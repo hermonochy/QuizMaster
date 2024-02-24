@@ -2,23 +2,9 @@ import PySimpleGUI as sg
 import random
 import json
 import os
+from modules.persistence import load_questions_from_json, delete_questions_json_file, save_questions_to_json
 
 sg.theme('DarkBlue3')
-
-def load_questions_from_json():
-    try:
-        with open('quiz_questions.json', 'r') as file:
-            questions = json.load(file)
-    except FileNotFoundError:
-        return []
-    return questions
-
-def delete_questions_json_file():
-    try:
-        os.remove('quiz_questions.json')
-        print("Deleted quiz_questions.json file")
-    except FileNotFoundError:
-        print("quiz_questions.json file not found")    
 
 quiz_layout = [
     [sg.Text('Quiz Time!')],
@@ -30,10 +16,6 @@ quiz_layout = [
 ]
 
 quiz_window = sg.Window('Quiz - Quiz', quiz_layout, finalize=True)
-
-def save_questions_to_json(questions):
-    with open('quiz_questions.json', 'w') as file:
-        json.dump(questions, file)
 
 questions = load_questions_from_json()
 
