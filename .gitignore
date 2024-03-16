@@ -4,4 +4,5 @@ lib/
 lib64
 pyvenv.cfg
 share
-quiz_questions.json
+*.json
+modules/__pycache__/*.pyc

@@ -2,9 +2,10 @@ import PySimpleGUI as sg
 import random
 import json
 import os
-from modules.persistence import load_questions_from_json, delete_questions_json_file, save_questions_to_json
-
+from modules.persistence import load_questions_from_json,save_questions_to_json, save_questions_json_file
 sg.theme('DarkBlue3')
+
+  
 
 quiz_layout = [
     [sg.Text('Quiz Time!')],
@@ -16,6 +17,10 @@ quiz_layout = [
 ]
 
 quiz_window = sg.Window('Quiz - Quiz', quiz_layout, finalize=True)
+
+def save_questions_to_json(questions):
+    with open('quiz_questions.json', 'w') as file:
+        json.dump(questions, file)
 
 questions = load_questions_from_json()
 
