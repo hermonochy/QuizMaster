@@ -1,16 +1,7 @@
 import PySimpleGUI as sg
-from dataclasses import dataclass
-from typing import List
 import json
+from modules.persistence import QuizQuestion
 
-@dataclass
-class QuizQuestion:
-   question: str
-   correctAnswer: str
-   wrongAnswers: List[str]
-   
-   def __repr__(self):
-      return self.question
 
 questionList = []
 
@@ -30,6 +21,8 @@ def make_questionEditorWindow():
             [sg.Text('Enter the question:'), sg.InputText(key='question')],
             [sg.Text('Enter the correct answer:'), sg.InputText(key='correct_answer')],
             [sg.Text('Enter the wrong answers:'), sg.InputText(key='wrong_answers')],
+            [sg.Text('Enter the time given(seconds):'), sg.InputText(key='time_given')],
+            [sg.Text('Enter the marks given:'), sg.InputText(key='marks_given')],
             [sg.Button('Add'), sg.Button('Cancel')]
         ]
         

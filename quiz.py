@@ -1,75 +1,137 @@
+import pygame
+import sys
 import PySimpleGUI as sg
-import random
 import json
-import os
-from modules.persistence import load_questions_from_json,save_questions_to_json, save_questions_json_file
-sg.theme('DarkBlue3')
+import random
+from modules.persistence import QuizQuestion
+from pygame.locals import *
 
-  
+pygame.init()
 
-quiz_layout = [
-    [sg.Text('Quiz Time!')],
-    [sg.Text('Select the correct answer for each question')],
-    [sg.Text('', size=(30,1), key='question')],
-    [sg.Listbox([], size=(30, 4), key='answers'),
-     sg.Text('Score: 0', key='score', visible=False)],
-    [sg.Button('Next'), sg.Button('Quit'), sg.Button('Reveal Correct Answer', key='reveal', visible=False)]
-]
 
-quiz_window = sg.Window('Quiz - Quiz', quiz_layout, finalize=True)
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 800
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+FONT_SIZE = 25
+QUESTION_OFFSET = 50
+ANSWER_OFFSET = 100
+OPTION_HEIGHT = 50
+TIMER = 10  
 
-def save_questions_to_json(questions):
-    with open('quiz_questions.json', 'w') as file:
-        json.dump(questions, file)
 
-questions = load_questions_from_json()
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption('Quiz Game')
 
-question_index = 0
-score = 0
-start_quiz = False
-reveal = False
 
-while True:
-    current_question = questions[question_index]
-    correct_answer = current_question[1]
-    wrong_answers = current_question[2]
-    answers = random.sample([correct_answer] + wrong_answers, len(wrong_answers) + 1)
 
-    quiz_window['question'].update(current_question[0])
-    quiz_window['answers'].update(values=answers)
-    quiz_window['score'].update(f'Score: {score}', visible=start_quiz)
-    quiz_window['reveal'].update(visible=reveal)
+def load_quiz(filename):
+    with open(filename, 'r') as file:
+        quizDicts = json.load(file)
+        questionList = []
+        for q in quizDicts["listOfQuestions"]:
+            qq = QuizQuestion(**q)
+            questionList.append(qq)
+        titleofquiz = quizDicts["title"]
+    return questionList, titleofquiz
 
-    event, values = quiz_window.read()
 
-    if event == sg.WIN_CLOSED or event == 'Quit':
-        break
+def display_message(message, y_position):
+    font = pygame.font.Font(None, FONT_SIZE)
+    text = font.render(message, True, BLACK)
+    text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, y_position))
+    screen.blit(text, text_rect)
 
-    if start_quiz:
-        if event == 'Next':
-            if values['answers']:
-                if values['answers'][0] == correct_answer:
-                    score += 1
-            else:
-                sg.popup('Please select an answer')
-                continue
 
-            question_index += 1
+def quiz_game(questionList):
+    running = True
+    questionIndex = 0
+    correctAnswers = 0
+    totalQuestions = len(questionList)
+    background_color = WHITE
 
-            if question_index < len(questions):
-                reveal = False
-            else:
-                reveal = True
-        elif event == 'Reveal Correct Answer':
-            reveal = True
+    while running and questionIndex < totalQuestions:
+        currentQuestion = questionList[questionIndex]
 
-        if not reveal and question_index < len(questions):
-            quiz_window['score'].update(f'Score: {score}', visible=True)
-        else:
-            sg.popup(f'Quiz completed! Your score: {score}/{len(questions)}')
-            delete_questions_json_file()
+        user_answer = None
+        time_remaining = TIMER
+
+        answerOptions = [currentQuestion.correctAnswer] + currentQuestion.wrongAnswers
+        random.shuffle(answerOptions)  
+
+
+        while running and time_remaining > 0:
+            screen.fill(background_color)
+            display_message(f"Question {questionIndex + 1}: {currentQuestion.question}", QUESTION_OFFSET)
+
+            for idx, answer in enumerate(answerOptions):
+                display_message(f"{idx + 1}. {answer}", ANSWER_OFFSET + idx * OPTION_HEIGHT)
+
+            display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET)
+
+            pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    sys.exit()
+                if event.type == MOUSEBUTTONDOWN: 
+                    x, y = pygame.mouse.get_pos()
+                    for idx, _ in enumerate(answerOptions):
+                        if ANSWER_OFFSET + idx * OPTION_HEIGHT < y < ANSWER_OFFSET + (idx + 1) * OPTION_HEIGHT:
+                            user_answer = answerOptions.index(answer)
+                            break
+                if event.type == KEYDOWN:
+                    if event.key in [K_1, K_2, K_3, K_4]:
+                        user_answer = event.key - K_1
+                        break
+
+            time_remaining -= 1
+            pygame.time.wait(1000)
+
+        if user_answer is not None and user_answer == answerOptions.index(currentQuestion.correctAnswer):
+            correctAnswers += 1
+
+        questionIndex += 1
+
+    screen.fill(background_color)
+    display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2)
+    display_message("Press 'Q' to Quit or 'L' to Load another quiz", SCREEN_HEIGHT // 2 + FONT_SIZE)
+    pygame.display.update()
+
+
+
+def main():
+    running = True
+
+    while running:
+        filename = sg.popup_get_file("Open quiz", no_window=True)
+        if not filename:
             break
-    else:
-        start_quiz = True
 
-quiz_window.close()
+        try:
+            questionList, titleofquiz = load_quiz(filename)
+        except Exception:
+            print("Error loading quiz file.")
+            return
+
+        screen.fill(WHITE)
+        display_message(titleofquiz, QUESTION_OFFSET)
+        pygame.display.update()
+        pygame.time.wait(2000)
+
+        quiz_game(questionList)
+
+        for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if event.key == K_q:
+                    running = False
+                elif event.key == K_l:
+                    print('bye!')
+                    break
+
+    pygame.quit()
+    sys.exit()
+
+
+if __name__ == '__main__':
+    main()

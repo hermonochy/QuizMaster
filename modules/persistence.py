@@ -1,5 +1,16 @@
 import json
 import os
+from typing import List
+from dataclasses import dataclass
+
+@dataclass
+class QuizQuestion:
+   question: str
+   correctAnswer: str
+   wrongAnswers: List[str]
+   
+   def __repr__(self):
+      return self.question
 
 def load_questions_from_json():
     try:
@@ -8,6 +19,20 @@ def load_questions_from_json():
     except FileNotFoundError:
         return []
     return questions
+    
+class NoQuizTitleException(Exception):
+   ...    
+    
+def load_quiz(jsonfilename):
+    try:
+        with open(jsonfilename , 'r') as file:
+            quizdata = json.load(file)
+            if not 'title' in quizdata.keys():
+                raise NoQuizTitleException
+    except FileNotFoundError:
+        return None
+    return quizdata
+    
 
 
 def save_questions_json_file(quiz_name: str, quiz_data):
