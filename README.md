@@ -1,13 +1,26 @@
 # Quiz
 
-This Python code consists of two parts: a Quiz Creator and a Quiz Game. The Quiz Creator tool allows you to add, edit, delete, save, and load quiz questions using PySimpleGUI. The Quiz Game, built with pygame, lets you play the quiz with timed questions.
+This Python code consists of two parts: a Quiz Creator and a Quiz Game. The Quiz Creator tool allows you to add, edit, delete, save, and load quiz questions. Quiz Creator depends on PySimpleGUI. The Quiz Game, built with pygame, lets you play the quiz with timed questions.
 
 ## How to Use
 
+### Install
+1. Clone this repository
+2. Set up a new virtual environment (optional, but recommended). 
+3. Install packages in `requirements.txt`.
+4. Run either Quiz Creator or Quiz Game (see below).
+
 ### Quiz Creator
 
+![](images.screenshotcreator1.png)
+
 1. Run the script `quiz_creator.py` 
-2. Use it to manage and create quiz questions.The add button you can add questions.As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas.Afterwards, save it.
+2. Use it to manage and create quiz questions.The add button you can add questions.As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas.Afterwards, save it. Format is json.
+
+### Quiz Game
+
+![](images.screenshotplayer1.png)
+
 
 
 ## Features
@@ -30,4 +43,15 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. The Quiz
 - `load_quiz()`: Load a quiz from a JSON file.
 - `quiz_game()`: Play the quiz game with loaded questions.
 
-Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code!Please add some extra quizzes for others.
+Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code!Please add some extra quizzes for others. This repository is open to pull requests.
+
+## Future Work
+
+- more methods of awnsering questions
+- adding pictures to questions
+- more user friendly method of starting and interface
+
+
+
+
+
