@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import PySimpleGUI as sg
 import json
 from modules.persistence import QuizQuestion
