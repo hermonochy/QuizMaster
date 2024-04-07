@@ -12,14 +12,14 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. The Quiz
 
 ### Quiz Creator
 
-![](images.screenshotcreator1.png)
+![](images/screenshotcreator1.png)
 
 1. Run the script `./quizcreator.py` 
 2. Use it to manage and create quiz questions.The add button you can add questions.As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas.Afterwards, save it. Format is json.
 
 ### Quiz Game
 
-![](images.screenshotplayer1.png)
+![](images/screenshotplayer1.png)
 
 In a command line window, enter `./quiz.py`. Choose a json file and play.
 
