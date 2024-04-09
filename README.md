@@ -5,23 +5,24 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. The Quiz
 ## How to Use
 
 ### Install
-1. Clone this repository
-2. Set up a new virtual environment (optional, but recommended). 
-3. Install packages in `requirements.txt`.
-4. Run either Quiz Creator or Quiz Game (see below).
+1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster.git`
+2. Set up a new virtual environment `python3 -m venv .`(optional, but recommended).
+3. Start the environment.`source ./bin/activate`
+4. Install packages in `requirements.txt`.`pip3 install -r requirements.txt`
+5. Run either Quiz Creator or Quiz Game (see below).
 
 ### Quiz Creator
 
 ![](images/screenshotcreator1.png)
 
 1. Run the script `./quizcreator.py` 
-2. Use it to manage and create quiz questions.The add button you can add questions.As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas.Afterwards, save it. Format is json.
+2. Use it to manage and create quiz questions.The add button you can add questions. As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas.Afterwards, save it. Format is json.
 
 ### Quiz Game
 
 ![](images/screenshotplayer1.png)
 
-In a command line window, enter `./quiz.py`. Choose a json file and play.
+In a command line window, enter `./quiz.py`. Choose a json file and play.You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have 10 seconds!
 
 
 ## Features
