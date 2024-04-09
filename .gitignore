@@ -4,7 +4,6 @@ lib/
 lib64
 pyvenv.cfg
 share
-*.json
 modules/__pycache__/*.pyc
 .pytest_cache
 __pycache__

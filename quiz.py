@@ -147,7 +147,8 @@ def main():
     pygame.mixer.music.play(-1)
 
     while running:
-        filename = sg.popup_get_file("Please select a quiz:", no_window=True)
+        filename = sg.popup_get_file("Please select a quiz:",background_color= "blue", \
+                            no_window=True, file_types=(('Quiz files', '.json'),))
         if not filename:
             break
 
