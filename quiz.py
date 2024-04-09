@@ -7,17 +7,22 @@ import random
 from modules.persistence import QuizQuestion
 from pygame.locals import *
 
+
+
+music_list = ['music1.mp3', 'music2.mp3', 'music3.mp3']
+music = (random.choice(music_list))
+
 pygame.mixer.init()
-pygame.mixer.music.load('music1.mp3')
+pygame.mixer.music.load(music)
 
 pygame.init()
 pygame.font.init()
 
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1250
+SCREEN_HEIGHT = 700
 LIGHT_BLUE = (173, 216, 230)
 BLACK = (0, 0, 0)
-FONT_SIZE = 25
+FONT_SIZE = 30
 QUESTION_OFFSET = 50
 ANSWER_OFFSET = 100
 OPTION_HEIGHT = 50
@@ -66,7 +71,7 @@ def display_message(message, y_position):
 
 
 
-def quiz_game(questionList):
+def quiz_game(questionList,titleofquiz):
     running = True
     questionIndex = 0
     correctAnswers = 0
@@ -131,10 +136,14 @@ def quiz_game(questionList):
         questionIndex += 1
 
     screen.fill(background_color)
-    display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2)
+    display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
+    if correctAnswers/totalQuestions > 0.7:
+           display_message(f"Well Done! You know alot about {titleofquiz}!", SCREEN_HEIGHT // 2-175)
+    else:
+           display_message(f"You might want to revise {titleofquiz}", SCREEN_HEIGHT // 2-175)
     pygame.display.update()
 
-    y_position = SCREEN_HEIGHT // 2 + 50
+    y_position = SCREEN_HEIGHT // 2-150
     for idx, question in enumerate(incorrect_questions):
         y_position += display_message(f"Incorrect - Question: {question.question}", y_position)
         y_position += display_message(f"Correct Answer: {question.correctAnswer}", y_position)
@@ -143,11 +152,11 @@ def quiz_game(questionList):
 
 def main():
     running = True
-    pygame.mixer.music.load('music2.mp3')
+    pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
 
     while running:
-        filename = sg.popup_get_file("Please select a quiz:",background_color= "blue", \
+        filename = sg.popup_get_file("Please select a quiz:",button_color= "blue", \
                             no_window=True, file_types=(('Quiz files', '.json'),))
         if not filename:
             break
@@ -164,8 +173,8 @@ def main():
         pygame.display.update()
         pygame.time.wait(2000)
 
-        quiz_game(questionList)
-        pygame.mixer.music.load('music1.mp3')
+        quiz_game(questionList, titleofquiz)
+        pygame.mixer.music.load(music)
         pygame.mixer.music.play(-1)
 
         for event in pygame.event.get():
