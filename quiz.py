@@ -24,7 +24,7 @@ LIGHT_BLUE = (173, 216, 230)
 BLACK = (0, 0, 0)
 FONT_SIZE = 30
 QUESTION_OFFSET = 50
-ANSWER_OFFSET = 100
+ANSWER_OFFSET = 200
 OPTION_HEIGHT = 50
 TIMER = 10
 
@@ -64,13 +64,35 @@ def load_quiz(filename):
 
 def display_message(message, y_position):
     font = pygame.font.Font(None, FONT_SIZE)
-    text = font.render(message, True, BLACK)
-    text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, y_position))
-    screen.blit(text, text_rect)
-    return text.get_height()
+    words = message.split()
+    
+    if len(message) > 60:
+        text_lines = []
+        line = ""
+        
+        for word in words:
+            if font.size(line + word)[0] <= SCREEN_WIDTH:
+                line += word + " "
+            else:
+                text_lines.append(line)
+                line = word + " "
+        
+        if line:
+            text_lines.append(line)
 
+        for line in text_lines:
+            text = font.render(line, True, BLACK)
+            text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, y_position))
+            screen.blit(text, text_rect)
+            y_position += text.get_height()
+    else:
+        text = font.render(message, True, BLACK)
+        text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, y_position))
+        screen.blit(text, text_rect)
+        
+        y_position += text.get_height()
 
-
+    return y_position
 def quiz_game(questionList,titleofquiz):
     running = True
     questionIndex = 0
