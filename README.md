@@ -52,6 +52,7 @@ Enjoy the combined functionalities of creating quizzes and playing quiz games wi
 - more methods of awnsering questions
 - adding pictures to questions
 - more user friendly method of starting and interface
+- multiplayer options
 
 
 
