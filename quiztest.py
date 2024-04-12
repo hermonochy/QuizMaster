@@ -6,7 +6,6 @@ import random
 from modules.persistence import QuizQuestion
 from pygame.locals import *
 
-
 incorrect_questions = []
 
 music_list = ['music1.mp3', 'music2.mp3', 'music3.mp3']
