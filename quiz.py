@@ -7,7 +7,6 @@ import random
 from modules.persistence import QuizQuestion
 from pygame.locals import *
 
-incorrect_questions = []
 
 music_list = ['music1.mp3', 'music2.mp3', 'music3.mp3']
 music = (random.choice(music_list))
@@ -93,7 +92,7 @@ def display_message(message, y_position):
 
     return y_position
     
-def open_new_window(incorrect_questions):
+def open_wronganswer_window(incorrect_questions):
     popup_layout = [
         [sg.Text("Incorrect Questions and Correct Answers")],
         *[[sg.Text(f"{question.question} -> Correct Answer: {question.correctAnswer}")] for question in incorrect_questions],
@@ -104,7 +103,7 @@ def open_new_window(incorrect_questions):
     popup_window.read()
 
 def quiz_game(questionList, titleofquiz):
-    global incorrect_questions
+    incorrect_questions = []
     running = True
     questionIndex = 0
     correctAnswers = 0
@@ -190,13 +189,12 @@ def quiz_game(questionList, titleofquiz):
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_show_incorrect.is_clicked(pos):
-                    open_new_window(incorrect_questions)
+                    open_wronganswer_window(incorrect_questions)
                 elif button_open_file.is_clicked(pos):
-                     main()
+                     return incorrect_questions, True
 
 
 def main():
-    global incorrect_questions
     running = True
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
@@ -218,7 +216,9 @@ def main():
         pygame.display.update()
         pygame.time.wait(2000)
 
-        incorrect_questions = quiz_game(questionList, titleofquiz)
+        incorrect_questions, play_again = quiz_game(questionList, titleofquiz)
+        if play_again:
+           continue
 
         pygame.mixer.music.load(music)
         pygame.mixer.music.play(-1)
@@ -243,7 +243,7 @@ def main():
                 if event.type == MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     if button_show_incorrect.is_clicked(pos):
-                        open_new_window(incorrect_questions)
+                        open_wronganswer_window(incorrect_questions)
                     elif button_open_file.is_clicked(pos):
                         sg.popup_get_file("Please select a quiz:",no_window=True, file_types=(('Quiz files', '.json'),))
                         break
