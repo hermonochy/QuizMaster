@@ -173,7 +173,7 @@ def quiz_game(questionList, titleofquiz):
         if correctAnswers/totalQuestions > 0.7:
             display_message(f"Well Done! You know a lot about {titleofquiz}!", y_position)
         elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.7 :
-            display_message(f"You might want to revise {titleofquiz}", y_position)
+            display_message(f"You are reasonable at {titleofquiz}", y_position)
         elif correctAnswers/totalQuestions < 0.3:
             display_message(f"You are terrible at {titleofquiz}", y_position)
     
