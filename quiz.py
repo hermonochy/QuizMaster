@@ -172,8 +172,11 @@ def quiz_game(questionList, titleofquiz):
         y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
         if correctAnswers/totalQuestions > 0.7:
             display_message(f"Well Done! You know a lot about {titleofquiz}!", y_position)
-        else:
+        elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.7 :
             display_message(f"You might want to revise {titleofquiz}", y_position)
+        elif correctAnswers/totalQuestions < 0.3:
+            display_message(f"You are terrible at {titleofquiz}", y_position)
+    
 
         button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40)
         button_open_file = Button("Play another quiz", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
