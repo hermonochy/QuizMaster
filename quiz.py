@@ -109,6 +109,13 @@ def quiz_game(questionList, titleofquiz):
     correctAnswers = 0
     totalQuestions = len(questionList)
     background_color = LIGHT_BLUE
+    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You seem to be a master on the topic of {titleofquiz}!"]
+    good_praise = (random.choice(good_praise_list))
+    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Just abit more effort on {titleofquiz}!"]
+    medium_praise = (random.choice(medium_praise_list))
+    bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!"]
+    bad_praise = (random.choice(bad_praise_list))
+
 
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
@@ -171,11 +178,12 @@ def quiz_game(questionList, titleofquiz):
         screen.fill(background_color)
         y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
         if correctAnswers/totalQuestions > 0.7:
-            display_message(f"Well Done! You know a lot about {titleofquiz}!", y_position)
+
+            display_message(good_praise, y_position)
         elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.7 :
-            display_message(f"You are reasonable at {titleofquiz}", y_position)
+            display_message(medium_praise, y_position)
         elif correctAnswers/totalQuestions < 0.3:
-            display_message(f"You are terrible at {titleofquiz}", y_position)
+            display_message(bad_praise, y_position)
     
 
         button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40)
