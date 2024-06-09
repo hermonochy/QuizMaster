@@ -9,3 +9,4 @@ modules/__pycache__/*.pyc
 __pycache__
 ()
 quiztest.py
+.vscode
