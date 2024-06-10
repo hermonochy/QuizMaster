@@ -17,11 +17,15 @@ pygame.mixer.music.load(music)
 pygame.init()
 pygame.font.init()
 
+colour_list = [(173,210,255),(150,200,250),(127, 127, 127) ,(255, 255, 255),(255, 0, 0) ,(0, 255, 0), (0, 0, 255), (255, 255, 0), (0, 255, 255) ,(255, 0, 255)]
+button_colour_list = [(150,200,230),(120,180,230),(110, 110, 110) ,(230, 230, 230),(230, 0, 0) ,(0, 230, 0), (0, 0, 230), (230, 230, 0), (0, 230, 230) ,(230, 0, 230)]
+colour = (random.choice(colour_list))
+button_colour = (random.choice(button_colour_list))
 
 SCREEN_WIDTH = 1250
 SCREEN_HEIGHT = 700
-LIGHT_BLUE = (173,216,230)
-BLUE = (173,216,255)
+BACKGROUND_COLOUR = colour
+BUTTON_COLOUR = button_colour
 BLACK = (0, 0, 0)
 FONT_SIZE = 30
 QUESTION_OFFSET = 50
@@ -108,7 +112,7 @@ def quiz_game(questionList, titleofquiz):
     questionIndex = 0
     correctAnswers = 0
     totalQuestions = len(questionList)
-    background_color = LIGHT_BLUE
+    background_color = BACKGROUND_COLOUR
     good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You seem to be a master on the topic of {titleofquiz}!"]
     good_praise = (random.choice(good_praise_list))
     medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Just abit more effort on {titleofquiz}!"]
@@ -138,7 +142,7 @@ def quiz_game(questionList, titleofquiz):
             display_message(f"Question {questionIndex + 1} out of {totalQuestions} : {currentQuestion.question}", QUESTION_OFFSET)
 
             for button in buttons:
-                button.draw(screen, BLUE if user_answer is None else LIGHT_BLUE)
+                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
 
             display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET)
 
@@ -177,10 +181,9 @@ def quiz_game(questionList, titleofquiz):
     while True:
         screen.fill(background_color)
         y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
-        if correctAnswers/totalQuestions > 0.7:
-
+        if correctAnswers/totalQuestions > 0.8:
             display_message(good_praise, y_position)
-        elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.7 :
+        elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.8 :
             display_message(medium_praise, y_position)
         elif correctAnswers/totalQuestions < 0.3:
             display_message(bad_praise, y_position)
@@ -189,8 +192,8 @@ def quiz_game(questionList, titleofquiz):
         button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40)
         button_open_file = Button("Play another quiz", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
 
-        button_show_incorrect.draw(screen, BLUE)
-        button_open_file.draw(screen, BLUE)
+        button_show_incorrect.draw(screen, BUTTON_COLOUR)
+        button_open_file.draw(screen, BUTTON_COLOUR)
         pygame.display.update()
 
         for event in pygame.event.get(): 
@@ -222,7 +225,7 @@ def main():
             sg.Popup("What you selected is not a quiz!")
             continue
 
-        screen.fill(LIGHT_BLUE)
+        screen.fill(BACKGROUND_COLOUR)
         display_message(titleofquiz, QUESTION_OFFSET)
         pygame.display.update()
         pygame.time.wait(2000)
@@ -237,14 +240,14 @@ def main():
         button_pressed = False
 
         while not button_pressed:
-            screen.fill(LIGHT_BLUE)
+            screen.fill(BACKGROUND_COLOUR)
             display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
 
             button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), 250, 40)
             button_open_file = Button("Play another quiz", (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50), 250, 40)
 
-            button_show_incorrect.draw(screen, BLUE)
-            button_open_file.draw(screen, BLUE)
+            button_show_incorrect.draw(screen, BUTTON_COLOUR)
+            button_open_file.draw(screen, BUTTON_COLOUR)
             pygame.display.update()
 
             for event in pygame.event.get():
