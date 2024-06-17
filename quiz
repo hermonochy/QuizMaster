@@ -17,10 +17,13 @@ pygame.mixer.music.load(music)
 pygame.init()
 pygame.font.init()
 
-colour_list = [(173,210,255),(150,200,250),(127, 127, 127) ,(255, 255, 255),(255, 0, 0) ,(0, 255, 0), (0, 0, 255), (255, 255, 0), (0, 255, 255) ,(255, 0, 255)]
-button_colour_list = [(150,200,230),(120,180,230),(110, 110, 110) ,(230, 230, 230),(230, 0, 0) ,(0, 230, 0), (0, 0, 230), (230, 230, 0), (0, 230, 230) ,(230, 0, 230)]
-colour = (random.choice(colour_list))
-button_colour = (random.choice(button_colour_list))
+r= random.randint(10,245)
+b= random.randint(10,245)
+g= random.randint(10,245)
+colour_background = (r,g,b)
+buttons_colour = (r+10,g+10,b+10)
+colour = colour_background
+button_colour = buttons_colour
 
 SCREEN_WIDTH = 1250
 SCREEN_HEIGHT = 700
