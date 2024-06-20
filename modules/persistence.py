@@ -1,16 +1,23 @@
 import json
 import os
 from typing import List
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 @dataclass
 class QuizQuestion:
    question: str
    correctAnswer: str
    wrongAnswers: List[str]
+   timeout: int = field(default=10)
+   
+   
+   #def __post_init__(self):
+   #     if self.timeout is None:
+   #         self.timeout = 10
    
    def __repr__(self):
       return self.question
+     
 
 def load_questions_from_json():
     try:

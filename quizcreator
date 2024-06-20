@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import PySimpleGUI as sg
 import json
 from modules.persistence import QuizQuestion
@@ -22,6 +22,7 @@ def make_questionEditorWindow():
             [sg.Text('Enter the question:'), sg.InputText(key='question')],
             [sg.Text('Enter the correct answer:'), sg.InputText(key='correct_answer')],
             [sg.Text('Enter the wrong answers:'), sg.InputText(key='wrong_answers')],
+            [sg.Text('Enter the time given to awnser:'), sg.InputText(key = 'time_given')],
             [sg.Button('Add'), sg.Button('Cancel')]
         ]
         
@@ -53,12 +54,13 @@ while True:
       questionEditorWindow['question'].update(quizQuestion.question)
       questionEditorWindow['correct_answer'].update(quizQuestion.correctAnswer)
       questionEditorWindow['wrong_answers'].update(''.join((','+str(e)) for e in quizQuestion.wrongAnswers)[1:])
+      questionEditorWindow['time_given'].update(quizQuestion.timeout)
       editorEvent,editorValues = questionEditorWindow.read()
       if editorEvent == 'Add':
           question = editorValues['question']
           correct_answer = editorValues['correct_answer']
           wrong_answers = editorValues['wrong_answers'].split(',')
-          newquestion = QuizQuestion(question, correct_answer, wrong_answers)
+          newquestion = QuizQuestion(question, correct_answer, wrong_answers, int(editorValues['time_given']))
           questionList[index]=newquestion  
           questionEditorWindow.close()
           mainWindow["quizquestionentry"].update(questionList)                            
@@ -72,7 +74,7 @@ while True:
             question = editorValues['question']
             correct_answer = editorValues['correct_answer']
             wrong_answers = editorValues['wrong_answers'].split(',')
-            newquestion = QuizQuestion(question, correct_answer, wrong_answers)
+            newquestion = QuizQuestion(question, correct_answer, wrong_answers, int(editorValues['time_given']))
             questionList.append(newquestion) 
             questionEditorWindow.close()
             mainWindow["quizquestionentry"].update(questionList)                            
@@ -83,7 +85,8 @@ while True:
       filename = sg.popup_get_file('', save_as=True, no_window=True, \
             file_types=(("All JSON Files", "*.json"), ("All Files", "*.*")))
       with open(f'{filename}', 'w') as file:
-         savedData = {"title": values['quiz_name'] , "listOfQuestions": questionList}
+         savedData = {"title": values['quiz_name'] , "listOfQuestions": questionList, "time given": editorValues['time_given']}
+         print("aveddata:", savedData)
          json.dump(savedData, file, default = vars)      
          
          

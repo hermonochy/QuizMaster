@@ -4,6 +4,7 @@ import sys
 import PySimpleGUI as sg
 import json
 import random
+import colorsys
 from modules.persistence import QuizQuestion
 from pygame.locals import *
 
@@ -17,11 +18,10 @@ pygame.mixer.music.load(music)
 pygame.init()
 pygame.font.init()
 
-r= random.randint(10,245)
-b= random.randint(10,245)
-g= random.randint(10,245)
-colour_background = (r,g,b)
-buttons_colour = (r+10,g+10,b+10)
+
+col_bg = random.uniform(0,1)
+colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.96))) 
+buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
 colour = colour_background
 button_colour = buttons_colour
 
@@ -34,7 +34,6 @@ FONT_SIZE = 30
 QUESTION_OFFSET = 50
 ANSWER_OFFSET = 200
 OPTION_HEIGHT = 50
-TIMER = 10
 
 class Button:
     def __init__(self, text, position, width, height):
@@ -128,8 +127,9 @@ def quiz_game(questionList, titleofquiz):
         currentQuestion = questionList[questionIndex]
 
         user_answer = None
-        time_remaining = TIMER
+        time_remaining = currentQuestion.timeout 
 
+        
         answerOptions = [currentQuestion.correctAnswer] + currentQuestion.wrongAnswers
         random.shuffle(answerOptions)
 
@@ -224,8 +224,8 @@ def main():
 
         try:
             questionList, titleofquiz = load_quiz(filename)
-        except Exception:
-            sg.Popup("What you selected is not a quiz!")
+        except Exception as ex:
+            sg.Popup(f"What you selected is not a quiz: {ex}!")
             continue
 
         screen.fill(BACKGROUND_COLOUR)
