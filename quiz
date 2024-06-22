@@ -8,19 +8,15 @@ import colorsys
 from modules.persistence import QuizQuestion
 from pygame.locals import *
 
+pygame.init()
+pygame.font.init()
 
 music_list = ['music1.mp3', 'music2.mp3', 'music3.mp3']
 music = (random.choice(music_list))
 
-pygame.mixer.init()
-pygame.mixer.music.load(music)
-
-pygame.init()
-pygame.font.init()
-
 
 col_bg = random.uniform(0,1)
-colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.96))) 
+colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
 buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
 colour = colour_background
 button_colour = buttons_colour
@@ -30,7 +26,7 @@ SCREEN_HEIGHT = 700
 BACKGROUND_COLOUR = colour
 BUTTON_COLOUR = button_colour
 BLACK = (0, 0, 0)
-FONT_SIZE = 30
+FONT_SIZE = 40
 QUESTION_OFFSET = 50
 ANSWER_OFFSET = 200
 OPTION_HEIGHT = 50
@@ -115,9 +111,9 @@ def quiz_game(questionList, titleofquiz):
     correctAnswers = 0
     totalQuestions = len(questionList)
     background_color = BACKGROUND_COLOUR
-    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You seem to be a master on the topic of {titleofquiz}!"]
+    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You seem to be a master on {titleofquiz}!"]
     good_praise = (random.choice(good_praise_list))
-    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Just abit more effort on {titleofquiz}!"]
+    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far of mastering {titleofquiz}"]
     medium_praise = (random.choice(medium_praise_list))
     bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!"]
     bad_praise = (random.choice(bad_praise_list))
@@ -138,8 +134,6 @@ def quiz_game(questionList, titleofquiz):
             button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
             buttons.append(button)
 
-        pygame.mixer.music.play(-1)
-
         while running and time_remaining > 0 and user_answer is None:
             screen.fill(background_color)
             display_message(f"Question {questionIndex + 1} out of {totalQuestions} : {currentQuestion.question}", QUESTION_OFFSET)
@@ -153,7 +147,6 @@ def quiz_game(questionList, titleofquiz):
 
             for event in pygame.event.get():
                 if event.type == QUIT:
-                    pygame.mixer.music.stop()
                     pygame.quit()
                     sys.exit()
                 if event.type == MOUSEBUTTONDOWN:
@@ -169,8 +162,6 @@ def quiz_game(questionList, titleofquiz):
 
             time_remaining -= 1
             pygame.time.wait(1000)
-
-        pygame.mixer.music.stop()
 
         correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
         if user_answer is not None:
@@ -194,13 +185,17 @@ def quiz_game(questionList, titleofquiz):
 
         button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40)
         button_open_file = Button("Play another quiz", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
 
         button_show_incorrect.draw(screen, BUTTON_COLOUR)
         button_open_file.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)
+        
         pygame.display.update()
 
         for event in pygame.event.get(): 
             if event.type == QUIT:
+                print("Bye!")
                 pygame.quit()
                 sys.exit()
             if event.type == MOUSEBUTTONDOWN:
@@ -209,10 +204,16 @@ def quiz_game(questionList, titleofquiz):
                     open_wronganswer_window(incorrect_questions)
                 elif button_open_file.is_clicked(pos):
                      return incorrect_questions, True
+                elif button_quit.is_clicked(pos):
+                     print("Bye!")
+                     pygame.quit()
+                     sys.exit()
+                          
 
 
 def main():
     running = True
+    pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
 
@@ -236,15 +237,19 @@ def main():
         incorrect_questions, play_again = quiz_game(questionList, titleofquiz)
         if play_again:
            continue
-
-        pygame.mixer.music.load(music)
-        pygame.mixer.music.play(-1)
-
         button_pressed = False
 
         while not button_pressed:
             screen.fill(BACKGROUND_COLOUR)
             display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
+
+            if correctAnswers/totalQuestions > 0.8:
+                display_message(good_praise, y_position)
+            elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.8 :
+                display_message(medium_praise, y_position)
+            elif correctAnswers/totalQuestions < 0.3:
+                display_message(bad_praise, y_position)
+        
 
             button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), 250, 40)
             button_open_file = Button("Play another quiz", (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50), 250, 40)
