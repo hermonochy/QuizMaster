@@ -111,11 +111,11 @@ def quiz_game(questionList, titleofquiz):
     correctAnswers = 0
     totalQuestions = len(questionList)
     background_color = BACKGROUND_COLOUR
-    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You seem to be a master on {titleofquiz}!"]
+    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You seem to be a master on {titleofquiz}!",f"Great!You are amazing at {titleofquiz}!"]
     good_praise = (random.choice(good_praise_list))
-    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far of mastering {titleofquiz}"]
+    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far of mastering {titleofquiz}", f"Just abit more practice on {titleofquiz}!"]
     medium_praise = (random.choice(medium_praise_list))
-    bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!"]
+    bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!", f"You might want to consider revising another topic!"]
     bad_praise = (random.choice(bad_praise_list))
 
 
