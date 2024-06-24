@@ -140,9 +140,12 @@ def quiz_game(questionList, titleofquiz):
 
             for button in buttons:
                 button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
-
+                
+            button_go_back = Button("Go back", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+250), 250, 40)
+            button_leave = Button("Quit", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+300), 250, 40)
             display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET)
-
+            button_go_back.draw(screen, BUTTON_COLOUR)
+            button_leave.draw(screen, BUTTON_COLOUR)
             pygame.display.update()
 
             for event in pygame.event.get():
@@ -150,15 +153,21 @@ def quiz_game(questionList, titleofquiz):
                     pygame.quit()
                     sys.exit()
                 if event.type == MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
+                    pos = pygame.mouse.get_pos() 
+                    if button_go_back.is_clicked(pos):
+                       main()                      
+                    if button_leave.is_clicked(pos):
+                       print("Bye!")
+                       pygame.quit()
+                       sys.exit()
                     for idx, button in enumerate(buttons):
                         if button.is_clicked(pos):
                             user_answer = idx
-                            break
+                            #break
+                            
                 if event.type == KEYDOWN:
-                    if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4]:
+                    if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,pygame.K_5,pygame.K_6,pygame.K_7,pygame.K_8,pygame.K_9]:
                         user_answer = event.key - pygame.K_1
-                        break
 
             time_remaining -= 1
             pygame.time.wait(1000)
