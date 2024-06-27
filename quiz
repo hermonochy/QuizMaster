@@ -11,9 +11,6 @@ from pygame.locals import *
 pygame.init()
 pygame.font.init()
 
-music_list = ['music1.mp3', 'music2.mp3', 'music3.mp3']
-music = (random.choice(music_list))
-
 
 col_bg = random.uniform(0,1)
 colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
@@ -111,13 +108,6 @@ def quiz_game(questionList, titleofquiz):
     correctAnswers = 0
     totalQuestions = len(questionList)
     background_color = BACKGROUND_COLOUR
-    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You seem to be a master on {titleofquiz}!",f"Great!You are amazing at {titleofquiz}!"]
-    good_praise = (random.choice(good_praise_list))
-    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far of mastering {titleofquiz}", f"Just abit more practice on {titleofquiz}!"]
-    medium_praise = (random.choice(medium_praise_list))
-    bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!", f"You might want to consider revising another topic!"]
-    bad_praise = (random.choice(bad_praise_list))
-
 
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
@@ -184,13 +174,6 @@ def quiz_game(questionList, titleofquiz):
     while True:
         screen.fill(background_color)
         y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
-        if correctAnswers/totalQuestions > 0.8:
-            display_message(good_praise, y_position)
-        elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.8 :
-            display_message(medium_praise, y_position)
-        elif correctAnswers/totalQuestions < 0.3:
-            display_message(bad_praise, y_position)
-    
 
         button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40)
         button_open_file = Button("Play another quiz", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
@@ -222,10 +205,6 @@ def quiz_game(questionList, titleofquiz):
 
 def main():
     running = True
-    pygame.mixer.init()
-    pygame.mixer.music.load(music)
-    pygame.mixer.music.play(-1)
-
     while running:
         filename = sg.popup_get_file("Please select a quiz:", button_color="blue", initial_folder="quizzes",
                                      no_window=True, file_types=(('Quiz files', '.json'),))
@@ -252,13 +231,6 @@ def main():
             screen.fill(BACKGROUND_COLOUR)
             display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
 
-            if correctAnswers/totalQuestions > 0.8:
-                display_message(good_praise, y_position)
-            elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.8 :
-                display_message(medium_praise, y_position)
-            elif correctAnswers/totalQuestions < 0.3:
-                display_message(bad_praise, y_position)
-        
 
             button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), 250, 40)
             button_open_file = Button("Play another quiz", (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50), 250, 40)
