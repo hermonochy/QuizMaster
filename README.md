@@ -2,6 +2,9 @@
 
 This Python code consists of two parts: a Quiz Creator and a Quiz Game. The Quiz Creator tool allows you to add, edit, delete, save, and load quiz questions. Quiz Creator uses PySimpleGUI. The Quiz Game, built with pygame, lets you play the quiz with timed questions.
 
+## QuizMasterMini
+ This branch is a smaller version of the application for devices with less storage.
+
 ## How to Use
 
 ### Install
