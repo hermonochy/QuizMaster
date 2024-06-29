@@ -74,7 +74,11 @@ while True:
             question = editorValues['question']
             correct_answer = editorValues['correct_answer']
             wrong_answers = editorValues['wrong_answers'].split(',')
-            newquestion = QuizQuestion(question, correct_answer, wrong_answers, int(editorValues['time_given']))
+            try:
+                time_given = int(editorValues['time_given'])
+            except ValueError:
+                time_given = 10
+            newquestion = QuizQuestion(question, correct_answer, wrong_answers, time_given)
             questionList.append(newquestion) 
             questionEditorWindow.close()
             mainWindow["quizquestionentry"].update(questionList)                            
@@ -92,7 +96,7 @@ while True:
          
    if event == 'Open':
      try:
-        filename = sg.popup_get_file("Open quiz", initial_folder="quizzes", no_window=True)
+        filename = sg.popup_get_file("Open quiz", initial_folder="quizzes",no_window=True)
         with open(filename, 'r') as file:
            quizDicts = json.load(file)
            questionList = []
