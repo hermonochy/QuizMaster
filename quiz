@@ -237,22 +237,13 @@ def main():
         except Exception as ex:
             sg.Popup(f"What you selected is not a quiz: {ex}!")
             continue
-S
-        screen.fill(BACKGROUND_COLOUR)
-        display_message(titleofquiz, QUESTION_OFFSET)
-        display_message("3", QUESTION_OFFSET+200)
-        pygame.display.update()
-        pygame.time.delay(1000)
-        screen.fill(BACKGROUND_COLOUR)
-        display_message(titleofquiz, QUESTION_OFFSET)        
-        display_message("2", QUESTION_OFFSET+200)
-        pygame.display.update()
-        pygame.time.delay(1000)
-        screen.fill(BACKGROUND_COLOUR)
-        display_message(titleofquiz, QUESTION_OFFSET)        
-        display_message("1", QUESTION_OFFSET+200)
-        pygame.display.update()
-        pygame.time.delay(1000)
+        for i in range(3,1,-1):
+          screen.fill(BACKGROUND_COLOUR)
+          display_message(titleofquiz, QUESTION_OFFSET)
+          display_message((f"{i}"), QUESTION_OFFSET+200)
+          pygame.display.update()
+          pygame.time.delay(1000)
+        
 
         incorrect_questions, play_again = quiz_game(questionList, titleofquiz)
         if play_again:
