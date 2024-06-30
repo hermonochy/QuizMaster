@@ -50,7 +50,7 @@ class Button:
         return self.rect.collidepoint(pos)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption('Quiz Game')
+pygame.display.set_caption('QuizMaster')
 
 def load_quiz(filename):
     with open(filename, 'r') as file:
@@ -227,7 +227,7 @@ def main():
     pygame.mixer.music.play(-1)
 
     while running:
-        filename = sg.popup_get_file("Please select a quiz:", button_color="blue", initial_folder="quizzes",
+        filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
                                      no_window=True, file_types=(('Quiz files', '.json'),))
         if not filename:
             break
@@ -237,11 +237,22 @@ def main():
         except Exception as ex:
             sg.Popup(f"What you selected is not a quiz: {ex}!")
             continue
-
+S
         screen.fill(BACKGROUND_COLOUR)
         display_message(titleofquiz, QUESTION_OFFSET)
+        display_message("3", QUESTION_OFFSET+200)
         pygame.display.update()
-        pygame.time.wait(2000)
+        pygame.time.delay(1000)
+        screen.fill(BACKGROUND_COLOUR)
+        display_message(titleofquiz, QUESTION_OFFSET)        
+        display_message("2", QUESTION_OFFSET+200)
+        pygame.display.update()
+        pygame.time.delay(1000)
+        screen.fill(BACKGROUND_COLOUR)
+        display_message(titleofquiz, QUESTION_OFFSET)        
+        display_message("1", QUESTION_OFFSET+200)
+        pygame.display.update()
+        pygame.time.delay(1000)
 
         incorrect_questions, play_again = quiz_game(questionList, titleofquiz)
         if play_again:
