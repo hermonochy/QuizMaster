@@ -47,4 +47,4 @@
     {"question": "In which year did the English Civil War start?", "correctAnswer": "1642", "wrongAnswers": ["1492", "1776", "1914"], "timeout": 15}, 
     {"question": "Who was the leader of the Women's Social and Political Union, fighting for women's suffrage?", "correctAnswer": "Emmeline Pankhurst", "wrongAnswers": ["Florence Nightingale", "Marie Curie", "Jane Austen"], "timeout": 15}, 
     {"question": "Which British monarch ruled during the Victorian era, known for industrial expansion and colonialism?", "correctAnswer": "Queen Victoria", "wrongAnswers": ["Queen Elizabeth I", "Queen Anne", "Queen Mary I"], "timeout": 15}
-  ], }
+  ]}
