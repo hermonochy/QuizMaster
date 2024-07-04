@@ -183,9 +183,9 @@ def quiz_game(questionList, titleofquiz):
         y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
         if correctAnswers/totalQuestions > 0.8:
             display_message(good_praise, y_position)
-        elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.8 :
+        elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.8 or correctAnswers/totalQuestions == 0.8:
             display_message(medium_praise, y_position)
-        elif correctAnswers/totalQuestions < 0.3:
+        elif correctAnswers/totalQuestions < 0.3 or correctAnswers/totalQuestions==0.3:
             display_message(bad_praise, y_position)
     
 
@@ -247,42 +247,6 @@ def main():
         if play_again:
            continue
         button_pressed = False
-
-        while not button_pressed:
-            screen.fill(BACKGROUND_COLOUR)
-            display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
-
-            if correctAnswers/totalQuestions > 0.8:
-                display_message(good_praise, y_position)
-            elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.8 :
-                display_message(medium_praise, y_position)
-            elif correctAnswers/totalQuestions < 0.3:
-                display_message(bad_praise, y_position)
-        
-
-            button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), 250, 40)
-            button_open_file = Button("Play another quiz", (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50), 250, 40)
-
-            button_show_incorrect.draw(screen, BUTTON_COLOUR)
-            button_open_file.draw(screen, BUTTON_COLOUR)
-            pygame.display.update()
-
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
-                    if button_show_incorrect.is_clicked(pos):
-                        open_wronganswer_window(incorrect_questions)
-                    elif button_open_file.is_clicked(pos):
-                        sg.popup_get_file("Please select a quiz:",no_window=True, file_types=(('Quiz files', '.json'),))
-                        break
-
-        pygame.display.update()
-
-    pygame.quit()
-    sys.exit()
 
 if __name__ == '__main__':
     main()
