@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import PySimpleGUI as sg
+import modules.PySimpleGUI as sg
 import json
 from modules.persistence import QuizQuestion
 
