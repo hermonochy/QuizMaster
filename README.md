@@ -15,14 +15,14 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. The Quiz
 
 ![](images/screenshotcreator1.png)
 
-1. Run the script `./quizcreator.py` 
+1. Run the script `./quizcreator` 
 2. Use it to manage and create quiz questions.The add button you can add questions. As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas.Afterwards, save it. Format is json.
 
 ### Quiz Game
 
 ![](images/screenshotplayer1.png)
 
-In a command line window, enter `./quiz.py`. Choose a json file and play.You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have 10 seconds! At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
+In a command line window, enter `./quiz`. Choose a json file and play.You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have 10 seconds! At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
 ![](images/screenshotplayer2.png)
 
 ## QuizMasterMini
@@ -55,8 +55,10 @@ Enjoy the combined functionalities of creating quizzes and playing quiz games wi
 
 - more methods of awnsering questions
 - adding pictures to questions
-- more user friendly method of starting and interface
+- more user friendly method of starting
+- more user friendly interface
 - multiplayer options
+- different game modes
 
 
 
