@@ -16,9 +16,10 @@ pygame.font.init()
 music_list = ['music1.mp3', 'music2.mp3', 'music3.mp3']
 music = (random.choice(music_list))
 
+
 col_bg = random.uniform(0,1)
-colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975)))
-buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1)))
+colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
+buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
 colour = colour_background
 button_colour = buttons_colour
 
@@ -66,18 +67,18 @@ def load_quiz(filename):
 def display_message(message, y_position):
     font = pygame.font.Font(None, FONT_SIZE)
     words = message.split()
-   
+    
     if len(message) > 60:
         text_lines = []
         line = ""
-       
+        
         for word in words:
             if font.size(line + word)[0] <= SCREEN_WIDTH:
                 line += word + " "
             else:
                 text_lines.append(line)
                 line = word + " "
-       
+        
         if line:
             text_lines.append(line)
 
@@ -90,7 +91,7 @@ def display_message(message, y_position):
         text = font.render(message, True, BLACK)
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, y_position))
         screen.blit(text, text_rect)
-       
+        
         y_position += text.get_height()
 
     return y_position
@@ -108,16 +109,15 @@ def quiz_game(questionList, titleofquiz):
     medium_praise = (random.choice(medium_praise_list))
     bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!", f"You might want to consider revising another topic!"]
     bad_praise = (random.choice(bad_praise_list))
-    not_started = ("You did not start the quiz!")
 
 
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
 
         user_answer = None
-        time_remaining = currentQuestion.timeout
+        time_remaining = currentQuestion.timeout 
 
-       
+        
         answerOptions = [currentQuestion.correctAnswer] + currentQuestion.wrongAnswers
         random.shuffle(answerOptions)
 
@@ -132,11 +132,7 @@ def quiz_game(questionList, titleofquiz):
 
             for button in buttons:
                 button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
-<<<<<<< HEAD
-               
-=======
-               
->>>>>>> 442fb20851a197eed2c5e6a815b2b6b87cc04f78
+                
             button_end = Button("End Quiz", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+200), 250, 40)                
             button_go_back = Button("Go Back", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+250), 250, 40)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+300), 250, 40)
@@ -151,11 +147,7 @@ def quiz_game(questionList, titleofquiz):
                     pygame.quit()
                     sys.exit()
                 if event.type == MOUSEBUTTONDOWN:
-<<<<<<< HEAD
-                    pos = pygame.mouse.get_pos()
-=======
-                    pos = pygame.mouse.get_pos()
->>>>>>> 442fb20851a197eed2c5e6a815b2b6b87cc04f78
+                    pos = pygame.mouse.get_pos() 
                     if button_end.is_clicked(pos):
                         time_remaining = 0
                         totalQuestions = questionIndex
@@ -169,7 +161,7 @@ def quiz_game(questionList, titleofquiz):
                         if button.is_clicked(pos):
                             user_answer = idx
 
-                           
+                            
                 if event.type == KEYDOWN:
                     if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,pygame.K_5,pygame.K_6,pygame.K_7,pygame.K_8,pygame.K_9]:
                         user_answer = event.key - pygame.K_1
@@ -189,7 +181,6 @@ def quiz_game(questionList, titleofquiz):
     while True:
         screen.fill(background_color)
         y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
-<<<<<<< HEAD
         try:
             if correctAnswers/totalQuestions > 0.8:
                 display_message(good_praise, y_position)
@@ -198,16 +189,9 @@ def quiz_game(questionList, titleofquiz):
             elif correctAnswers/totalQuestions < 0.3 or correctAnswers/totalQuestions==0.3:
                 display_message(bad_praise, y_position)
         except ZeroDivisionError:
-            display_message(not_started, y_position)
-=======
-        if correctAnswers/totalQuestions > 0.8:
-            display_message(good_praise, y_position)
-        elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.8 or correctAnswers/totalQuestions == 0.8:
-            display_message(medium_praise, y_position)
-        elif correctAnswers/totalQuestions < 0.3 or correctAnswers/totalQuestions==0.3:
-            display_message(bad_praise, y_position)
-   
->>>>>>> 442fb20851a197eed2c5e6a815b2b6b87cc04f78
+                display_message("No questions attempted!", y_position)
+            
+    
 
         button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40)
         button_open_file = Button("Play another quiz", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
@@ -216,10 +200,10 @@ def quiz_game(questionList, titleofquiz):
         button_show_incorrect.draw(screen, BUTTON_COLOUR)
         button_open_file.draw(screen, BUTTON_COLOUR)
         button_quit.draw(screen, BUTTON_COLOUR)
-       
+        
         pygame.display.update()
 
-        for event in pygame.event.get():
+        for event in pygame.event.get(): 
             if event.type == QUIT:
                 print("Bye!")
                 pygame.quit()
@@ -227,15 +211,15 @@ def quiz_game(questionList, titleofquiz):
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_show_incorrect.is_clicked(pos):
-                  for question in incorrect_questions :
-                     messagebox.showinfo(title='Wrong Questions', message=f"{question.question} -> Correct Answer: {question.correctAnswer}")
+                  for question in incorrect_questions : 
+                     messagebox.showinfo(title='Wrong Questions', message=f"{question.question} -> Correct Answer: {question.correctAnswer}") 
                 elif button_open_file.is_clicked(pos):
                      return incorrect_questions, True
                 elif button_quit.is_clicked(pos):
                      print("Bye!")
                      pygame.quit()
                      sys.exit()
-                         
+                          
 
 
 def main():
@@ -245,11 +229,6 @@ def main():
     pygame.mixer.music.play(-1)
 
     while running:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-               print("Bye!")
-               pygame.quit()
-               sys.exit()
         filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
                                      no_window=True, file_types=(('Quiz files', '.json'),))
         if not filename:
@@ -266,7 +245,7 @@ def main():
           display_message((f"{i}"), QUESTION_OFFSET+200)
           pygame.display.update()
           pygame.time.delay(1000)
-       
+        
 
         incorrect_questions, play_again = quiz_game(questionList, titleofquiz)
         if play_again:
