@@ -8,8 +8,9 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. The Quiz
 1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster.git`
 2. Set up a new virtual environment `python3 -m venv .`(optional, but recommended).
 3. Start the environment.`source ./bin/activate`
-4. Install packages in `requirements.txt`.`pip3 install -r requirements.txt`
-5. Run either Quiz Creator or Quiz Game (see below).
+4. Install tkinter.`sudo apt-get install python3-tk`
+5. Install packages in `requirements.txt`.`pip3 install -r requirements.txt`
+6. Run either Quiz Creator or Quiz Game (see below).
 
 ### Quiz Creator
 
