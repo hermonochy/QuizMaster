@@ -10,5 +10,3 @@ __pycache__
 ()
 quiztest.py
 .vscode
-*.json 
-!quizzes/*.json
