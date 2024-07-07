@@ -10,6 +10,25 @@ from pygame.locals import *
 from tkinter import *
 from tkinter import messagebox
 
+asciiartstart="""
+  ___                _            ___  ___                     __                        __
+ / _ \     _   _    (_)    ____   |  \/  |     __ _     ___    | |_      ___     _ __    | |
+| | | |   | | | |   | |   |_  /   | |\/| |    / _` |   / __|   | __|    / _ \   | '__|   | |
+| |_| |   | |_| |   | |    / /    | |  | |   | (_| |   \__ \   | |_    |  __/   | |      |_|
+ \__\_\    \__,_|   |_|   /___|   |_|  |_|    \__,_|   |___/    \__|    \___|   |_|      (_)
+                                                                     
+"""                     
+
+asciiartend="""
+
+ ____                         _ 
+| __ )     _   _      ___    | |
+|  _ \    | | | |    / _ \   | |
+| |_) |   | |_| |   |  __/   |_|
+|____/     \__, |    \___|   (_)
+           |___/                
+
+"""
 pygame.init()
 pygame.font.init()
 
@@ -144,6 +163,7 @@ def quiz_game(questionList, titleofquiz):
 
             for event in pygame.event.get():
                 if event.type == QUIT:
+                    print(asciiartend)
                     pygame.quit()
                     sys.exit()
                 if event.type == MOUSEBUTTONDOWN:
@@ -154,7 +174,7 @@ def quiz_game(questionList, titleofquiz):
                     if button_go_back.is_clicked(pos):
                        main()                      
                     if button_leave.is_clicked(pos):
-                       print("Bye!")
+                       print(asciiartend)
                        pygame.quit()
                        sys.exit()
                     for idx, button in enumerate(buttons):
@@ -205,7 +225,7 @@ def quiz_game(questionList, titleofquiz):
 
         for event in pygame.event.get(): 
             if event.type == QUIT:
-                print("Bye!")
+                print(asciiartend)
                 pygame.quit()
                 sys.exit()
             if event.type == MOUSEBUTTONDOWN:
@@ -216,7 +236,7 @@ def quiz_game(questionList, titleofquiz):
                 elif button_open_file.is_clicked(pos):
                      return incorrect_questions, True
                 elif button_quit.is_clicked(pos):
-                     print("Bye!")
+                     print(asciiartend)
                      pygame.quit()
                      sys.exit()
                           
@@ -227,13 +247,14 @@ def main():
     pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
+    print(asciiartstart)
 
     while running:
         filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
                                      no_window=True, file_types=(('Quiz files', '.json'),))
         if not filename:
             break
-
+        
         try:
             questionList, titleofquiz = load_quiz(filename)
         except Exception as ex:
