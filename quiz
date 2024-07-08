@@ -32,6 +32,8 @@ asciiartend="""
 pygame.init()
 pygame.font.init()
 
+print(asciiartstart)
+
 music_list = ['music1.mp3', 'music2.mp3', 'music3.mp3']
 music = (random.choice(music_list))
 
@@ -122,7 +124,7 @@ def quiz_game(questionList, titleofquiz):
     correctAnswers = 0
     totalQuestions = len(questionList)
     background_color = BACKGROUND_COLOUR
-    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You seem to be a master on {titleofquiz}!",f"Great!You are amazing at {titleofquiz}!"]
+    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You have mastered {titleofquiz}!",f"Great!You are amazing at {titleofquiz}!"]
     good_praise = (random.choice(good_praise_list))
     medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far of mastering {titleofquiz}", f"Just abit more practice on {titleofquiz}!"]
     medium_praise = (random.choice(medium_praise_list))
@@ -130,6 +132,7 @@ def quiz_game(questionList, titleofquiz):
     bad_praise = (random.choice(bad_praise_list))
 
 
+    
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
 
@@ -247,7 +250,6 @@ def main():
     pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
-    print(asciiartstart)
 
     while running:
         filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
@@ -260,6 +262,7 @@ def main():
         except Exception as ex:
             messagebox.showinfo(title='Error', message=f'This is not a quiz file: {ex}!')
             continue
+        print("questions:",questionList)    
         for i in range(3,0,-1):
           screen.fill(BACKGROUND_COLOUR)
           display_message(titleofquiz, QUESTION_OFFSET)

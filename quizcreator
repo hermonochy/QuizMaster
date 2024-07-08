@@ -23,6 +23,7 @@ def make_questionEditorWindow():
             [sg.Text('Enter the correct answer:'), sg.InputText(key='correct_answer')],
             [sg.Text('Enter the wrong answers:'), sg.InputText(key='wrong_answers')],
             [sg.Text('Enter the time given to awnser:'), sg.InputText(key = 'time_given')],
+            [sg.Checkbox("Have music playing", default=True, key = "checkbox")],
             [sg.Button('Add'), sg.Button('Cancel')]
         ]
         
