@@ -1,6 +1,6 @@
 # Quiz
 
-This Python code consists of two parts: a Quiz Creator and a Quiz Game. The Quiz Creator tool allows you to add, edit, delete, save, and load quiz questions. Quiz Creator uses PySimpleGUI. The Quiz Game, built with pygame, lets you play the quiz with timed questions.
+This Python code consists of two parts: a Quiz Creator and a Quiz Game. You can start the Quiz Creator with the Quiz Game but not the other way round. The Quiz Creator tool allows you to add, edit, delete, save, and load quiz questions. Quiz Creator uses PySimpleGUI. The Quiz Game, built with pygame, lets you play the quiz with timed questions.
 
 ## How to Use
 
@@ -17,17 +17,17 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. The Quiz
 ![](images/screenshotcreator1.png)
 
 1. Run the script `./quizcreator` 
-2. Use it to manage and create quiz questions.The add button you can add questions. As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas.Afterwards, save it. Format is json.
+2. Use it to manage and create quiz questions.The add button can add questions. As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas.Afterwards, save it. Format is json.
 
 ### Quiz Game
 
 ![](images/screenshotplayer1.png)
 
-In a command line window, enter `./quiz`. Choose a json file and play.You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have 10 seconds! At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
+In a command line window, enter `./quiz`.Press either `Play a Quiz` or `Make a Quiz`.`Make a Quiz` will open Quiz Creator, `Play a Quiz` will allow you to choose a quiz and you can play! You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have a few seconds! At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
 ![](images/screenshotplayer2.png)
 
 ## QuizMasterMini
- [QuizMasterMini](https://github.com/hermonochy/QuizMasterMini) is a smaller version of the application, made for weaker devices.
+ [QuizMasterMini](https://github.com/hermonochy/QuizMasterMini) is a smaller version of the application, made for smaller devices.
 
 
 ## Features
@@ -40,17 +40,9 @@ In a command line window, enter `./quiz`. Choose a json file and play.You can ei
 - Timed quiz questions with countdown.
 - Ability to answer questions and receive scores.
 - Background music during gameplay.
+- Start the QuizCreator
 
-## Functions
-
-- `add_question()`: Add a new question to the quiz list.
-- `edit_question()`: Edit a selected question from the list.
-- `delete_question()`: Delete a selected question from the list.
-- `save_quiz()`: Save the quiz questions to a JSON file.
-- `load_quiz()`: Load a quiz from a JSON file.
-- `quiz_game()`: Play the quiz game with loaded questions.
-
-Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code!Please add some extra quizzes for others. This repository is open to pull requests.
+Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository is open to pull requests.
 
 ## Future Work
 

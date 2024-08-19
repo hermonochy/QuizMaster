@@ -5,6 +5,7 @@ import modules.PySimpleGUI as sg
 import json
 import random
 import colorsys
+import runpy
 from modules.persistence import QuizQuestion
 from pygame.locals import *
 from tkinter import *
@@ -218,7 +219,7 @@ def quiz_game(questionList, titleofquiz):
     
 
         button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40)
-        button_open_file = Button("Play another quiz", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
+        button_open_file = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
         button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
 
         button_show_incorrect.draw(screen, BUTTON_COLOUR)
@@ -251,31 +252,47 @@ def main():
     pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
-
     while running:
-        filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
-                                     no_window=True, file_types=(('Quiz files', '.json'),))
-        if not filename:
-            break
-        
-        try:
-            questionList, titleofquiz = load_quiz(filename)
-        except Exception as ex:
-            messagebox.showinfo(title='Error', message=f'This is not a quiz file: {ex}!')
-            continue
-        print("questions:",questionList)    
-        for i in range(3,0,-1):
-          screen.fill(BACKGROUND_COLOUR)
-          display_message(titleofquiz, QUESTION_OFFSET,70)
-          display_message((f"{i}!"), QUESTION_OFFSET+200,150)
-          pygame.display.update()
-          pygame.time.delay(1000)
-        
+        screen.fill(BACKGROUND_COLOUR)
+        button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50 , SCREEN_HEIGHT // 2), 250, 60)
+        button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300 , SCREEN_HEIGHT // 2), 250, 60)
+        display_message("Welcome to QuizMaster!", SCREEN_HEIGHT - 600, 75)
+        button_make.draw(screen, BUTTON_COLOUR)
+        button_play.draw(screen, BUTTON_COLOUR)
+        pygame.display.update()
+        for event in pygame.event.get(): 
+            if event.type == QUIT:
+                print(asciiartend)
+                pygame.quit()
+                sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if button_make.is_clicked(pos):
+                   runpy.run_path('quizcreator')
+                elif button_play.is_clicked(pos):
+                    filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
+                                                 no_window=True, file_types=(('Quiz files', '.json'),))
+                    if not filename:
+                        break
+                    
+                    try:
+                        questionList, titleofquiz = load_quiz(filename)
+                    except Exception as ex:
+                        messagebox.showinfo(title='Error', message=f'This is not a quiz file: {ex}!')
+                        continue
+                    print("questions:",questionList)    
+                    for i in range(3,0,-1):
+                      screen.fill(BACKGROUND_COLOUR)
+                      display_message(titleofquiz, QUESTION_OFFSET,70)
+                      display_message((f"{i}!"), QUESTION_OFFSET+200,150)
+                      pygame.display.update()
+                      pygame.time.delay(1000)
+                    
 
-        incorrect_questions, play_again = quiz_game(questionList, titleofquiz)
-        if play_again:
-           continue
-        button_pressed = False
+                    incorrect_questions, play_again = quiz_game(questionList, titleofquiz)
+                    if play_again:
+                       continue
+                    button_pressed = False
 
 if __name__ == '__main__':
     main()
