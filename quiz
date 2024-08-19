@@ -85,8 +85,8 @@ def load_quiz(filename):
         titleofquiz = quizDicts["title"]
     return questionList, titleofquiz
 
-def display_message(message, y_position):
-    font = pygame.font.Font(None, FONT_SIZE)
+def display_message(message, y_position, font_size):
+    font = pygame.font.Font(None, font_size)
     words = message.split()
     
     if len(message) > 60:
@@ -150,7 +150,7 @@ def quiz_game(questionList, titleofquiz):
 
         while running and time_remaining > 0 and user_answer is None:
             screen.fill(background_color)
-            display_message(f"Question {questionIndex + 1} out of {totalQuestions} : {currentQuestion.question}", QUESTION_OFFSET)
+            display_message(f"Question {questionIndex + 1} out of {totalQuestions} : {currentQuestion.question}", QUESTION_OFFSET, 50)
 
             for button in buttons:
                 button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
@@ -158,7 +158,7 @@ def quiz_game(questionList, titleofquiz):
             button_end = Button("End Quiz", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+200), 250, 40)                
             button_go_back = Button("Go Back", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+250), 250, 40)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+300), 250, 40)
-            display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET)
+            display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET, 40)
             button_end.draw(screen, BUTTON_COLOUR)
             button_go_back.draw(screen, BUTTON_COLOUR)
             button_leave.draw(screen, BUTTON_COLOUR)
@@ -180,6 +180,7 @@ def quiz_game(questionList, titleofquiz):
                        print(asciiartend)
                        pygame.quit()
                        sys.exit()
+                    pygame.time.wait(20)
                     for idx, button in enumerate(buttons):
                         if button.is_clicked(pos):
                             user_answer = idx
@@ -203,16 +204,16 @@ def quiz_game(questionList, titleofquiz):
 
     while True:
         screen.fill(background_color)
-        y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200)
+        y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200,40)
         try:
             if correctAnswers/totalQuestions > 0.8:
-                display_message(good_praise, y_position)
+                display_message(good_praise, y_position,40)
             elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.8 or correctAnswers/totalQuestions == 0.8:
-                display_message(medium_praise, y_position)
+                display_message(medium_praise, y_position,40)
             elif correctAnswers/totalQuestions < 0.3 or correctAnswers/totalQuestions==0.3:
-                display_message(bad_praise, y_position)
+                display_message(bad_praise, y_position,40)
         except ZeroDivisionError:
-                display_message("No questions attempted!", y_position)
+                display_message("No questions attempted!", y_position,40)
             
     
 
@@ -265,8 +266,8 @@ def main():
         print("questions:",questionList)    
         for i in range(3,0,-1):
           screen.fill(BACKGROUND_COLOUR)
-          display_message(titleofquiz, QUESTION_OFFSET)
-          display_message((f"{i}"), QUESTION_OFFSET+200)
+          display_message(titleofquiz, QUESTION_OFFSET,70)
+          display_message((f"{i}!"), QUESTION_OFFSET+200,150)
           pygame.display.update()
           pygame.time.delay(1000)
         
