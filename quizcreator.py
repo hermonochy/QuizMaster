@@ -23,7 +23,6 @@ def make_questionEditorWindow():
             [sg.Text('Enter the correct answer:'), sg.InputText(key='correct_answer')],
             [sg.Text('Enter the wrong answers:'), sg.InputText(key='wrong_answers')],
             [sg.Text('Enter the time given to awnser:'), sg.InputText(key = 'time_given')],
-            [sg.Checkbox("Have music playing", default=True, key = "checkbox_play_music",enable_events = True)],
             [sg.Button('Add'), sg.Button('Cancel')]
         ]
         
@@ -56,7 +55,6 @@ while True:
       questionEditorWindow['correct_answer'].update(quizQuestion.correctAnswer)
       questionEditorWindow['wrong_answers'].update(''.join((','+str(e)) for e in quizQuestion.wrongAnswers)[1:])
       questionEditorWindow['time_given'].update(quizQuestion.timeout)
-      questionEditorWindow['checkbox_play_music'].update(quizQuestion.playMusic)
       editorEvent,editorValues = questionEditorWindow.read()
       if editorEvent == 'Add':
           question = editorValues['question']
@@ -80,9 +78,7 @@ while True:
                 time_given = int(editorValues['time_given'])
             except ValueError:
                 time_given = 10
-            play_music = editorValues['checkbox_play_music']
-            print(f"Saving play_music: {checkbox_play_music}")
-            newquestion = QuizQuestion(question, correct_answer, wrong_answers, time_given, play_music)
+            newquestion = QuizQuestion(question, correct_answer, wrong_answers, time_given)
             questionList.append(newquestion) 
             questionEditorWindow.close()
             mainWindow["quizquestionentry"].update(questionList)                            

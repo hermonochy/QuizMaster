@@ -9,7 +9,6 @@ class QuizQuestion:
    correctAnswer: str
    wrongAnswers: List[str]
    timeout: int = field(default=10)
-   playMusic: bool = field(default=True)
    
    #def __post_init__(self):
    #     if self.timeout is None:
