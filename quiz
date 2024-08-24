@@ -35,7 +35,7 @@ pygame.font.init()
 
 print(asciiartstart)
 
-music_list = ['music1.mp3', 'music2.mp3', 'music3.mp3', 'music4.mp3', 'music5.mp3', 'music6.mp3']
+music_list = ['music1.ogg', 'music2.ogg', 'music3.ogg', 'music4.ogg', 'music5.ogg', 'music6.ogg']
 music = (random.choice(music_list))
 
 
