@@ -35,7 +35,7 @@ pygame.font.init()
 
 print(asciiartstart)
 
-music_list = ['music1.mp3', 'music2.mp3', 'music3.mp3']
+music_list = ['music1.mp3', 'music2.mp3', 'music3.mp3', 'music4.mp3', 'music5.mp3', 'music6.mp3']
 music = (random.choice(music_list))
 
 
@@ -60,7 +60,7 @@ class Button:
         self.text = text
         self.position = position
         self.width = width
-        self.height = height
+        self.height = height + 100 
         self.rect = pygame.Rect(position[0], position[1], width, height)
 
     def draw(self, screen, color):
@@ -155,7 +155,6 @@ def quiz_game(questionList, titleofquiz):
 
             for button in buttons:
                 button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
-                
             button_end = Button("End Quiz", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+200), 250, 40)                
             button_go_back = Button("Go Back", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+250), 250, 40)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+300), 250, 40)
@@ -174,7 +173,7 @@ def quiz_game(questionList, titleofquiz):
                     pos = pygame.mouse.get_pos() 
                     if button_end.is_clicked(pos):
                         time_remaining = 0
-                        totalQuestions = questionIndex
+                        totalQuestions = questionIndex                                                 
                     if button_go_back.is_clicked(pos):
                        main()                      
                     if button_leave.is_clicked(pos):
@@ -249,9 +248,11 @@ def quiz_game(questionList, titleofquiz):
 
 def main():
     running = True
+    icon = pygame.image.load('images/logo.png')
     pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
+    pygame.display.set_icon(icon)
     while running:
         screen.fill(BACKGROUND_COLOUR)
         button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50 , SCREEN_HEIGHT // 2), 250, 60)

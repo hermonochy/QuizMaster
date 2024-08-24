@@ -77,7 +77,7 @@ while True:
             try:
                 time_given = int(editorValues['time_given'])
             except ValueError:
-                time_given = 10
+                time_given = 15
             newquestion = QuizQuestion(question, correct_answer, wrong_answers, time_given)
             questionList.append(newquestion) 
             questionEditorWindow.close()
