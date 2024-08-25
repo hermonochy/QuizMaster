@@ -1,6 +1,6 @@
 # Quiz
 
-This Python code consists of two parts: a Quiz Creator and a Quiz Game. You can start the Quiz Creator with the Quiz Game but not the other way round. The Quiz Creator tool allows you to add, edit, delete, save, and load quiz questions. Quiz Creator uses PySimpleGUI. The Quiz Game, built with pygame, lets you play the quiz with timed questions.
+This Python code consists of two parts: a Quiz Creator and a Quiz Game. You can launch the Quiz Creator with the Quiz Game but not the other way round. The Quiz Creator tool allows you to add, edit, delete, save, and load quiz questions. Quiz Creator uses PySimpleGUI. The Quiz Game, built with pygame, lets you play the quiz with timed questions.
 
 ## How to Use
 

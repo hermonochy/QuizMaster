@@ -132,13 +132,12 @@ def quiz_game(questionList, titleofquiz):
     bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!", f"You might want to consider revising another topic!"]
     bad_praise = (random.choice(bad_praise_list))
 
-
     
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
 
         user_answer = None
-        time_remaining = currentQuestion.timeout 
+        time_remaining = currentQuestion.timeout
 
         
         answerOptions = [currentQuestion.correctAnswer] + currentQuestion.wrongAnswers
@@ -175,7 +174,7 @@ def quiz_game(questionList, titleofquiz):
                         time_remaining = 0
                         totalQuestions = questionIndex                                                 
                     if button_go_back.is_clicked(pos):
-                       main()                      
+                       main(music,BACKGROUND_COLOUR,BUTTON_COLOUR)                      
                     if button_leave.is_clicked(pos):
                        print(asciiartend)
                        pygame.quit()
@@ -214,7 +213,6 @@ def quiz_game(questionList, titleofquiz):
                 display_message(bad_praise, y_position,40)
         except ZeroDivisionError:
                 display_message("No questions attempted!", y_position,40)
-            
     
 
         button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40)
@@ -245,10 +243,10 @@ def quiz_game(questionList, titleofquiz):
                      sys.exit()
                           
 
-
-def main():
+def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR):
     running = True
     icon = pygame.image.load('images/logo.png')
+    v = 0.5  
     pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
@@ -257,9 +255,13 @@ def main():
         screen.fill(BACKGROUND_COLOUR)
         button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50 , SCREEN_HEIGHT // 2), 250, 60)
         button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300 , SCREEN_HEIGHT // 2), 250, 60)
+        button_preferences = Button("Preferences", (SCREEN_WIDTH // 2 - 300 , SCREEN_HEIGHT // 2 + 100), 250, 60)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50 , SCREEN_HEIGHT // 2 + 100), 250, 60)        
         display_message("Welcome to QuizMaster!", SCREEN_HEIGHT - 600, 75)
         button_make.draw(screen, BUTTON_COLOUR)
         button_play.draw(screen, BUTTON_COLOUR)
+        button_preferences.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)                
         pygame.display.update()
         for event in pygame.event.get(): 
             if event.type == QUIT:
@@ -268,8 +270,67 @@ def main():
                 sys.exit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
+                if button_quit.is_clicked(pos):
+                   print(asciiartend)
+                   pygame.quit()
+                   sys.exit()
                 if button_make.is_clicked(pos):
                    runpy.run_path('quizcreator')
+                elif button_preferences.is_clicked(pos):
+                  while running:
+                    screen.fill(BACKGROUND_COLOUR)
+                    display_message("Preferences", SCREEN_HEIGHT - 600, 75)
+                    button_decrease = Button("Decrease volume", (SCREEN_WIDTH // 2 - 300 , SCREEN_HEIGHT // 2 +100), 250, 60)
+                    button_increase = Button("Increase volume", (SCREEN_WIDTH // 2 - 300 , SCREEN_HEIGHT // 2), 250, 60)
+                    button_colour = Button("Change Colour", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2), 250, 60)
+                    button_music = Button("Change Music", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2 +100), 250, 60)
+                    button_goback = Button("Go Back", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2+250), 250, 60)                    
+                    button_increase.draw(screen, BUTTON_COLOUR)
+                    button_decrease.draw(screen, BUTTON_COLOUR)
+                    button_music.draw(screen, BUTTON_COLOUR)
+                    button_colour.draw(screen, BUTTON_COLOUR)
+                    button_goback.draw(screen, BUTTON_COLOUR)                    
+                    pygame.display.update()
+                    for event in pygame.event.get(): 
+                        if event.type == QUIT:
+                            print(asciiartend)
+                            pygame.quit()
+                            sys.exit()
+                        if event.type == MOUSEBUTTONDOWN:
+                            pos = pygame.mouse.get_pos()
+                            if button_increase.is_clicked(pos):
+                              try:
+                                 v += 0.1
+                              except:
+                                 if v > 1:
+                                    pass  
+                              pygame.mixer.music.set_volume(v)
+                            elif button_decrease.is_clicked(pos):
+                              try:
+                                 v -= 0.1
+                              except:
+                                 if v < 0:
+                                    pass  
+                              pygame.mixer.music.set_volume(v)
+                            elif button_music.is_clicked(pos):
+                                music_list = ['music1.ogg', 'music2.ogg', 'music3.ogg', 'music4.ogg', 'music5.ogg', 'music6.ogg']
+                                pygame.mixer.music.stop
+                                pygame.mixer.music.unload
+                                music = (random.choice(music_list))
+                                pygame.mixer.music.load(music)
+                                pygame.mixer.music.play(-1)                                
+
+                            elif button_colour.is_clicked(pos):    
+                                col_bg = random.uniform(0,1)
+                                colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
+                                buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
+                                colour = colour_background
+                                button_colour = buttons_colour
+                                BACKGROUND_COLOUR = colour
+                                BUTTON_COLOUR = button_colour
+                            elif button_goback.is_clicked(pos):   
+                               main(music,BACKGROUND_COLOUR,BUTTON_COLOUR)
+                                                                                         
                 elif button_play.is_clicked(pos):
                     filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
                                                  no_window=True, file_types=(('Quiz files', '.json'),))
@@ -289,11 +350,10 @@ def main():
                       pygame.display.update()
                       pygame.time.delay(1000)
                     
-
                     incorrect_questions, play_again = quiz_game(questionList, titleofquiz)
                     if play_again:
                        continue
                     button_pressed = False
 
 if __name__ == '__main__':
-    main()
+    main(music,BACKGROUND_COLOUR,BUTTON_COLOUR)
