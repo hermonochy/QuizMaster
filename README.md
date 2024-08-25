@@ -5,6 +5,11 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. You can 
 ## How to Use
 
 ### Install
+#### Option 1 (Easy):
+1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster.git`
+2. Use the included script `./setup.sh` (Ubuntu/Debian) or the `setup.bat` (known issues with msys2 python conflict, only worry about this if you are C++ dev) script for windows, these scripts may take some time to complete.
+
+#### Option 2 (Advanced, Ubuntu/Debian only):
 1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster.git`
 2. Set up a new virtual environment `python3 -m venv .`(optional, but recommended).
 3. Start the environment.`source ./bin/activate`
@@ -16,14 +21,14 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. You can 
 
 ![](images/screenshotcreator1.png)
 
-1. Run the script `./quizcreator` 
+1. Run quizcreator by opening QuizMaster (instructions below) and clicking "Make a quiz".
 2. Use it to manage and create quiz questions.The add button can add questions. As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas.Afterwards, save it. Format is json.
 
 ### Quiz Game
 
 ![](images/screenshotplayer1.png)
 
-In a command line window, enter `./quiz`.Press either `Play a Quiz` or `Make a Quiz`.`Make a Quiz` will open Quiz Creator, `Play a Quiz` will allow you to choose a quiz and you can play! You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have a few seconds! At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
+In a command line window, enter `./run.sh` for linux, or `run.bat` for windows. Press either `Play a Quiz` or `Make a Quiz`.`Make a Quiz` will open Quiz Creator, `Play a Quiz` will allow you to choose a quiz and you can play! You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have a few seconds! At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
 ![](images/screenshotplayer2.png)
 
 ## QuizMasterMini
