@@ -118,7 +118,7 @@ def display_message(message, y_position, font_size):
 
     return y_position
 
-def quiz_game(questionList, titleofquiz):
+def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     incorrect_questions = []
     running = True
     questionIndex = 0
@@ -333,7 +333,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR):
                                                                                          
                 elif button_play.is_clicked(pos):
                     filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
-                                                 no_window=True, file_types=(('Quiz files', '.json'),))
+                                                no_window=True, file_types=(('Quiz files', '.json'),))
                     if not filename:
                         break
                     
@@ -350,7 +350,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR):
                       pygame.display.update()
                       pygame.time.delay(1000)
                     
-                    incorrect_questions, play_again = quiz_game(questionList, titleofquiz)
+                    incorrect_questions, play_again = quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     if play_again:
                        continue
                     button_pressed = False
