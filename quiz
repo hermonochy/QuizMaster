@@ -47,7 +47,7 @@ try:
           button_colour = buttons_colour
       except json.JSONDecodeError:
           v = 0.5
-          music_list = ['music1.ogg', 'music2.ogg', 'music3.ogg', 'music4.ogg', 'music5.ogg', 'music6.ogg']
+          music_list = ['music/music1.ogg', 'music/music2.ogg', 'music/music3.ogg', 'music/music4.ogg', 'music/music5.ogg', 'music/music6.ogg']
           music = (random.choice(music_list))
           col_bg = random.uniform(0,1)
           colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
@@ -56,7 +56,7 @@ try:
           button_colour = buttons_colour
 except FileNotFoundError:
     v = 0.5
-    music_list = ['music1.ogg', 'music2.ogg', 'music3.ogg', 'music4.ogg', 'music5.ogg', 'music6.ogg']
+    music_list = ['music/music1.ogg', 'music/music2.ogg', 'music/music3.ogg', 'music/music4.ogg', 'music/music5.ogg', 'music/music6.ogg']
     music = (random.choice(music_list))
     col_bg = random.uniform(0,1)
     colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
@@ -145,7 +145,7 @@ def save_preferences(volume,music,background_colour,button_colour):
       try:
         savedData = {"Volume": volume , "Music": music , "colour" : background_colour , "buttoncolour": button_colour}
       except NameError:
-        savedData = {"Volume": 0.3 , "Music": 'music1.ogg' , "colour" : background_colour , "buttoncolour": button_colour}
+        savedData = {"Volume": 0.3 , "Music": 'music/music1.ogg' , "colour" : background_colour , "buttoncolour": button_colour}
 
       print("saveddata:", savedData)
       json.dump(savedData, file, default = vars)  
@@ -355,7 +355,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                     pass  
                               pygame.mixer.music.set_volume(v)
                             elif button_music.is_clicked(pos):
-                                music_list = ['music1.ogg', 'music2.ogg', 'music3.ogg', 'music4.ogg', 'music5.ogg', 'music6.ogg']
+                                music_list = ['music/music1.ogg', 'music/music2.ogg', 'music/music3.ogg', 'music/music4.ogg', 'music/music5.ogg', 'music/music6.ogg']
                                 pygame.mixer.music.stop
                                 pygame.mixer.music.unload
                                 music = (random.choice(music_list))
