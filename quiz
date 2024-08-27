@@ -35,15 +35,36 @@ pygame.font.init()
 
 print(asciiartstart)
 
-music_list = ['music1.ogg', 'music2.ogg', 'music3.ogg', 'music4.ogg', 'music5.ogg', 'music6.ogg']
-music = (random.choice(music_list))
-
-
-col_bg = random.uniform(0,1)
-colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
-buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
-colour = colour_background
-button_colour = buttons_colour
+try:
+  with open(".Preferences.json", "r") as file:
+      try:
+          prefDict = json.load(file)
+          v = prefDict["Volume"]
+          music = prefDict["Music"]
+          colour_background = prefDict["colour"]
+          buttons_colour = prefDict["buttoncolour"] 
+          colour = colour_background
+          button_colour = buttons_colour
+      except json.JSONDecodeError:
+          v = 0.5
+          music_list = ['music1.ogg', 'music2.ogg', 'music3.ogg', 'music4.ogg', 'music5.ogg', 'music6.ogg']
+          music = (random.choice(music_list))
+          col_bg = random.uniform(0,1)
+          colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
+          buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
+          colour = colour_background
+          button_colour = buttons_colour
+except FileNotFoundError:
+    v = 0.5
+    music_list = ['music1.ogg', 'music2.ogg', 'music3.ogg', 'music4.ogg', 'music5.ogg', 'music6.ogg']
+    music = (random.choice(music_list))
+    col_bg = random.uniform(0,1)
+    colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
+    buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
+    colour = colour_background
+    button_colour = buttons_colour
+    
+    
 
 SCREEN_WIDTH = 1250
 SCREEN_HEIGHT = 700
@@ -117,6 +138,18 @@ def display_message(message, y_position, font_size):
         y_position += text.get_height()
 
     return y_position
+    
+    
+def save_preferences(volume,music,background_colour,button_colour):
+   with open(".Preferences.json", 'w') as file:
+      try:
+        savedData = {"Volume": volume , "Music": music , "colour" : background_colour , "buttoncolour": button_colour}
+      except NameError:
+        savedData = {"Volume": 0.3 , "Music": 'music1.ogg' , "colour" : background_colour , "buttoncolour": button_colour}
+
+      print("saveddata:", savedData)
+      json.dump(savedData, file, default = vars)  
+
         
 
 def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
@@ -181,7 +214,7 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                         time_remaining = 0
                         totalQuestions = questionIndex                                                 
                     if button_go_back.is_clicked(pos):
-                       main(music,BACKGROUND_COLOUR,BUTTON_COLOUR)                      
+                       main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)                      
                     if button_leave.is_clicked(pos):
                        print(asciiartend)
                        pygame.quit()
@@ -253,10 +286,9 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                      sys.exit()
                           
 
-def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR):
+def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
     running = True
     icon = pygame.image.load('images/logo.png')
-    v = 0.5  
     pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
@@ -339,9 +371,8 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR):
                                 BACKGROUND_COLOUR = colour
                                 BUTTON_COLOUR = button_colour
                             elif button_go_back.is_clicked(pos):
-                            
-                              
-                               main(music,BACKGROUND_COLOUR,BUTTON_COLOUR)
+                               save_preferences(v,music,BACKGROUND_COLOUR,BUTTON_COLOUR)                            
+                               main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
                                                                                          
                 elif button_play.is_clicked(pos):
                     filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
@@ -362,4 +393,4 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR):
                     button_pressed = False
 
 if __name__ == '__main__':
-    main(music,BACKGROUND_COLOUR,BUTTON_COLOUR)
+    main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
