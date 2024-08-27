@@ -28,7 +28,7 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. You can 
 
 ![](images/screenshotplayer1.png)
 
-In a command line window, enter `./quiz` for linux, or `run.bat` for windows. Press either `Play a Quiz` or `Make a Quiz`.`Make a Quiz` will open Quiz Creator, `Play a Quiz` will allow you to choose a quiz and you can play! You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have a few seconds! At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
+In a command line window, enter `source venv/bin/activate` to activate the environment and `./quiz` to start the code in linux, or `run.bat` for windows. Press either `Play a Quiz` or `Make a Quiz`.`Make a Quiz` will open Quiz Creator, `Play a Quiz` will allow you to choose a quiz and you can play! You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have a few seconds! At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
 ![](images/screenshotplayer2.png)
 
 ## QuizMasterMini

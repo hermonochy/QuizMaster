@@ -8,11 +8,7 @@ class QuizQuestion:
    question: str
    correctAnswer: str
    wrongAnswers: List[str]
-   timeout: int = field(default=10)
-   
-   #def __post_init__(self):
-   #     if self.timeout is None:
-   #         self.timeout = 10
+   timeout: int = field(default=15)
    
    def __repr__(self):
       return self.question

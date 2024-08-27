@@ -89,23 +89,33 @@ while True:
       filename = sg.popup_get_file('', save_as=True, no_window=True,initial_folder="quizzes", \
             file_types=(("All JSON Files", "*.json"),("All Files", "*.*")))
       with open(f'{filename}', 'w') as file:
-         savedData = {"title": values['quiz_name'] , "listOfQuestions": questionList, "time given": editorValues['time_given']}
-         print("aveddata:", savedData)
-         json.dump(savedData, file, default = vars)      
+        try:
+          savedData = {"title": values['quiz_name'] , "listOfQuestions": questionList, "time given": editorValues['time_given']}
+        except NameError:
+          savedData = {"title": values['quiz_name'] , "listOfQuestions": questionList, "time given": 15}
+
+        print("saveddata:", savedData)
+        json.dump(savedData, file, default = vars)  
+
+
          
          
    if event == 'Open':
      try:
         filename = sg.popup_get_file("Open quiz", initial_folder="quizzes",no_window=True)
         with open(filename, 'r') as file:
-           quizDicts = json.load(file)
-           questionList = []
-           for q in quizDicts["listOfQuestions"]:
-               qq = QuizQuestion(**q)
-               questionList.append(qq)
-           mainWindow["quizquestionentry"].update(questionList)
-           titleofquiz = quizDicts["title"]
-           mainWindow["quiz_name"].update(titleofquiz)
+           try:
+              quizDicts = json.load(file)
+              questionList = []
+              for q in quizDicts["listOfQuestions"]:
+                  qq = QuizQuestion(**q)
+                  questionList.append(qq)
+              mainWindow["quizquestionentry"].update(questionList)
+              titleofquiz = quizDicts["title"]
+              mainWindow["quiz_name"].update(titleofquiz)
+           except Exception as e:   
+               sg.Popup(f"Error with this file! {e}")
+           
            
      except TypeError:
         ...    

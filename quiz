@@ -117,6 +117,7 @@ def display_message(message, y_position, font_size):
         y_position += text.get_height()
 
     return y_position
+        
 
 def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     incorrect_questions = []
@@ -131,6 +132,12 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     medium_praise = (random.choice(medium_praise_list))
     bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!", f"You might want to consider revising another topic!"]
     bad_praise = (random.choice(bad_praise_list))
+    for i in range(3,0,-1):
+        screen.fill(BACKGROUND_COLOUR)
+        display_message(titleofquiz, QUESTION_OFFSET,70)
+        display_message((f"{i}!"), QUESTION_OFFSET+200,150)
+        pygame.display.update()
+        pygame.time.delay(1000)
 
     
     while running and questionIndex < totalQuestions:
@@ -216,12 +223,13 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     
 
         button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40)
-        button_open_file = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
-
+        button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
+        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
         button_show_incorrect.draw(screen, BUTTON_COLOUR)
-        button_open_file.draw(screen, BUTTON_COLOUR)
-        button_quit.draw(screen, BUTTON_COLOUR)
+        button_go_back.draw(screen, BUTTON_COLOUR)
+        button_replay.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)        
         
         pygame.display.update()
 
@@ -235,8 +243,10 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if button_show_incorrect.is_clicked(pos):
                   for question in incorrect_questions : 
                      messagebox.showinfo(title='Wrong Questions', message=f"{question.question} -> Correct Answer: {question.correctAnswer}") 
-                elif button_open_file.is_clicked(pos):
+                elif button_go_back.is_clicked(pos):
                      return incorrect_questions, True
+                elif button_replay.is_clicked(pos):
+                    quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                 elif button_quit.is_clicked(pos):
                      print(asciiartend)
                      pygame.quit()
@@ -284,12 +294,12 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR):
                     button_increase = Button("Increase volume", (SCREEN_WIDTH // 2 - 300 , SCREEN_HEIGHT // 2), 250, 60)
                     button_colour = Button("Change Colour", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2), 250, 60)
                     button_music = Button("Change Music", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2 +100), 250, 60)
-                    button_goback = Button("Go Back", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2+250), 250, 60)                    
+                    button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2+250), 250, 60)                    
                     button_increase.draw(screen, BUTTON_COLOUR)
                     button_decrease.draw(screen, BUTTON_COLOUR)
                     button_music.draw(screen, BUTTON_COLOUR)
                     button_colour.draw(screen, BUTTON_COLOUR)
-                    button_goback.draw(screen, BUTTON_COLOUR)                    
+                    button_go_back.draw(screen, BUTTON_COLOUR)                    
                     pygame.display.update()
                     for event in pygame.event.get(): 
                         if event.type == QUIT:
@@ -328,7 +338,9 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR):
                                 button_colour = buttons_colour
                                 BACKGROUND_COLOUR = colour
                                 BUTTON_COLOUR = button_colour
-                            elif button_goback.is_clicked(pos):   
+                            elif button_go_back.is_clicked(pos):
+                            
+                              
                                main(music,BACKGROUND_COLOUR,BUTTON_COLOUR)
                                                                                          
                 elif button_play.is_clicked(pos):
@@ -342,13 +354,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR):
                     except Exception as ex:
                         messagebox.showinfo(title='Error', message=f'This is not a quiz file: {ex}!')
                         continue
-                    print("questions:",questionList)    
-                    for i in range(3,0,-1):
-                      screen.fill(BACKGROUND_COLOUR)
-                      display_message(titleofquiz, QUESTION_OFFSET,70)
-                      display_message((f"{i}!"), QUESTION_OFFSET+200,150)
-                      pygame.display.update()
-                      pygame.time.delay(1000)
+                    print("questions:",questionList)
                     
                     incorrect_questions, play_again = quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     if play_again:
