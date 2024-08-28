@@ -19,17 +19,26 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. You can 
 
 ### Quiz Creator
 
-![](images/screenshotcreator1.png)
+![](images/QM2.png)
 
 1. Run quizcreator by opening QuizMaster (instructions below) and clicking "Make a quiz".
 2. Use it to manage and create quiz questions.The add button can add questions. As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas.Afterwards, save it. Format is json.
 
 ### Quiz Game
 
-![](images/screenshotplayer1.png)
+![](images/QM1.png)
 
-In a command line window, enter `source venv/bin/activate` to activate the environment and `./quiz` to start the code in linux, or `run.bat` for windows. Press either `Play a Quiz` or `Make a Quiz`.`Make a Quiz` will open Quiz Creator, `Play a Quiz` will allow you to choose a quiz and you can play! You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have a few seconds! At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
-![](images/screenshotplayer2.png)
+In a command line window, enter `./quiz` to start the code in linux, or `run.bat` for windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open Quiz Creator, `Play a Quiz` will allow you to choose a quiz and you can play! You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have a few seconds!
+
+![](images/QM3.png)
+
+ At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
+ 
+![](images/QM4.png)
+
+There is also a preferences window where you can change the song, volume and colour:
+
+![](QM5)
 
 ## QuizMasterMini
  [QuizMasterMini](https://github.com/hermonochy/QuizMasterMini) is a smaller version of the application, made for smaller devices.
