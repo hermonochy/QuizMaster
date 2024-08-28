@@ -159,7 +159,7 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     correctAnswers = 0
     totalQuestions = len(questionList)
     background_color = BACKGROUND_COLOUR
-    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You have mastered {titleofquiz}!",f"Great!You are amazing at {titleofquiz}!"]
+    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You have mastered {titleofquiz}!",f"You are amazing at {titleofquiz}!"]
     good_praise = (random.choice(good_praise_list))
     medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far of mastering {titleofquiz}", f"Just abit more practice on {titleofquiz}!"]
     medium_praise = (random.choice(medium_praise_list))
@@ -274,8 +274,26 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_show_incorrect.is_clicked(pos):
-                  for question in incorrect_questions : 
-                     messagebox.showinfo(title='Wrong Questions', message=f"{question.question} -> Correct Answer: {question.correctAnswer}") 
+                  messages = []
+                  for question in incorrect_questions:
+                      messages.append(f"{question.question} -> Correct Answer: {question.correctAnswer}")
+
+                  final_message = '\n'.join(messages)
+
+                  layout = [
+                      [sg.Text('Wrong Questions')],
+                      [sg.Multiline(final_message, size=(50, 10), disabled=True)],
+                      [sg.Button('OK')]
+                  ]
+
+                  window = sg.Window('Wrong Questions', layout)
+
+                  while True:
+                      event, values = window.read()
+                      if event == sg.WINDOW_CLOSED or event == 'OK':
+                          window.close()
+                          break
+                          
                 elif button_go_back.is_clicked(pos):
                      return incorrect_questions, True
                 elif button_replay.is_clicked(pos):

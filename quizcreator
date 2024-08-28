@@ -96,9 +96,6 @@ while True:
 
         print("saveddata:", savedData)
         json.dump(savedData, file, default = vars)  
-
-
-         
          
    if event == 'Open':
      try:
@@ -115,7 +112,6 @@ while True:
               mainWindow["quiz_name"].update(titleofquiz)
            except Exception as e:   
                sg.Popup(f"Error with this file! {e}")
-           
            
      except TypeError:
         ...    
