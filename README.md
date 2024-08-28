@@ -38,7 +38,7 @@ In a command line window, enter `./quiz` to start the code in linux, or `run.bat
 
 There is also a preferences window where you can change the song, volume and colour:
 
-![](QM5)
+![](images/QM5.png)
 
 ## QuizMasterMini
  [QuizMasterMini](https://github.com/hermonochy/QuizMasterMini) is a smaller version of the application, made for smaller devices.
