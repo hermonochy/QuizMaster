@@ -276,13 +276,14 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if button_show_incorrect.is_clicked(pos):
                   messages = []
                   for question in incorrect_questions:
-                      messages.append(f"{question.question} -> Correct Answer: {question.correctAnswer}")
+                      messages.append(f"""{question.question}
+Correct Answer: {question.correctAnswer}""")
 
-                  final_message = '\n'.join(messages)
+                  final_message = '\n \n'.join(messages)
 
                   layout = [
                       [sg.Text('Wrong Questions')],
-                      [sg.Multiline(final_message, size=(50, 10), disabled=True)],
+                      [sg.Multiline(final_message, size=(100, 20), disabled=True)],
                       [sg.Button('OK')]
                   ]
 
