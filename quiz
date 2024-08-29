@@ -147,7 +147,6 @@ def save_preferences(volume,music,background_colour,button_colour):
       except NameError:
         savedData = {"Volume": 0.3 , "Music": 'music/music1.ogg' , "colour" : background_colour , "buttoncolour": button_colour}
 
-      print("saveddata:", savedData)
       json.dump(savedData, file, default = vars)  
 
         
@@ -247,9 +246,9 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         try:
             if correctAnswers/totalQuestions > 0.8:
                 display_message(good_praise, y_position,40)
-            elif correctAnswers/totalQuestions > 0.3 and correctAnswers/totalQuestions < 0.8 or correctAnswers/totalQuestions == 0.8:
+            elif correctAnswers/totalQuestions > 0.4 and correctAnswers/totalQuestions < 0.8 or correctAnswers/totalQuestions == 0.8:
                 display_message(medium_praise, y_position,40)
-            elif correctAnswers/totalQuestions < 0.3 or correctAnswers/totalQuestions==0.3:
+            elif correctAnswers/totalQuestions < 0.4 or correctAnswers/totalQuestions==0.4:
                 display_message(bad_praise, y_position,40)
         except ZeroDivisionError:
                 display_message("No questions attempted!", y_position,40)
@@ -404,7 +403,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                     except Exception as ex:
                         messagebox.showinfo(title='Error', message=f'This is not a quiz file: {ex}!')
                         continue
-                    print("questions:",questionList)
+                    print("Questions:",questionList)
                     
                     incorrect_questions, play_again = quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     if play_again:
