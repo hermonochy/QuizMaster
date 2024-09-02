@@ -28,7 +28,7 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. You can 
 
 ![](images/QM1.png)
 
-In a command line window, enter `./quiz` to start the code in linux, or `run.bat` for windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open Quiz Creator, `Play a Quiz` will allow you to choose a quiz and you can play! You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have a few seconds!
+In a command line window, enter `./quiz` to start the code in linux, or `run.bat` for windows. Note for linux users: There is a bug that makes some buttons unresponsive when the v.env. is activated. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open Quiz Creator, `Play a Quiz` will allow you to choose a quiz and you can play! You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have a few seconds!
 
 ![](images/QM3.png)
 
@@ -57,6 +57,7 @@ There is also a preferences window where you can change the song, volume and col
 - Start the QuizCreator
 
 Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository is open to pull requests.
+Note: Many of these quizzes were written by AI, so may contain incorrect questions.
 
 ## Future Work
 
