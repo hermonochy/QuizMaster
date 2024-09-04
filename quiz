@@ -12,8 +12,6 @@ from tkinter import *
 from tkinter import messagebox
 import threading
 
-
-
 asciiartstart="""
   ___                _            ___  ___                     __                        __
  / _ \     _   _    (_)    ____   |  \/  |     __ _     ___    | |_      ___     _ __    | |
@@ -275,7 +273,7 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 sys.exit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                if incorrect_questions:
+                if incorrect_questions and questionIndex > 0:
                     if button_show_incorrect.is_clicked(pos):
                       messages = []
                       for question in incorrect_questions:
