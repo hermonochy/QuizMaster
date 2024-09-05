@@ -6,31 +6,13 @@ import json
 import random
 import colorsys
 import runpy
-from modules.persistence import QuizQuestion
+from modules.persistence import *
 from pygame.locals import *
 from tkinter import *
 from tkinter import messagebox
 import threading
 
-asciiartstart="""
-  ___                _            ___  ___                     __                        __
- / _ \     _   _    (_)    ____   |  \/  |     __ _     ___    | |_      ___     _ __    | |
-| | | |   | | | |   | |   |_  /   | |\/| |    / _` |   / __|   | __|    / _ \   | '__|   | |
-| |_| |   | |_| |   | |    / /    | |  | |   | (_| |   \__ \   | |_    |  __/   | |      |_|
- \__\_\    \__,_|   |_|   /___|   |_|  |_|    \__,_|   |___/    \__|    \___|   |_|      (_)
-                                                                     
-"""                     
 
-asciiartend="""
-
- ____                         _ 
-| __ )     _   _      ___    | |
-|  _ \    | | | |    / _ \   | |
-| |_) |   | |_| |   |  __/   |_|
-|____/     \__, |    \___|   (_)
-           |___/                
-
-"""
 pygame.init()
 pygame.font.init()
 
@@ -141,14 +123,6 @@ def display_message(message, y_position, font_size):
     return y_position
     
     
-def save_preferences(volume,music,background_colour,button_colour):
-   with open(".Preferences.json", 'w') as file:
-      try:
-        savedData = {"Volume": volume , "Music": music , "colour" : background_colour , "buttoncolour": button_colour}
-      except NameError:
-        savedData = {"Volume": 0.3 , "Music": 'music/music1.ogg' , "colour" : background_colour , "buttoncolour": button_colour}
-
-      json.dump(savedData, file, default = vars)  
 
         
 
@@ -247,9 +221,9 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         try:
             if correctAnswers/totalQuestions > 0.8:
                 display_message(good_praise, y_position,40)
-            elif correctAnswers/totalQuestions > 0.4 and correctAnswers/totalQuestions < 0.8 or correctAnswers/totalQuestions == 0.8:
+            if correctAnswers/totalQuestions > 0.4 and correctAnswers/totalQuestions < 0.8 or correctAnswers/totalQuestions == 0.8:
                 display_message(medium_praise, y_position,40)
-            elif correctAnswers/totalQuestions < 0.4 or correctAnswers/totalQuestions==0.4:
+            if correctAnswers/totalQuestions < 0.4 or correctAnswers/totalQuestions==0.4:
                 display_message(bad_praise, y_position,40)
         except ZeroDivisionError:
                 display_message("No questions attempted!", y_position,40)
@@ -338,7 +312,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                    sys.exit()
                 if button_make.is_clicked(pos):
                    runpy.run_path('quizcreator')
-                elif button_preferences.is_clicked(pos):
+                if button_preferences.is_clicked(pos):
                   while running:
                     screen.fill(BACKGROUND_COLOUR)
                     display_message("Preferences", SCREEN_HEIGHT - 600, 75)
@@ -367,14 +341,14 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                  if v > 1:
                                     pass  
                               pygame.mixer.music.set_volume(v)
-                            elif button_decrease.is_clicked(pos):
+                            if button_decrease.is_clicked(pos):
                               try:
                                  v -= 0.1
                               except:
                                  if v < 0:
                                     pass  
                               pygame.mixer.music.set_volume(v)
-                            elif button_music.is_clicked(pos):
+                            if button_music.is_clicked(pos):
                                 music_list = ['music/music1.ogg', 'music/music2.ogg', 'music/music3.ogg', 'music/music4.ogg', 'music/music5.ogg', 'music/music6.ogg']
                                 pygame.mixer.music.stop
                                 pygame.mixer.music.unload
@@ -382,7 +356,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                 pygame.mixer.music.load(music)
                                 pygame.mixer.music.play(-1)                                
 
-                            elif button_colour.is_clicked(pos):    
+                            if button_colour.is_clicked(pos):    
                                 col_bg = random.uniform(0,1)
                                 colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
                                 buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
@@ -390,11 +364,11 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                 button_colour = buttons_colour
                                 BACKGROUND_COLOUR = colour
                                 BUTTON_COLOUR = button_colour
-                            elif button_go_back.is_clicked(pos):
+                            if button_go_back.is_clicked(pos):
                                save_preferences(v,music,BACKGROUND_COLOUR,BUTTON_COLOUR)                            
                                main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
                                                                                          
-                elif button_play.is_clicked(pos):
+                if button_play.is_clicked(pos):
                     filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
                                                 no_window=True, file_types=(('Quiz files', '.json'),))
                     if not filename:
