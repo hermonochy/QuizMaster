@@ -5,6 +5,7 @@ import modules.PySimpleGUI as sg
 import json
 import random
 import colorsys
+import re
 import runpy
 from modules.persistence import *
 from pygame.locals import *
@@ -313,6 +314,8 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                 if button_make.is_clicked(pos):
                    runpy.run_path('quizcreator')
                 if button_preferences.is_clicked(pos):
+                  numList = re.findall(r'\d+',music)                  
+                  i = int(numList[0]) if numList else 1 
                   while running:
                     screen.fill(BACKGROUND_COLOUR)
                     display_message("Preferences", SCREEN_HEIGHT - 600, 75)
@@ -349,10 +352,13 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                     pass  
                               pygame.mixer.music.set_volume(v)
                             if button_music.is_clicked(pos):
-                                music_list = ['music/music1.ogg', 'music/music2.ogg', 'music/music3.ogg', 'music/music4.ogg', 'music/music5.ogg', 'music/music6.ogg']
+                                if i < 6:
+                                    i += 1
+                                else:    
+                                    i = 1
                                 pygame.mixer.music.stop
                                 pygame.mixer.music.unload
-                                music = (random.choice(music_list))
+                                music = f'music/music{i}.ogg'
                                 pygame.mixer.music.load(music)
                                 pygame.mixer.music.play(-1)                                
 
