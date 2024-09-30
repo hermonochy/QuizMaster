@@ -6,15 +6,21 @@ import json
 import random
 import colorsys
 import runpy
-from modules.persistence import *
 from pygame.locals import *
+from pygame_textinput import TextInputVisualizer
 from tkinter import *
 from tkinter import messagebox
 import threading
+from glob import glob
 
+from modules.persistence import *
+from searchQuiz import search_str_in_file
 
 pygame.init()
 pygame.font.init()
+
+textinput = TextInputVisualizer()
+pygame.key.set_repeat(200, 25)
 
 print(asciiartstart)
 
@@ -369,10 +375,42 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
                                                                                          
                 if button_play.is_clicked(pos):
-                    filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
-                                                no_window=True, file_types=(('Quiz files', '.json'),))
-                    if not filename:
+                    # filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
+                    #                            no_window=True, file_types=(('Quiz files', '.json'),))
+                    searchTerm = ""
+                    
+                    while True:
+                      screen.fill(BACKGROUND_COLOUR)
+
+                      events = pygame.event.get()
+
+                      textinput.update(events)
+
+                      screen.blit(textinput.surface, (10, 10))
+
+                      # Check if user pressed return
+                      if [ev for ev in events if ev.type == pygame.KEYDOWN and ev.key == pygame.K_RETURN]:
+                          print(f"User pressed enter! TextInput so far: {textinput.value}")
+                          searchTerm=textinput.value
+                          break
+
+                      pygame.display.update()
+                      pygame.time.wait(30) 
+                                           
+                    
+                    quizfiles = glob('./quizzes/**/*.json', recursive=True)
+                    
+                    quizfileSearchResults= []
+                    for file in quizfiles:
+                      if search_str_in_file(file,searchTerm):
+                        print(f"Search term {searchTerm} found in quiz file {file}.")
+                        quizfileSearchResults.append(file)
+                      
+                      
+                      
+                    if not quizfileSearchResults:
                         break
+                    filename = quizfileSearchResults[0]  # TODO Replace with listbox selection
                     
                     try:
                         questionList, titleofquiz = load_quiz(filename)
