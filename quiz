@@ -375,22 +375,18 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
                                                                                          
                 if button_play.is_clicked(pos):
-                    # filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
-                    #                            no_window=True, file_types=(('Quiz files', '.json'),))
                     searchTerm = ""
                     user_answer=None
                     while True:
                       screen.fill(BACKGROUND_COLOUR)
-
+                      display_message("Enter Quiz Keyword:", 30, 50)   
                       events = pygame.event.get()
 
                       textinput.update(events)
 
-                      screen.blit(textinput.surface, (10, 10))
+                      screen.blit(textinput.surface, (500, 100))
 
-                      # Check if user pressed return
                       if [ev for ev in events if ev.type == pygame.KEYDOWN and ev.key == pygame.K_RETURN]:
-                          print(f"TextInput so far: {textinput.value}")
                           searchTerm=textinput.value
                           break
                       
@@ -403,7 +399,6 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                     quizfileSearchResults= []
                     for file in quizfiles:
                       if search_str_in_file(file,searchTerm):
-                        print(f"Search term {searchTerm} found in quiz file {file}.")
                         quizfileSearchResults.append(file)
                       
                       
@@ -431,13 +426,10 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                             sys.exit()
                         if event.type == MOUSEBUTTONDOWN:
                             pos = pygame.mouse.get_pos()   
-                            print(f'User selected button at {pos}.')
                             for idx, button in enumerate(buttons):
-                                print(f'Checking button {button.rect}')
                                 if button.is_clicked(pos):
                                     user_answer = idx 
-                      if user_answer:                
-                        print(f'User answer is {user_answer}.')
+                      if user_answer is not None:                
                         filename = quizfileSearchResults[user_answer]
                       
                         try:
