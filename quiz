@@ -14,7 +14,7 @@ import threading
 from glob import glob
 
 from modules.persistence import *
-from searchQuiz import search_str_in_file
+from modules.searchQuiz import search_str_in_file
 
 pygame.init()
 pygame.font.init()
@@ -381,7 +381,11 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                       screen.fill(BACKGROUND_COLOUR)
                       display_message("Enter Quiz Keyword:", 30, 50)   
                       events = pygame.event.get()
-
+                      for event in events:
+                        if event.type == QUIT:
+                            print(asciiartend)
+                            pygame.quit()
+                            sys.exit()
                       textinput.update(events)
 
                       screen.blit(textinput.surface, (500, 100))
@@ -407,7 +411,6 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                         break
                     buttons = []
                     for idx, quizfile in enumerate(quizfileSearchResults):
-                      print(f'Creating wquizselection button {idx}')
                       with open(quizfile, "r") as file:
                           quiztitle = json.load(file)["title"]
                       button = Button(f"{idx + 1}. {quiztitle}", \

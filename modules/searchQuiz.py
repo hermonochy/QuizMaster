@@ -2,8 +2,8 @@ from glob import glob
 
 def search_str_in_file(file_path, word):
     with open(file_path, 'r') as file:
-        content = file.read()
-        if word in content:
+        content = file.read().lower()
+        if word.lower() in content:
             return file_path
             
 if __name__=='__main__':
@@ -11,7 +11,6 @@ if __name__=='__main__':
 
   searchTerm = input ("Word to search: ")
 
-  #quizfileSearchResults = [search_str(file,searchTerm) for file in quizfiles]
   quizfileSearchResults= []
   for file in quizfiles:
     if search_str_in_file(file,searchTerm):
