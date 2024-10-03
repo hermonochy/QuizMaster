@@ -7,15 +7,21 @@ import random
 import colorsys
 import re
 import runpy
-from modules.persistence import *
 from pygame.locals import *
+from pygame_textinput import TextInputVisualizer
 from tkinter import *
 from tkinter import messagebox
 import threading
+from glob import glob
 
+from modules.persistence import *
+from modules.searchQuiz import search_str_in_file
 
 pygame.init()
 pygame.font.init()
+
+textinput = TextInputVisualizer()
+pygame.key.set_repeat(200, 25)
 
 print(asciiartstart)
 
@@ -375,22 +381,78 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
                                                                                          
                 if button_play.is_clicked(pos):
-                    filename = sg.popup_get_file("Please select a quiz:", initial_folder="quizzes",
-                                                no_window=True, file_types=(('Quiz files', '.json'),))
-                    if not filename:
+                    searchTerm = ""
+                    user_answer=None
+                    while True:
+                      screen.fill(BACKGROUND_COLOUR)
+                      display_message("Enter Quiz Keyword:", 30, 50)   
+                      events = pygame.event.get()
+                      for event in events:
+                        if event.type == QUIT:
+                            print(asciiartend)
+                            pygame.quit()
+                            sys.exit()
+                      textinput.update(events)
+
+                      screen.blit(textinput.surface, (500, 100))
+
+                      if [ev for ev in events if ev.type == pygame.KEYDOWN and ev.key == pygame.K_RETURN]:
+                          searchTerm=textinput.value
+                          break
+                      
+                      pygame.display.update()
+                      pygame.time.wait(30) 
+                                           
+                    
+                    quizfiles = glob('./quizzes/**/*.json', recursive=True)
+                    
+                    quizfileSearchResults= []
+                    for file in quizfiles:
+                      if search_str_in_file(file,searchTerm):
+                        quizfileSearchResults.append(file)
+                      
+                      
+                      
+                    if not quizfileSearchResults:
                         break
+                    buttons = []
+                    for idx, quizfile in enumerate(quizfileSearchResults):
+                      with open(quizfile, "r") as file:
+                          quiztitle = json.load(file)["title"]
+                      button = Button(f"{idx + 1}. {quiztitle}", \
+                                (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
+                      buttons.append(button)    
                     
-                    try:
-                        questionList, titleofquiz = load_quiz(filename)
-                    except Exception as ex:
-                        messagebox.showinfo(title='Error', message=f'This is not a quiz file: {ex}!')
-                        continue
-                    print("Questions:",questionList)
-                    
-                    incorrect_questions, play_again = quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    if play_again:
-                       continue
-                    button_pressed = False
+                    for button in buttons:
+                       button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
+                    pygame.display.update()
+                    running = True
+                    while running:   
+                      for event in pygame.event.get(): 
+                        if event.type == QUIT:
+                            print(asciiartend)
+                            pygame.quit()
+                            sys.exit()
+                        if event.type == MOUSEBUTTONDOWN:
+                            pos = pygame.mouse.get_pos()   
+                            for idx, button in enumerate(buttons):
+                                if button.is_clicked(pos):
+                                    user_answer = idx 
+                      if user_answer is not None:                
+                        filename = quizfileSearchResults[user_answer]
+                      
+                        try:
+                            questionList, titleofquiz = load_quiz(filename)
+                        except Exception as ex:
+                            messagebox.showinfo(title='Error', message=f'This is not a quiz file: {ex}!')
+                            continue
+                        print("Questions:",questionList)
+                        
+                        incorrect_questions, go_back = quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        if go_back:
+                           main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
+                        button_pressed = False
+                        running=False
 
 if __name__ == '__main__':
     main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
