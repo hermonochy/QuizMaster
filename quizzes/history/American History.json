@@ -45,5 +45,4 @@
    {"question": "Which amendment to the U.S. Constitution granted citizenship to all persons born or naturalized in the United States?", "correctAnswer": "14th Amendment", "wrongAnswers": ["12th Amendment", "16th Amendment", "18th Amendment"], "timeout": 10},
    {"question": "Which U.S. president is known for the Monroe Doctrine?", "correctAnswer": "James Monroe", "wrongAnswers": ["Andrew Jackson", "Martin Van Buren", "John Quincy Adams"], "timeout": 10},
    {"question": "What event marked the end of the Cold War?", "correctAnswer": "Fall of the Berlin Wall", "wrongAnswers": ["Cuban Missile Crisis", "Soviet invasion of Afghanistan", "Chernobyl disaster"], "timeout": 10}
- ],
- }
+]}

@@ -409,20 +409,21 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                     quizfileSearchResults= []
                     for file in quizfiles:
                       if search_str_in_file(file,searchTerm):
-                        quizfileSearchResults.append(file)
-                      
-                      
+                        quizfileSearchResults.append(file)                      
                       
                     if not quizfileSearchResults:
                         break
                     buttons = []
                     for idx, quizfile in enumerate(quizfileSearchResults):
-                      with open(quizfile, "r") as file:
-                          quiztitle = json.load(file)["title"]
-                      button = Button(f"{idx + 1}. {quiztitle}", \
-                                (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
-                      buttons.append(button)    
-                    
+                       try:  
+                          with open(quizfile, "r") as file:
+                              quiztitle = json.load(file)["title"]
+                          button = Button(f"{idx + 1}. {quiztitle}", \
+                                    (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
+                          buttons.append(button)    
+                       except json.decoder.JSONDecodeError as ex:
+                          print(f"Error in quizfile {quizfile}! {ex}")
+                          continue 
                     for button in buttons:
                        button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
                     pygame.display.update()
