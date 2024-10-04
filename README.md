@@ -57,7 +57,7 @@ There is also a preferences window where you can change the song, volume and col
 - Start the QuizCreator
 
 Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository is open to pull requests.
-Note: Many of these quizzes were written by AI, so may contain incorrect questions.
+Note: Many of the example quizzes were written by AI, so may contain incorrect questions.
 
 ## Future Work
 

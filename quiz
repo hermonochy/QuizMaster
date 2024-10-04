@@ -6,12 +6,11 @@ import json
 import random
 import colorsys
 import re
-import runpy
+import os
 from pygame.locals import *
 from pygame_textinput import TextInputVisualizer
 from tkinter import *
 from tkinter import messagebox
-import threading
 from glob import glob
 
 from modules.persistence import *
@@ -318,7 +317,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                    pygame.quit()
                    sys.exit()
                 if button_make.is_clicked(pos):
-                   runpy.run_path('quizcreator')
+                   os.system("./quizcreator")
                 if button_preferences.is_clicked(pos):
                   numList = re.findall(r'\d+',music)                  
                   i = int(numList[0]) if numList else 1 
