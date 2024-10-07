@@ -12,6 +12,7 @@ from pygame_textinput import TextInputVisualizer
 from tkinter import *
 from tkinter import messagebox
 from glob import glob
+import subprocess
 
 from modules.persistence import *
 from modules.searchQuiz import search_str_in_file
@@ -283,7 +284,7 @@ Correct Answer: {question.correctAnswer}""")
 
 def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
     running = True
-    icon = pygame.image.load('images/logo.png')
+    icon = pygame.image.load('images/blendlogo.png')
     pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
@@ -308,7 +309,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                 if button_quit.is_clicked(pos):
                    end()
                 if button_make.is_clicked(pos):
-                   os.system("./quizcreator")
+                   subprocess.Popen(["python3","quizcreator"])
                 if button_preferences.is_clicked(pos):
                   numList = re.findall(r'\d+',music)                  
                   i = int(numList[0]) if numList else 1 

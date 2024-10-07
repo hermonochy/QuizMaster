@@ -7,7 +7,7 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. You can 
 ### Install
 #### Option 1 (Easy):
 1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster.git`
-2. Use the included script `./setup.sh` (Ubuntu/Debian) or the `setup.bat` (known issues with msys2 python conflict, only worry about this if you are C++ dev) script for windows, these scripts may take some time to complete.
+2. Use the included script `./setup.sh` (Ubuntu/Debian) or the `setup.bat` (known issues with msys2 python conflict, only worry about this if you are C++ dev) script for windows. Note: these scripts may take some time to complete.
 
 #### Option 2 (Advanced, Ubuntu/Debian only):
 1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster.git`
@@ -15,20 +15,19 @@ This Python code consists of two parts: a Quiz Creator and a Quiz Game. You can 
 3. Start the environment.`source ./bin/activate`
 4. Install tkinter.`sudo apt-get install python3-tk`
 5. Install packages in `requirements.txt`.`pip3 install -r requirements.txt`
-6. Run either Quiz Creator or Quiz Game (see below).
 
 ### Quiz Creator
 
 ![](images/QM2.png)
 
 1. Run quizcreator by opening QuizMaster (instructions below) and clicking "Make a quiz".
-2. Use it to manage and create quiz questions.The add button can add questions. As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas.Afterwards, save it. Format is json.
+2. Use it to manage and create quiz questions. The add button can add questions. As it is multiple choice, you need to give a correct awnser and wrong awnsers, seperating them with commas. Afterwards, save it. Format is json.
 
 ### Quiz Game
 
 ![](images/QM1.png)
 
-In a command line window, enter `./quiz` to start the code in linux, or `run.bat` for windows. Note for linux users: There is a bug that makes some buttons unresponsive when the v.env. is activated. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open Quiz Creator, `Play a Quiz` will allow you to choose a quiz and you can play! You can either press the number given to the awnser or, if you don't have a keyboard, click on the awnser. Remember, you only have a few seconds!
+In a command line window, enter `./run.sh` to start the code in linux, or `run.bat` for windows. Note for linux users: There is a bug causing some buttons to be unresponsive when the v. env. is activated. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open Quiz Creator, `Play a Quiz` will allow you to choose a quiz to play! You can either press the number given to the answer or, if you don't have a keyboard, click on the awnser. Remember, you only have a few seconds!
 
 ![](images/QM3.png)
 
@@ -61,10 +60,9 @@ Note: Many of the example quizzes were written by AI, so may contain incorrect q
 
 ## Future Work
 
-- more methods of awnsering questions
+- more methods of answering questions
 - adding pictures to questions
 - more user friendly method of starting
-- more user friendly interface
 - multiplayer options
 - different game modes
 
