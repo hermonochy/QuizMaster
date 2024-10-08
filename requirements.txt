@@ -3,7 +3,7 @@ iniconfig==2.0.0
 packaging==24.0
 pluggy==1.4.0
 pygame==2.5.2
+pygame-textinput==1.0.1
 pytest==8.1.1
-tomli==2.0.1
 tk==0.1.0
-pygame_textinput-1.0.1
+tomli==2.0.1
