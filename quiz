@@ -263,14 +263,13 @@ Correct Answer: {question.correctAnswer}""")
                       layout = [
                           [sg.Text('Wrong Questions')],
                           [sg.Multiline(final_message, size=(100, 20), disabled=True)],
-                          [sg.Button('OK')]
-                      ]
+                        ]
 
                       window = sg.Window('Wrong Questions', layout)
 
                       while True:
                           event, values = window.read()
-                          if event == sg.WINDOW_CLOSED or event == 'OK':
+                          if event == sg.WINDOW_CLOSED:
                               window.close()
                               break
                           
