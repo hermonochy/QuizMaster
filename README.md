@@ -1,33 +1,32 @@
 # QuizMaster
 
-This Python code consists of two parts: a Quiz Creator and a Quiz Game. You can launch the Quiz Creator with the Quiz Game but not the other way round. The Quiz Creator tool allows you to add, edit, delete, save, and load quiz questions. Quiz Creator uses PySimpleGUI. The Quiz Game, built with pygame, lets you play the quiz with timed questions.
+QuizMaster is a fun game testing your general knowledge and cognitive ability in many different areas. 
+If you know how to use the command line interface, and can clone this repository from github, then you're in.
+If you've got some useful knowlege on top of this, you can create a quiz on it with `QuizCreator`.
 
 ## How to Use
 
-### Install
-#### Option 1 (Easy):
+### Installation
+
 1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster.git`
-2. Run the included script `./setup.sh` (Ubuntu/Debian) or `setup.bat` (known issues with msys2 python conflict, only worry about this if you are C++ dev) script for windows. Note: these scripts may take some time to complete.
+2. Enter the directory containing the game executable: `cd QuizMaster`
+
+#### Option 1 (Easy):
+
+Run the included script `./setup.sh` (Ubuntu/Debian) or `setup.bat` (known issues with msys2 python conflict, only worry about this if you are C++ dev) script for windows. Note: these scripts may take some time to complete.
 
 #### Option 2 (Advanced, Ubuntu/Debian only):
-1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster.git`
-2. Set up a new virtual environment `python3 -m venv .`(optional, but recommended).
-3. Start the environment.`source ./bin/activate`
-4. Install tkinter.`sudo apt-get install python3-tk`
-5. Install packages in `requirements.txt`.`pip3 install -r requirements.txt`
 
-### Quiz Creator
-
-![](images/QM2.png)
-
-1. Run quizcreator by opening QuizMaster (instructions below) and clicking "Make a quiz".
-2. Use it to manage and create quiz questions. The add button can add questions. As it is multiple choice, you need to give a correct answser and wrong answers, seperated with commas. Afterwards, save it in an apropriate folder. Format is json.
+1. Set up a new virtual environment: `python3 -m venv venv`(optional, but recommended).
+2. Activate the environment: `source venv/bin/activate`
+3. Install tkinter: `sudo apt-get install python3-tk`
+4. Install packages in `requirements.txt`: `pip3 install -r requirements.txt`
 
 ### Quiz Game
 
 ![](images/QM1.png)
 
-In a command line window, enter `./run.sh` to start the code in linux, or `run.bat` for windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will allow you to search a quiz to play! You can either press the number allocated to the answer or, if you don't have a keyboard, click on the awnser. Remember, you have a time limit!
+In a command line window, enter `./run.sh` to start the code in Linux, or `run.bat` for Windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will allow you to search a quiz to play! You can either press the number allocated to the answer or, if you don't have a keyboard, click on the awnser. Remember, you have a time limit!
 
 ![](images/QM3.png)
 
@@ -35,12 +34,20 @@ In a command line window, enter `./run.sh` to start the code in linux, or `run.b
  
 ![](images/QM4.png)
 
-There is also a preferences window where you can change the song, volume and colour:
+There is a preferences window where you can change the song, volume and colour:
 
 ![](images/QM5.png)
 
+### Quiz Creator
+
+![](images/QM2.png)
+
+1. Run quizcreator by opening QuizMaster and clicking "Make a quiz". You can also start it separately with `./quizcreator` on the command line interface in Linux.
+2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answser and wrong answers, seperated with commas. Afterwards, save it in an apropriate folder with a `.json` file extension.
+
+
 ## QuizMasterMini
- [QuizMasterMini](https://github.com/hermonochy/QuizMasterMini) is a smaller version of the application, made for smaller devices.
+ [QuizMasterMini](https://github.com/hermonochy/QuizMasterMini) is a smaller version of the application, made for smaller devices or people on a budget with data volumes.
 
 
 ## Features
@@ -63,7 +70,7 @@ Note: Many of the example quizzes are AI written, so may contain incorrect infor
 
 - more methods of answering questions
 - adding pictures to questions
-- more user friendly method of starting
+- more user friendly method of installing the game
 - multiplayer options
 - different game modes
 
