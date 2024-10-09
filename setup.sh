@@ -1,13 +1,13 @@
 echo "Creating virtual enviroment..."
-python3 -m venv venv /dev/null 2>&1
+python3 -m venv venv
 
 echo "Activating virual enviroment..."
-source venv/bin/activate --quiet
+source venv/bin/activate
 
 echo "Installing tkinter (may ask for password)..."
-sudo apt-get install python3-tk -q
+sudo apt-get install python3-tk
 
 echo "Installing requirements in virtual enviroment..."
-pip3 install -r requirements.txt --quiet
+pip3 install -r requirements.txt
 
 echo "Done!"
