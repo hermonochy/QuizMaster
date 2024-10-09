@@ -53,8 +53,7 @@ except FileNotFoundError:
     buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
     colour = colour_background
     button_colour = buttons_colour
-    
-    
+     
 
 SCREEN_WIDTH = 1250
 SCREEN_HEIGHT = 700
@@ -133,8 +132,7 @@ def end():
     print(asciiartend)
     pygame.quit()
     sys.exit()   
-
-        
+    
 
 def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     incorrect_questions = []
@@ -261,7 +259,6 @@ Correct Answer: {question.correctAnswer}""")
                       final_message = '\n \n'.join(messages)
 
                       layout = [
-                          [sg.Text('Wrong Questions')],
                           [sg.Multiline(final_message, size=(100, 20), disabled=True)],
                         ]
 
@@ -283,7 +280,7 @@ Correct Answer: {question.correctAnswer}""")
 
 def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
     running = True
-    icon = pygame.image.load('images/blendlogo.png')
+    icon = pygame.image.load('images/logo.png')
     pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
@@ -387,8 +384,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                           break
                       
                       pygame.display.update()
-                      pygame.time.wait(30) 
-                                           
+                      pygame.time.wait(30)           
                     
                     quizfiles = glob('./quizzes/**/*.json', recursive=True)
                     

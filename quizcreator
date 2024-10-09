@@ -3,7 +3,7 @@ import modules.PySimpleGUI as sg
 import json
 from modules.persistence import QuizQuestion
 
-
+changes=False
 questionList = []
 
 mainWinowLayout = [
@@ -33,14 +33,21 @@ while True:
    event,values = mainWindow.read()
    
    if event == 'quizquestionentry':
+     changes=True
      if len(values['quizquestionentry'])>0:
          answers = ("correct awnser:",values['quizquestionentry'][0].correctAnswer, "wrong awnsers:",values['quizquestionentry'][0].wrongAnswers)
          outputtext = "Correct answer: \n" + answers[1]+ "\n Wrrong answers:\n" + str(answers[3]) 
          mainWindow["textbox"].update(outputtext) 
     
    if event == sg.WIN_CLOSED or event == 'Quit':
-        print("Bye...")
-        break
+       if changes == True:
+          if sg.popup_yes_no("You have unsaved changes! Are you sure you want to leave?") == "Yes":
+            print("Bye...")
+            break
+          else:
+            continue  
+       print("Bye...")
+       break         
 
    if event == 'Edit Question':
       try:
@@ -85,7 +92,8 @@ while True:
         if editorEvent == 'Cancel':
            questionEditorWindow.close()
         
-   if event == 'Save':         
+   if event == 'Save': 
+      changes = False        
       filename = sg.popup_get_file('', save_as=True, no_window=True,initial_folder="quizzes", \
             file_types=(("All JSON Files", "*.json"),("All Files", "*.*")))
       with open(f'{filename}', 'w') as file:
@@ -98,6 +106,11 @@ while True:
         json.dump(savedData, file, default = vars)  
          
    if event == 'Open':
+     if changes == True:
+         if sg.popup_yes_no("You have unsaved changes! Are you sure you want to leave?") == "Yes":
+            pass
+         else:
+            continue   
      try:
         filename = sg.popup_get_file("Open quiz", initial_folder="quizzes",no_window=True)
         with open(filename, 'r') as file:
