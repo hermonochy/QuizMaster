@@ -1,3 +1,11 @@
+name: Make QuizMaster installable
+
+on:
+  push: 
+    - branches: [main]
+  pull_request:
+    - branches: [main]
+
 jobs:
   pyinstaller-build:
     runs-on: <windows-latest / ubuntu-latest>
