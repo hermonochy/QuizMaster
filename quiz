@@ -1,21 +1,23 @@
 #!/usr/bin/env python3
 import pygame
 import sys
-import modules.PySimpleGUI as sg
 import json
 import random
 import colorsys
 import re
 import os
+import subprocess
+from glob import glob
+
 from pygame.locals import *
-from pygame_textinput import TextInputVisualizer
 from tkinter import *
 from tkinter import messagebox
-from glob import glob
-import subprocess
 
 from modules.persistence import *
 from modules.searchQuiz import search_str_in_file
+from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
+import modules.PySimpleGUI as sg
+
 
 pygame.init()
 pygame.font.init()
