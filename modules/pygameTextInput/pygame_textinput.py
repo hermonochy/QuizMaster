@@ -137,7 +137,7 @@ class TextInputVisualizer:
             ):
 
         self._manager = TextInputManager() if manager is None else manager
-        self._font_object = pygame.font.Font(pygame.font.get_default_font(), 25) if font_object is None else font_object
+        self._font_object = pygame.font.Font(str(pygame.font.get_default_font()), 25) if font_object is None else font_object
         self._antialias = antialias
         self._font_color = font_color
         
