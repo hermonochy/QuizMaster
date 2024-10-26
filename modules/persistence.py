@@ -1,6 +1,7 @@
 from typing import List
 from dataclasses import dataclass, field
 import json
+import datetime
 
 @dataclass
 class QuizQuestion:
@@ -42,3 +43,33 @@ def save_preferences(volume,music,background_colour,button_colour):
 
       json.dump(savedData, file, default = vars)  
      
+def isItChristmasTimeNow():
+  """
+  Function return True, if current date is in range [1-25] December, False otherwise.
+  """
+  if datetime.datetime.now().month == 12 and datetime.datetime.now().day <= 25:
+    return True
+  return False
+
+def isItHalloweenTimeNow():
+  """
+  Function return True, if current date is in range [1-31] October, False otherwise.
+  """
+  return datetime.datetime.now().month == 10
+
+def isItValentinesTimeNow():
+  """
+  Function return True, if current date is Valentines.
+  """
+  if datetime.datetime.now().month == 2 and datetime.datetime.now().day == 14:
+    return True
+  return False
+  
+def isItStPatricksTimeNow():
+  """
+  Function return True, if current date is Valentines.
+  """
+  if datetime.datetime.now().month == 3 and datetime.datetime.now().day == 17:
+    return True
+  return False  
+       

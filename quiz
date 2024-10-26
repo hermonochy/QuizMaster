@@ -19,20 +19,6 @@ from modules.searchQuiz import search_str_in_file
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
 import modules.PySimpleGUI as sg
 
-def isItChristmasTimeNow():
-  """
-  Function return True, if current date is in range [1-25] December, False otherwise.
-  """
-  if datetime.datetime.now().month == 12 and datetime.datetime.now().day <= 25:
-    return True
-  return False
-
-def isItHalloweenTimeNow():
-  """
-  Function return True, if current date is in range [1-31] October, False otherwise.
-  """
-  return datetime.datetime.now().month == 10
-
 pygame.init()
 pygame.font.init()
 
@@ -50,7 +36,13 @@ try:
           if isItHalloweenTimeNow():
               colour_background = (250,100,0)
               buttons_colour =  (255,110,10)
-          else:    
+          elif isItValentinesTimeNow():
+              colour_background = (255,0,0)
+              buttons_colour =  (255,10,10)
+          elif isItStPatricksTimeNow():
+              colour_background = (0,150,0)
+              buttons_colour =  (10,175,10)        
+          else:
               colour_background = prefDict["colour"]
               buttons_colour = prefDict["buttoncolour"] 
           colour = colour_background
@@ -376,6 +368,10 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                   music = ["music/music_christmas1.ogg","music/music_christmas2.ogg"][i%2]
                                 if isItHalloweenTimeNow():
                                   music = ["music/music_halloween1.ogg","music/music_halloween2.ogg"][i%2]
+                                if isItStPatricksTimeNow():
+                                  music = "music/music_stpatricks1.ogg"
+                                if isItValentinesTimeNow():
+                                  music = "music/music_valentines1.ogg"  
                                 
                                 pygame.mixer.music.load(music)
                                 pygame.mixer.music.play(-1)                                
