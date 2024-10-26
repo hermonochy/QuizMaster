@@ -32,7 +32,6 @@ def isItHalloweenTimeNow():
   Function return True, if current date is in range [1-31] October, False otherwise.
   """
   return datetime.datetime.now().month == 10
-a = isItHalloweenTimeNow()
 
 pygame.init()
 pygame.font.init()
@@ -149,7 +148,7 @@ def display_message(message, y_position, font_size):
 
     return y_position
     
-def end():  
+def end():
     print(asciiartend)
     pygame.quit()
     sys.exit()   
