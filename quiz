@@ -423,7 +423,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                        try:  
                           with open(quizfile, "r") as file:
                               quiztitle = json.load(file)["title"]
-                          button = Button(f"{idx + 1}. {quiztitle}", \
+                          button = Button(quiztitle, \
                                     (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
                           buttons.append(button)    
                        except json.decoder.JSONDecodeError as ex:
