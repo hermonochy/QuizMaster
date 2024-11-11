@@ -44,7 +44,7 @@ try:
               music = "music/music_stpatrick1.ogg"
               colour_background = (0,150,0)
               buttons_colour =  (10,175,10) 
-          elif isItChristmasTimeNow:
+          elif isItChristmasTimeNow():
               music = "music/music_christmas1.ogg"
               colour_background = prefDict["colour"]
               buttons_colour = prefDict["buttoncolour"]         
