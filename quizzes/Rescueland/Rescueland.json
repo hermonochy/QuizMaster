@@ -1,0 +1,234 @@
+{
+  "title": "Rescueland!",
+  "listOfQuestions": [
+    {
+      "question": "What is the primary material used for the indestructible fighter ships?",
+      "correctAnswer": "Darkmaterial",
+      "wrongAnswers": ["Eleha", "Force Field Gel", "Techanda"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the main purpose of the Energy Scoop in Rescueland?",
+      "correctAnswer": "Transforming energy with 100% efficiency",
+      "wrongAnswers": ["Create food energy", "Power weapons", "Run androids"],
+      "timeout": 15
+    },
+    {
+      "question": "What kind of gas injected into Rescueland robots gives them personality?",
+      "correctAnswer": "Rescueland Gas",
+      "wrongAnswers": ["Oxygen", "Force Field Gel", "Eleha Dioxide"],
+      "timeout": 15
+    },
+    {
+      "question": "What technology allows atmospheric vehicles to transition into outer space?",
+      "correctAnswer": "Atmospheric Bubble",
+      "wrongAnswers": ["Energy Scoop", "Teleporter", "Force Field Gel"],
+      "timeout": 15
+    },
+    {
+      "question": "Which type of weapon is described as capable of turning enemy fire into usable power?",
+      "correctAnswer": "Energy Absorption Shields",
+      "wrongAnswers": ["Plasma Shields", "Hydro-Bombs", "Sonic Blasters"],
+      "timeout": 15
+    },
+    {
+      "question": "Which planet is the capital to the Seperatists?",
+      "correctAnswer": "Recola",
+      "wrongAnswers": ["Klesone", "Computerland", "Helucky"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the function of the Verdant Shield Projector?",
+      "correctAnswer": "To protect Rescueland until the FFG is activated",
+      "wrongAnswers": ["A primary ship shield", "Repairing damaged ships", "Teleporting to other planets"],
+      "timeout": 15
+    },
+    {
+      "question": "Which of the following is a variant of Force Field Gel with destructive capabilities?",
+      "correctAnswer": "Mutant FFG",
+      "wrongAnswers": ["Destructive Force Fields", "Monster Force Field Gel", "Magnetic Force Fields"],
+      "timeout": 15
+    },
+    {
+      "question": "Which Rescueland robot type the most modern?",
+      "correctAnswer": "FCRT's",
+      "wrongAnswers": ["FRJ's", "UF's", "Hulk Super FRJ's"],
+      "timeout": 15
+    },
+    {
+      "question": "What is Rescueland's primary defense technology called?",
+      "correctAnswer": "Force Field Gel",
+      "wrongAnswers": ["Plasma Shields", "Energy Shields", "Magnetic Fields"],
+      "timeout": 15
+    },
+    {
+      "question": "Which Rescueland material is specifically designed to absorb energy attacks?",
+      "correctAnswer": "Energy Absorption Shields",
+      "wrongAnswers": ["Force Field Gel", "Plasma Shields", "Teleporter"],
+      "timeout": 15
+    },
+    {
+      "question": "What kind of material is Pakira known for?",
+      "correctAnswer": "Affordability and malleability",
+      "wrongAnswers": ["Indestructibility", "Resistance to water", "Resistance to fire"],
+      "timeout": 15
+    },
+    {
+      "question": "What role do Regular FCRT's primarily serve?",
+      "correctAnswer": "Civilians and soldiers",
+      "wrongAnswers": ["Pilots", "Spies", "Instructors"],
+      "timeout": 15
+    },
+    {
+      "question": "Which engine colour represents the cleanest engine technology?",
+      "correctAnswer": "White",
+      "wrongAnswers": ["Green", "Red", "Yellow"],
+      "timeout": 15
+    },
+    {
+      "question": "Which explosive weapon is capable of annihilating a small army?",
+      "correctAnswer": "Hydro-Bombs",
+      "wrongAnswers": ["Rockets", "Slit Bombs", "Cannons"],
+      "timeout": 15
+    },
+    {
+      "question": "What material is known for its striking blue sheen and durability?",
+      "correctAnswer": "Krython",
+      "wrongAnswers": ["Eleha", "Conductium", "Quorite"],
+      "timeout": 15
+    },
+    {
+      "question": "Which objects do the Super Owls wear?",
+      "correctAnswer": "The Rings",
+      "wrongAnswers": ["The Bracelets", "The Necklaces", "The Watches"],
+      "timeout": 15
+    },
+    {
+      "question": "Which type of laser beams are known for their abilities to stun, destroy, and apply telekinesis?",
+      "correctAnswer": "Beamers",
+      "wrongAnswers": ["Basic Lasers", "Hyperion Fusion Cannons", "Solar Beam Projectors"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the primary function of the Teleporter?",
+      "correctAnswer": "Instantaneous jumps anywhere",
+      "wrongAnswers": ["Time travel", "Dimensional travel", "Space expansion"],
+      "timeout": 15
+    },
+    {
+      "question": "What robot is known for being disguised as an asteroid?",
+      "correctAnswer": "Spy FCRT's",
+      "wrongAnswers": ["Pilot FCRT's", "Regular FCRT's", "UF's"],
+      "timeout": 15
+    },
+    {
+      "question": "What protective technology is utilized to knock out devices?",
+      "correctAnswer": "Electromagnetic Pulse (EMP)",
+      "wrongAnswers": ["Energy Shields", "Force Field Gel", "Teleporter"],
+      "timeout": 15
+    },
+    {
+      "question": "Who typically leads the Rescueland army during military conflicts?",
+      "correctAnswer": "Commander of War Weda",
+      "wrongAnswers": ["Alpha Commander", "General Nox", "Emperor Kepson"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the name of the weapon capable of harnessing the power of a star?",
+      "correctAnswer": "Solar Beam Projectors",
+      "wrongAnswers": ["Hyperion Fusion Cannons", "Conductium Cannons", "Plasma Cannons"],
+      "timeout": 15
+    },
+    {
+      "question": "Which cannon type is the most widely utilized?",
+      "correctAnswer": "Universal Cannon",
+      "wrongAnswers": ["Small Cannon", "Extra Small Cannon", "Large Cannon"],
+      "timeout": 15
+    },
+    {
+      "question": "How often do Rescueland robots require replenishing the Rescueland Gas?",
+      "correctAnswer": "Every hundred years",
+      "wrongAnswers": ["Every year", "Every decade", "Every millennium"],
+      "timeout": 15
+    },
+    {
+      "question": "What type of aliens are the inhabitants of Rescueland primarily?",
+      "correctAnswer": "Robots with personalities",
+      "wrongAnswers": ["The Greys", "Rescuelandians", "Avian"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the primary purpose of the Anti-Bunker Drill?",
+      "correctAnswer": "Penetrate bunkers for capture operations",
+      "wrongAnswers": ["Destroy enemy ships", "Launch surprise attacks", "Halve enemy troops"],
+      "timeout": 15
+    },
+    {
+      "question": "What kind of technology does the AquaPurifier provide?",
+      "correctAnswer": "Clean drinking water",
+      "wrongAnswers": ["Electricity", "Nutritional supplements", "Weapons manufacturing"],
+      "timeout": 15
+    },
+    {
+      "question": "Who governs the Helucky faction?",
+      "correctAnswer": "The Great Computer",
+      "wrongAnswers": ["High King", "The Council of Elders", "Emperor Tarvos"],
+      "timeout": 15
+    },
+    {
+      "question": "What is Quorite known for in terms of durability?",
+      "correctAnswer": "Resistance to wear and tear",
+      "wrongAnswers": ["Resistance to fire", "Resistance to water", "Resistance to air"],
+      "timeout": 15
+    },
+    {
+      "question": "What does the LightSphere device offer?",
+      "correctAnswer": "Customizable lighting solutions",
+      "wrongAnswers": ["Control of a star", "Air purification", "Water filtration"],
+      "timeout": 15
+    },
+    {
+      "question": "What does the Exoskeleton Suit mainly enhance?",
+      "correctAnswer": "Strength and mobility",
+      "wrongAnswers": ["Speed and agility", "Intelligence and creativity", "Defensive capabilities"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the general atmosphere composition of Rescueland?",
+      "correctAnswer": "Nitrogen 90%, Hydrogen 8%, Oxygen 1%",
+      "wrongAnswers": ["Oxygen 55%, Argon 30%, Nitrogen 15%", "Hydrogen 50%, Nitrogen 40%, Oxygen 10%", "Argon 80%, Oxygen 20%"],
+      "timeout": 15
+    },
+    {
+      "question": "How often does (regular) FFG need to be taken down?",
+      "correctAnswer": "Every ten years",
+      "wrongAnswers": ["Every five years", "Every twenty years", "Once a year"],
+      "timeout": 15
+    },
+    {
+      "question": "Which type of ship is the bulk of the Helucky army made of?",
+      "correctAnswer": "Interceptors",
+      "wrongAnswers": ["Fighter ships", "Cargo ships", "Battle ships"],
+      "timeout": 15
+    },
+    {
+      "question": "What protective feature does FCRT DarkArmour offer?",
+      "correctAnswer": "A thick defensive layer that is nearly impossible to penetrate",
+      "wrongAnswers": ["Provides invisibility", "Increases speed", "Allows teleportation"],
+      "timeout": 15
+    },
+     {
+      "question": "Which following laser is known for its ability to latch onto targets?",
+      "correctAnswer": "P-series Laser",
+      "wrongAnswers": ["Beamers", "Hyperion Fusion Cannons", "Solar Beam Projectors"],
+      "timeout": 15
+    },
+     {
+      "question": "What materials are commonly integrated into the designs of slit bombs?",
+      "correctAnswer": "Solitme and Eleha",
+      "wrongAnswers": ["Pakira and Techanda", "Darkmaterial and Krython", "Quorite and Conductium"],
+      "timeout": 15
+    }
+  ],
+  "time given": "15"
+}
