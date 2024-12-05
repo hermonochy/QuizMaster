@@ -172,6 +172,10 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         display_message((f"{i}!"), QUESTION_OFFSET+200,150)
         pygame.display.update()
         pygame.time.delay(1000)
+    screen.fill(BACKGROUND_COLOUR)        
+    display_message(("Go!"), QUESTION_OFFSET+200,200)
+    pygame.display.update()
+    pygame.time.delay(1000)        
 
     
     while running and questionIndex < totalQuestions:
