@@ -299,11 +299,6 @@ Correct Answer: {question.correctAnswer}""")
 
 def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
     running = True
-    icon = pygame.image.load('images/logo1.png')
-    pygame.mixer.init()
-    pygame.mixer.music.load(music)
-    pygame.mixer.music.play(-1)
-    pygame.display.set_icon(icon)
     while running:
         screen.fill(BACKGROUND_COLOUR)
         button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50 , SCREEN_HEIGHT // 2), 250, 60)
@@ -466,4 +461,9 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                         running=False
 
 if __name__ == '__main__':
+    icon = pygame.image.load('images/logo1.png')
+    pygame.mixer.init()
+    pygame.mixer.music.load(music)
+    pygame.mixer.music.play(-1)
+    pygame.display.set_icon(icon)
     main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
