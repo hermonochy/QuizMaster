@@ -173,7 +173,7 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         pygame.display.update()
         pygame.time.delay(1000)
     screen.fill(BACKGROUND_COLOUR)        
-    display_message(("Go!"), QUESTION_OFFSET+200,200)
+    display_message(("Go!"), QUESTION_OFFSET+200,150)
     pygame.display.update()
     pygame.time.delay(1000)        
 
@@ -220,7 +220,7 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                        main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)                      
                     if button_leave.is_clicked(pos):
                        end()
-                    pygame.time.wait(20)
+                    pygame.time.wait(40)
                     for idx, button in enumerate(buttons):
                         if button.is_clicked(pos):
                             user_answer = idx
