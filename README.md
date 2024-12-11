@@ -1,21 +1,31 @@
 # QuizMaster
 
-QuizMaster is a fun game testing your general knowledge and cognitive ability in many different areas. 
-If you know how to use the command line interface, and can clone this repository from github, then you're in.
+QuizMaster is a fun game testing your knowledge and cognitive ability in many different areas. 
+If you know how to use the command line interface, and can copy or clone this repository, then you're in.
 If you've got some useful knowlege on top of this, you can create a quiz on it with `QuizCreator`.
 
-## How to Use
+## Usage
 
 ### Installation
+
+**Either:**
 
 1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster.git`
 2. Enter the directory containing the game executable: `cd QuizMaster`
 
-#### Option 1 (Easy):
+**Or:**
+
+1. Download the Zip file
+2. Extract the Zip file
+3. Enter the directory
+
+**Then:**
+
+**Either:**
 
 Run the included script `./setup.sh` (Ubuntu/Debian) or `setup.bat` (known issues with msys2 python conflict, only worry about this if you are C++ dev) script for windows. Note: these scripts may take some time to complete.
 
-#### Option 2 (Advanced, Ubuntu/Debian only):
+**Or:** (Advanced, Ubuntu/Debian only):
 
 1. Set up a new virtual environment: `python3 -m venv venv`(optional, but recommended).
 2. Activate the environment: `source venv/bin/activate`
@@ -24,16 +34,15 @@ Run the included script `./setup.sh` (Ubuntu/Debian) or `setup.bat` (known issue
 
 ### Quiz Game
 
-![](images/QM1.png)
-
 In a command line window, enter `./run.sh` to start the code in Linux, or `run.bat` for Windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will allow you to search a quiz to play! You can either press the number allocated to the answer or, if you don't have a keyboard, click on the awnser. Remember, you have a time limit!
 
-![](images/QM3.png)
+![](images/QM1.png)
 
  At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
- 
-![](images/QM4.png)
 
+ ![](images/QM4.png)
+
+ 
 There is a preferences window where you can change the song, volume and colour:
 
 ![](images/QM5.png)
