@@ -198,8 +198,8 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             display_message(f"Question {questionIndex + 1} out of {totalQuestions} : {currentQuestion.question}", QUESTION_OFFSET, 50)
 
             for button in buttons:
-                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)            
-            button_end = Button("End Quiz", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+200), 250, 40)                
+                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
+            button_end = Button("End Quiz", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+200), 250, 40)  
             button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+250), 250, 40)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+300), 250, 40)
             display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET, 40)
@@ -215,9 +215,9 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     pos = pygame.mouse.get_pos() 
                     if button_end.is_clicked(pos):
                        time_remaining = 0
-                       totalQuestions = questionIndex                                                 
+                       totalQuestions = questionIndex       
                     if button_go_back.is_clicked(pos):
-                       main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)                      
+                       main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
                     if button_leave.is_clicked(pos):
                        end()
                     pygame.time.wait(40)
@@ -313,7 +313,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
         button_make.draw(screen, BUTTON_COLOUR)
         button_play.draw(screen, BUTTON_COLOUR)
         button_preferences.draw(screen, BUTTON_COLOUR)
-        button_quit.draw(screen, BUTTON_COLOUR)                
+        button_quit.draw(screen, BUTTON_COLOUR)
         pygame.display.update()
         for event in pygame.event.get(): 
             if event.type == QUIT:
@@ -325,7 +325,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                 if button_make.is_clicked(pos):
                    subprocess.Popen(["python3","quizcreator"])
                 if button_preferences.is_clicked(pos):
-                  numList = re.findall(r'\d+',music)                  
+                  numList = re.findall(r'\d+',music)     
                   i = int(numList[0]) if numList else 1 
                        
                   while running:
@@ -335,12 +335,12 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                     button_increase = Button("Increase volume", (SCREEN_WIDTH // 2 - 300 , SCREEN_HEIGHT // 2), 250, 60)
                     button_colour = Button("Change Colour", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2), 250, 60)
                     button_music = Button("Change Music", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2 +100), 250, 60)
-                    button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2+250), 250, 60)                    
+                    button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2+250), 250, 60)       
                     button_increase.draw(screen, BUTTON_COLOUR)
                     button_decrease.draw(screen, BUTTON_COLOUR)
                     button_music.draw(screen, BUTTON_COLOUR)
                     button_colour.draw(screen, BUTTON_COLOUR)
-                    button_go_back.draw(screen, BUTTON_COLOUR)                    
+                    button_go_back.draw(screen, BUTTON_COLOUR)         
                     pygame.display.update()
                     for event in pygame.event.get(): 
                         if event.type == QUIT:
@@ -366,7 +366,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                     i += 1
                                 else:    
                                     i = 1
-                                pygame.mixer.music.stop
+                                pygame.mixer.music.fadeout(1000)
                                 pygame.mixer.music.unload
                                 music = f'music/music{i}.ogg'
                                 
@@ -380,7 +380,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                   music = "music/music_valentines1.ogg"  
                                 
                                 pygame.mixer.music.load(music)
-                                pygame.mixer.music.play(-1)                                
+                                pygame.mixer.music.play(-1)       
 
                             if button_colour.is_clicked(pos):    
                                 col_bg = random.uniform(0,1)
@@ -391,9 +391,9 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                                 BACKGROUND_COLOUR = colour
                                 BUTTON_COLOUR = button_colour
                             if button_go_back.is_clicked(pos):
-                               save_preferences(v,music,BACKGROUND_COLOUR,BUTTON_COLOUR)                            
+                               save_preferences(v,music,BACKGROUND_COLOUR,BUTTON_COLOUR)     
                                main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
-                                                                                         
+
                 if button_play.is_clicked(pos):
                     searchTerm = ""
                     user_answer=None
@@ -413,14 +413,14 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                           break
                       
                       pygame.display.update()
-                      pygame.time.wait(30)           
+                      pygame.time.wait(30)
                     
                     quizfiles = glob('./quizzes/**/*.json', recursive=True)
                     
                     quizfileSearchResults= []
                     for file in quizfiles:
                       if search_str_in_file(file,searchTerm):
-                        quizfileSearchResults.append(file)                      
+                        quizfileSearchResults.append(file)
                       
                     if not quizfileSearchResults:
                         break
@@ -448,7 +448,7 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                             for idx, button in enumerate(buttons):
                                 if button.is_clicked(pos):
                                     user_answer = idx 
-                      if user_answer is not None:                
+                      if user_answer is not None:
                         filename = quizfileSearchResults[user_answer]
                       
                         try:
