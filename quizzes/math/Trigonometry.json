@@ -1,0 +1,223 @@
+{
+  "title": "Advanced Trigonometry!",
+  "listOfQuestions": [
+    {
+      "question": "What is sin(30°)?",
+      "correctAnswer": "1/2",
+      "wrongAnswers": ["√3/2", "0", "1"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the exact value of cos(45°)?",
+      "correctAnswer": "√2/2",
+      "wrongAnswers": ["1/2", "√3/2", "0"],
+      "timeout": 15
+    },
+    {
+      "question": "If sin(x) = 1/2, what are the possible values of x in degrees?",
+      "correctAnswer": "30° and 150°",
+      "wrongAnswers": ["0° and 90°", "60° and 120°", "45° and 135°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the period of the function y = tan(x)?",
+      "correctAnswer": "180°",
+      "wrongAnswers": ["360°", "90°", "30°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of cos(120°)?",
+      "correctAnswer": "-1/2",
+      "wrongAnswers": ["1/2", "√3/2", "-√3/2"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the amplitude of y = 3sin(x)?",
+      "correctAnswer": "3",
+      "wrongAnswers": ["1", "2", "0"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of sin(90°)?",
+      "correctAnswer": "1",
+      "wrongAnswers": ["0", "√2/2", "1/2"],
+      "timeout": 15
+    },
+    {
+      "question": "If cos(x) = 0, what are the possible values of x in degrees?",
+      "correctAnswer": "90°, 270°",
+      "wrongAnswers": ["0°, 360°", "45°, 135°", "30°, 150°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is sin²(x) + cos²(x) equal to?",
+      "correctAnswer": "1",
+      "wrongAnswers": ["0", "sin(x)", "cos(x)"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of tan(45°)?",
+      "correctAnswer": "1",
+      "wrongAnswers": ["0", "√3", "undefined"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the principal value of arcsin(0)?",
+      "correctAnswer": "0°",
+      "wrongAnswers": ["90°", "180°", "360°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of sec(60°)?",
+      "correctAnswer": "2",
+      "wrongAnswers": ["1/2", "√3/2", "1"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of cot(90°)?",
+      "correctAnswer": "0",
+      "wrongAnswers": ["undefined", "1", "∞"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the sum of angles identity for sine?",
+      "correctAnswer": "sin(a + b) = sin(a)cos(b) + cos(a)sin(b)",
+      "wrongAnswers": ["sin(a + b) = sin(a) + sin(b)", "sin(a + b) = cos(a)cos(b) - sin(a)sin(b)", "sin(a + b) = tan(a) + tan(b)"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of sin(180°)?",
+      "correctAnswer": "0",
+      "wrongAnswers": ["1", "√3/2", "1/2"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the double angle formula for cosine?",
+      "correctAnswer": "cos(2x) = cos²(x) - sin²(x)",
+      "wrongAnswers": ["cos(2x) = 2cos²(x) - 1", "cos(2x) = sin²(x) + cos²(x)", "cos(2x) = 1 - 2sin²(x)"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of arctan(1)?",
+      "correctAnswer": "45°",
+      "wrongAnswers": ["90°", "60°", "30°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the cosine of 210°?",
+      "correctAnswer": "-√3/2",
+      "wrongAnswers": ["√3/2", "1/2", "0"],
+      "timeout": 15
+    },
+    {
+      "question": "If sin(x) = 0, what are the possible values of x in degrees?",
+      "correctAnswer": "0°, 180°",
+      "wrongAnswers": ["90°, 270°", "360°, 540°", "45°, 135°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the sine of 270°?",
+      "correctAnswer": "-1",
+      "wrongAnswers": ["1", "0", "√3/2"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of csc(30°)?",
+      "correctAnswer": "2",
+      "wrongAnswers": ["1/2", "√3/2", "1"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of cos(240°)?",
+      "correctAnswer": "-1/2",
+      "wrongAnswers": ["1/2", "√3/2", "0"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the law of sines?",
+      "correctAnswer": "a/sin(A) = b/sin(B) = c/sin(C)",
+      "wrongAnswers": ["a² = b² + c² - 2bc*cos(A)", "sin(A) = sin(B)", "a + b + c = 180°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of sin(360°)?",
+      "correctAnswer": "0",
+      "wrongAnswers": ["1", "-1", "√3/2"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the angle whose sine is 1/√2?",
+      "correctAnswer": "45°",
+      "wrongAnswers": ["30°", "60°", "90°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is sin(5π/6) in degrees?",
+      "correctAnswer": "150°",
+      "wrongAnswers": ["30°", "90°", "120°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is cos(330°)?",
+      "correctAnswer": "√3/2",
+      "wrongAnswers": ["1/2", "-√3/2", "0"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of tan(30°)?",
+      "correctAnswer": "1/√3",
+      "wrongAnswers": ["√3", "1", "0"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of arcsin(1)?",
+      "correctAnswer": "90°",
+      "wrongAnswers": ["0°", "180°", "270°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the value of sin(3π/2)?",
+      "correctAnswer": "-1",
+      "wrongAnswers": ["1", "0", "√3/2"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the sine of 150°?",
+      "correctAnswer": "1/2",
+      "wrongAnswers": ["√3/2", "0", "-1/2"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the relationship between sine and cosine?",
+      "correctAnswer": "sin(x) = cos(90° - x)",
+      "wrongAnswers": ["sin(x) + cos(x) = 1", "sin(90° - x) = cos(x)", "sin²(x) + cos²(x) = 0"],
+      "timeout": 15
+    },
+    {
+      "question": "What is the period of y = cos(3x)?",
+      "correctAnswer": "120°",
+      "wrongAnswers": ["360°", "90°", "180°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is cot(0°)?",
+      "correctAnswer": "undefined",
+      "wrongAnswers": ["0", "1", "∞"],
+      "timeout": 15
+    },
+    {
+      "question": "If tan(x) = 0, what are the possible values of x in degrees?",
+      "correctAnswer": "0°, 180°",
+      "wrongAnswers": ["90°, 270°", "360°, 540°", "45°, 135°"],
+      "timeout": 15
+    },
+    {
+      "question": "What is sec(0°)?",
+      "correctAnswer": "1",
+      "wrongAnswers": ["0", "undefined", "1/2"],
+      "timeout": 15
+    }
+  ],
+  "time given": "600"
+}
+
