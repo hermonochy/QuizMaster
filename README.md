@@ -1,8 +1,8 @@
 # QuizMaster
 
 QuizMaster is a fun game testing your knowledge and cognitive ability in many different areas. 
-If you know how to use the command line interface, and can copy or clone this repository, then you're in.
-If you've got some useful knowlege on top of this, you can create a quiz on it with `QuizCreator`.
+If you know how to copy and paste text to the command line interface, and can copy or clone this repository, then you're in.
+If you've got some useful knowlege on top of this, you can create a quiz on it with `QuizCreator` and create a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
 
 ## Usage
 
@@ -23,7 +23,8 @@ If you've got some useful knowlege on top of this, you can create a quiz on it w
 
 **Either:**
 
-Run the included script `./setup.sh` (Ubuntu/Debian) or `setup.bat` (known issues with msys2 python conflict, only worry about this if you are C++ dev) script for windows. Note: these scripts may take some time to complete.
+Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are C++ dev). 
+*Note: these scripts may take some time to complete.*
 
 **Or:** (Advanced, Ubuntu/Debian only):
 
@@ -34,16 +35,16 @@ Run the included script `./setup.sh` (Ubuntu/Debian) or `setup.bat` (known issue
 
 ### Quiz Game
 
-In a command line window, enter `./run.sh` to start the code in Linux, or `run.bat` for Windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will allow you to search a quiz to play! You can either press the number allocated to the answer or, if you don't have a keyboard, click on the awnser. Remember, you have a time limit!
+In a command line window, enter `./run.sh` to start the code in Linux, or `run.bat` for Windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will allow you to search a quiz to play! You can either press the number allocated to the answer or, if you don't have a keyboard, click on the answer. Remember, you have a time limit!
 
 ![](images/QM1.png)
 
- At the end it will tell you your score and either congratulate you or suggest you revise depending on the score.
+ At the end it will give appropriate advice depending on the score.
 
  ![](images/QM4.png)
 
  
-There is a preferences window where you can change the song, volume and colour:
+There is a preferences window where you can change the song, volume and background colour:
 
 ![](images/QM5.png)
 
@@ -52,7 +53,7 @@ There is a preferences window where you can change the song, volume and colour:
 ![](images/QM2.png)
 
 1. Run quizcreator by opening QuizMaster and clicking "Make a quiz". You can also start it separately with `./quizcreator` on the command line interface in Linux.
-2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answser and wrong answers, seperated with commas. Afterwards, save it in an apropriate folder with a `.json` file extension.
+2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answser and wrong answers, seperated by commas. Afterwards, save it in an apropriate folder. A common mistake made by many users is to leave the question editor window open, which blocks QuizCreator.
 
 
 ## QuizMasterMini
@@ -73,7 +74,7 @@ There is a preferences window where you can change the song, volume and colour:
 - Change settings
 
 Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository is open to pull requests.
-Note: Many of the example quizzes are AI written, so may contain incorrect information.
+Note: Many of the example quizzes are AI or teenager written, so may contain incorrect information.
 
 ## Future Work
 
