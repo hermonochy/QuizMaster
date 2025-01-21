@@ -160,11 +160,12 @@ def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     correctAnswers = 0
     totalQuestions = len(questionList)
     background_color = BACKGROUND_COLOUR
-    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You have mastered {titleofquiz}!",f"You are amazing at {titleofquiz}!"]
+    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!",f"You are an expert on {titleofquiz}!", f" You have mastered {titleofquiz}!",f"You are amazing at {titleofquiz}!",f"You truly excel in {titleofquiz}!", f"Congratulations! You're a whiz on {titleofquiz}!",f"Bravo! You've nailed {titleofquiz}!"]
     good_praise = (random.choice(good_praise_list))
-    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far of mastering {titleofquiz}", f"Just abit more practice on {titleofquiz}!"]
+    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far of mastering {titleofquiz}", f"Just abit more practice on {titleofquiz}!",f"You’re making steady progress in {titleofquiz}.", f"You're on the right track with {titleofquiz}!",f"You've got a solid grasp of {titleofquiz}.",f"A commendable effort in {titleofquiz}!",f"You've got the basics of {titleofquiz} down!",f"Keep it up! You're building a good foundation in {titleofquiz}!"
+]
     medium_praise = (random.choice(medium_praise_list))
-    bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!", f"You might want to consider revising another topic!"]
+    bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!", f"You might want to consider revising another topic!", f"Sorry to say, but you're pretty terrible at {titleofquiz}", f"You really struggle with {titleofquiz}!", f"You have a long way to go in mastering {titleofquiz}!", f"Not to be too hard, but it seems you're not great at {titleofquiz}!", f"Time to go back to the drawing board on {titleofquiz}!", f"You might want to consider taking another look at {titleofquiz}!", f"It's clear you're not a {titleofquiz} expert!", f"Unfortunately, you're not very good at {titleofquiz}!", f"You need to brush up on your {titleofquiz} skills!", f"Your {titleofquiz} knowledge is still in its infancy!"]
     bad_praise = (random.choice(bad_praise_list))
     for i in range(3,0,-1):
         screen.fill(BACKGROUND_COLOUR)
@@ -294,7 +295,7 @@ Correct Answer: {question.correctAnswer}""")
                               break
                           
                 if button_go_back.is_clicked(pos):
-                     return incorrect_questions, True
+                     return True
                 if button_replay.is_clicked(pos):
                     quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                 if button_quit.is_clicked(pos):
@@ -458,11 +459,9 @@ def main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v):
                             continue
                         print("Questions:",questionList)
                         
-                        incorrect_questions, go_back = quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                        if go_back:
+                        if quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                            main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
-                        button_pressed = False
-                        running=False
+
 
 if __name__ == '__main__':
     icon = pygame.image.load('images/logo1.png')
