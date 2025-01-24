@@ -475,7 +475,8 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                         screen.fill(BACKGROUND_COLOUR)
                         for button in buttons:
                             button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
-                        scrollbar.draw(screen)
+                        if len(buttons) > 12:    
+                           scrollbar.draw(screen)
                         pygame.display.update()
                         for event in pygame.event.get():
                             if event.type == QUIT:
