@@ -7,22 +7,21 @@ changes=False
 questionList = []
 
 mainWinowLayout = [
-        [sg.Text("Title of Quiz:"), sg.InputText(key='quiz_name')],
-        [sg.Listbox(questionList,size = (125,25), key='quizquestionentry',enable_events = True), sg.Text(key='textbox',size = (20,10))],
-        [sg.Button('Open'), sg.Button('Save'), sg.Button("Edit Question"), sg.Button("Add Question"), sg.Button("Delete Question")],
+        [sg.Text("Title of Quiz:"), sg.InputText(key='quiz_name', tooltip = "The title that players will see.")],
+        [sg.Listbox(questionList,size = (125,25), key='quizquestionentry', enable_events = True, tooltip = "A list of the questions."), sg.Text(key='textbox',size = (20,10))],
+        [sg.Button('Open', tooltip = "Open an existing quiz."), sg.Button('Save', tooltip = "Save your quiz in an appropriate folder."), sg.Button("Edit Question", tooltip = "Select a question from the listbox to edit it."), sg.Button("Add Question", tooltip = "Add a new question."), sg.Button("Delete Question", tooltip = "Select a question from the listbox to delete.")],
         [sg.Button('Quit')]
     ]
-    
     
 
 mainWindow = sg.Window('Quiz Creator', mainWinowLayout)
 
 def make_questionEditorWindow():
     questionEditorLayout = [
-            [sg.Text('Enter the question:'), sg.InputText(key='question')],
-            [sg.Text('Enter the correct answer:'), sg.InputText(key='correct_answer')],
-            [sg.Text('Enter the wrong answers:'), sg.InputText(key='wrong_answers')],
-            [sg.Text('Enter the time given to awnser:'), sg.InputText(key = 'time_given')],
+            [sg.Text('Enter the question:'), sg.InputText(key='question', tooltip = "Enter the question.")],
+            [sg.Text('Enter the correct answer:'), sg.InputText(key='correct_answer', tooltip = "Enter the answer.")],
+            [sg.Text('Enter the wrong answers:'), sg.InputText(key='wrong_answers', tooltip = "Enter some related but incorrect answers, seperated by commas.")],
+            [sg.Text('Enter the time given to awnser:'), sg.InputText(key = 'time_given', tooltip = "Enter an integer number of seconds. Average is 10-20.")],
             [sg.Button('Add'), sg.Button('Cancel')]
         ]
         
@@ -94,7 +93,7 @@ while True:
         
    if event == 'Save': 
       changes = False        
-      filename = sg.popup_get_file('', save_as=True, no_window=True,initial_folder="quizzes", \
+      filename = sg.popup_get_file('', save_as=True, no_window=True, initial_folder="quizzes", \
             file_types=(("All JSON Files", "*.json"),("All Files", "*.*")))
       with open(f'{filename}', 'w') as file:
         try:
