@@ -1,0 +1,271 @@
+{
+    "title": "Brandon Sanderson!",
+    "listOfQuestions": [
+      {
+        "question": "What is the name of the first book in the Mistborn series?",
+        "correctAnswer": "Mistborn: The Final Empire",
+        "wrongAnswers": ["Mistborn: The Well of Ascension", "Mistborn: The Hero of Ages", "Mistborn: Secret History"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the the magical abilities in the Stormlight Archive?",
+        "correctAnswer": "Surgebinding",
+        "wrongAnswers": ["Allomancy", "Feruchemy", "Voidbinding"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the main protagonist in The Way of Kings?",
+        "correctAnswer": "Kaladin Stormblessed",
+        "wrongAnswers": ["Shallan Davar", "Dalinar Kholin", "Adolin Kholin"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the world where the Mistborn series takes place?",
+        "correctAnswer": "Scadrial",
+        "wrongAnswers": ["Roshar", "Nalthis", "Taldain"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character is known as the 'Hero of Ages'?",
+        "correctAnswer": "Vin",
+        "wrongAnswers": ["Elend Venture", "Sazed", "Kelsier"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the Shard on the planet Roshar that was splintered by Odium?",
+        "correctAnswer": "Honor",
+        "wrongAnswers": ["Cultivation", "Ruin", "Preservation"],
+        "timeout": 15
+      },
+      {
+        "question": "In which book does the character Shallan Davar first appear?",
+        "correctAnswer": "The Way of Kings",
+        "wrongAnswers": ["Words of Radiance", "Edgedancer", "Oathbringer"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the primary magic system used in Warbreaker?",
+        "correctAnswer": "BioChromatic Breath",
+        "wrongAnswers": ["Allomancy", "Surgebinding", "Hemalurgy"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the god-like beings in the Cosmere?",
+        "correctAnswer": "Shards",
+        "wrongAnswers": ["Fabrials", "Sprens", "Adonalsium"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the author of the Stormlight Archive series?",
+        "correctAnswer": "Brandon Sanderson",
+        "wrongAnswers": ["Robert Jordan", "Patrick Rothfuss", "Terry Brooks"],
+        "timeout": 15
+      },
+      {
+        "question": "What city is the capital of the kingdom of Alethkar?",
+        "correctAnswer": "Kholinar",
+        "wrongAnswers": ["Hearthstone", "Thaylen City", "Urithiru"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the order of Knights Radiant that Kaladin belongs to?",
+        "correctAnswer": "Windrunners",
+        "wrongAnswers": ["Lightweavers", "Stonewards", "Truthwatchers"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the term for the magical metal used in Allomancy?",
+        "correctAnswer": "Metal",
+        "wrongAnswers": ["Gemstone", "Shardblade", "Fabrial"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the primary antagonist in Mistborn: The Final Empire?",
+        "correctAnswer": "The Lord Ruler",
+        "wrongAnswers": ["Kelsier", "Marsh", "Vin"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the capital city of the Scadrian Empire?",
+        "correctAnswer": "Luthadel",
+        "wrongAnswers": ["Hearthstone", "Kholinar", "Thaylen City"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the character who is a former Thief and becomes a major player in the Mistborn series?",
+        "correctAnswer": "Kelsier",
+        "wrongAnswers": ["Vin", "Elend Venture", "Sazed"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the term for the magical constructs created by using Sprens in the Stormlight Archive?",
+        "correctAnswer": "Fabrials",
+        "wrongAnswers": ["Shards", "Metalborn", "Allomancy"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the main theme of the Mistborn series?",
+        "correctAnswer": "Rebellion against oppression",
+        "wrongAnswers": ["Love conquers all", "The power of friendship", "The balance of power"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the ancient order of protectors in the Stormlight Archive?",
+        "correctAnswer": "Knights Radiant",
+        "wrongAnswers": ["The Heralds", "The Fused", "The Bondsmiths"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the author of the Wheel of Time series?",
+        "correctAnswer": "Robert Jordan",
+        "wrongAnswers": ["Brandon Sanderson", "Terry Brooks", "George R.R. Martin"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the god of hatred in the Stormlight Archive?",
+        "correctAnswer": "Odium",
+        "wrongAnswers": ["Honor", "Cultivation", "Preservation"],
+        "timeout": 15
+      },
+      {
+        "question": "In which book does the character Szeth come into prominence?",
+        "correctAnswer": "The Way of Kings",
+        "wrongAnswers": ["Words of Radiance", "Oathbringer", "Rhythm of War"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the primary theme of Warbreaker?",
+        "correctAnswer": "The value of life and identity",
+        "wrongAnswers": ["Power and corruption", "Love and sacrifice", "War and peace"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the character who wielded a Shardblade named Oathbringer?",
+        "correctAnswer": "Dalinar Kholin",
+        "wrongAnswers": ["Adolin Kholin", "Kaladin Stormblessed", "Zeth son of Nalan"],
+        "timeout": 15
+      },
+      {
+        "question": "In which book do the events of the 'Dawnshard' novella take place?",
+        "correctAnswer": "Rhythm of War",
+        "wrongAnswers": ["Oathbringer", "Words of Radiance", "The Way of Kings"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the ancient enemy of the Knights Radiant?",
+        "correctAnswer": "The Fused",
+        "wrongAnswers": ["The Heralds", "The Voidbringers", "The Parshendi"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the purpose of the Oathgate in the Stormlight Archive?",
+        "correctAnswer": "To travel between locations",
+        "wrongAnswers": ["To summon Shardblades", "To create Stormlight", "To bind Sprens"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the character who is a skilled Lightweaver?",
+        "correctAnswer": "Shallan Davar",
+        "wrongAnswers": ["Jasnah Kholin", "Navani Kholin", "Lift"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the unique ability of the character Lift?",
+        "correctAnswer": "She can convert food into Lifelight",
+        "wrongAnswers": ["She can heal others", "She can manipulate time", "She can see the future"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the organization that serves the Lord Ruler in the Mistborn series?",
+        "correctAnswer": "The Steel Ministry",
+        "wrongAnswers": ["The Set", "The Kandra", "The Inquisition"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the book series that features the character Elantris?",
+        "correctAnswer": "Elantris",
+        "wrongAnswers": ["Mistborn", "The Stormlight Archive", "Warbreaker"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the metal that allows allomancers to push on metal?",
+        "correctAnswer": "Steel",
+        "wrongAnswers": ["Iron", "Copper", "Zinc"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the character who is a scholar and the primary narrator of the Stormlight Archive?",
+        "correctAnswer": "Jasnah Kholin",
+        "wrongAnswers": ["Shallan Davar", "Navani Kholin", "Kaladin Stormblessed"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the character who becomes a Bondsmith?",
+        "correctAnswer": "Dalinar Kholin",
+        "wrongAnswers": ["Adolin Kholin", "Kaladin Stormblessed", "Sazed"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the first book in the Stormlight Archive series?",
+        "correctAnswer": "The Way of Kings",
+        "wrongAnswers": ["Words of Radiance", "Oathbringer", "Rhythm of War"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the race that can change forms in the Mistborn series?",
+        "correctAnswer": "Kandra",
+        "wrongAnswers": ["Koloss", "Hemalurgists", "Mistwraiths"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the character who is known as 'The Survivor of Hathsin'?",
+        "correctAnswer": "Kelsier",
+        "wrongAnswers": ["Vin", "Elend Venture", "Sazed"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the character who has a unique ability to store memories?",
+        "correctAnswer": "Sazed",
+        "wrongAnswers": ["Vin", "Kelsier", "Elend Venture"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the magical energy source in the Stormlight Archive?",
+        "correctAnswer": "Stormlight",
+        "wrongAnswers": ["Lifeblood", "Breath", "Investiture"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the character who is the main antagonist in the first Mistborn trilogy?",
+        "correctAnswer": "The Lord Ruler",
+        "wrongAnswers": ["Kelsier", "Vin", "Sazed"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the main conflict in the Stormlight Archive series?",
+        "correctAnswer": "The war between humans and the Voidbringers",
+        "wrongAnswers": ["The struggle for power among the nobility", "The quest for knowledge", "The fight against the Lord Ruler"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the character who is a master of the Lightweaving art?",
+        "correctAnswer": "Shallan Davar",
+        "wrongAnswers": ["Jasnah Kholin", "Navani Kholin", "Lift"],
+        "timeout": 15
+      },
+      {
+        "question": "What unique aspect does the character of Vin possess in the Mistborn series?",
+        "correctAnswer": "She is a Mistborn",
+        "wrongAnswers": ["She is a Kandra", "She is a Feruchemist", "She is a Bondsmith"],
+        "timeout": 15
+      },
+      {
+        "question": "In the Cosmere, what is the term for the force of creation?",
+        "correctAnswer": "Investiture",
+        "wrongAnswers": ["Magic", "Power", "Energy"],
+        "timeout": 15
+      }
+    ],
+    "time given": "15"
+  }
+  

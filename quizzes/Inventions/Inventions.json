@@ -1,0 +1,259 @@
+{
+    "title": "Inventions!",
+    "listOfQuestions": [
+      {
+        "question": "Who invented the telephone?",
+        "correctAnswer": "Alexander Graham Bell",
+        "wrongAnswers": ["Thomas Edison", "Nikola Tesla", "Guglielmo Marconi"],
+        "timeout": 15
+      },
+      {
+        "question": "What year was the first airplane invented?",
+        "correctAnswer": "1903",
+        "wrongAnswers": ["1895", "1910", "1920"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is credited with inventing the light bulb?",
+        "correctAnswer": "Thomas Edison",
+        "wrongAnswers": ["Nikola Tesla", "Alexander Graham Bell", "Michael Faraday"],
+        "timeout": 15
+      },
+      {
+        "question": "What did Johannes Gutenberg invent?",
+        "correctAnswer": "The printing press",
+        "wrongAnswers": ["The telephone", "The steam engine", "The light bulb"],
+        "timeout": 15
+      },
+      {
+        "question": "Who developed the theory of relativity?",
+        "correctAnswer": "Albert Einstein",
+        "wrongAnswers": ["Isaac Newton", "Niels Bohr", "Galileo Galilei"],
+        "timeout": 15
+      },
+      {
+        "question": "What invention is Nikola Tesla known for?",
+        "correctAnswer": "Alternating current (AC)",
+        "wrongAnswers": ["The light bulb", "The radio", "The telephone"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first successful vaccine?",
+        "correctAnswer": "Edward Jenner",
+        "wrongAnswers": ["Louis Pasteur", "Joseph Lister", "Robert Koch"],
+        "timeout": 15
+      },
+      {
+        "question": "What invention is associated with Tim Berners-Lee?",
+        "correctAnswer": "The World Wide Web",
+        "wrongAnswers": ["The email", "The computer", "The smartphone"],
+        "timeout": 15
+      },
+      {
+        "question": "What did James Watt improve?",
+        "correctAnswer": "The steam engine",
+        "wrongAnswers": ["The internal combustion engine", "The electric motor", "The printing press"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first practical automobile?",
+        "correctAnswer": "Karl Benz",
+        "wrongAnswers": ["Henry Ford", "Gottlieb Daimler", "Nikola Tesla"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the refrigerator?",
+        "correctAnswer": "Carl von Linde",
+        "wrongAnswers": ["Thomas Edison", "Albert Einstein", "James Watt"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the primary invention of the industrial revolution?",
+        "correctAnswer": "The steam engine",
+        "wrongAnswers": ["The telephone", "The computer", "The airplane"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first successful powered flight?",
+        "correctAnswer": "Wright brothers",
+        "wrongAnswers": ["Charles Lindbergh", "Amelia Earhart", "Howard Hughes"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is known for creating the first programmable computer?",
+        "correctAnswer": "Konrad Zuse",
+        "wrongAnswers": ["Charles Babbage", "Alan Turing", "John von Neumann"],
+        "timeout": 15
+      },
+      {
+        "question": "What year was the first successful vaccine developed?",
+        "correctAnswer": "1796",
+        "wrongAnswers": ["1801", "1776", "1850"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first mechanical computer?",
+        "correctAnswer": "Charles Babbage",
+        "wrongAnswers": ["Alan Turing", "Ada Lovelace", "John von Neumann"],
+        "timeout": 15
+      },
+      {
+        "question": "What did Thomas Edison also invent aside from the light bulb?",
+        "correctAnswer": "The phonograph",
+        "wrongAnswers": ["The radio", "The electric car", "The television"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the invention of Alexander Fleming?",
+        "correctAnswer": "Penicillin",
+        "wrongAnswers": ["Vaccines", "Insulin", "Aspirin"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first digital camera?",
+        "correctAnswer": "Steven Sasson",
+        "wrongAnswers": ["Kodak", "Sony", "Canon"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the purpose of a thermostat?",
+        "correctAnswer": "Regulating temperature",
+        "wrongAnswers": ["Measuring humidity", "Controlling light", "Filtering air"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first successful parachute?",
+        "correctAnswer": "Louis-Sébastien Lenormand",
+        "wrongAnswers": ["Leonardo da Vinci", "Wiley Post", "Blaise Pascal"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is credited with the invention of the electric chair?",
+        "correctAnswer": "Thomas Edison",
+        "wrongAnswers": ["George Westinghouse", "Nikola Tesla", "H.G. Wells"],
+        "timeout": 15
+      },
+      {
+        "question": "What did Hedy Lamarr invent?",
+        "correctAnswer": "Frequency-hopping spread spectrum",
+        "wrongAnswers": ["The laser", "The microwave", "The computer"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first successful heart-lung machine?",
+        "correctAnswer": "John Heysham Gibbon",
+        "wrongAnswers": ["Michael DeBakey", "Christiaan Barnard", "Paul Zoll"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the invention of Eli Whitney?",
+        "correctAnswer": "Cotton gin",
+        "wrongAnswers": ["Steam engine", "Telegraph", "Airplane"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first successful solar cell?",
+        "correctAnswer": "Bell Labs",
+        "wrongAnswers": ["NREL", "MIT", "Stanford"],
+        "timeout": 15
+      },
+      {
+        "question": "What was invented by George Washington Carver?",
+        "correctAnswer": "Peanut butter",
+        "wrongAnswers": ["Soy sauce", "Corn syrup", "Rice milk"],
+        "timeout": 15
+      },
+      {
+        "question": "What was the first mass-produced car?",
+        "correctAnswer": "Ford Model T",
+        "wrongAnswers": ["Chevrolet", "Volkswagen Beetle", "Chrysler"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the microwave oven?",
+        "correctAnswer": "Percy Spencer",
+        "wrongAnswers": ["Albert Einstein", "Nikola Tesla", "Thomas Edison"],
+        "timeout": 15
+      },
+      {
+        "question": "What did the Wright brothers invent?",
+        "correctAnswer": "The airplane",
+        "wrongAnswers": ["The helicopter", "The glider", "The rocket"],
+        "timeout": 15
+      },
+      {
+        "question": "What year was the first email sent?",
+        "correctAnswer": "1971",
+        "wrongAnswers": ["1965", "1980", "1990"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first successful electric car?",
+        "correctAnswer": "Thomas Parker",
+        "wrongAnswers": ["Henry Ford", "Nikola Tesla", "Gottlieb Daimler"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first modern computer?",
+        "correctAnswer": "Alan Turing",
+        "wrongAnswers": ["Charles Babbage", "John von Neumann", "Konrad Zuse"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the primary purpose of the compass?",
+        "correctAnswer": "Navigation",
+        "wrongAnswers": ["Communication", "Measurement", "Construction"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first successful video game?",
+        "correctAnswer": "Ralph Baer",
+        "wrongAnswers": ["Nolan Bushnell", "Shigeru Miyamoto", "Atari"],
+        "timeout": 15
+      },
+      {
+        "question": "What invention is attributed to John Logie Baird?",
+        "correctAnswer": "Television",
+        "wrongAnswers": ["Radio", "Telephone", "Computer"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the safety pin?",
+        "correctAnswer": "Walter Hunt",
+        "wrongAnswers": ["Elias Howe", "Isaac Singer", "Thomas Edison"],
+        "timeout": 15
+      },
+      {
+        "question": "What year was the first successful manned spaceflight?",
+        "correctAnswer": "1961",
+        "wrongAnswers": ["1957", "1965", "1969"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first synthetic dye?",
+        "correctAnswer": "William Henry Perkin",
+        "wrongAnswers": ["Hermann Kolbe", "August Wilhelm von Hofmann", "Robert Williams Wood"],
+        "timeout": 15
+      },
+      {
+        "question": "What did Nikola Tesla invent related to wireless technology?",
+        "correctAnswer": "Radio",
+        "wrongAnswers": ["Television", "Telephone", "Telegraph"],
+        "timeout": 15
+      },
+      {
+        "question": "Who invented the first electronic computer?",
+        "correctAnswer": "ENIAC",
+        "wrongAnswers": ["Colossus", "Z3", "UNIVAC"],
+        "timeout": 15
+      },
+      {
+        "question": "What invention is associated with Leonardo da Vinci?",
+        "correctAnswer": "Flying machine",
+        "wrongAnswers": ["Printing press", "Steam engine", "Telescope"],
+        "timeout": 15
+      }
+    ],
+    "time given": "15"
+  }
+  
