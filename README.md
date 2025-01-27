@@ -8,30 +8,29 @@ If you've got some useful knowlege on top of this, you can create a quiz on it w
 
 ### Installation
 
-**Either:**
+##### Either:
 
-1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster.git`
+1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster`
 2. Enter the directory containing the game executable: `cd QuizMaster`
 
-**Or:**
+##### Or:
 
 1. Download the Zip file
 2. Extract the Zip file
 3. Enter the directory
 
-**Then:**
+##### Then Either:
 
-**Either:**
+Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are C++ dev). These scripts may take some time to complete.
 
-Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are C++ dev). 
-*Note: these scripts may take some time to complete.*
+##### Or: (Advanced, Ubuntu/Debian only):
 
-**Or:** (Advanced, Ubuntu/Debian only):
-
-1. Set up a new virtual environment: `python3 -m venv venv`(optional, but recommended).
+1. Set up a new virtual environment: `python3 -m venv venv`
 2. Activate the environment: `source venv/bin/activate`
 3. Install tkinter: `sudo apt-get install python3-tk`
 4. Install packages in `requirements.txt`: `pip3 install -r requirements.txt`
+
+*Note: Steps 1 and 2 are optional, but recommended.*
 
 ### Quiz Game
 
@@ -39,7 +38,7 @@ In a command line window, enter `./run.sh` to start the code in Linux, or `run.b
 
 ![](images/QM1.png)
 
- At the end it will give appropriate advice depending on the score.
+ At the end it will give advice appropriate to the score. Scores greater than 80& are above average, between 80% and 40% is average and less than 40% is terrible.
 
  ![](images/QM4.png)
 
@@ -52,19 +51,14 @@ There is a preferences window where you can change the song, volume and backgrou
 
 ![](images/QM2.png)
 
-1. Run quizcreator by opening QuizMaster and clicking "Make a quiz". You can also start it separately with `./quizcreator` on the command line interface in Linux.
-2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answser and wrong answers, seperated by commas. Afterwards, save it in an apropriate folder. A common mistake made by many users is to leave the question editor window open, which blocks QuizCreator.
+1. Run quizcreator by opening QuizMaster and clicking `Make a Quiz`. You can also start it separately with `./quizcreator` on the command line interface in Linux.
+2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answser and a set of wrong answers, seperated by commas. Adding the time limit is optional, in the format of an integer number of seconds. The average is 10 - 20 seconds. Afterwards, save it in an apropriate folder. A common mistake made by many users is to leave the question editor window open, which blocks QuizCreator.
 
 
 ## QuizMasterMini
  [QuizMasterMini](https://github.com/hermonochy/QuizMasterMini) is a smaller version of the application, made for smaller devices or people on a budget with data volumes.
 
-
 ## Features
-
-### Quiz Creator:
-- Add, Edit, Delete, Save, Load functions for quiz questions.
-- Interactive GUI interface for managing quiz questions.
 
 ### Quiz Game:
 - Timed quiz questions with countdown.
@@ -73,8 +67,12 @@ There is a preferences window where you can change the song, volume and backgrou
 - Start QuizCreator
 - Change settings
 
+### Quiz Creator:
+- Add, Edit, Delete, Save, Load functions for quiz questions.
+- Interactive GUI interface for managing quiz questions.
+
 Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository is open to pull requests.
-Note: Many of the example quizzes are AI or teenager written, so may contain incorrect information.
+*Note: Many of the example quizzes are AI or teenage schoolchildren written, so may contain incorrect information.*
 
 ## Future Work
 
@@ -83,5 +81,5 @@ Note: Many of the example quizzes are AI or teenager written, so may contain inc
 - more user friendly method of installing the game
 - multiplayer options
 - different game modes
-
-
+- web app option
+- Add links to external sources
