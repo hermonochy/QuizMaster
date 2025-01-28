@@ -3,6 +3,7 @@ import pygame
 import sys
 import json
 import random
+import time
 import colorsys
 import re
 import os
@@ -184,10 +185,9 @@ def display_message(message, y_position, font_size):
 def end():
     print(asciiartend)
     pygame.quit()
-    sys.exit()   
-    
+    sys.exit()
 
-def quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     incorrect_questions = []
     running = True
     questionIndex = 0
@@ -331,9 +331,110 @@ Correct Answer: {question.correctAnswer}""")
                 if button_go_back.is_clicked(pos):
                      return True
                 if button_replay.is_clicked(pos):
-                    quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                 if button_quit.is_clicked(pos):
                      end()
+                    
+
+def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+    questions = questionList
+    incorrect_questions = []
+    running = True
+    correctAnswers = 0
+    totalQuestions = len(questionList)
+    background_color = BACKGROUND_COLOUR
+    lives = 3
+
+    start_time = time.time()
+
+    while running and questionList:
+        currentQuestion = questionList.pop(0)
+        user_answer = None
+
+        answerOptions = [currentQuestion.correctAnswer] + currentQuestion.wrongAnswers
+        random.shuffle(answerOptions)
+
+        buttons = []
+        for idx, answer in enumerate(answerOptions):
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
+            buttons.append(button)
+
+        while running and user_answer is None:
+            screen.fill(background_color)
+            display_message(f"Question: {currentQuestion.question}", QUESTION_OFFSET, 50)
+
+            for button in buttons:
+                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
+            button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40)
+            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40)
+            button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40)
+            elapsed_time = time.time() - start_time
+            display_message(f"Time: {int(elapsed_time)}", SCREEN_HEIGHT - QUESTION_OFFSET, 40)
+            display_message(f"Lives: {lives}", SCREEN_HEIGHT - (QUESTION_OFFSET + 30), 40)
+            button_end.draw(screen, BUTTON_COLOUR)
+            button_go_back.draw(screen, BUTTON_COLOUR)
+            button_leave.draw(screen, BUTTON_COLOUR)
+            pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    end()
+                if event.type == MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    for idx, button in enumerate(buttons):
+                        if button_end.is_clicked(pos):
+                           time_remaining = 0
+                           totalQuestions = questionIndex       
+                        if button_go_back.is_clicked(pos):
+                           main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
+                        if button_leave.is_clicked(pos):
+                           end()
+                        if button.is_clicked(pos):
+                            user_answer = idx
+
+                if event.type == KEYDOWN:
+                    if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
+                        user_answer = event.key - pygame.K_1
+
+        correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
+        if user_answer is not None:
+            if user_answer == correct_answer_index:
+                correctAnswers += 1
+                continue
+            else:
+                questionList.append(currentQuestion)
+                lives -= 1
+                if lives < 0:
+                   questionList = questions
+                   lives = 3
+
+    end_time = time.time()
+    total_time = int(end_time - start_time)
+
+    while True:
+        screen.fill(background_color)
+        y_position = display_message(f"Speed Run completed! You answered all questions correctly in {total_time} seconds.", SCREEN_HEIGHT // 2 - 200, 40)
+        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
+        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
+        button_go_back.draw(screen, BUTTON_COLOUR)
+        button_replay.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                end()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                event_time = pygame.time.get_ticks()
+                if button_go_back.is_clicked(pos):
+                    return True
+                if button_replay.is_clicked(pos):
+                    speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                if button_quit.is_clicked(pos):
+                    end()
                           
 
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
@@ -505,10 +606,30 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                                 messagebox.showinfo(title='Error', message=f'This is not a quiz file: {ex}!')
                                 continue
                             print("Questions:", questionList)
+                            
+                            running = True
+                            while running:
+                                screen.fill(BACKGROUND_COLOUR)
+                                display_message("Select Game Mode:", SCREEN_HEIGHT - 650, 75)
+                                button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 550, SCREEN_HEIGHT // 2 - 200), 300, 60)
+                                button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 - 225, SCREEN_HEIGHT // 2 - 200), 300, 60)
+                                button_classic.draw(screen, BUTTON_COLOUR)
+                                button_speed.draw(screen, BUTTON_COLOUR)
+                                pygame.display.update()
 
-                            if quiz_game(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
-                                main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
-
+                                for event in pygame.event.get():
+                                    if event.type == QUIT:
+                                        end()
+                                    if event.type == MOUSEBUTTONDOWN:
+                                        pos = pygame.mouse.get_pos()
+                                        event_time = pygame.time.get_ticks()
+                                        if button_classic.is_clicked(pos):
+                                            if classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+                                                main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+                                        if button_speed.is_clicked(pos):
+                                            if speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+                                                main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+                                            
 if __name__ == '__main__':
     icon = pygame.image.load('images/logo1.png')
     pygame.mixer.init()
