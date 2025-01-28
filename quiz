@@ -89,11 +89,13 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('QuizMaster')
 
 class Button:
-    def __init__(self, text, position, width, height):
+    def __init__(self, text, position, width=0, height=0):
         self.text = text
         self.position = position
-        self.width = width
-        self.height = height + 100 
+        self.font = pygame.font.Font(None, FONT_SIZE)
+        text_width, text_height = self.font.size(text)
+        self.width = max(width, text_width + 20)
+        self.height = max(height, text_height + 20) 
         self.rect = pygame.Rect(position[0], position[1], width, height)
 
     def draw(self, screen, color):
