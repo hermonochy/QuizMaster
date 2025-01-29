@@ -2,7 +2,7 @@
 
 QuizMaster is a fun game testing your knowledge and cognitive ability in many different areas. 
 If you know how to copy and paste text to the command line interface, and can copy or clone this repository, then you're in.
-If you've got some useful knowlege on top of this, you can create a quiz on it with `QuizCreator` and create a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
+If you've got some useful knowledge on top of this, you can create a quiz on it with `QuizCreator` and create a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/creating-a-pull-request).
 
 ## Usage
 
@@ -21,7 +21,7 @@ If you've got some useful knowlege on top of this, you can create a quiz on it w
 
 ##### Then Either:
 
-Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are C++ dev). These scripts may take some time to complete.
+Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are a C++ developer). These scripts may take some time to complete.
 
 ##### Or: (Advanced, Ubuntu/Debian only):
 
@@ -30,20 +30,33 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 3. Install tkinter: `sudo apt-get install python3-tk`
 4. Install packages in `requirements.txt`: `pip3 install -r requirements.txt`
 
-*Note: Steps 1 and 2 are optional, but recommended.*
+*Note: Steps 1 and 2 are optional but recommended.*
 
 ### Quiz Game
 
-In a command line window, enter `./run.sh` to start the code in Linux, or `run.bat` for Windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will allow you to search a quiz to play! You can either press the number allocated to the answer or, if you don't have a keyboard, click on the answer. Remember, you have a time limit!
+In a command line window, enter `./run.sh` to start the code in Linux, or `run.bat` for Windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will start the game.
 
 ![](images/QM1.png)
 
- At the end it will give advice appropriate to the score. Scores greater than 80& are above average, between 80% and 40% is average and less than 40% is terrible.
+### Quiz Game
 
- ![](images/QM4.png)
+In a command line window, enter `./run.sh` to start the code in Linux, or `run.bat` for Windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will start the game.
 
- 
-There is a preferences window where you can change the song, volume and background colour:
+![](images/QM1.png)
+
+#### Classic Game
+
+The classic game mode allows you to answer questions with a countdown timer. Your score is recorded, and at the end, it will give advice appropriate to the score. Scores greater than 80% are above average, between 80% and 40% is average, and less than 40% is below average. You can either press the number allocated to the answer or, if you don't have a keyboard, click on the answer. Remember, you have a time limit!
+
+![](images/QM4.png)
+
+#### Speed Run
+
+The speed run game mode challenges you to answer all questions correctly in the shortest time possible. If you answer a question incorrectly, you must redo the question. If all your lives are lost, you must redo the entire quiz. The game keeps a stopwatch running throughout, and your final time is displayed at the end.
+
+### Preferences
+
+There is a preferences window where you can change the song, volume, and background color:
 
 ![](images/QM5.png)
 
@@ -52,34 +65,34 @@ There is a preferences window where you can change the song, volume and backgrou
 ![](images/QM2.png)
 
 1. Run quizcreator by opening QuizMaster and clicking `Make a Quiz`. You can also start it separately with `./quizcreator` on the command line interface in Linux.
-2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answser and a set of wrong answers, seperated by commas. Adding the time limit is optional, in the format of an integer number of seconds. The average is 10 - 20 seconds. Afterwards, save it in an apropriate folder. A common mistake made by many users is to leave the question editor window open, which blocks QuizCreator.
-
+2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answer and a set of wrong answers, separated by commas. Adding questions is easy and intuitive.
 
 ## QuizMasterMini
- [QuizMasterMini](https://github.com/hermonochy/QuizMasterMini) is a smaller version of the application, made for smaller devices or people on a budget with data volumes.
+[QuizMasterMini](https://github.com/hermonochy/QuizMasterMini) is a smaller version of the application, made for smaller devices or people on a budget with data volumes.
 
 ## Features
 
 ### Quiz Game:
-- Timed quiz questions with countdown.
+- Classic game mode without timing and score recording.
+- Timed quiz questions with countdown (Speed Run).
 - Ability to answer questions and receive scores.
 - Background music during gameplay.
 - Start QuizCreator
 - Change settings
 
 ### Quiz Creator:
-- Add, Edit, Delete, Save, Load functions for quiz questions.
+- Add, Edit, Delete, Save, and Load functions for quiz questions.
 - Interactive GUI interface for managing quiz questions.
 
-Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository is open to pull requests.
-*Note: Many of the example quizzes are AI or teenage schoolchildren written, so may contain incorrect information.*
+Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository welcomes contributions from everyone.
+*Note: Many of the example quizzes are written by AI or teenage schoolchildren, so they may contain incorrect information.*
 
 ## Future Work
 
-- more methods of answering questions
-- adding pictures to questions
-- more user friendly method of installing the game
-- multiplayer options
-- different game modes
-- web app option
+- More methods of answering questions
+- Adding pictures to questions
+- More user-friendly method of installing the game
+- Multiplayer options
+- Different game modes
+- Web app option
 - Add links to external sources
