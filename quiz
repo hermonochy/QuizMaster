@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 import pygame
+import pygame_gui
 import sys
 import json
 import random
 import time
+import math
 import colorsys
 import re
 import os
@@ -13,7 +15,7 @@ import datetime
 
 from pygame.locals import *
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, colorchooser
 
 from modules.persistence import *
 from modules.searchQuiz import search_str_in_file
@@ -22,6 +24,7 @@ import modules.PySimpleGUI as sg
 
 pygame.init()
 pygame.font.init()
+manager = pygame_gui.UIManager((1250, 700))
 
 
 textinput = TextInputVisualizer()
@@ -181,6 +184,27 @@ def display_message(message, y_position, font_size):
         y_position += text.get_height()
 
     return y_position
+
+
+def draw_color_wheel(center, radius):
+    for angle in range(360):
+        for r in range(radius):
+            x = center[0] + int(r * math.cos(math.radians(angle)))
+            y = center[1] + int(r * math.sin(math.radians(angle)))
+            color = colorsys.hsv_to_rgb(angle / 360, r / radius, 1)
+            color = tuple(int(c * 255) for c in color)
+            screen.set_at((x, y), color)
+
+def get_color_from_wheel(pos, center, radius):
+    dx = pos[0] - center[0]
+    dy = pos[1] - center[1]
+    distance = math.sqrt(dx * dx + dy * dy)
+    if distance <= radius:
+        angle = (math.degrees(math.atan2(dy, dx)) + 360) % 360
+        saturation = distance / radius
+        color = colorsys.hsv_to_rgb(angle / 360, saturation, 1)
+        return tuple(int(c * 255) for c in color)
+    return None
     
 def end():
     print(asciiartend)
@@ -492,75 +516,119 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                     end()
                 if button_make.is_clicked(pos):
                     subprocess.Popen(["python3", "quizcreator"])
+                    
+def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
+    running = True
+    while running:
+        screen.fill(BACKGROUND_COLOUR)
+        button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2), 250, 60)
+        button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2), 250, 60)
+        button_preferences = Button("Preferences", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 100), 250, 60)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 100), 250, 60)
+        display_message("Welcome to QuizMaster!", SCREEN_HEIGHT - 600, 75)
+        button_make.draw(screen, BUTTON_COLOUR)
+        button_play.draw(screen, BUTTON_COLOUR)
+        button_preferences.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                end()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if button_quit.is_clicked(pos):
+                    end()
+                if button_make.is_clicked(pos):
+                    subprocess.Popen(["python3", "quizcreator"])
                 if button_preferences.is_clicked(pos):
-                  numList = re.findall(r'\d+',music)     
-                  i = int(numList[0]) if numList else 1 
-                       
-                  while running:
-                    screen.fill(BACKGROUND_COLOUR)
-                    display_message("Preferences", SCREEN_HEIGHT - 600, 75)
-                    button_decrease = Button("Decrease volume", (SCREEN_WIDTH // 2 - 300 , SCREEN_HEIGHT // 2 +100), 250, 60)
-                    button_increase = Button("Increase volume", (SCREEN_WIDTH // 2 - 300 , SCREEN_HEIGHT // 2), 250, 60)
-                    button_colour = Button("Change Colour", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2), 250, 60)
-                    button_music = Button("Change Music", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2 +100), 250, 60)
-                    button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT // 2+250), 250, 60)       
-                    button_increase.draw(screen, BUTTON_COLOUR)
-                    button_decrease.draw(screen, BUTTON_COLOUR)
-                    button_music.draw(screen, BUTTON_COLOUR)
-                    button_colour.draw(screen, BUTTON_COLOUR)
-                    button_go_back.draw(screen, BUTTON_COLOUR)         
-                    pygame.display.update()
-                    for event in pygame.event.get(): 
-                        if event.type == QUIT:
-                            end()
-                        if event.type == MOUSEBUTTONDOWN:
-                            pos = pygame.mouse.get_pos()
-                            if button_increase.is_clicked(pos):
-                              try:
-                                 v += 0.1
-                              except:
-                                 if v > 1:
-                                    pass  
-                              pygame.mixer.music.set_volume(v)
-                            if button_decrease.is_clicked(pos):
-                              try:
-                                 v -= 0.1
-                              except:
-                                 if v < 0:
-                                    pass  
-                              pygame.mixer.music.set_volume(v)
-                            if button_music.is_clicked(pos):
-                                if i < 6:
-                                    i += 1
-                                else:    
-                                    i = 1
-                                pygame.mixer.music.fadeout(1000)
-                                pygame.mixer.music.unload
-                                music = f'music/music{i}.ogg'
-                                
-                                if isItChristmasTimeNow():
-                                  music = ["music/music_christmas1.ogg","music/music_christmas2.ogg"][i%2]
-                                if isItHalloweenTimeNow():
-                                  music = ["music/music_halloween1.ogg","music/music_halloween2.ogg"][i%2]
-                                if isItStPatricksTimeNow():
-                                  music = "music/music_stpatricks1.ogg"
-                                if isItValentinesTimeNow():
-                                  music = "music/music_valentines1.ogg"  
-                                
-                                pygame.mixer.music.load(music)
-                                pygame.mixer.music.play(-1)       
+                    numList = re.findall(r'\d+',music)     
+                    i = int(numList[0]) if numList else 1 
+                    
+                    volume_slider = pygame_gui.elements.ui_horizontal_slider.UIHorizontalSlider(
+                        relative_rect=pygame.Rect((SCREEN_WIDTH // 2 - 150, 150), (300, 50)),
+                        start_value=v,
+                        value_range=(0, 1),
+                        manager=manager
+                    )
 
-                            if button_colour.is_clicked(pos):    
-                                col_bg = random.uniform(0,1)
-                                colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
-                                buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
-                                colour = colour_background
-                                button_colour = buttons_colour
-                                BACKGROUND_COLOUR = colour
-                                BUTTON_COLOUR = button_colour
-                            if button_go_back.is_clicked(pos):
-                               save_preferences(v,music,BACKGROUND_COLOUR,BUTTON_COLOUR)     
-                               main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
+                    scrollbar = Scrollbar((SCREEN_WIDTH - 40, 100), SCREEN_HEIGHT - 150, 6, 4)
+
+                    while running:
+                        time_delta = pygame.time.Clock().tick(60) / 1000.0
+                        screen.fill(BACKGROUND_COLOUR)
+                        display_message("Preferences", 50, 75)
+                        display_message("_"*125, 60, 40)
+                        display_message("Volume Control", 120, 40)
+                        display_message("_"*100, 130, 25)
+                        button_increase = Button("Increase Volume", (SCREEN_WIDTH // 2 - 150, 210), 300, 50)
+                        button_decrease = Button("Decrease Volume", (SCREEN_WIDTH // 2 - 150, 280), 300, 50)
+                        
+                        display_message("Colours", 370, 40)
+                        display_message("_"*100, 380, 25)
+                        button_colour = Button("Change Colour", (SCREEN_WIDTH // 2 - 150, 400), 300, 50)
+
+                        display_message("Music", 500, 40)
+                        display_message("_"*100, 510, 25)
+                        button_music = Button("Change Music", (SCREEN_WIDTH // 2 - 150, 530), 300, 50)
+                        display_message("_"*125, 600, 40)
+                        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, 650), 300, 50)
+
+                        button_increase.draw(screen, BUTTON_COLOUR)
+                        button_decrease.draw(screen, BUTTON_COLOUR)
+                        button_colour.draw(screen, BUTTON_COLOUR)
+                        button_music.draw(screen, BUTTON_COLOUR)
+                        button_go_back.draw(screen, BUTTON_COLOUR)
+
+                        manager.draw_ui(screen)
+                        pygame.display.update()
+
+                        for event in pygame.event.get():
+                            if event.type == QUIT:
+                                end()
+                            if event.type == MOUSEBUTTONDOWN:
+                                pos = pygame.mouse.get_pos()
+                                if button_increase.is_clicked(pos):
+                                    v = min(1.0, v + 0.1)
+                                    pygame.mixer.music.set_volume(v)
+                                if button_decrease.is_clicked(pos):
+                                    v = max(0.0, v - 0.1)
+                                    pygame.mixer.music.set_volume(v)
+                                if button_colour.is_clicked(pos):
+                                    col_bg = random.uniform(0, 1)
+                                    colour_background = tuple(map(lambda x: 255.0 * x, colorsys.hsv_to_rgb(col_bg, 1, 0.975)))
+                                    buttons_colour = tuple(map(lambda x: 255.0 * x, colorsys.hsv_to_rgb(col_bg, 1, 1)))
+                                    colour = colour_background
+                                    button_colour = buttons_colour
+                                    BACKGROUND_COLOUR = colour
+                                    BUTTON_COLOUR = button_colour
+                                if button_music.is_clicked(pos):
+                                    if i < 6:
+                                        i += 1
+                                    else:
+                                        i = 1
+                                    pygame.mixer.music.fadeout(1000)
+                                    pygame.mixer.music.unload()
+                                    music = f'music/music{i}.ogg'
+                                    if isItChristmasTimeNow():
+                                        music = ["music/music_christmas1.ogg", "music/music_christmas2.ogg"][i % 2]
+                                    if isItHalloweenTimeNow():
+                                        music = ["music/music_halloween1.ogg", "music/music_halloween2.ogg"][i % 2]
+                                    if isItStPatricksTimeNow():
+                                        music = "music/music_stpatricks1.ogg"
+                                    if isItValentinesTimeNow():
+                                        music = "music/music_valentines1.ogg"
+                                    pygame.mixer.music.load(music)
+                                    pygame.mixer.music.play(-1)
+                                if button_go_back.is_clicked(pos):
+                                    save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                                    main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+                            manager.process_events(event)
+                            if event.type == pygame.USEREVENT:
+                                if event.user_type == pygame_gui.UI_HORIZONTAL_SLIDER_MOVED:
+                                    if event.ui_element == volume_slider:
+                                        v = event.value
+                                        pygame.mixer.music.set_volume(v)
+                        manager.update(time_delta)
 
                 if button_play.is_clicked(pos):
                     searchTerm = ""
