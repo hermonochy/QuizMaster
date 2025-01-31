@@ -2,6 +2,8 @@ from typing import List
 from dataclasses import dataclass, field
 import json
 import datetime
+import re
+from collections import Counter
 
 @dataclass
 class QuizQuestion:
@@ -73,3 +75,20 @@ def isItStPatricksTimeNow():
     return True
   return False  
        
+       
+def is_silly(question, correct_answer, wrong_answers, question_list):
+
+    if re.search(r'\d{10,}', question):
+        return True, "Question contains a very long sequence of numbers."
+
+    if len(set(wrong_answers)) != len(wrong_answers):
+        return True, "Wrong answers are identical!"
+
+    if correct_answer in wrong_answers:
+        return True, "A wrong answer is the same as the correct answer!"
+
+    question_counter = Counter((q.question, q.correctAnswer, tuple(q.wrongAnswers)) for q in question_list)
+    if question_counter[(question, correct_answer, tuple(wrong_answers))] > 10:
+        return True, "There are more than 10 identical questions."
+
+    return False, ""

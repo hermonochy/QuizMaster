@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import modules.PySimpleGUI as sg
 import json
-from modules.persistence import QuizQuestion
+from modules.persistence import QuizQuestion, is_silly
 
 changes = False
 questionList = []
@@ -29,7 +29,6 @@ def make_questionEditorWindow():
 
     questionEditorWindow = sg.Window('Question Editor', questionEditorLayout, finalize=True)
     return questionEditorWindow
-
 
 while True:
     event, values = mainWindow.read()
@@ -70,9 +69,14 @@ while True:
             correct_answer = editorValues['correct_answer']
             wrong_answers = editorValues['wrong_answers'].split(',')
             newquestion = QuizQuestion(question, correct_answer, wrong_answers, int(editorValues['time_given']))
-            questionList[index] = newquestion
-            questionEditorWindow.close()
-            mainWindow["quizquestionentry"].update(questionList)
+            is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, questionList)
+            if is_silly_question:
+                sg.Popup(f"Silly question detected: {reason}")
+                continue
+            else:
+                questionList[index] = newquestion
+                questionEditorWindow.close()
+                mainWindow["quizquestionentry"].update(questionList)
         if editorEvent == 'Cancel':
             questionEditorWindow.close()
 
@@ -88,9 +92,14 @@ while True:
             except ValueError:
                 time_given = 15
             newquestion = QuizQuestion(question, correct_answer, wrong_answers, time_given)
-            questionList.append(newquestion)
-            questionEditorWindow.close()
-            mainWindow["quizquestionentry"].update(questionList)
+            is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, questionList)
+            if is_silly_question:
+                sg.Popup(f"Silly question detected: {reason}")
+                pass
+            else:
+                questionList.append(newquestion)
+                questionEditorWindow.close()
+                mainWindow["quizquestionentry"].update(questionList)
         if editorEvent == 'Cancel':
             questionEditorWindow.close()
 
@@ -131,6 +140,10 @@ while True:
                     questionList = []
                     for q in quizDicts["listOfQuestions"]:
                         qq = QuizQuestion(**q)
+                        is_silly_question, reason = is_silly(qq.question, qq.correctAnswer, qq.wrongAnswers, questionList)
+                        if is_silly_question:
+                            sg.Popup(f"Silly question detected: {reason}")
+                            break
                         questionList.append(qq)
                     mainWindow["quizquestionentry"].update(questionList)
                     titleofquiz = quizDicts["title"]
