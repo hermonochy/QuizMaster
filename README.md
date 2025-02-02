@@ -10,7 +10,7 @@ If you've got some useful knowledge on top of this, you can create a quiz on it 
 
 ##### Either:
 
-1. Clone this repository `git clone https://github.com/hermonochy/QuizMaster`
+1. Clone this repository via terminal `git clone https://github.com/hermonochy/QuizMaster`
 2. Enter the directory containing the game executable: `cd QuizMaster`
 
 ##### Or:
@@ -26,21 +26,15 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 ##### Or: (Advanced, Ubuntu/Debian only):
 
 1. Set up a new virtual environment: `python3 -m venv venv`
-2. Activate the environment: `source venv/bin/activate`
+2. Activate the environment: `source venv/bin/activate` (To decativate, type `deactivate`)
 3. Install tkinter: `sudo apt-get install python3-tk`
 4. Install packages in `requirements.txt`: `pip3 install -r requirements.txt`
 
-*Note: Steps 1 and 2 are optional but recommended.*
+*Steps 1 and 2 are optional but recommended.*
 
 ### Quiz Game
 
-In a command line window, enter `./run.sh` to start the code in Linux, or `run.bat` for Windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will start the game.
-
-![](images/QM1.png)
-
-### Quiz Game
-
-In a command line window, enter `./run.sh` to start the code in Linux, or `run.bat` for Windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will start the game.
+In a command line window, enter `./run.sh` to start the application in Linux, or `run.bat` for Windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will start the game (see below).
 
 ![](images/QM1.png)
 
@@ -50,13 +44,17 @@ The classic game mode allows you to answer questions with a countdown timer. You
 
 ![](images/QM4.png)
 
+#### Classic V2
+
+Similar to classic, the time limit of classic V2 is the absolute time, rather than induvidual time limits. This game mode is generally the easiest.
+
 #### Speed Run
 
-The speed run game mode challenges you to answer all questions correctly in the shortest time possible. If you answer a question incorrectly, you must redo the question. If all your lives are lost, you must redo the entire quiz. The game keeps a stopwatch running throughout, and your final time is displayed at the end.
+The speed run game mode challenges you to answer all questions correctly in the shortest time possible. If you answer a question incorrectly, you must redo the question. If three questions are answered incorrectly, you must redo the entire quiz. The game keeps a stopwatch running throughout, and your final time is displayed at the end.
 
 ### Preferences
 
-There is a preferences window where you can change the song, volume, and background color:
+There is a preferences window where you can change the song, volume, and background colour:
 
 ![](images/QM5.png)
 
@@ -65,7 +63,7 @@ There is a preferences window where you can change the song, volume, and backgro
 ![](images/QM2.png)
 
 1. Run quizcreator by opening QuizMaster and clicking `Make a Quiz`. You can also start it separately with `./quizcreator` on the command line interface in Linux.
-2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answer and a set of wrong answers, separated by commas. Adding questions is easy and intuitive.
+2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answer and a set of wrong answers, separated by commas. Further instructions can be viewed via the implemented tooltips.
 
 ## QuizMasterMini
 [QuizMasterMini](https://github.com/hermonochy/QuizMasterMini) is a smaller version of the application, made for smaller devices or people on a budget with data volumes.
@@ -73,7 +71,8 @@ There is a preferences window where you can change the song, volume, and backgro
 ## Features
 
 ### Quiz Game:
-- Classic game mode without timing and score recording.
+
+- Classic game mode with timing and score recording.
 - Timed quiz questions with countdown (Speed Run).
 - Ability to answer questions and receive scores.
 - Background music during gameplay.
@@ -81,11 +80,12 @@ There is a preferences window where you can change the song, volume, and backgro
 - Change settings
 
 ### Quiz Creator:
+
 - Add, Edit, Delete, Save, and Load functions for quiz questions.
 - Interactive GUI interface for managing quiz questions.
 
 Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository welcomes contributions from everyone.
-*Note: Many of the example quizzes are written by AI or teenage schoolchildren, so they may contain incorrect information.*
+*Note: Many of the example quizzes are written by AI or schoolchildren, so they may contain incorrect information.*
 
 ## Future Work
 
@@ -93,6 +93,6 @@ Enjoy the combined functionalities of creating quizzes and playing quiz games wi
 - Adding pictures to questions
 - More user-friendly method of installing the game
 - Multiplayer options
-- Different game modes
+- ~~Different game modes~~
 - Web app option
 - Add links to external sources
