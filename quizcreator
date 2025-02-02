@@ -68,7 +68,12 @@ while True:
             question = editorValues['question']
             correct_answer = editorValues['correct_answer']
             wrong_answers = editorValues['wrong_answers'].split(',')
+            try:
+                time_given = int(editorValues['time_given'])
+            except ValueError:
+                time_given = 15
             newquestion = QuizQuestion(question, correct_answer, wrong_answers, int(editorValues['time_given']))
+            newquestion = QuizQuestion(question, correct_answer, wrong_answers, 15)
             is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, questionList)
             if is_silly_question:
                 sg.Popup(f"Silly question detected: {reason}")
