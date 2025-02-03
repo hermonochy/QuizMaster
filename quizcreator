@@ -7,11 +7,11 @@ changes = False
 questionList = []
 
 mainWindowLayout = [
-    [sg.Text("Title of Quiz:"), sg.InputText(key='quiz_name', tooltip="The title that players will see.")],
-    [sg.Listbox(questionList, size=(125, 25), key='quizquestionentry', enable_events=True, tooltip="A list of the questions."),
+    [sg.Text("Title of Quiz:"), sg.InputText(key='quiz_name', tooltip="The title of the quiz that players will see.")],
+    [sg.Listbox(questionList, size=(125, 25), key='quizquestionentry', enable_events=True, tooltip="The list of the questions."),
      sg.Text(key='textbox', size=(20, 10))],
     [sg.Button('Open', tooltip="Open an existing quiz."), sg.Button('Save', tooltip="Save your quiz in an appropriate folder."),
-     sg.Button("Edit Question", tooltip="Select a question from the listbox to edit it."), sg.Button("Add Question", tooltip="Add a new question."),
+     sg.Button("Edit Question", tooltip="Select a question from the listbox to edit."), sg.Button("Add Question", tooltip="Add a new question."),
      sg.Button('Duplicate Question', tooltip="Duplicate the selected question"), sg.Button("Delete Question", tooltip="Select a question from the listbox to delete.")],
     [sg.Button('Quit')]
 ]
