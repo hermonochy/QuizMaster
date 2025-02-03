@@ -27,7 +27,7 @@ def make_questionEditorWindow():
         [sg.Button('Add'), sg.Button('Cancel')]
     ]
 
-    questionEditorWindow = sg.Window('Question Editor', questionEditorLayout, finalize=True)
+    questionEditorWindow = sg.Window('Question Editor', questionEditorLayout, finalize=True, keep_on_top=True)
     return questionEditorWindow
 
 while True:

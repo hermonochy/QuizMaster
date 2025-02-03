@@ -364,7 +364,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     correctAnswers = 0
     totalQuestions = len(questionList)
     
-    total_time = sum(q.timeout for q in questionList) - len(questionList)*2
+    total_time = sum(q.timeout-3 for q in questionList)+10
     start_time = time.time()
 
     good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!", f"You are an expert on {titleofquiz}!", f" You have mastered {titleofquiz}!", f"You are amazing at {titleofquiz}!"]
