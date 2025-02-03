@@ -709,21 +709,17 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                         display_message("_"*125, 60, 40)
                         display_message("Volume Control", 120, 40)
                         display_message("_"*100, 130, 25)
-                        button_increase = Button("Increase Volume", (SCREEN_WIDTH // 2 - 150, 210), 300, 50)
-                        button_decrease = Button("Decrease Volume", (SCREEN_WIDTH // 2 - 150, 280), 300, 50)
                         
-                        display_message("Colours", 370, 40)
-                        display_message("_"*100, 380, 25)
-                        button_colour = Button("Change Colour", (SCREEN_WIDTH // 2 - 150, 400), 300, 50)
+                        display_message("Colours", 330, 40)
+                        display_message("_"*100, 340, 25)
+                        button_colour = Button("Change Colour", (SCREEN_WIDTH // 2 - 150, 360), 300, 50)
 
-                        display_message("Music", 500, 40)
-                        display_message("_"*100, 510, 25)
-                        button_music = Button("Change Music", (SCREEN_WIDTH // 2 - 150, 530), 300, 50)
-                        display_message("_"*125, 600, 40)
-                        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, 650), 300, 50)
+                        display_message("Music", 485, 40)
+                        display_message("_"*100, 495, 25)
+                        button_music = Button("Change Music", (SCREEN_WIDTH // 2 - 150, 510), 300, 50)
+                        display_message("_"*125, 550, 40)
+                        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, 600), 300, 50)
 
-                        button_increase.draw(screen, BUTTON_COLOUR)
-                        button_decrease.draw(screen, BUTTON_COLOUR)
                         button_colour.draw(screen, BUTTON_COLOUR)
                         button_music.draw(screen, BUTTON_COLOUR)
                         button_go_back.draw(screen, BUTTON_COLOUR)
@@ -736,12 +732,6 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                                 end()
                             if event.type == MOUSEBUTTONDOWN:
                                 pos = pygame.mouse.get_pos()
-                                if button_increase.is_clicked(pos):
-                                    v = min(1.0, v + 0.1)
-                                    pygame.mixer.music.set_volume(v)
-                                if button_decrease.is_clicked(pos):
-                                    v = max(0.0, v - 0.1)
-                                    pygame.mixer.music.set_volume(v)
                                 if button_colour.is_clicked(pos):
                                     col_bg = random.uniform(0, 1)
                                     colour_background = tuple(map(lambda x: 255.0 * x, colorsys.hsv_to_rgb(col_bg, 1, 0.975)))
@@ -850,7 +840,7 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                             filename = quizfileSearchResults[user_answer]
 
                             try:
-                                questionList, titleofquiz = load_quiz(filename)
+                                questionList, titleofquizs  = load_quiz(filename)
                             except Exception as ex:
                                 messagebox.showinfo(title='Error', message=f'This is not a quiz file: {ex}!')
                                 continue
