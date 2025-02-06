@@ -5,18 +5,20 @@ from modules.persistence import QuizQuestion, is_silly
 
 changes = False
 questionList = []
+current_file_path = None
 
 mainWindowLayout = [
     [sg.Text("Title of Quiz:"), sg.InputText(key='quiz_name', tooltip="The title of the quiz that players will see.")],
     [sg.Listbox(questionList, size=(125, 25), key='quizquestionentry', enable_events=True, tooltip="The list of the questions."),
      sg.Text(key='textbox', size=(20, 10))],
-    [sg.Button('Open', tooltip="Open an existing quiz."), sg.Button('Save', tooltip="Save your quiz in an appropriate folder."),
-     sg.Button("Edit Question", tooltip="Select a question from the listbox to edit."), sg.Button("Add Question", tooltip="Add a new question."),
-     sg.Button('Duplicate Question', tooltip="Duplicate the selected question"), sg.Button("Delete Question", tooltip="Select a question from the listbox to delete.")],
+    [sg.Button('Open', tooltip="Open an existing quiz."), sg.Button('Save', tooltip="Save your quiz."),
+     sg.Button('Save As', tooltip="Save your quiz as a new quiz in an appropriate folder."), sg.Button("Edit Question", tooltip="Select a question from the listbox to edit."), 
+     sg.Button("Add Question", tooltip="Add a new question."), sg.Button('Duplicate Question', tooltip="Duplicate the selected question"), 
+     sg.Button("Delete Question", tooltip="Select a question from the listbox to delete.")],
     [sg.Button('Quit')]
 ]
 
-mainWindow = sg.Window('Quiz Creator', mainWindowLayout, return_keyboard_events=True, finalize = True, use_default_focus=False)
+mainWindow = sg.Window('Quiz Creator', mainWindowLayout, return_keyboard_events=True, finalize=True, use_default_focus=False)
 
 def make_questionEditorWindow():
     questionEditorLayout = [
@@ -29,6 +31,15 @@ def make_questionEditorWindow():
 
     questionEditorWindow = sg.Window('Question Editor', questionEditorLayout, finalize=True, keep_on_top=True)
     return questionEditorWindow
+
+def save_quiz(file_path):
+    with open(f'{file_path}', 'w') as file:
+        try:
+            savedData = {"title": mainWindow['quiz_name'].get(), "listOfQuestions": questionList, "time given": editorValues['time_given']}
+        except NameError:
+            savedData = {"title": mainWindow['quiz_name'].get(), "listOfQuestions": questionList, "time given": 15}
+
+        json.dump(savedData, file, default=vars)
 
 while True:
     event, values = mainWindow.read()
@@ -118,18 +129,19 @@ while True:
         except ValueError:
             sg.Popup("Select a question to duplicate!")
 
-    if event == 'Save' or event == 's':
+    if event == 'Save As' or event == 's':
         changes = False
-        filename = sg.popup_get_file('', save_as=True, no_window=True, initial_folder="quizzes",
-                                     file_types=(("All JSON Files", "*.json"), ("All Files", "*.*")))
-        with open(f'{filename}', 'w') as file:
-            try:
-                savedData = {"title": values['quiz_name'], "listOfQuestions": questionList, "time given": editorValues['time_given']}
-            except NameError:
-                savedData = {"title": values['quiz_name'], "listOfQuestions": questionList, "time given": 15}
+        current_file_path = sg.popup_get_file('', save_as=True, no_window=True, initial_folder="quizzes",
+                                              file_types=(("All JSON Files", "*.json"), ("All Files", "*.*")))
+        if current_file_path:
+            save_quiz(current_file_path)
 
-            print("saveddata:", savedData)
-            json.dump(savedData, file, default=vars)
+    if event == 'Save':
+        changes = False
+        try:
+            save_quiz(current_file_path)
+        except:
+            event == 'Save As'
 
     if event == 'Open' or event == 'o':
         if changes:
@@ -139,23 +151,24 @@ while True:
                 continue
         try:
             filename = sg.popup_get_file("Open quiz", initial_folder="quizzes", no_window=True)
-            with open(filename, 'r') as file:
-                try:
-                    quizDicts = json.load(file)
-                    questionList = []
-                    for q in quizDicts["listOfQuestions"]:
-                        qq = QuizQuestion(**q)
-                        is_silly_question, reason = is_silly(qq.question, qq.correctAnswer, qq.wrongAnswers, questionList)
-                        if is_silly_question:
-                            sg.Popup(f"Silly question detected: {reason}")
-                            break
-                        questionList.append(qq)
-                    mainWindow["quizquestionentry"].update(questionList)
-                    titleofquiz = quizDicts["title"]
-                    mainWindow["quiz_name"].update(titleofquiz)
-                except Exception as e:
-                    sg.Popup(f"Error with this file! {e}")
-
+            if filename:
+                with open(filename, 'r') as file:
+                    try:
+                        quizDicts = json.load(file)
+                        questionList = []
+                        for q in quizDicts["listOfQuestions"]:
+                            qq = QuizQuestion(**q)
+                            is_silly_question, reason = is_silly(qq.question, qq.correctAnswer, qq.wrongAnswers, questionList)
+                            if is_silly_question:
+                                sg.Popup(f"Silly question detected: {reason}")
+                                break
+                            questionList.append(qq)
+                        mainWindow["quizquestionentry"].update(questionList)
+                        titleofquiz = quizDicts["title"]
+                        mainWindow["quiz_name"].update(titleofquiz)
+                        current_file_path = filename
+                    except Exception as e:
+                        sg.Popup(f"Error with this file! {e}")
         except TypeError:
             ...
 
