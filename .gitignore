@@ -1,7 +1,11 @@
 bin/
 include/
 lib/
+_internal/*
+build/quiz/*
 lib64
+None
+quizzes/example.json
 pyvenv.cfg
 share
 modules/__pycache__/*.pyc
@@ -14,3 +18,4 @@ __pycache__
 .Preferences.json
 None
 quizzes/example.json
+quiz

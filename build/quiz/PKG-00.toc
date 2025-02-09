@@ -42,7 +42,7 @@
   ('pyi_rth__tkinter',
    '/home/fcrt/.local/lib/python3.12/site-packages/PyInstaller/hooks/rthooks/pyi_rth__tkinter.py',
    'PYSOURCE'),
-  ('quiz', '/home/fcrt/Coding/python/spiele/quizcode/quiz', 'PYSOURCE')],
+  ('quiz', '/home/fcrt/Coding/python/spiele/quizcode/quiz.py', 'PYSOURCE')],
  'libpython3.12.so.1.0',
  True,
  False,

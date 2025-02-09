@@ -19,6 +19,10 @@ If you've got some useful knowledge on top of this, you can create a quiz on it 
 2. Extract the Zip file
 3. Enter the directory
 
+#### Then:
+
+Run the command `pyinstaller quiz.py`. If this does not work, attempt `pip install pyinstaller`. Finally move the `quiz` file and `_internal` folder to the main folder.
+
 #### If you are a Developer:
 
 The `quiz` file is a binary, but the `quiz.py` file contains the actual python code. For this to work, the dependencies need to be manually installed. Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are a C++ developer). These scripts may take some time to complete.
