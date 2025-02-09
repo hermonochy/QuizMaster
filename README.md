@@ -8,22 +8,22 @@ If you've got some useful knowledge on top of this, you can create a quiz on it 
 
 ### Installation
 
-##### Either:
+#### Either:
 
 1. Clone this repository via terminal `git clone https://github.com/hermonochy/QuizMaster`
 2. Enter the directory containing the game executable: `cd QuizMaster`
 
-##### Or:
+#### Or:
 
 1. Download the Zip file
 2. Extract the Zip file
 3. Enter the directory
 
-##### Then Either:
+#### If you are a Developer:
 
-Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are a C++ developer). These scripts may take some time to complete.
+The `quiz` file is a binary, but the `quiz.py` file contains the actual python code. For this to work, the dependencies need to be manually installed. Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are a C++ developer). These scripts may take some time to complete.
 
-##### Or: (Advanced, Ubuntu/Debian only):
+#### Or: (Advanced, Ubuntu/Debian only):
 
 1. Set up a new virtual environment: `python3 -m venv venv`
 2. Activate the environment: `source venv/bin/activate` (To decativate, type `deactivate`)
@@ -34,21 +34,26 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 
 ### Quiz Game
 
-In a command line window, enter `./run.sh` to start the application in Linux, or `run.bat` for Windows. Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open QuizCreator, `Play a Quiz` will start the game (see below).
+In a command line window, enter `./quiz` to start the application in Linux, or `run.bat` for Windows. To start the python file in Linux, enter `./quiz.py`.
+
+
+ Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open [QuizCreator](#quiz-creator), `Play a Quiz` will start the game (see below).
 
 ![](images/QM1.png)
 
-#### Classic Game
+#### Game modes
+
+##### Classic Game
 
 The classic game mode allows you to answer questions with a countdown timer. Your score is recorded, and at the end, it will give advice appropriate to the score. Scores greater than 80% are above average, between 80% and 40% is average, and less than 40% is below average. You can either press the number allocated to the answer or, if you don't have a keyboard, click on the answer. Remember, you have a time limit!
 
 ![](images/QM4.png)
 
-#### Classic V2
+##### Classic V2
 
 Similar to classic, the time limit of classic V2 is the absolute time, rather than induvidual time limits. This game mode is generally the easiest.
 
-#### Speed Run
+##### Speed Run
 
 The speed run game mode challenges you to answer all questions correctly in the shortest time possible. If you answer a question incorrectly, you must redo the question. If three questions are answered incorrectly, you must redo the entire quiz. The game keeps a stopwatch running throughout, and your final time is displayed at the end.
 
