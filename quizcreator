@@ -87,8 +87,8 @@ while True:
             newquestion = QuizQuestion(question, correct_answer, wrong_answers, 15)
             is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, questionList)
             if is_silly_question:
-                sg.Popup(f"Silly question detected: {reason}")
-                continue
+                sg.Popup(f"Silly question detected: {reason}", keep_on_top=True)
+                questionEditorWindow.close()
             else:
                 questionList[index] = newquestion
                 questionEditorWindow.close()
@@ -110,8 +110,8 @@ while True:
             newquestion = QuizQuestion(question, correct_answer, wrong_answers, time_given)
             is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, questionList)
             if is_silly_question:
-                sg.Popup(f"Silly question detected: {reason}")
-                pass
+                sg.Popup(f"Silly question detected: {reason}", keep_on_top=True)
+                questionEditorWindow.close()
             else:
                 questionList.append(newquestion)
                 questionEditorWindow.close()
