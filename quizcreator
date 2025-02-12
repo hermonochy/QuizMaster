@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import modules.PySimpleGUI as sg
 import json
-from modules.persistence import QuizQuestion, is_silly
+from modules.persistence import QuizQuestion
+from modules.checker import is_silly
 
 changes = False
 questionList = []

@@ -18,6 +18,7 @@ from tkinter import *
 from tkinter import messagebox, colorchooser
 
 from modules.persistence import *
+from modules.checker import *
 from modules.searchQuiz import search_str_in_file
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
 import modules.PySimpleGUI as sg
