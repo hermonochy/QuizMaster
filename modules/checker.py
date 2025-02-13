@@ -48,7 +48,7 @@ def is_silly(question, correct_answer, wrong_answers, question_list):
     if question_counter[(question, correct_answer, tuple(wrong_answers))] > 10:
         return True, "There are more than 10 identical questions!"
     
-    if len(wrong_answers) > 10:
+    if len(wrong_answers) > 9:
         return True, "Too many wrong answer options!"
 
     return False, ""

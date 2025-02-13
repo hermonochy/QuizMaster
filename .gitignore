@@ -2,7 +2,7 @@ bin/
 include/
 lib/
 _internal/*
-build/quiz/*
+build/
 lib64
 None
 quizzes/example.json
@@ -19,3 +19,4 @@ __pycache__
 None
 quizzes/example.json
 quiz
+quiz.spec
