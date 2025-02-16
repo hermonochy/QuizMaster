@@ -1,7 +1,7 @@
 # QuizMaster
 
 QuizMaster is a fun game testing your knowledge and cognitive ability in many different areas. 
-If you know how to copy and paste text to the command line interface, and can copy or clone this repository, then you're in.
+If you know how to copy and paste text to the command line interface, and can copy or clone this repository, then you're in. 
 If you've got some useful knowledge on top of this, you can create a quiz on it with `QuizCreator` and create a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/creating-a-pull-request).
 
 ## Usage
@@ -21,7 +21,7 @@ If you've got some useful knowledge on top of this, you can create a quiz on it 
 
 #### Then:
 
-Run the command `pyinstaller quiz.py`. If this does not work, attempt `pip install pyinstaller`. Finally move the `quiz` file and `_internal` folder to the main folder.
+Run the command `pyinstaller quiz.py`. If this does not work, attempt installing pyinstaller: `pip install pyinstaller`.
 
 #### If you are a Developer:
 
@@ -38,7 +38,7 @@ The `quiz` file is a binary, but the `quiz.py` file contains the actual python c
 
 ### Quiz Game
 
-In a command line window, enter `./quiz` to start the application in Linux, or `run.bat` for Windows. To start the python file in Linux, enter `./quiz.py`.
+In a command line window, enter `./dist/quiz/quiz` to start the application in Linux, or `dist/quiz/quiz` for Windows. To start the python file in Linux, enter `./run.sh` and `run.bat` for Windows.
 
 
  Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open [QuizCreator](#quiz-creator), `Play a Quiz` will start the game (see below).
@@ -81,27 +81,28 @@ There is a preferences window where you can change the song, volume, and backgro
 
 ### Quiz Game:
 
-- Classic game mode with timing and score recording.
+- Classic game mode with timing and score recording (Classic/Classic V2).
 - Timed quiz questions with countdown (Speed Run).
 - Ability to answer questions and receive scores.
 - Background music during gameplay.
 - Start QuizCreator
-- Change settings
+- Customise background and music
 
 ### Quiz Creator:
 
-- Add, Edit, Delete, Save, and Load functions for quiz questions.
+- Add, Edit, Delete, Duplicate, Open, Save, and Load functions for quiz questions.
 - Interactive GUI interface for managing quiz questions.
 
-Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository welcomes contributions from everyone.
-*Note: Many of the example quizzes are written by AI or schoolchildren, so they may contain incorrect information.*
+Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository welcomes contributions from everyone. 
+
+*Warning: Many of the example quizzes are written by AI or schoolchildren, so they may contain incorrect or silly information.*
 
 ## Future Work
 
 - More methods of answering questions
 - Adding pictures to questions
 - More user-friendly method of installing the game
-- Multiplayer options
+- Multiplayer option
 - ~~Different game modes~~
-- Web app option
+- Web app version
 - Add links to external sources

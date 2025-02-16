@@ -517,8 +517,6 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     totalQuestions = len(originalQuestions)
     lives = 3
 
-    start_time = time.time()
-
     for i in range(3,0,-1):
         screen.fill(BACKGROUND_COLOUR)
         display_message(titleofquiz, QUESTION_OFFSET,70)
@@ -529,6 +527,7 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     display_message(("Go!"), QUESTION_OFFSET+200,150)
     pygame.display.update()
     pygame.time.delay(1000) 
+    start_time = time.time()
 
     while running:
         if not questionList:
