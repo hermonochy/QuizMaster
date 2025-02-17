@@ -154,7 +154,7 @@ def load_quiz(filename):
         titleofquiz = quizDicts["title"]
     return questionList, titleofquiz
 
-def display_message(message, y_position, font_size):
+def display_message(message, y_position, font_size, colour="BLACK"):
     font = pygame.font.Font(None, font_size)
     words = message.split()
     
@@ -173,12 +173,12 @@ def display_message(message, y_position, font_size):
             text_lines.append(line)
 
         for line in text_lines:
-            text = font.render(line, True, BLACK)
+            text = font.render(line, True, colour)
             text_rect = text.get_rect(center=(SCREEN_WIDTH // 2 , y_position))
             screen.blit(text, text_rect)
             y_position += text.get_height()
     else:
-        text = font.render(message, True, BLACK)
+        text = font.render(message, True, colour)
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, y_position))
         screen.blit(text, text_rect)
         
@@ -242,7 +242,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         user_answer = None
         time_remaining = currentQuestion.timeout
-
+        timeColour = (0,0,0)
         
         answerOptions = [currentQuestion.correctAnswer] + currentQuestion.wrongAnswers
         random.shuffle(answerOptions)
@@ -261,7 +261,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             button_end = Button("End Quiz", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+200), 250, 40)  
             button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+250), 250, 40)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+300), 250, 40)
-            display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET, 40)
+            display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, timeColour)
             button_end.draw(screen, BUTTON_COLOUR)
             button_go_back.draw(screen, BUTTON_COLOUR)
             button_leave.draw(screen, BUTTON_COLOUR)
@@ -289,6 +289,8 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                         user_answer = event.key - pygame.K_1
 
             time_remaining -= 1
+            if time_remaining <= 5:
+                timeColour = (255,0,0)
             pygame.time.wait(1000)
 
         correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
@@ -403,6 +405,11 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             elapsed_time = time.time() - start_time
             time_remaining = total_time - int(elapsed_time)
             
+            if time_remaining < total_time/totalQuestions:
+                timeColour = (255,0,0)
+            else:
+                timeColour = (0,0,0)    
+
             if time_remaining <= 0:
                 running = False
                 break
@@ -415,7 +422,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40)
             button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40)
-            display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET, 40)
+            display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, timeColour)
             button_end.draw(screen, BUTTON_COLOUR)
             button_go_back.draw(screen, BUTTON_COLOUR)
             button_leave.draw(screen, BUTTON_COLOUR)

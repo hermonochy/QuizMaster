@@ -10,7 +10,7 @@ def search_str_in_file(file_path, word):
             return file_path
         
         for w in words:
-            if fuzz.ratio(w, word.lower()) > 80:
+            if fuzz.ratio(w, word.lower()) > 70:
                 return file_path
 
 
