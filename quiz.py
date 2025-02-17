@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import pygame
 import pygame_gui
+from tkinter import *
 import sys
 import json
 import random
@@ -58,6 +59,7 @@ try:
               music = prefDict["Music"]
               colour_background = prefDict["colour"]
               buttons_colour = prefDict["buttoncolour"] 
+              celebration = False
           colour = colour_background
           button_colour = buttons_colour
       except json.JSONDecodeError:
@@ -78,10 +80,14 @@ except FileNotFoundError:
     buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
     colour = colour_background
     button_colour = buttons_colour
+    
+root = Tk()
+width = root.winfo_screenwidth() 
+height = root.winfo_screenheight()
      
 
-SCREEN_WIDTH = 1250
-SCREEN_HEIGHT = 700
+SCREEN_WIDTH = width - 250
+SCREEN_HEIGHT = height -150
 BACKGROUND_COLOUR = colour
 BUTTON_COLOUR = button_colour
 BLACK = (0, 0, 0)
@@ -89,9 +95,6 @@ FONT_SIZE = 40
 QUESTION_OFFSET = 50
 ANSWER_OFFSET = 200
 OPTION_HEIGHT = 50
-
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption('QuizMaster')
 
 class Button:
     def __init__(self, text, position, width=0, height=0):
@@ -622,56 +625,7 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     speed(originalQuestions[:], titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                 if button_quit.is_clicked(pos):
                     end()
-                    
-    while True:
-        screen.fill(BACKGROUND_COLOUR)
-        display_message(f"Speed Run completed! You answered all questions correctly in {total_time} seconds.", SCREEN_HEIGHT // 2 - 200, 40)
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
-        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
-        button_go_back.draw(screen, BUTTON_COLOUR)
-        button_replay.draw(screen, BUTTON_COLOUR)
-        button_quit.draw(screen, BUTTON_COLOUR)
-
-        pygame.display.update()
-
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                end()
-            if event.type == MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                event_time = pygame.time.get_ticks()
-                if button_go_back.is_clicked(pos):
-                    return True
-                if button_replay.is_clicked(pos):
-                    speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                if button_quit.is_clicked(pos):
-                    end()
-                    
-
-def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
-    running = True
-    while running:
-        screen.fill(BACKGROUND_COLOUR)
-        button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2), 250, 60)
-        button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2), 250, 60)
-        button_preferences = Button("Preferences", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 100), 250, 60)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 100), 250, 60)
-        display_message("Welcome to QuizMaster!", SCREEN_HEIGHT - 600, 75)
-        button_make.draw(screen, BUTTON_COLOUR)
-        button_play.draw(screen, BUTTON_COLOUR)
-        button_preferences.draw(screen, BUTTON_COLOUR)
-        button_quit.draw(screen, BUTTON_COLOUR)
-        pygame.display.update()
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                end()
-            if event.type == MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                if button_quit.is_clicked(pos):
-                    end()
-                if button_make.is_clicked(pos):
-                    subprocess.Popen(["python3", "quizcreator"])
+                   
                     
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
     running = True
@@ -681,7 +635,7 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
         button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2), 250, 60)
         button_preferences = Button("Preferences", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 100), 250, 60)
         button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 100), 250, 60)
-        display_message("Welcome to QuizMaster!", SCREEN_HEIGHT - 600, 75)
+        display_message("Welcome to QuizMaster!", SCREEN_HEIGHT // 2 - 300, 75)
         button_make.draw(screen, BUTTON_COLOUR)
         button_play.draw(screen, BUTTON_COLOUR)
         button_preferences.draw(screen, BUTTON_COLOUR)
@@ -697,6 +651,7 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                 if button_make.is_clicked(pos):
                     subprocess.Popen(["python3", "quizcreator"])
                 if button_preferences.is_clicked(pos):
+                    celebration = False
                     numList = re.findall(r'\d+',music)     
                     i = int(numList[0]) if numList else 1 
                     
@@ -726,10 +681,12 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                         button_music = Button("Change Music", (SCREEN_WIDTH // 2 - 150, 510), 300, 50)
                         display_message("_"*125, 550, 40)
                         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, 600), 300, 50)
+                        button_cancel = Button("Cancel", (SCREEN_WIDTH // 2 - 150, 660), 300, 50)
 
                         button_colour.draw(screen, BUTTON_COLOUR)
                         button_music.draw(screen, BUTTON_COLOUR)
                         button_go_back.draw(screen, BUTTON_COLOUR)
+                        button_cancel.draw(screen, BUTTON_COLOUR)
 
                         manager.draw_ui(screen)
                         pygame.display.update()
@@ -756,17 +713,24 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                                     pygame.mixer.music.unload()
                                     music = f'music/music{i}.ogg'
                                     if isItChristmasTimeNow():
+                                        celebration = True
                                         music = ["music/music_christmas1.ogg", "music/music_christmas2.ogg"][i % 2]
                                     if isItHalloweenTimeNow():
+                                        celebration = True
                                         music = ["music/music_halloween1.ogg", "music/music_halloween2.ogg"][i % 2]
                                     if isItStPatricksTimeNow():
+                                        celebration = True
                                         music = "music/music_stpatricks1.ogg"
                                     if isItValentinesTimeNow():
+                                        celebration = True
                                         music = "music/music_valentines1.ogg"
                                     pygame.mixer.music.load(music)
                                     pygame.mixer.music.play(-1)
                                 if button_go_back.is_clicked(pos):
-                                    save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                                    if celebration == False:
+                                        save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                                    main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+                                if button_cancel.is_clicked(pos):
                                     main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                             manager.process_events(event)
                             if event.type == pygame.USEREVENT:
@@ -856,7 +820,7 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                             running = True
                             while running:
                                 screen.fill(BACKGROUND_COLOUR)
-                                display_message("Select Game Mode:", SCREEN_HEIGHT - 650, 75)
+                                display_message("Select Game Mode:", SCREEN_HEIGHT // 2 - 300, 75)
                                 button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 550, SCREEN_HEIGHT // 2 - 200), 300, 60)
                                 button_classicV2 = Button("Classic v2.0", (SCREEN_WIDTH // 2 - 225, SCREEN_HEIGHT // 2 - 200), 300, 60)
                                 button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 + 110, SCREEN_HEIGHT // 2 - 200), 300, 60)           
@@ -883,6 +847,8 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                                                 main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                                             
 if __name__ == '__main__':
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('QuizMaster')
     icon = pygame.image.load('images/logo1.png')
     pygame.mixer.init()
     pygame.mixer.music.load(music)
