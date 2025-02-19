@@ -86,8 +86,8 @@ width = root.winfo_screenwidth()
 height = root.winfo_screenheight()
      
 
-SCREEN_WIDTH = width - 250
-SCREEN_HEIGHT = height -150
+SCREEN_WIDTH = width * 0.75
+SCREEN_HEIGHT = height * 0.75
 BACKGROUND_COLOUR = colour
 BUTTON_COLOUR = button_colour
 BLACK = (0, 0, 0)
@@ -467,7 +467,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         try:
             if correctAnswers / totalQuestions > 0.8:
                 display_message(good_praise, y_position, 40)
-            if correctAnswers / totalQuestions > 0.4 and correctAnswers / totalQuestions < 0.8 or correctAnswers / totalQuestions == 0.8:
+            if correctAnswers / totalQuestions > 0.4 and correctAnswers / totalQuestions <= 0.8 :
                 display_message(medium_praise, y_position, 40)
             if correctAnswers / totalQuestions < 0.4 or correctAnswers / totalQuestions == 0.4:
                 display_message(bad_praise, y_position, 40)
