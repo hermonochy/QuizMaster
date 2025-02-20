@@ -40,6 +40,20 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 
 *Steps 1 and 2 are optional but recommended.*
 
+##### Adding Arguments
+
+The file `quiz.py` also allows for the quiz path and game mode to be added as arguments when starting the program. This is primarily for quick testing of a quiz; a shortcut for quiz makers.
+```sh
+usage: quiz [-h] [--quizPath [QUIZPATH]] [--gameMode [GAMEMODE]]
+
+options:
+  -h, --help            show this help message and exit
+  --quizPath [QUIZPATH]
+  --gameMode [GAMEMODE]
+```
+
+The quiz argument can be added by itself, but the game mode argument requires a quiz to go along with it.
+
 ### Quiz Game
 
 In a command line window, enter `./dist/quiz/quiz` to start the application in Linux, or `dist/quiz/quiz` for Windows. To start the python file in Linux, enter `./run.sh` and `run.bat` for Windows.

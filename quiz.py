@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import pygame
 import pygame_gui
+import argparse
 import sys
 import json
 import random
@@ -13,6 +14,7 @@ import subprocess
 from glob import glob
 import datetime
 
+from enum import Enum
 from pygame.locals import *
 from tkinter import *
 
@@ -93,6 +95,11 @@ FONT_SIZE = 40
 QUESTION_OFFSET = 50
 ANSWER_OFFSET = 200
 OPTION_HEIGHT = 50
+
+class GameMode(str, Enum):
+    classic = 'classic'
+    classicV2 = 'classicV2'
+    speedRun = 'speedRun'
 
 class Button:
     def __init__(self, text, position, width=0, height=0):
@@ -365,8 +372,9 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
             try:
                 questionList, titleofquiz  = load_quiz(filename)
             except Exception as ex:
-                messagebox.showinfo(title='Error', message=f'This is not a quiz file: {ex}!')
-                continue
+                print(f"Error in {filename}: {ex}")               
+                break
+                break
             print("Questions:", questionList)
             
             running = True
@@ -848,6 +856,23 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                     choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        prog='quiz',
+        description='Main program for QuizMaster. Features include: Playing quiz, preferences and starting QuizCreator.',
+        #epilog='No other options.'
+        )
+    parser.add_argument('--quizPath', nargs='?', const="")
+    parser.add_argument('--gameMode', nargs='?', const="", type=GameMode)
+    args = parser.parse_args()
+
+    if args.quizPath is not None:
+        print("Loading quiz: ", args.quizPath)
+        try:
+            questionList, titleofquiz = load_quiz(args.quizPath)
+        except Exception as ex:
+            print("Error:", ex)
+            sys.exit()
+
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('QuizMaster')
     icon = pygame.image.load('images/logo1.png')
@@ -855,4 +880,23 @@ if __name__ == '__main__':
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
     pygame.display.set_icon(icon)
-    main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+    if args.gameMode == GameMode.classic or (args.quizPath != None and args.gameMode == None):
+        try:
+            classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        except Exception as ex:
+            print("Error: ", ex)
+            sys.exit()
+    if args.gameMode == GameMode.classicV2:
+        try:
+            classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        except Exception as ex:
+            print("Error: ", ex)
+            sys.exit()
+    if args.gameMode == GameMode.speedRun:
+        try:
+            speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        except Exception as ex:
+            print("Error: ", ex)
+            sys.exit()
+    if args.gameMode == None:
+        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
