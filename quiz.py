@@ -15,7 +15,6 @@ import datetime
 
 from pygame.locals import *
 from tkinter import *
-from tkinter import messagebox, colorchooser
 
 from modules.persistence import *
 from modules.checker import *
@@ -122,7 +121,7 @@ class Scrollbar:
         self.total_items = total_items
         self.items_per_page = items_per_page
         self.rect = pygame.Rect(position[0], position[1], 20, height)
-        self.handle_rect = pygame.Rect(position[0], position[1], 20, height * items_per_page // total_items)
+        self.handle_rect = pygame.Rect(position[0], position[1], 20, int(height * items_per_page // total_items))
         self.dragging = False
         self.offset_y = 0
 
@@ -144,7 +143,7 @@ class Scrollbar:
                 self.handle_rect.y = new_y
 
     def get_offset(self):
-        return (self.handle_rect.y - self.rect.y) * self.total_items // self.height
+        return int((self.handle_rect.y - self.rect.y) * self.total_items // self.height)
 
 def load_quiz(filename):
     with open(filename, 'r') as file:
@@ -395,6 +394,43 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
                         if button_speed.is_clicked(pos):
                             speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                             
+def show_incorrect_answers(incorrect_questions):
+    running = True
+    total_items = len(incorrect_questions)
+    items_per_page = 10
+    scrollbar = Scrollbar((SCREEN_WIDTH - 40, 100), SCREEN_HEIGHT - 150, total_items, items_per_page)
+    offset = 0
+
+    while running:
+        screen.fill(BACKGROUND_COLOUR)
+        y_position = 50
+
+        for idx in range(offset, min(offset + items_per_page, total_items)):
+            question = incorrect_questions[idx]
+            y_position = display_message(question.question, y_position, 30, BLACK)
+            y_position = display_message(f"Correct Answer: {question.correctAnswer}", y_position, 30, BLACK)
+            y_position += 20
+
+        button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50)
+        button_back.draw(screen, BUTTON_COLOUR)
+
+        if total_items > items_per_page:
+            scrollbar.draw(screen)
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                end()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if button_back.is_clicked(pos):
+                    running = False
+            if total_items > items_per_page:
+                scrollbar.handle_event(event)
+
+        offset = scrollbar.get_offset()
+                            
 
 def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     incorrect_questions = []
@@ -519,25 +555,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 pos = pygame.mouse.get_pos()
                 if incorrect_questions and questionIndex > 0:
                     if button_show_incorrect.is_clicked(pos):
-                      messages = []
-                      for question in incorrect_questions:
-                          messages.append(f"""{question.question}
-Correct Answer: {question.correctAnswer}""")
-
-                      final_message = '\n \n'.join(messages)
-
-                      layout = [
-                          [sg.Multiline(final_message, size=(100, 20), disabled=True)],
-                        ]
-
-                      window = sg.Window('Wrong Questions', layout)
-
-                      while True:
-                          event, values = window.read()
-                          if event == sg.WINDOW_CLOSED:
-                              window.close()
-                              break
-                          
+                        show_incorrect_answers(incorrect_questions)
                 if button_go_back.is_clicked(pos):
                     main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                     return
@@ -677,25 +695,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 pos = pygame.mouse.get_pos()
                 if incorrect_questions and questionIndex > 0:
                     if button_show_incorrect.is_clicked(pos):
-                        messages = []
-                        for question in incorrect_questions:
-                            messages.append(f"""{question.question}
-Correct Answer: {question.correctAnswer}""")
-
-                        final_message = '\n \n'.join(messages)
-
-                        layout = [
-                            [sg.Multiline(final_message, size=(100, 20), disabled=True)],
-                        ]
-
-                        window = sg.Window('Wrong Questions', layout)
-
-                        while True:
-                            event, values = window.read()
-                            if event == sg.WINDOW_CLOSED:
-                                window.close()
-                                break
-
+                        show_incorrect_answers(incorrect_questions)
                 if button_go_back.is_clicked(pos):
                     main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                     return
