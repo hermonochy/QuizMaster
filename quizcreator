@@ -23,10 +23,10 @@ mainWindow = sg.Window('Quiz Creator', mainWindowLayout, return_keyboard_events=
 
 def make_questionEditorWindow():
     questionEditorLayout = [
-        [sg.Text('Enter the question:'), sg.InputText(key='question', tooltip="Enter the question.")],
-        [sg.Text('Enter the correct answer:'), sg.InputText(key='correct_answer', tooltip="Enter the answer.")],
-        [sg.Text('Enter the wrong answers:'), sg.InputText(key='wrong_answers', tooltip="Enter some related but incorrect answers, separated by commas.")],
-        [sg.Text('Enter the time given to answer:'), sg.InputText(key='time_given', tooltip="Enter an integer number of seconds. Average is 10-20.")],
+        [sg.Text('Enter the question:'), sg.InputText(key='question', size=105, tooltip="Enter the question.")],
+        [sg.Text('Enter the correct answer:'), sg.InputText(key='correct_answer', size=75, tooltip="Enter the answer.")],
+        [sg.Text('Enter the wrong answers:'), sg.InputText(key='wrong_answers', size=100, tooltip="Enter some related but incorrect answers, separated by commas.")],
+        [sg.Text('Enter the time given to answer:'), sg.InputText(key='time_given', size=3, tooltip="Enter an integer number of seconds. Average is 10-20.")],
         [sg.Button('Add'), sg.Button('Cancel')]
     ]
 
