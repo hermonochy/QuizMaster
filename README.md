@@ -74,8 +74,9 @@ There is a preferences window where you can change the song, volume, and backgro
 1. Run quizcreator by opening QuizMaster and clicking `Make a Quiz`. You can also start it separately with `./quizcreator` on the command line interface in Linux.
 2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answer and a set of wrong answers, separated by commas. Further instructions can be viewed via the implemented tooltips.
 
-## QuizMasterMini
-[QuizMasterMini](https://github.com/hermonochy/QuizMasterMini) is a smaller version of the application, made for smaller devices or people on a budget with data volumes.
+## QuizMasterLite
+
+[QuizMasterLite](https://github.com/hermonochy/QuizMasterLite) is a smaller version of the application, made for smaller devices or people on a budget with data volumes.
 
 ## Features
 
