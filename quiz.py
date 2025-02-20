@@ -450,6 +450,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             button_go_back.draw(screen, BUTTON_COLOUR)
             button_leave.draw(screen, BUTTON_COLOUR)
             pygame.display.update()
+            pygame.time.wait(1000)
 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -475,7 +476,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             time_remaining -= 1
             if time_remaining <= 5:
                 timeColour = (255,0,0)
-            pygame.time.wait(1000)
+
 
         correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
         if user_answer is not None:
