@@ -823,11 +823,14 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
         button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2), 250, 60)
         button_preferences = Button("Preferences", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 100), 250, 60)
         button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 100), 250, 60)
-        display_message("Welcome to QuizMaster!", SCREEN_HEIGHT // 2 - 300, 75)
+        display_message("Welcome to QuizMaster!", SCREEN_HEIGHT // 7, 75)
         button_make.draw(screen, BUTTON_COLOUR)
         button_play.draw(screen, BUTTON_COLOUR)
         button_preferences.draw(screen, BUTTON_COLOUR)
         button_quit.draw(screen, BUTTON_COLOUR)
+        welcome_image = pygame.image.load("images/logo.png").convert()
+        screen.blit(welcome_image, (SCREEN_WIDTH//4.75, SCREEN_HEIGHT//12))
+        screen.blit(welcome_image, (SCREEN_WIDTH//1.325, SCREEN_HEIGHT//12))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == QUIT:

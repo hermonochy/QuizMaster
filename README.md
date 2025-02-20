@@ -25,9 +25,13 @@ Run the command `pyinstaller quiz.py`. If this does not work, attempt installing
 
 #### If you are a Developer:
 
-The `quiz` file is a binary, but the `quiz.py` file contains the actual python code. For this to work, the dependencies need to be manually installed. Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are a C++ developer). These scripts may take some time to complete.
+The `quiz` file is a binary, but the `quiz.py` file contains the actual python code. For this to work, the dependencies need to be manually installed. 
 
-#### Or: (Advanced, Ubuntu/Debian only):
+##### Either
+
+Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are a C++ developer). These scripts may take some time to complete.
+
+##### Or: (Advanced, Ubuntu/Debian only):
 
 1. Set up a new virtual environment: `python3 -m venv venv`
 2. Activate the environment: `source venv/bin/activate` (To decativate, type `deactivate`)
