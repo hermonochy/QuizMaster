@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import pygame
-import pygame_gui
+import pygame_widgets
 import argparse
 import sys
 import json
@@ -16,6 +16,9 @@ import datetime
 
 from enum import Enum
 from pygame.locals import *
+from pygame_widgets.slider import Slider
+from pygame_widgets.textbox import TextBox
+from pygame_widgets.button import Button as button
 from tkinter import *
 
 from modules.persistence import *
@@ -26,7 +29,6 @@ import modules.PySimpleGUI as sg
 
 pygame.init()
 pygame.font.init()
-manager = pygame_gui.UIManager((1250, 700))
 
 
 textinput = TextInputVisualizer()
@@ -39,6 +41,7 @@ try:
       try:
           prefDict = json.load(file)
           v = prefDict["Volume"]
+          pygame.mixer.music.set_volume(v)
           if isItHalloweenTimeNow():
               colour_background = (250,100,0)
               buttons_colour =  (255,110,10)
@@ -205,57 +208,47 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
     celebration = False
     numList = re.findall(r'\d+', music)     
     i = int(numList[0]) if numList else 1 
-    
-    volume_slider = pygame_gui.elements.ui_horizontal_slider.UIHorizontalSlider(
-        relative_rect=pygame.Rect((SCREEN_WIDTH // 2 - 150, 150), (300, 50)),
-        start_value=v,
-        value_range=(0, 1),
-        manager=manager
-    )
 
-    scrollbar = Scrollbar((SCREEN_WIDTH - 40, 100), SCREEN_HEIGHT - 150, 6, 4)
+    volumeSlider = Slider(screen, 300, 150, 800, 40, min=0, max=1, step=0.05, initial=v, handleRadius=20)
+    Rslider = Slider(screen, 300, 280, 800, 40, min=0, max=148, step=0.5, handleRadius=20, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0]-100)
+    Gslider = Slider(screen, 300, 330, 800, 40, min=0, max=148, step=0.5, handleRadius=20, handleColour = (20,255,50), initial = BACKGROUND_COLOUR[1]-100)
+    Bslider = Slider(screen, 300, 380, 800, 40, min=0, max=148, step=0.5, handleRadius=20, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2]-100)
+    button_music = button(screen, 575, 510, 300, 50, text="Change Music", inactiveColour = BUTTON_COLOUR, shadowDistance = 2)
+    button_go_back = button(screen, 575, 600, 300, 50, text="Main Menu", inactiveColour = BUTTON_COLOUR, shadowDistance = 2)
+    button_cancel = button(screen, 575, 660, 300, 50, text="Cancel", inactiveColour = BUTTON_COLOUR, shadowDistance = 2)
+    volumeSlider.draw()
+    Rslider.draw()
+    Gslider.draw()
+    Bslider.draw()
+    button_music.draw()
+    button_go_back.draw()
+    button_cancel.draw()
+    screen.fill(BACKGROUND_COLOUR)
+    display_message("Preferences", 50, 75)
+    display_message("_"*125, 60, 40)
+    display_message("Volume Control", 120, 40)
+    display_message("_"*100, 130, 25)
+    
+    display_message("Colours", 230, 40)
+    display_message("_"*100, 240, 25)
+
+    display_message("Music", 485, 40)
+    display_message("_"*100, 495, 25)
+    display_message("_"*125, 550, 40)
 
     while running:
-        time_delta = pygame.time.Clock().tick(60) / 1000.0
-        screen.fill(BACKGROUND_COLOUR)
-        display_message("Preferences", 50, 75)
-        display_message("_"*125, 60, 40)
-        display_message("Volume Control", 120, 40)
-        display_message("_"*100, 130, 25)
-        
-        display_message("Colours", 330, 40)
-        display_message("_"*100, 340, 25)
-        button_colour = Button("Change Colour", (SCREEN_WIDTH // 2 - 150, 360), 300, 50)
-
-        display_message("Music", 485, 40)
-        display_message("_"*100, 495, 25)
-        button_music = Button("Change Music", (SCREEN_WIDTH // 2 - 150, 510), 300, 50)
-        display_message("_"*125, 550, 40)
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, 600), 300, 50)
-        button_cancel = Button("Cancel", (SCREEN_WIDTH // 2 - 150, 660), 300, 50)
-
-        button_colour.draw(screen, BUTTON_COLOUR)
-        button_music.draw(screen, BUTTON_COLOUR)
-        button_go_back.draw(screen, BUTTON_COLOUR)
-        button_cancel.draw(screen, BUTTON_COLOUR)
-
-        manager.draw_ui(screen)
+        pygame_widgets.update(pygame.event.get())
         pygame.display.update()
-
+        v = volumeSlider.getValue()
+        pygame.mixer.music.set_volume(v)
+        BACKGROUND_COLOUR = (Rslider.getValue()+100, Gslider.getValue()+100, Bslider.getValue()+100)
+        BUTTON_COLOUR = (Rslider.getValue()+107, Gslider.getValue()+107, Bslider.getValue()+107)
         for event in pygame.event.get():
             if event.type == QUIT:
                 end()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                if button_colour.is_clicked(pos):
-                    col_bg = random.uniform(0, 1)
-                    colour_background = tuple(map(lambda x: 255.0 * x, colorsys.hsv_to_rgb(col_bg, 1, 0.975)))
-                    buttons_colour = tuple(map(lambda x: 255.0 * x, colorsys.hsv_to_rgb(col_bg, 1, 1)))
-                    colour = colour_background
-                    button_colour = buttons_colour
-                    BACKGROUND_COLOUR = colour
-                    BUTTON_COLOUR = button_colour
-                if button_music.is_clicked(pos):
+                if button_music.contains(*pos):
                     if i < 7:
                         i += 1
                     else:
@@ -277,21 +270,14 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                         music = "music/music_valentines1.ogg"
                     pygame.mixer.music.load(music)
                     pygame.mixer.music.play(-1)
-                if button_go_back.is_clicked(pos):
-                    if celebration == False:
+                if button_go_back.contains(*pos):
+                    if not celebration:
                         save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                     return
-                if button_cancel.is_clicked(pos):
+                if button_cancel.contains(*pos):
                     main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                     return
-            manager.process_events(event)
-            if event.type == pygame.USEREVENT:
-                if event.user_type == pygame_gui.UI_HORIZONTAL_SLIDER_MOVED:
-                    if event.ui_element == volume_slider:
-                        v = event.value
-                        pygame.mixer.music.set_volume(v)
-        manager.update(time_delta)
 
 
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
@@ -402,7 +388,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
                         if button_speed.is_clicked(pos):
                             speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                             
-def show_incorrect_answers(incorrect_questions):
+def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR):
     running = True
     total_items = len(incorrect_questions)
     items_per_page = 10
@@ -563,7 +549,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 pos = pygame.mouse.get_pos()
                 if incorrect_questions and questionIndex > 0:
                     if button_show_incorrect.is_clicked(pos):
-                        show_incorrect_answers(incorrect_questions)
+                        show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                 if button_go_back.is_clicked(pos):
                     main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                     return
@@ -703,7 +689,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 pos = pygame.mouse.get_pos()
                 if incorrect_questions and questionIndex > 0:
                     if button_show_incorrect.is_clicked(pos):
-                        show_incorrect_answers(incorrect_questions)
+                        show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                 if button_go_back.is_clicked(pos):
                     main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                     return
@@ -859,7 +845,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog='quiz',
         description='Main program for QuizMaster. Features include: Playing quiz, preferences and starting QuizCreator.',
-        #epilog='No other options.'
         )
     parser.add_argument('--quizPath', nargs='?', const="")
     parser.add_argument('--gameMode', nargs='?', const="", type=GameMode)
