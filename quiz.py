@@ -7,7 +7,6 @@ import json
 import random
 import time
 import math
-import colorsys
 import re
 import os
 import subprocess
@@ -83,13 +82,10 @@ except FileNotFoundError:
     buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
     colour = colour_background
     button_colour = buttons_colour
-    
-width = Tk().winfo_screenwidth() 
-height = Tk().winfo_screenheight()
      
 
-SCREEN_WIDTH = width ** 2 // 2000
-SCREEN_HEIGHT = height ** 2 // 1250
+SCREEN_WIDTH = 1400
+SCREEN_HEIGHT = 850
 BACKGROUND_COLOUR = colour
 BUTTON_COLOUR = button_colour
 BLACK = (0, 0, 0)
@@ -104,7 +100,7 @@ class GameMode(str, Enum):
     speedRun = 'speedRun'
 
 class Button:
-    def __init__(self, text, position, width=0, height=0):
+    def __init__(self, text, position, width=300, height=60):
         self.text = text
         self.position = position
         self.font = pygame.font.Font(None, FONT_SIZE)
@@ -271,13 +267,26 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                     pygame.mixer.music.load(music)
                     pygame.mixer.music.play(-1)
                 if button_go_back.contains(*pos):
+                    volumeSlider.hide()
+                    Rslider.hide()
+                    Gslider.hide()
+                    Bslider.hide()
+                    button_music.hide()
+                    button_go_back.hide()
+                    button_cancel.hide()
                     if not celebration:
                         save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return  main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                 if button_cancel.contains(*pos):
+                    volumeSlider.hide()
+                    Rslider.hide()
+                    Gslider.hide()
+                    Bslider.hide()
+                    button_music.hide()
+                    button_go_back.hide()
+                    button_cancel.hide()
                     main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                     return
-
 
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
     searchTerm = ""
@@ -366,12 +375,14 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
             while running:
                 screen.fill(BACKGROUND_COLOUR)
                 display_message("Select Game Mode:", SCREEN_HEIGHT // 2 - 300, 75)
-                button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 550, SCREEN_HEIGHT // 2 - 200), 300, 60)
-                button_classicV2 = Button("Classic v2.0", (SCREEN_WIDTH // 2 - 225, SCREEN_HEIGHT // 2 - 200), 300, 60)
-                button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 + 110, SCREEN_HEIGHT // 2 - 200), 300, 60)           
+                button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), 250, 60)
+                button_classicV2 = Button("Classic V2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60)
+                button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60)
+                button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60)           
                 button_classic.draw(screen, BUTTON_COLOUR)
                 button_classicV2.draw(screen, BUTTON_COLOUR)
                 button_speed.draw(screen, BUTTON_COLOUR)
+                button_survival.draw(screen, BUTTON_COLOUR)
                 pygame.display.update()
 
                 for event in pygame.event.get():
@@ -386,6 +397,8 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
                             classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         if button_speed.is_clicked(pos):
                             speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        if button_survival.is_clicked(pos):
+                            survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                             
 
 def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR):
@@ -394,6 +407,8 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
     items_per_page = 10
     scrollbar = Scrollbar((SCREEN_WIDTH - 40, 100), SCREEN_HEIGHT - 150, total_items, items_per_page)
     offset = 0
+    button_back = button(screen, SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100, 300, 50, text="Back to Results", inactiveColour=BUTTON_COLOUR, shadowDistance = 2, radius=25)
+    button_back.draw()
 
     while running:
         screen.fill(BACKGROUND_COLOUR)
@@ -405,12 +420,9 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
             y_position = display_message(f"Correct Answer: {question.correctAnswer}", y_position, 30, BLACK)
             y_position += 20
 
-        button_back = button(screen, SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100, 300, 50, text="Back to Results", inactiveColour=BUTTON_COLOUR, shadowDistance = 2, radius=25)
-        button_back.draw()
-
         if total_items > items_per_page:
             scrollbar.draw(screen)
-
+        pygame_widgets.update(pygame.event.get())
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -419,6 +431,7 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_back.contains(*pos):
+                    button_back.hide()
                     return
             if total_items > items_per_page:
                 scrollbar.handle_event(event)
@@ -437,7 +450,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far of mastering {titleofquiz}", f"Just abit more practice on {titleofquiz}!",f"You’re making steady progress in {titleofquiz}.", f"You're on the right track with {titleofquiz}!",f"You've got a solid grasp of {titleofquiz}.",f"A commendable effort in {titleofquiz}!",f"You've got the basics of {titleofquiz} down!",f"Keep it up! You're building a good foundation in {titleofquiz}!"
 ]
     medium_praise = (random.choice(medium_praise_list))
-    bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!", f"You might want to consider revising another topic!", f"Sorry to say, but you're pretty terrible at {titleofquiz}", f"You really struggle with {titleofquiz}!", f"You have a long way to go in mastering {titleofquiz}!", f"Not to be too hard, but it seems you're not great at {titleofquiz}!", f"Time to go back to the drawing board on {titleofquiz}!", f"You might want to consider taking another look at {titleofquiz}!", f"It's clear you're not a {titleofquiz} expert!", f"Unfortunately, you're not very good at {titleofquiz}!", f"You need to brush up on your {titleofquiz} skills!", f"Your {titleofquiz} knowledge is still in its infancy!"]
+    bad_praise_list = [f"Your forte is definitely not {titleofquiz}",f"You are terrible at {titleofquiz}!", f"You have alot to learn about {titleofquiz}!", f"You might want to consider revising another topic!", f"Sorry to say, but you're pretty terrible at {titleofquiz}", f"You really struggle with {titleofquiz}!", f"You have a long way to go in mastering {titleofquiz}!", f"Not to be too hard, but it seems you're not great at {titleofquiz}!", f"Time to go back to the drawing board on {titleofquiz}!", f"You might want to consider taking another look at {titleofquiz}!", f"It's clear you're not an expert on  {titleofquiz}!", f"Unfortunately, you're not very good at {titleofquiz}!", f"You need to brush up on your {titleofquiz} skills!"]
     bad_praise = (random.choice(bad_praise_list))
     for i in range(3,0,-1):
         screen.fill(BACKGROUND_COLOUR)
@@ -807,6 +820,134 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     return
                 if button_quit.is_clicked(pos):
                     quit()
+
+def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+    incorrect_questions = []
+    running = True
+    questionIndex = 0
+    correctAnswers = 0
+    totalQuestions = len(questionList)
+    lives = 3
+    good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!", f"You are an expert on {titleofquiz}!", f" You have mastered {titleofquiz}!", f"You are amazing at {titleofquiz}!", f"You truly mastered {titleofquiz}!"]
+    good_praise = (random.choice(good_praise_list))
+    medium_praise_list = ["Good enough...", f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far off mastering {titleofquiz}", f"Just a bit more practice on {titleofquiz}!", f"You're making progress on {titleofquiz}!"]
+    medium_praise = (random.choice(medium_praise_list))
+    bad_praise_list = [f"Your forte is definitely not {titleofquiz}", f"You are terrible at {titleofquiz}!", f"You have a lot to learn about {titleofquiz}!", f"You might want to consider revising another topic other than {titleofquiz}."]
+    bad_praise = (random.choice(bad_praise_list))
+    
+    for i in range(3, 0, -1):
+        screen.fill(BACKGROUND_COLOUR)
+        display_message(titleofquiz, QUESTION_OFFSET, 70)
+        display_message((f"{i}!"), QUESTION_OFFSET + 200, 150)
+        pygame.display.update()
+        pygame.time.delay(1000)
+    screen.fill(BACKGROUND_COLOUR)
+    display_message(("Go!"), QUESTION_OFFSET + 200, 150)
+    pygame.display.update()
+    pygame.time.delay(1000)
+    
+    while running and questionIndex < totalQuestions and lives > 0:
+        currentQuestion = questionList[questionIndex]
+
+        user_answer = None
+
+        answerOptions = [currentQuestion.correctAnswer] + currentQuestion.wrongAnswers
+        random.shuffle(answerOptions)
+
+        buttons = []
+        for idx, answer in enumerate(answerOptions):
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
+            buttons.append(button)
+
+        while running and user_answer is None:
+            screen.fill(BACKGROUND_COLOUR)
+            display_message(f"Question {questionIndex + 1} out of {totalQuestions} : {currentQuestion.question}", QUESTION_OFFSET, 50)
+
+            for button in buttons:
+                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
+            
+            button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40)
+            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40)
+            button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40)
+            display_message(f"Lives remaining: {lives}", SCREEN_HEIGHT - QUESTION_OFFSET, 40)
+            button_end.draw(screen, BUTTON_COLOUR)
+            button_go_back.draw(screen, BUTTON_COLOUR)
+            button_leave.draw(screen, BUTTON_COLOUR)
+            pygame.display.update()
+            
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    quit()
+                if event.type == MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    if button_end.is_clicked(pos):
+                        running = False
+                        break
+                    if button_go_back.is_clicked(pos):
+                        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+                    if button_leave.is_clicked(pos):
+                        quit()
+                    pygame.time.wait(40)
+                    for idx, button in enumerate(buttons):
+                        if button.is_clicked(pos):
+                            user_answer = idx
+
+                if event.type == KEYDOWN:
+                    if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
+                        user_answer = event.key - pygame.K_1
+
+        correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
+        if user_answer is not None:
+            if user_answer == correct_answer_index:
+                correctAnswers += 1
+            else:
+                incorrect_questions.append(currentQuestion)
+                lives -= 1
+
+        questionIndex += 1
+
+    while True:
+        screen.fill(BACKGROUND_COLOUR)
+        y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2 - 200, 40)
+        try:
+            if correctAnswers / totalQuestions > 0.8:
+                display_message(good_praise, y_position, 40)
+            if correctAnswers / totalQuestions > 0.4 and correctAnswers / totalQuestions <= 0.8:
+                display_message(medium_praise, y_position, 40)
+            if correctAnswers / totalQuestions < 0.4 or correctAnswers / totalQuestions == 0.4:
+                display_message(bad_praise, y_position, 40)
+        except ZeroDivisionError:
+            display_message("No questions attempted!", y_position, 40)
+        
+        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
+        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
+        if incorrect_questions:
+            button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2), 250, 40)
+            button_show_incorrect.draw(screen, BUTTON_COLOUR)
+        button_go_back.draw(screen, BUTTON_COLOUR)
+        button_replay.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                quit()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if incorrect_questions and questionIndex > 0:
+                    if button_show_incorrect.is_clicked(pos):
+                        show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                if button_go_back.is_clicked(pos):
+                    main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+                    return
+                if button_replay.is_clicked(pos):
+                    survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    return
+                if button_quit.is_clicked(pos):
+                    quit()
+
                    
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
     running = True
