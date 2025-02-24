@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-import modules.PySimpleGUI as sg
+import argparse
 import json
+import modules.PySimpleGUI as sg
 from modules.persistence import QuizQuestion
 from modules.checker import is_silly
 
@@ -42,144 +43,182 @@ def save_quiz(file_path):
 
         json.dump(savedData, file, default=vars)
 
-while True:
-    event, values = mainWindow.read()
 
-    if event == 'quizquestionentry':
-        changes = True
-        if len(values['quizquestionentry']) > 0:
-            answers = ("correct answer:", values['quizquestionentry'][0].correctAnswer, "wrong answers:", values['quizquestionentry'][0].wrongAnswers)
-            outputtext = "Correct answer: \n" + answers[1] + "\n Wrong answers:\n" + str(answers[3])
-            mainWindow["textbox"].update(outputtext)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        prog='QuizCreator',
+        description='Side program for QuizMaster, to make quizzes.',
+        )
+    parser.add_argument('--quizPath', nargs='?', const="")
+    args = parser.parse_args()
 
-    if event == sg.WIN_CLOSED or event == 'Quit' or event == 'Escape:27':
-        if changes:
-            if sg.popup_yes_no("You have unsaved changes! Are you sure you want to leave?") == "Yes":
-                print("Bye...")
-                break
-            else:
+    if args.quizPath is not None:
+        print("Loading quiz: ", args.quizPath)
+        try:
+            filename = args.quizPath
+            event = 'Open'
+        except Exception as ex:
+            print("Error:", ex)
+            sys.exit()
+        try:
+            with open(filename, 'r') as file:
+                try:
+                    quizDicts = json.load(file)
+                    questionList = []
+                    for q in quizDicts["listOfQuestions"]:
+                        qq = QuizQuestion(**q)
+                        is_silly_question, reason = is_silly(qq.question, qq.correctAnswer, qq.wrongAnswers, questionList)
+                        if is_silly_question:
+                            sg.Popup(f"Silly question detected: {reason}")
+                            break
+                        questionList.append(qq)
+                    mainWindow["quizquestionentry"].update(questionList)
+                    titleofquiz = quizDicts["title"]
+                    mainWindow["quiz_name"].update(titleofquiz)
+                    current_file_path = filename
+                except Exception as ex:
+                    sg.Popup(f"Error with this file! {ex}")
+                    print(f"Error with this file! {ex}")
+        except FileNotFoundError:
+            print(f"{filename} does not exist!")
+
+    while True:
+        event, values = mainWindow.read()      
+        if event == 'quizquestionentry':
+            changes = True
+            if len(values['quizquestionentry']) > 0:
+                answers = ("correct answer:", values['quizquestionentry'][0].correctAnswer, "wrong answers:", values['quizquestionentry'][0].wrongAnswers)
+                outputtext = "Correct answer: \n" + answers[1] + "\n Wrong answers:\n" + str(answers[3])
+                mainWindow["textbox"].update(outputtext)
+
+        if event == sg.WIN_CLOSED or event == 'Quit' or event == 'Escape:27':
+            if changes:
+                if sg.popup_yes_no("You have unsaved changes! Are you sure you want to leave?") == "Yes":
+                    print("Bye...")
+                    break
+                else:
+                    continue
+            print("Bye...")
+            break
+
+        if event == 'Edit Question' or event == 'e':
+            try:
+                index = int(''.join(map(str, mainWindow["quizquestionentry"].get_indexes())))
+                quizQuestion = questionList[index]
+            except ValueError:
+                sg.Popup("Select a message to edit!")
                 continue
-        print("Bye...")
-        break
 
-    if event == 'Edit Question' or event == 'e':
-        try:
-            index = int(''.join(map(str, mainWindow["quizquestionentry"].get_indexes())))
-            quizQuestion = questionList[index]
-        except ValueError:
-            sg.Popup("Select a message to edit!")
-            continue
+            questionEditorWindow = make_questionEditorWindow()
+            questionEditorWindow['question'].update(quizQuestion.question)
+            questionEditorWindow['correct_answer'].update(quizQuestion.correctAnswer)
+            questionEditorWindow['wrong_answers'].update(','.join(str(e) for e in quizQuestion.wrongAnswers))
+            questionEditorWindow['time_given'].update(quizQuestion.timeout)
+            editorEvent, editorValues = questionEditorWindow.read()
+            if editorEvent == 'Add':
+                question = editorValues['question']
+                correct_answer = editorValues['correct_answer']
+                wrong_answers = editorValues['wrong_answers'].split(',')
+                try:
+                    time_given = int(editorValues['time_given'])
+                except ValueError:
+                    time_given = 15
+                newquestion = QuizQuestion(question, correct_answer, wrong_answers, int(editorValues['time_given']))
+                newquestion = QuizQuestion(question, correct_answer, wrong_answers, 15)
+                is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, questionList)
+                if is_silly_question:
+                    sg.Popup(f"Silly question detected: {reason}", keep_on_top=True)
+                    questionEditorWindow.close()
+                else:
+                    questionList[index] = newquestion
+                    questionEditorWindow.close()
+                    mainWindow["quizquestionentry"].update(questionList)
+            if editorEvent == 'Cancel':
+                questionEditorWindow.close()
 
-        questionEditorWindow = make_questionEditorWindow()
-        questionEditorWindow['question'].update(quizQuestion.question)
-        questionEditorWindow['correct_answer'].update(quizQuestion.correctAnswer)
-        questionEditorWindow['wrong_answers'].update(','.join(str(e) for e in quizQuestion.wrongAnswers))
-        questionEditorWindow['time_given'].update(quizQuestion.timeout)
-        editorEvent, editorValues = questionEditorWindow.read()
-        if editorEvent == 'Add':
-            question = editorValues['question']
-            correct_answer = editorValues['correct_answer']
-            wrong_answers = editorValues['wrong_answers'].split(',')
+        if event == 'Add Question' or event == 'a':
+            questionEditorWindow = make_questionEditorWindow()
+            editorEvent, editorValues = questionEditorWindow.read()
+            if editorEvent == 'Add':
+                question = editorValues['question']
+                correct_answer = editorValues['correct_answer']
+                wrong_answers = editorValues['wrong_answers'].split(',')
+                try:
+                    time_given = int(editorValues['time_given'])
+                except ValueError:
+                    time_given = 15
+                newquestion = QuizQuestion(question, correct_answer, wrong_answers, time_given)
+                is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, questionList)
+                if is_silly_question:
+                    sg.Popup(f"Silly question detected: {reason}", keep_on_top=True)
+                    questionEditorWindow.close()
+                else:
+                    questionList.append(newquestion)
+                    questionEditorWindow.close()
+                    mainWindow["quizquestionentry"].update(questionList)
+            if editorEvent == 'Cancel':
+                questionEditorWindow.close()
+
+        if event == 'Duplicate Question' or event == 'd':
             try:
-                time_given = int(editorValues['time_given'])
-            except ValueError:
-                time_given = 15
-            newquestion = QuizQuestion(question, correct_answer, wrong_answers, int(editorValues['time_given']))
-            newquestion = QuizQuestion(question, correct_answer, wrong_answers, 15)
-            is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, questionList)
-            if is_silly_question:
-                sg.Popup(f"Silly question detected: {reason}", keep_on_top=True)
-                questionEditorWindow.close()
-            else:
-                questionList[index] = newquestion
-                questionEditorWindow.close()
+                index = int(''.join(map(str, mainWindow["quizquestionentry"].get_indexes())))
+                quizQuestion = questionList[index]
+                new_question = QuizQuestion(quizQuestion.question, quizQuestion.correctAnswer, quizQuestion.wrongAnswers, quizQuestion.timeout)
+                questionList.append(new_question)
                 mainWindow["quizquestionentry"].update(questionList)
-        if editorEvent == 'Cancel':
-            questionEditorWindow.close()
+            except ValueError:
+                sg.Popup("Select a question to duplicate!")
 
-    if event == 'Add Question' or event == 'a':
-        questionEditorWindow = make_questionEditorWindow()
-        editorEvent, editorValues = questionEditorWindow.read()
-        if editorEvent == 'Add':
-            question = editorValues['question']
-            correct_answer = editorValues['correct_answer']
-            wrong_answers = editorValues['wrong_answers'].split(',')
+        if event == 'Save As' or event == 's':
+            changes = False
+            current_file_path = sg.popup_get_file('', save_as=True, no_window=True, initial_folder="quizzes",
+                                                file_types=(("All JSON Files", "*.json"), ("All Files", "*.*")))
+            if current_file_path:
+                save_quiz(current_file_path)
+
+        if event == 'Save':
+            changes = False
             try:
-                time_given = int(editorValues['time_given'])
-            except ValueError:
-                time_given = 15
-            newquestion = QuizQuestion(question, correct_answer, wrong_answers, time_given)
-            is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, questionList)
-            if is_silly_question:
-                sg.Popup(f"Silly question detected: {reason}", keep_on_top=True)
-                questionEditorWindow.close()
-            else:
-                questionList.append(newquestion)
-                questionEditorWindow.close()
-                mainWindow["quizquestionentry"].update(questionList)
-        if editorEvent == 'Cancel':
-            questionEditorWindow.close()
+                save_quiz(current_file_path)
+            except:
+                event == 'Save As'
 
-    if event == 'Duplicate Question' or event == 'd':
-        try:
-            index = int(''.join(map(str, mainWindow["quizquestionentry"].get_indexes())))
-            quizQuestion = questionList[index]
-            new_question = QuizQuestion(quizQuestion.question, quizQuestion.correctAnswer, quizQuestion.wrongAnswers, quizQuestion.timeout)
-            questionList.append(new_question)
+        if event == 'Open' or event == 'o':
+            if changes:
+                if sg.popup_yes_no("You have unsaved changes! Are you sure you want to leave?") == "Yes":
+                    pass
+                else:
+                    continue
+            try:
+                filename = sg.popup_get_file("Open quiz", initial_folder="quizzes", no_window=True)
+                if filename:
+                    with open(filename, 'r') as file:
+                        try:
+                            quizDicts = json.load(file)
+                            questionList = []
+                            for q in quizDicts["listOfQuestions"]:
+                                qq = QuizQuestion(**q)
+                                is_silly_question, reason = is_silly(qq.question, qq.correctAnswer, qq.wrongAnswers, questionList)
+                                if is_silly_question:
+                                    sg.Popup(f"Silly question detected: {reason}")
+                                    break
+                                questionList.append(qq)
+                            mainWindow["quizquestionentry"].update(questionList)
+                            titleofquiz = quizDicts["title"]
+                            mainWindow["quiz_name"].update(titleofquiz)
+                            current_file_path = filename
+                        except Exception as e:
+                            sg.Popup(f"Error with this file! {e}")
+            except TypeError:
+                ...
+
+        if event == 'Delete Question' or event == 'Delete':
+            try:
+                index = int(''.join(map(str, mainWindow["quizquestionentry"].get_indexes())))
+                questionList.pop(index)
+            except ValueError:
+                sg.Popup("Select a message to delete!")
+
             mainWindow["quizquestionentry"].update(questionList)
-        except ValueError:
-            sg.Popup("Select a question to duplicate!")
 
-    if event == 'Save As' or event == 's':
-        changes = False
-        current_file_path = sg.popup_get_file('', save_as=True, no_window=True, initial_folder="quizzes",
-                                              file_types=(("All JSON Files", "*.json"), ("All Files", "*.*")))
-        if current_file_path:
-            save_quiz(current_file_path)
 
-    if event == 'Save':
-        changes = False
-        try:
-            save_quiz(current_file_path)
-        except:
-            event == 'Save As'
-
-    if event == 'Open' or event == 'o':
-        if changes:
-            if sg.popup_yes_no("You have unsaved changes! Are you sure you want to leave?") == "Yes":
-                pass
-            else:
-                continue
-        try:
-            filename = sg.popup_get_file("Open quiz", initial_folder="quizzes", no_window=True)
-            if filename:
-                with open(filename, 'r') as file:
-                    try:
-                        quizDicts = json.load(file)
-                        questionList = []
-                        for q in quizDicts["listOfQuestions"]:
-                            qq = QuizQuestion(**q)
-                            is_silly_question, reason = is_silly(qq.question, qq.correctAnswer, qq.wrongAnswers, questionList)
-                            if is_silly_question:
-                                sg.Popup(f"Silly question detected: {reason}")
-                                break
-                            questionList.append(qq)
-                        mainWindow["quizquestionentry"].update(questionList)
-                        titleofquiz = quizDicts["title"]
-                        mainWindow["quiz_name"].update(titleofquiz)
-                        current_file_path = filename
-                    except Exception as e:
-                        sg.Popup(f"Error with this file! {e}")
-        except TypeError:
-            ...
-
-    if event == 'Delete Question' or event == 'Delete':
-        try:
-            index = int(''.join(map(str, mainWindow["quizquestionentry"].get_indexes())))
-            questionList.pop(index)
-        except ValueError:
-            sg.Popup("Select a message to delete!")
-
-        mainWindow["quizquestionentry"].update(questionList)
-
-mainWindow.close()

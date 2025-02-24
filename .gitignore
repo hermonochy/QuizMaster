@@ -3,6 +3,7 @@ include/
 lib/
 dist/
 build/
+venv/
 lib64
 None
 pyvenv.cfg
@@ -12,6 +13,5 @@ modules/__pycache__/*
 __pycache__
 ()
 .Preferences.json
-None
 quizzes/example.json
 quiz.spec

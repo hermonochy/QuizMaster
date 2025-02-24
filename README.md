@@ -51,8 +51,9 @@ options:
   --quizPath [QUIZPATH]
   --gameMode [GAMEMODE]
 ```
+The quiz argument can be added by itself, but the game mode argument requires a quiz to go along with it. 
 
-The quiz argument can be added by itself, but the game mode argument requires a quiz to go along with it.
+Similarly in QuizCreator, a quiz parameter can be added to the end but for obvious reasons not a game mode parameter.
 
 ### Quiz Game
 
@@ -73,11 +74,11 @@ The classic game mode allows you to answer questions with a countdown timer. You
 
 ##### Classic V2
 
-Similar to classic, the time limit of classic V2 is the absolute time, rather than induvidual time limits. This game mode is generally the easiest.
+Similar to classic, the time limit of classic V2 is the absolute time, rather than induvidual time limits. This game mode is generally the easiest of all.
 
 ##### Speed Run
 
-The speed run game mode challenges you to answer all questions correctly in the shortest time possible. If you answer a question incorrectly, you must redo the question. If three questions are answered incorrectly, you must redo the entire quiz. The game keeps a stopwatch running throughout, and your final time is displayed at the end.
+The speed run game mode challenges you to answer all questions correctly in the shortest time possible. If you answer a question incorrectly, you must redo the question. If three questions are answered incorrectly, you must redo the entire quiz. The game keeps a stopwatch running throughout, and your final time is displayed at the end. Currently it is the most difficult game mode.
 
 ### Preferences
 
