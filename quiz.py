@@ -11,9 +11,10 @@ import colorsys
 import re
 import os
 import subprocess
-from glob import glob
 import datetime
+import modules.PySimpleGUI as sg
 
+from glob import glob
 from enum import Enum
 from pygame.locals import *
 from pygame_widgets.slider import Slider
@@ -25,7 +26,6 @@ from modules.persistence import *
 from modules.checker import *
 from modules.searchQuiz import search_str_in_file
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
-import modules.PySimpleGUI as sg
 
 pygame.init()
 pygame.font.init()
@@ -84,13 +84,12 @@ except FileNotFoundError:
     colour = colour_background
     button_colour = buttons_colour
     
-root = Tk()
-width = root.winfo_screenwidth() 
-height = root.winfo_screenheight()
+width = Tk().winfo_screenwidth() 
+height = Tk().winfo_screenheight()
      
 
-SCREEN_WIDTH = width * 0.75
-SCREEN_HEIGHT = height * 0.75
+SCREEN_WIDTH = width ** 2 // 2000
+SCREEN_HEIGHT = height ** 2 // 1250
 BACKGROUND_COLOUR = colour
 BUTTON_COLOUR = button_colour
 BLACK = (0, 0, 0)
@@ -198,7 +197,7 @@ def display_message(message, y_position, font_size, colour="BLACK"):
     return y_position
     
     
-def end():
+def quit():
     print(asciiartend)
     pygame.quit()
     sys.exit()
@@ -208,14 +207,14 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
     celebration = False
     numList = re.findall(r'\d+', music)     
     i = int(numList[0]) if numList else 1 
-
-    volumeSlider = Slider(screen, 300, 150, 800, 40, min=0, max=1, step=0.05, initial=v, handleRadius=20)
-    Rslider = Slider(screen, 300, 280, 800, 40, min=0, max=148, step=0.5, handleRadius=20, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0]-100)
-    Gslider = Slider(screen, 300, 330, 800, 40, min=0, max=148, step=0.5, handleRadius=20, handleColour = (20,255,50), initial = BACKGROUND_COLOUR[1]-100)
-    Bslider = Slider(screen, 300, 380, 800, 40, min=0, max=148, step=0.5, handleRadius=20, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2]-100)
-    button_music = button(screen, 575, 510, 300, 50, text="Change Music", inactiveColour = BUTTON_COLOUR, shadowDistance = 2)
-    button_go_back = button(screen, 575, 600, 300, 50, text="Main Menu", inactiveColour = BUTTON_COLOUR, shadowDistance = 2)
-    button_cancel = button(screen, 575, 660, 300, 50, text="Cancel", inactiveColour = BUTTON_COLOUR, shadowDistance = 2)
+    screen.fill(BACKGROUND_COLOUR)
+    volumeSlider = Slider(screen, SCREEN_WIDTH // 4, 150, 800, 40, min=0, max=1, step=0.05, initial=v, handleRadius=20)
+    Rslider = Slider(screen, SCREEN_WIDTH // 4, 270, 800, 40, min=0, max=220, step=0.5, handleColour = (255,0,0), handleRadius=20, initial = BACKGROUND_COLOUR[0])
+    Gslider = Slider(screen, SCREEN_WIDTH // 4, 340, 800, 40, min=0, max=248, step=0.5, handleColour = (20,255,50), handleRadius=20, initial = BACKGROUND_COLOUR[1])
+    Bslider = Slider(screen, SCREEN_WIDTH // 4, 400, 800, 40, min=0, max=248, step=0.5, handleColour = (0,0,255), handleRadius=20, initial = BACKGROUND_COLOUR[2])
+    button_music = button(screen, SCREEN_WIDTH // 2.5, 520, 300, 50, text="Change Music", inactiveColour = BUTTON_COLOUR, shadowDistance = 2)
+    button_go_back = button(screen, SCREEN_WIDTH // 2.5, 620, 300, 50, text="Main Menu", inactiveColour = BUTTON_COLOUR, shadowDistance = 2)
+    button_cancel = button(screen, SCREEN_WIDTH // 2.5, 680, 300, 50, text="Cancel", inactiveColour = BUTTON_COLOUR, shadowDistance = 2)
     volumeSlider.draw()
     Rslider.draw()
     Gslider.draw()
@@ -237,15 +236,16 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
     display_message("_"*125, 550, 40)
 
     while running:
+
+        BACKGROUND_COLOUR = (Rslider.getValue(), Gslider.getValue(), Bslider.getValue())
+        BUTTON_COLOUR = (Rslider.getValue()+7, Gslider.getValue()+7, Bslider.getValue()+7)
         pygame_widgets.update(pygame.event.get())
         pygame.display.update()
         v = volumeSlider.getValue()
         pygame.mixer.music.set_volume(v)
-        BACKGROUND_COLOUR = (Rslider.getValue()+100, Gslider.getValue()+100, Bslider.getValue()+100)
-        BUTTON_COLOUR = (Rslider.getValue()+107, Gslider.getValue()+107, Bslider.getValue()+107)
         for event in pygame.event.get():
             if event.type == QUIT:
-                end()
+                quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_music.contains(*pos):
@@ -273,8 +273,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                 if button_go_back.contains(*pos):
                     if not celebration:
                         save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
-                    return
+                    return  main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                 if button_cancel.contains(*pos):
                     main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                     return
@@ -289,7 +288,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
         events = pygame.event.get()
         for event in events:
             if event.type == QUIT:
-                end()
+                quit()
         textinput.update(events)
 
         screen.blit(textinput.surface, (500, 100))
@@ -338,7 +337,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == QUIT:
-                end()
+                quit()
             if event.type == MOUSEBUTTONDOWN or event.type == MOUSEBUTTONUP or event.type == MOUSEMOTION:
                 scrollbar.handle_event(event)
             if event.type == MOUSEBUTTONDOWN:
@@ -377,7 +376,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
 
                 for event in pygame.event.get():
                     if event.type == QUIT:
-                        end()
+                        quit()
                     if event.type == MOUSEBUTTONDOWN:
                         pos = pygame.mouse.get_pos()
                         event_time = pygame.time.get_ticks()
@@ -388,6 +387,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
                         if button_speed.is_clicked(pos):
                             speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                             
+
 def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR):
     running = True
     total_items = len(incorrect_questions)
@@ -405,8 +405,8 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
             y_position = display_message(f"Correct Answer: {question.correctAnswer}", y_position, 30, BLACK)
             y_position += 20
 
-        button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50)
-        button_back.draw(screen, BUTTON_COLOUR)
+        button_back = button(screen, SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100, 300, 50, text="Back to Results", inactiveColour=BUTTON_COLOUR, shadowDistance = 2, radius=25)
+        button_back.draw()
 
         if total_items > items_per_page:
             scrollbar.draw(screen)
@@ -415,11 +415,11 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
 
         for event in pygame.event.get():
             if event.type == QUIT:
-                end()
+                quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                if button_back.is_clicked(pos):
-                    running = False
+                if button_back.contains(*pos):
+                    return
             if total_items > items_per_page:
                 scrollbar.handle_event(event)
 
@@ -484,7 +484,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
             for event in pygame.event.get():
                 if event.type == QUIT:
-                    end()
+                    quit()
                 if event.type == MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos() 
                     if button_end.is_clicked(pos):
@@ -493,7 +493,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     if button_go_back.is_clicked(pos):
                        main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
                     if button_leave.is_clicked(pos):
-                       end()
+                       quit()
                     pygame.time.wait(40)
                     for idx, button in enumerate(buttons):
                         if button.is_clicked(pos):
@@ -544,7 +544,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         for event in pygame.event.get(): 
             if event.type == QUIT:
-               end()
+               quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if incorrect_questions and questionIndex > 0:
@@ -557,7 +557,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 if button_quit.is_clicked(pos):
-                    end()
+                    quit()
                     
 def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     incorrect_questions = []
@@ -629,7 +629,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
             for event in pygame.event.get():
                 if event.type == QUIT:
-                    end()
+                    quit()
                 if event.type == MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     if button_end.is_clicked(pos):
@@ -638,7 +638,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     if button_go_back.is_clicked(pos):
                         main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
                     if button_leave.is_clicked(pos):
-                        end()
+                        quit()
                     pygame.time.wait(40)
                     for idx, button in enumerate(buttons):
                         if button.is_clicked(pos):
@@ -684,7 +684,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         for event in pygame.event.get():
             if event.type == QUIT:
-                end()
+                quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if incorrect_questions and questionIndex > 0:
@@ -697,7 +697,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 if button_quit.is_clicked(pos):
-                    end()
+                    quit()
 
 def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     originalQuestions = questionList[:]
@@ -751,14 +751,14 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
             for event in pygame.event.get():
                 if event.type == QUIT:
-                    end()
+                    quit()
                 if event.type == MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     for idx, button in enumerate(buttons):
                         if button_go_back.is_clicked(pos):
                            main(music,BACKGROUND_COLOUR,BUTTON_COLOUR, v)
                         if button_leave.is_clicked(pos):
-                           end()
+                           quit()
                         if button.is_clicked(pos):
                             user_answer = idx
 
@@ -796,7 +796,7 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         for event in pygame.event.get():
             if event.type == QUIT:
-                end()
+                quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_go_back.is_clicked(pos):
@@ -806,9 +806,8 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     speed(originalQuestions[:], titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 if button_quit.is_clicked(pos):
-                    end()
+                    quit()
                    
-                    
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
     running = True
     while running:
@@ -828,18 +827,18 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == QUIT:
-                end()
+                quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_quit.is_clicked(pos):
-                    end()
+                    quit()
                 if button_make.is_clicked(pos):
                     subprocess.Popen(["python3", "quizcreator"])
                 if button_preferences.is_clicked(pos):
                     preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
-
                 if button_play.is_clicked(pos):
                     choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
