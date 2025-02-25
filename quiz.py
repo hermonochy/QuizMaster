@@ -84,8 +84,8 @@ except FileNotFoundError:
     button_colour = buttons_colour
      
 
-SCREEN_WIDTH = 1400
-SCREEN_HEIGHT = 850
+SCREEN_WIDTH = 1250
+SCREEN_HEIGHT = 800
 BACKGROUND_COLOUR = colour
 BUTTON_COLOUR = button_colour
 BLACK = (0, 0, 0)
@@ -827,7 +827,7 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     questionIndex = 0
     correctAnswers = 0
     totalQuestions = len(questionList)
-    lives = 3
+    lives = int(len(questionList) // 3+1)
     good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!", f"You are an expert on {titleofquiz}!", f" You have mastered {titleofquiz}!", f"You are amazing at {titleofquiz}!", f"You truly mastered {titleofquiz}!"]
     good_praise = (random.choice(good_praise_list))
     medium_praise_list = ["Good enough...", f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far off mastering {titleofquiz}", f"Just a bit more practice on {titleofquiz}!", f"You're making progress on {titleofquiz}!"]
@@ -957,7 +957,7 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
         button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2), 250, 60)
         button_preferences = Button("Preferences", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 100), 250, 60)
         button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 100), 250, 60)
-        display_message("Welcome to QuizMaster!", SCREEN_HEIGHT // 7, 75)
+        display_message("Welcome to QuizMaster!", SCREEN_HEIGHT // 8, 75)
         button_make.draw(screen, BUTTON_COLOUR)
         button_play.draw(screen, BUTTON_COLOUR)
         button_preferences.draw(screen, BUTTON_COLOUR)
