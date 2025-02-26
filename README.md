@@ -10,8 +10,8 @@ If you've got some useful knowledge on top of this, you can create a quiz on it 
 
 #### Either:
 
-1. Clone this repository via terminal `git clone https://github.com/hermonochy/QuizMaster`
-2. Enter the directory containing the game executable: `cd QuizMaster`
+1. Clone this repository via terminal ```git clone https://github.com/hermonochy/QuizMaster```
+2. Enter the directory containing the game executable: ```cd QuizMaster```
 
 #### Or:
 
@@ -21,7 +21,7 @@ If you've got some useful knowledge on top of this, you can create a quiz on it 
 
 #### Then:
 
-Run the command `pyinstaller quiz.py`. If this does not work, attempt installing pyinstaller: `pip install pyinstaller`.
+Run the command ```pyinstaller quiz.py```. If this does not work, attempt installing pyinstaller: ```pip install pyinstaller```.
 
 #### If you are a Developer:
 
@@ -33,16 +33,17 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 
 ##### Or: (Advanced, Ubuntu/Debian only):
 
-1. Set up a new virtual environment: `python3 -m venv venv`
-2. Activate the environment: `source venv/bin/activate` (To decativate, type `deactivate`)
-3. Install tkinter: `sudo apt-get install python3-tk`
-4. Install packages in `requirements.txt`: `pip3 install -r requirements.txt`
+1. Set up a new virtual environment: ```python3 -m venv venv```
+2. Activate the environment: ```source venv/bin/activate``` (To decativate, type `deactivate`)
+3. Install tkinter: ```sudo apt-get install python3-tk```
+4. Install packages in `requirements.txt`: ```pip3 install -r requirements.txt```
 
 *Steps 1 and 2 are optional but recommended.*
 
 ##### Adding Arguments
 
 The file `quiz.py` also allows for the quiz path and game mode to be added as arguments when starting the program. This is primarily for quick testing of a quiz; a shortcut for quiz makers.
+
 ```sh
 usage: quiz [-h] [-q [QUIZPATH]] [-g [GAMEMODE]]
 
@@ -53,7 +54,13 @@ options:
   -q [QUIZPATH], --quizPath [QUIZPATH]
   -g [GAMEMODE], --gameMode [GAMEMODE]
 ```
-The quiz argument can be added by itself, but the game mode argument requires a quiz to go along with it. 
+
+###### Game Mode Options
+
+- classic
+- classicV2
+- speedRun
+- survival
 
 Similarly in QuizCreator, a quiz parameter can be added to the end but for obvious reasons not a game mode parameter.
 

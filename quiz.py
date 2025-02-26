@@ -99,6 +99,7 @@ class GameMode(str, Enum):
     classic = 'classic'
     classicV2 = 'classicV2'
     speedRun = 'speedRun'
+    survival = 'survival'
 
 class Button:
     def __init__(self, text, position, width=300, height=60):
@@ -221,9 +222,9 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
     Rslider = Slider(screen, SCREEN_WIDTH // 4, 280, 800, 40, min=0, max=220, step=0.5, handleColour = (255,0,0), handleRadius=20, initial = BACKGROUND_COLOUR[0])
     Gslider = Slider(screen, SCREEN_WIDTH // 4, 330, 800, 40, min=0, max=248, step=0.5, handleColour = (20,255,50), handleRadius=20, initial = BACKGROUND_COLOUR[1])
     Bslider = Slider(screen, SCREEN_WIDTH // 4, 380, 800, 40, min=0, max=248, step=0.5, handleColour = (0,0,255), handleRadius=20, initial = BACKGROUND_COLOUR[2])
-    button_music = button(screen, SCREEN_WIDTH // 2.5, 520, 300, 50, text="Change Music", inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
-    button_go_back = button(screen, SCREEN_WIDTH // 2.5, 620, 300, 50, text="Main Menu", inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
-    button_cancel = button(screen, SCREEN_WIDTH // 2.5, 680, 300, 50, text="Cancel", inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
+    button_music = button(screen, SCREEN_WIDTH // 2.5, 520, 300, 50, text="Change Music", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
+    button_go_back = button(screen, SCREEN_WIDTH // 2.5, 620, 300, 50, text="Main Menu", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
+    button_cancel = button(screen, SCREEN_WIDTH // 2.5, 680, 300, 50, text="Cancel", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
     volumeSlider.draw()
     Rslider.draw()
     Gslider.draw()
@@ -390,35 +391,41 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
                 break
                 break
             print("Questions:", questionList)
+            if args.gameMode == None:
+                choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz)
+            else:
+                StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz)
             
-            running = True
-            while running:
-                screen.fill(BACKGROUND_COLOUR)
-                display_message("Select Game Mode:", SCREEN_HEIGHT // 2 - 300, 75, BLACK)
-                button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), 250, 60)
-                button_classicV2 = Button("Classic V2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60)
-                button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60)
-                button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60)           
-                button_classic.draw(screen, BUTTON_COLOUR)
-                button_classicV2.draw(screen, BUTTON_COLOUR)
-                button_speed.draw(screen, BUTTON_COLOUR)
-                button_survival.draw(screen, BUTTON_COLOUR)
-                pygame.display.update()
 
-                for event in pygame.event.get():
-                    if event.type == QUIT:
-                        quit()
-                    if event.type == MOUSEBUTTONDOWN:
-                        pos = pygame.mouse.get_pos()
-                        event_time = pygame.time.get_ticks()
-                        if button_classic.is_clicked(pos):
-                            classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                        if button_classicV2.is_clicked(pos):
-                            classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                        if button_speed.is_clicked(pos):
-                            speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                        if button_survival.is_clicked(pos):
-                            survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz):
+    running = True
+    while running:
+        screen.fill(BACKGROUND_COLOUR)
+        display_message("Select Game Mode:", SCREEN_HEIGHT // 2 - 300, 75, BLACK)
+        button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), 250, 60)
+        button_classicV2 = Button("Classic V2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60)
+        button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60)
+        button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60)           
+        button_classic.draw(screen, BUTTON_COLOUR)
+        button_classicV2.draw(screen, BUTTON_COLOUR)
+        button_speed.draw(screen, BUTTON_COLOUR)
+        button_survival.draw(screen, BUTTON_COLOUR)
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                quit()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                event_time = pygame.time.get_ticks()
+                if button_classic.is_clicked(pos):
+                    classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                if button_classicV2.is_clicked(pos):
+                    classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                if button_speed.is_clicked(pos):
+                    speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                if button_survival.is_clicked(pos):
+                    survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                             
 
 def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR):
@@ -427,7 +434,7 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
     items_per_page = 10
     scrollbar = Scrollbar((SCREEN_WIDTH - 40, 100), SCREEN_HEIGHT - 150, total_items, items_per_page)
     offset = 0
-    button_back = button(screen, SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100, 300, 50, text="Back to Results", inactiveColour=BUTTON_COLOUR, shadowDistance = 2, radius=25)
+    button_back = button(screen, SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100, 300, 50, text="Back to Results", textColour = BLACK, inactiveColour=BUTTON_COLOUR, shadowDistance = 2, radius=25)
     button_back.draw()
 
     while running:
@@ -968,6 +975,38 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if button_quit.is_clicked(pos):
                     quit()
 
+def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList=None, titleofquiz=None):
+    if args.gameMode == GameMode.classic:
+        try:
+            classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        except Exception as ex:
+            print("Error: ", ex)
+            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
+    if args.gameMode == GameMode.classicV2:
+        try:
+            classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        except Exception as ex:
+            print("Error: ", ex)
+            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
+    if args.gameMode == GameMode.speedRun:
+        try:
+            speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        except Exception as ex:
+            print("Error: ", ex)
+            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
+    if args.gameMode == GameMode.survival:
+        try:
+            survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        except Exception as ex:
+            print("Error: ", ex)
+            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
+    if args.quizPath != None and args.gameMode == None:
+        choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz)
+    if args.gameMode == None:
+        icon = pygame.image.load('images/logo1.png')
+        pygame.display.set_icon(icon)
+        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+
                    
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
     running = True
@@ -1010,7 +1049,7 @@ if __name__ == '__main__':
     parser.add_argument('-g', '--gameMode', nargs='?', const="", type=GameMode)
     args = parser.parse_args()
 
-    if args.quizPath is not None:
+    if args.quizPath != None:
         print("Loading quiz: ", args.quizPath)
         try:
             questionList, titleofquiz = load_quiz(args.quizPath)
@@ -1020,32 +1059,13 @@ if __name__ == '__main__':
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('QuizMaster')
-    icon = pygame.image.load('images/logo1.png')
     pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
-    pygame.display.set_icon(icon)
     screen_mode(BACKGROUND_COLOUR)
     textinput.font_color = (BLACK)
-
-
-    if args.gameMode == GameMode.classic or (args.quizPath != None and args.gameMode == None):
-        try:
-            classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-        except Exception as ex:
-            print("Error: ", ex)
-            sys.exit()
-    if args.gameMode == GameMode.classicV2:
-        try:
-            classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-        except Exception as ex:
-            print("Error: ", ex)
-            sys.exit()
-    if args.gameMode == GameMode.speedRun:
-        try:
-            speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-        except Exception as ex:
-            print("Error: ", ex)
-            sys.exit()
-    if args.gameMode == None:
-        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+    
+    try:
+        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz)
+    except:
+        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR)
