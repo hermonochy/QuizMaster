@@ -3,6 +3,7 @@ import pygame
 import pygame_widgets
 import argparse
 import sys
+import colorsys
 import json
 import random
 import time
@@ -986,8 +987,8 @@ if __name__ == '__main__':
         prog='quiz',
         description='Main program for QuizMaster. Features include: Playing quiz, preferences and starting QuizCreator.',
         )
-    parser.add_argument('--quizPath', nargs='?', const="")
-    parser.add_argument('--gameMode', nargs='?', const="", type=GameMode)
+    parser.add_argument('-q', '--quizPath', nargs='?', const="")
+    parser.add_argument('-g', '--gameMode', nargs='?', const="", type=GameMode)
     args = parser.parse_args()
 
     if args.quizPath is not None:

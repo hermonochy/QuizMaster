@@ -44,16 +44,28 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 
 The file `quiz.py` also allows for the quiz path and game mode to be added as arguments when starting the program. This is primarily for quick testing of a quiz; a shortcut for quiz makers.
 ```sh
-usage: quiz [-h] [--quizPath [QUIZPATH]] [--gameMode [GAMEMODE]]
+usage: quiz [-h] [-q [QUIZPATH]] [-g [GAMEMODE]]
+
+Main program for QuizMaster. Features include: Playing quiz, preferences and starting QuizCreator.
 
 options:
   -h, --help            show this help message and exit
-  --quizPath [QUIZPATH]
-  --gameMode [GAMEMODE]
+  -q [QUIZPATH], --quizPath [QUIZPATH]
+  -g [GAMEMODE], --gameMode [GAMEMODE]
 ```
 The quiz argument can be added by itself, but the game mode argument requires a quiz to go along with it. 
 
 Similarly in QuizCreator, a quiz parameter can be added to the end but for obvious reasons not a game mode parameter.
+
+```sh
+usage: QuizCreator [-h] [-q [QUIZPATH]]
+
+Side program for QuizMaster, to make quizzes.
+
+options:
+  -h, --help            show this help message and exit
+  -q [QUIZPATH], --quizPath [QUIZPATH]
+```
 
 ### Quiz Game
 
