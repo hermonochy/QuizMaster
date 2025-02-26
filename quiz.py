@@ -251,6 +251,8 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
         BACKGROUND_COLOUR = (R, G, B)
         BUTTON_COLOUR = (R + 7, G + 7, B + 7)
         screen_mode(BACKGROUND_COLOUR)
+        textinput.font_color = (BLACK)
+
         
         pygame_widgets.update(pygame.event.get())
         pygame.display.update()
@@ -1023,6 +1025,10 @@ if __name__ == '__main__':
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
     pygame.display.set_icon(icon)
+    screen_mode(BACKGROUND_COLOUR)
+    textinput.font_color = (BLACK)
+
+
     if args.gameMode == GameMode.classic or (args.quizPath != None and args.gameMode == None):
         try:
             classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
