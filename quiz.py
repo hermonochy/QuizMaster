@@ -312,7 +312,12 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
     searchTerm = ""
     user_answer = None
+    initialized = False
     while True:
+        if not initialized:
+            screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+            initialized = True
+
         screen.fill(BACKGROUND_COLOUR)
         display_message("Enter Quiz Keyword:", 30, 50, BLACK)
         events = pygame.event.get()
@@ -467,6 +472,9 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
                             
 
 def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+    if questionList is None:
+        pass
+        return
     incorrect_questions = []
     running = True
     questionIndex = 0
@@ -496,7 +504,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         user_answer = None
         time_remaining = currentQuestion.timeout
-        timeColour = (0,0,0)
+        timeColour = BLACK
         
         answerOptions = [currentQuestion.correctAnswer] + currentQuestion.wrongAnswers
         random.shuffle(answerOptions)
@@ -600,6 +608,10 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     quit()
                     
 def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+    if questionList is None:
+        pass
+        return
+    
     incorrect_questions = []
     running = True
     questionIndex = 0
@@ -611,11 +623,11 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     good_praise_list = [f"Well Done! You know a lot about {titleofquiz}!", f"You are an expert on {titleofquiz}!", f" You have mastered {titleofquiz}!", f"You are amazing at {titleofquiz}!"]
     good_praise = (random.choice(good_praise_list))
-    medium_praise_list = ["Good enough...", f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far off mastering {titleofquiz}", f"Just a bit more practice on {titleofquiz}!", f"You’re making good progress on {titleofquiz}!"]
+    medium_praise_list = ["Good enough...", f"You have a fair amount of knowledge on {titleofquiz}!", f"Not far off mastering {titleofquiz}", f"Just a bit more practice on {titleofquiz}!", f"You’re making progress!"]
     medium_praise = (random.choice(medium_praise_list))
-    bad_praise_list = [f"Your forte is definitely not {titleofquiz}", f"You are terrible at {titleofquiz}!", f"You have a lot to learn about {titleofquiz}!", f"You might want to consider revising another topic!", f"{titleofquiz} is not your strong suit!"]
+    bad_praise_list = [f"Your forte is definitely not {titleofquiz}", f"You are terrible at {titleofquiz}!", f"You have a lot to learn about {titleofquiz}!", f"You might want to consider revising another topic."]
     bad_praise = (random.choice(bad_praise_list))
-    
+
     for i in range(3, 0, -1):
         screen.fill(BACKGROUND_COLOUR)
         display_message(titleofquiz, QUESTION_OFFSET, 70, BLACK)
@@ -647,7 +659,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             if time_remaining < total_time/totalQuestions:
                 timeColour = (255,0,0)
             else:
-                timeColour = (0,0,0)    
+                timeColour = BLACK  
 
             if time_remaining <= 0:
                 running = False
@@ -739,7 +751,11 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if button_quit.is_clicked(pos):
                     quit()
 
+
 def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+    if questionList is None:
+        pass
+        return
     originalQuestions = questionList[:]
     incorrect_questions = []
     running = True
@@ -849,6 +865,10 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     quit()
 
 def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+    if questionList is None:
+        pass
+        return
+        
     incorrect_questions = []
     running = True
     questionIndex = 0
