@@ -439,13 +439,12 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
     items_per_page = 10
     scrollbar = Scrollbar((SCREEN_WIDTH - 40, 100), SCREEN_HEIGHT - 150, total_items, items_per_page)
     offset = 0
-    button_back = button(screen, SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100, 300, 50, text="Back to Results", textColour = BLACK, inactiveColour=BUTTON_COLOUR, shadowDistance = 2, radius=25)
-    button_back.draw()
 
     while running:
         screen.fill(BACKGROUND_COLOUR)
         y_position = 50
-
+        button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50)
+        button_back.draw(screen, BUTTON_COLOUR)
         for idx in range(offset, min(offset + items_per_page, total_items)):
             question = incorrect_questions[idx]
             y_position = display_message(question.question, y_position, 30, BLACK)
@@ -454,7 +453,6 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
 
         if total_items > items_per_page:
             scrollbar.draw(screen)
-        pygame_widgets.update(pygame.event.get())
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -462,14 +460,13 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                if button_back.contains(*pos):
-                    button_back.hide()
+                if button_back.is_clicked(pos):
                     return
             if total_items > items_per_page:
                 scrollbar.handle_event(event)
 
         offset = scrollbar.get_offset()
-                            
+                          
 
 def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
