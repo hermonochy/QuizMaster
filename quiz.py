@@ -1064,6 +1064,7 @@ if __name__ == '__main__':
         )
     parser.add_argument('-q', '--quizPath', nargs='?', const="")
     parser.add_argument('-g', '--gameMode', nargs='?', const="", type=GameMode)
+    parser.add_argument('-v', '--volume', nargs='?', const="")
     args = parser.parse_args()
 
     if args.quizPath != None:
@@ -1079,6 +1080,12 @@ if __name__ == '__main__':
     pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
+    try:
+        v = float(args.volume)
+    except Exception:
+        pass
+    finally:
+        pygame.mixer.music.set_volume(v)
     screen_mode(BACKGROUND_COLOUR)
     textinput.font_color = (BLACK)
     
