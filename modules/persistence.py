@@ -12,7 +12,16 @@ class QuizQuestion:
    
    def __repr__(self):
       return self.question
-     
+
+def load_quiz(filename):
+    with open(filename, 'r') as file:
+        quizDicts = json.load(file)
+        questionList = []
+        for q in quizDicts["listOfQuestions"]:
+            qq = QuizQuestion(**q)
+            questionList.append(qq)
+        titleofquiz = quizDicts["title"]
+    return questionList, titleofquiz
      
 asciiartstart="""
   ___                _            ___  ___                     __                        __

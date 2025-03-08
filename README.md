@@ -53,7 +53,7 @@ options:
   -h, --help            show this help message and exit
   -q [QUIZPATH], --quizPath [QUIZPATH]
   -g [GAMEMODE], --gameMode [GAMEMODE]
-  -v [VOLUME], --volume [VOLUME]
+  -v , --volume         enter a float (decimal) between 0 and 1
 ```
 
 ###### Game Mode Options
