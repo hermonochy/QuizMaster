@@ -1,4 +1,8 @@
+[![License GPLv3](https://img.shields.io/badge/license-GPL_v3-green.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
+
 # QuizMaster
+
+ ![](images/logo1.png)
 
 QuizMaster is a fun game testing your knowledge and cognitive ability in many different areas. 
 If you know how to copy and paste text to the command line interface, and can copy or clone this repository, then you're in. 
