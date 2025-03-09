@@ -12,27 +12,16 @@ class QuizQuestion:
    
    def __repr__(self):
       return self.question
-     
-     
-asciiartstart="""
-  ___                _            ___  ___                     __                        __
- / _ \     _   _    (_)    ____   |  \/  |     __ _     ___    | |_      ___     _ __    | |
-| | | |   | | | |   | |   |_  /   | |\/| |    / _` |   / __|   | __|    / _ \   | '__|   | |
-| |_| |   | |_| |   | |    / /    | |  | |   | (_| |   \__ \   | |_    |  __/   | |      |_|
- \__\_\    \__,_|   |_|   /___|   |_|  |_|    \__,_|   |___/    \__|    \___|   |_|      (_)
-                                                                     
-"""                     
 
-asciiartend="""
-
- ____                         _ 
-| __ )     _   _      ___    | |
-|  _ \    | | | |    / _ \   | |
-| |_) |   | |_| |   |  __/   |_|
-|____/     \__, |    \___|   (_)
-           |___/                
-
-"""
+def load_quiz(filename):
+    with open(filename, 'r') as file:
+        quizDicts = json.load(file)
+        questionList = []
+        for q in quizDicts["listOfQuestions"]:
+            qq = QuizQuestion(**q)
+            questionList.append(qq)
+        titleofquiz = quizDicts["title"]
+    return questionList, titleofquiz
 
 def save_preferences(volume,music,background_colour,button_colour):
    with open(".Preferences.json", 'w') as file:

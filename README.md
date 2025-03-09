@@ -53,7 +53,7 @@ options:
   -h, --help            show this help message and exit
   -q [QUIZPATH], --quizPath [QUIZPATH]
   -g [GAMEMODE], --gameMode [GAMEMODE]
-  -v [VOLUME], --volume [VOLUME]
+  -v , --volume         enter a float (decimal) between 0 and 1
 ```
 
 ###### Game Mode Options
@@ -102,7 +102,7 @@ The speed run game mode challenges you to answer all questions correctly in the 
 
 ##### Survival
 
-The Survival game mode is a challenging addition to QuizMaster. In this mode, players have a limited number of lives to answer questions correctly. Each incorrect answer costs a life, and the game ends when the player loses all their lives or answers all questions correctly. The objective is to survive as long as possible while maintaining accuracy. This mode tests both knowledge and endurance, making it a thrilling experience for quiz enthusiasts.
+The Survival game mode is a challenging addition to QuizMaster. In this mode, players have a limited number of lives to answer questions correctly. Each incorrect answer costs a life, and the game ends when the player loses all their lives or answers all questions correctly. The objective is to survive as long as possible by maintaining accuracy throughout.
 
 ### Preferences
 
@@ -119,11 +119,11 @@ There is a preferences window where you can change the song, volume, and backgro
 
 ## Other QuizMaster Versions
 
-While the original QuizMaster app is by far the most feature-rich and aesthetically pleasing option, there are several alternative versions tailored for different use cases and user preferences. All of these versions are organized under the QuizMaster organization, providing quick accessibility to all. Below is a brief overview of each version:
+While the original QuizMaster app is by far the most feature-rich and aesthetically pleasing option, there are several alternative versions tailored for different use cases and user preferences. All of these versions are organized under the [QuizMaster organization](https://github.com/QuizMaster-world), providing quick accessibility to all. Below is a brief overview of each version:
 
 - [QuizMasterLite](https://github.com/hermonochy/QuizMasterLite): This scaled-down version is designed for use on smaller devices or for users who may have budgetary constraints regarding data volumes. It retains many of the core functionalities, making it a suitable alternative for those who need a simpler interface without sacrificing key features.
 
-- [QuizMasterTerminal](https://github.com/QuizMaster-world/QuizMasterTerminal): A minimalist iteration of QuizMaster, QuizMasterTerminal is a mere 1.4 MB of storage. The significant difference here is the absence of a graphical user interface; all interactions occur via the terminal. This makes it an excellent choice for users comfortable with command line operations and those using resource-constrained environments.
+- [QuizMasterTerminal](https://github.com/QuizMaster-world/QuizMasterTerminal): A minimalist iteration of QuizMaster, QuizMasterTerminal uses only 1.4 MB of storage. The significant difference here is the absence of a graphical user interface; all interactions occur via the terminal. This makes it an excellent choice for users comfortable with command line operations and those using resource-constrained environments.
 
 - [MicroQuizMaster](https://github.com/QuizMaster-world/MicroQuizMaster): As the lightest version of all QuizMasters, MicroQuizMaster is a mere 7 KB in size. Unlike QuizMasterTerminal, it does not include any example quizzes, focusing instead on ultra-lightweight functionality for users with the lowest-specification devices. It is *particularly* aimed at **Windows** users or those seeking a no-frills experience with minimal resource consumption.
 
@@ -149,9 +149,11 @@ Each version of QuizMaster caters to specific needs and environments, ensuring t
 - Add, Edit, Delete, Duplicate, Open, Save, and Load functions for quiz questions.
 - Interactive GUI interface for managing quiz questions.
 
-Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository welcomes contributions from everyone. 
+---
 
-*Warning: Many of the example quizzes are written by AI or schoolchildren, so they may contain incorrect or silly information.*
+Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository welcomes contributions from everyone via pull request. 
+
+*Warning: Many of the example quizzes are written by AI or schoolchildren, so may contain incorrect or silly information.*
 
 ## Future Work
 
