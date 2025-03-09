@@ -94,8 +94,6 @@ In a command line window, enter `./dist/quiz/quiz` to start the application in L
 
 The classic game mode allows you to answer questions with a countdown timer. Your score is recorded, and at the end, it will give advice appropriate to the score. Scores greater than 80% are above average, between 80% and 40% is average, and less than 40% is below average. You can either press the number allocated to the answer or, if you don't have a keyboard, click on the answer. Remember, you have a time limit!
 
-![](images/QM4.png)
-
 ##### Classic V2
 
 Similar to classic, the time limit of classic V2 is the absolute time, rather than induvidual time limits. This game mode is generally the easiest of all.
@@ -107,6 +105,9 @@ The speed run game mode challenges you to answer all questions correctly in the 
 ##### Survival
 
 The Survival game mode is a challenging addition to QuizMaster. In this mode, players have a limited number of lives to answer questions correctly. Each incorrect answer costs a life, and the game ends when the player loses all their lives or answers all questions correctly. The objective is to survive as long as possible by maintaining accuracy throughout.
+
+![](images/QM4.png)
+
 
 ### Preferences
 
