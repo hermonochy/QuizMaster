@@ -45,17 +45,7 @@ def load_quiz(filename):
         titleofquiz = quizDicts["title"]
     return questionList, titleofquiz
 
-def screen_mode(BACKGROUND_COLOUR):
-    R = BACKGROUND_COLOUR[0]
-    G = BACKGROUND_COLOUR[1]
-    B = BACKGROUND_COLOUR[2]
-    global BLACK
-    if R + G + B < 200 and max(R,G,B) < 100:
-        BLACK = (255, 255, 255)
-    else:
-        BLACK = (0, 0, 0)
-
-def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
+def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     running = True
     celebration = False
     numList = re.findall(r'\d+', music)     
@@ -94,7 +84,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
         B = Bslider.getValue()
         BACKGROUND_COLOUR = (R, G, B)
         BUTTON_COLOUR = (R + 7, G + 7, B + 7)
-        screen_mode(BACKGROUND_COLOUR)
+        BLACK = screen_mode(BACKGROUND_COLOUR)
         textinput.font_color = (BLACK)
 
         
@@ -140,7 +130,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                     button_cancel.hide()
                     if not celebration:
                         save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+                    return main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
                 if button_cancel.contains(*pos):
                     volumeSlider.hide()
                     Rslider.hide()
@@ -149,10 +139,10 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                     button_music.hide()
                     button_go_back.hide()
                     button_cancel.hide()
-                    main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+                    main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
                     return
 
-def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
+def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     searchTerm = ""
     user_answer = None
     initialized = False
@@ -189,7 +179,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
         display_message("No Quiz Results found!", SCREEN_HEIGHT // 2, 75, (255,0,0))
         pygame.display.update()
         pygame.time.wait(250)
-        choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
+        choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         return
         
     scrollbar = Scrollbar((SCREEN_WIDTH - 40, ANSWER_OFFSET), SCREEN_HEIGHT - ANSWER_OFFSET - 50, len(quizfileSearchResults), 10)
@@ -208,7 +198,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
     while running:
         screen.fill(BACKGROUND_COLOUR)
         for button in buttons:
-            button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
+            button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR, BLACK)
         if len(buttons) > 12:    
            scrollbar.draw(screen)
         pygame.display.update()
@@ -239,12 +229,12 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR):
                 break
             print("Questions:", questionList)
             if args.gameMode == None:
-                choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz)
+                choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
                 return
             else:
-                StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz)
+                StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
             
-def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz):
+def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz):
     running = True
     while running:
         screen.fill(BACKGROUND_COLOUR)
@@ -253,10 +243,10 @@ def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz):
         button_classicV2 = Button("Classic V2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60)
         button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60)
         button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60)           
-        button_classic.draw(screen, BUTTON_COLOUR)
-        button_classicV2.draw(screen, BUTTON_COLOUR)
-        button_speed.draw(screen, BUTTON_COLOUR)
-        button_survival.draw(screen, BUTTON_COLOUR)
+        button_classic.draw(screen, BUTTON_COLOUR, BLACK)
+        button_classicV2.draw(screen, BUTTON_COLOUR, BLACK)
+        button_speed.draw(screen, BUTTON_COLOUR, BLACK)
+        button_survival.draw(screen, BUTTON_COLOUR, BLACK)
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -280,40 +270,40 @@ def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz):
                             
 
 
-def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList=None, titleofquiz=None):
+def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titleofquiz=None):
     if args.gameMode == GameMode.classic:
         try:
             classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
         except Exception as ex:
             print("Error: ", ex)
-            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
+            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
     if args.gameMode == GameMode.classicV2:
         try:
             classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
         except Exception as ex:
             print("Error: ", ex)
-            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
+            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
     if args.gameMode == GameMode.speedRun:
         try:
             speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
         except Exception as ex:
             print("Error: ", ex)
-            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
+            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
     if args.gameMode == GameMode.survival:
         try:
             survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
         except Exception as ex:
             print("Error: ", ex)
-            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
+            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
     if args.quizPath != None and args.gameMode == None:
-        choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz)
+        choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
     if args.gameMode == None:
         icon = pygame.image.load('images/logo1.png')
         pygame.display.set_icon(icon)
-        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
 
                    
-def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
+def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     running = True
     while running:
         screen.fill(BACKGROUND_COLOUR)
@@ -322,10 +312,10 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
         button_preferences = Button("Preferences", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 100), 250, 60)
         button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 100), 250, 60)
         display_message("Welcome to QuizMaster!", SCREEN_HEIGHT // 8, 75, BLACK)
-        button_make.draw(screen, BUTTON_COLOUR)
-        button_play.draw(screen, BUTTON_COLOUR)
-        button_preferences.draw(screen, BUTTON_COLOUR)
-        button_quit.draw(screen, BUTTON_COLOUR)
+        button_make.draw(screen, BUTTON_COLOUR, BLACK)
+        button_play.draw(screen, BUTTON_COLOUR, BLACK)
+        button_preferences.draw(screen, BUTTON_COLOUR, BLACK)
+        button_quit.draw(screen, BUTTON_COLOUR, BLACK)
         welcome_image = pygame.image.load("images/logo.png").convert()
         screen.blit(welcome_image, (SCREEN_WIDTH//4.75, SCREEN_HEIGHT//12))
         screen.blit(welcome_image, (SCREEN_WIDTH//1.325, SCREEN_HEIGHT//12))
@@ -343,9 +333,9 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v):
                     except:
                         subprocess.Popen(["python", "quizcreator"])
                 if button_preferences.is_clicked(pos):
-                    preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, v)
+                    preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
                 if button_play.is_clicked(pos):
-                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
 
 
 if __name__ == '__main__':
@@ -436,10 +426,10 @@ if __name__ == '__main__':
         pass
     finally:
         pygame.mixer.music.set_volume(v)
-    screen_mode(BACKGROUND_COLOUR)
+    BLACK = BLACK = screen_mode(BACKGROUND_COLOUR)
     textinput.font_color = (BLACK)
     
     try:
-        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, questionList, titleofquiz)
+        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
     except:
-        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR)
+        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)

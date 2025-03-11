@@ -39,6 +39,17 @@ def quit():
     pygame.quit()
     sys.exit()
 
+
+def screen_mode(BACKGROUND_COLOUR):
+    R = BACKGROUND_COLOUR[0]
+    G = BACKGROUND_COLOUR[1]
+    B = BACKGROUND_COLOUR[2]
+    global BLACK
+    if R + G + B < 200 and max(R,G,B) < 100:
+        return (255, 255, 255)
+    else:
+        return (0, 0, 0)
+
 class Button:
     def __init__(self, text, position, width=300, height=60):
         self.text = text
@@ -49,10 +60,10 @@ class Button:
         self.height = max(height, text_height + 20) 
         self.rect = pygame.Rect(position[0], position[1], width, height)
 
-    def draw(self, screen, colour):
+    def draw(self, screen, colour, text_colour=BLACK):
         pygame.draw.rect(screen, colour, self.rect)
         font = pygame.font.Font(None, FONT_SIZE)
-        label = font.render(self.text, True, BLACK)
+        label = font.render(self.text, True, text_colour)
         text_rect = label.get_rect(center=self.rect.center)
         screen.blit(label, text_rect)
 

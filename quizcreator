@@ -94,11 +94,9 @@ if __name__ == '__main__':
         if event == sg.WIN_CLOSED or event == 'Quit' or event == 'Escape:27':
             if changes:
                 if sg.popup_yes_no("You have unsaved changes! Are you sure you want to leave?") == "Yes":
-                    print("Bye...")
                     break
                 else:
                     continue
-            print("Bye...")
             break
 
         if event == 'Edit Question' or event == 'e':
