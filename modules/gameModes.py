@@ -111,7 +111,6 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                        return
                     if button_leave.is_clicked(pos):
                        quit()
-                    pygame.time.wait(40)
                     for idx, button in enumerate(buttons):
                         if button.is_clicked(pos):
                             user_answer = idx
@@ -119,6 +118,9 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if event.type == KEYDOWN:
                     if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,pygame.K_5,pygame.K_6,pygame.K_7,pygame.K_8,pygame.K_9]:
                         user_answer = event.key - pygame.K_1
+
+                    if event.key == pygame.K_a and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
+                        user_answer =  answerOptions.index(currentQuestion.correctAnswer)
 
             time_remaining -= 1
             if time_remaining <= 5:
@@ -268,6 +270,8 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if event.type == KEYDOWN:
                     if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
                         user_answer = event.key - pygame.K_1
+                    if event.key == pygame.K_a and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
+                        user_answer =  answerOptions.index(currentQuestion.correctAnswer)
 
         correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
         if user_answer is not None:
@@ -390,6 +394,8 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if event.type == KEYDOWN:
                     if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
                         user_answer = event.key - pygame.K_1
+                    if event.key == pygame.K_a and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
+                        user_answer =  answerOptions.index(currentQuestion.correctAnswer)
 
         correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
         if user_answer is not None:
@@ -511,6 +517,8 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if event.type == KEYDOWN:
                     if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
                         user_answer = event.key - pygame.K_1
+                    if event.key == pygame.K_a and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
+                        user_answer =  answerOptions.index(currentQuestion.correctAnswer)
 
         correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
         if user_answer is not None:

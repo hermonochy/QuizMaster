@@ -49,8 +49,8 @@ class Button:
         self.height = max(height, text_height + 20) 
         self.rect = pygame.Rect(position[0], position[1], width, height)
 
-    def draw(self, screen, color):
-        pygame.draw.rect(screen, color, self.rect)
+    def draw(self, screen, colour):
+        pygame.draw.rect(screen, colour, self.rect)
         font = pygame.font.Font(None, FONT_SIZE)
         label = font.render(self.text, True, BLACK)
         text_rect = label.get_rect(center=self.rect.center)
