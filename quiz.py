@@ -29,21 +29,15 @@ from modules.elements import *
 from modules.gameModes import *
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
 
+pygame.init()
+pygame.font.init()
+clock = pygame.time.Clock()
+
 class GameMode(str, Enum):
     classic = 'classic'
     classicV2 = 'classicV2'
     speedRun = 'speedRun'
     survival = 'survival'
-
-def load_quiz(filename):
-    with open(filename, 'r') as file:
-        quizDicts = json.load(file)
-        questionList = []
-        for q in quizDicts["listOfQuestions"]:
-            qq = QuizQuestion(**q)
-            questionList.append(qq)
-        titleofquiz = quizDicts["title"]
-    return questionList, titleofquiz
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     running = True
@@ -87,7 +81,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
         BLACK = screen_mode(BACKGROUND_COLOUR)
         textinput.font_color = (BLACK)
 
-        
         pygame_widgets.update(pygame.event.get())
         pygame.display.update()
         v = volumeSlider.getValue()
@@ -267,8 +260,6 @@ def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofqu
                 if button_survival.is_clicked(pos):
                     survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
-                            
-
 
 def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titleofquiz=None):
     if args.gameMode == GameMode.classic:
@@ -305,6 +296,7 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titl
                    
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     running = True
+    welcome_image = pygame.image.load("images/logo.png").convert()
     while running:
         screen.fill(BACKGROUND_COLOUR)
         button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2), 250, 60)
@@ -316,10 +308,11 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
         button_play.draw(screen, BUTTON_COLOUR, BLACK)
         button_preferences.draw(screen, BUTTON_COLOUR, BLACK)
         button_quit.draw(screen, BUTTON_COLOUR, BLACK)
-        welcome_image = pygame.image.load("images/logo.png").convert()
         screen.blit(welcome_image, (SCREEN_WIDTH//4.75, SCREEN_HEIGHT//12))
         screen.blit(welcome_image, (SCREEN_WIDTH//1.325, SCREEN_HEIGHT//12))
         pygame.display.update()
+        clock.tick(30)
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 quit()
@@ -356,49 +349,46 @@ if __name__ == '__main__':
             print("Error:", ex)
             sys.exit()
 
-    pygame.init()
-    pygame.font.init()
-    
     print(asciiartstart)
 
     try:
-      with open(".Preferences.json", "r") as file:
-          try:
-              prefDict = json.load(file)
-              v = prefDict["Volume"]
-              pygame.mixer.music.set_volume(v)
-              if isItHalloweenTimeNow():
-                  colour_background = (250,100,0)
-                  buttons_colour =  (255,110,10)
-                  music = "music/music_halloween1.ogg"
-              elif isItValentinesTimeNow():
-                  music = "music/music_valentines1.ogg"
-                  colour_background = (255,0,0)
-                  buttons_colour =  (255,10,10)
-              elif isItStPatricksTimeNow():
-                  music = "music/music_stpatrick1.ogg"
-                  colour_background = (0,150,0)
-                  buttons_colour =  (10,175,10) 
-              elif isItChristmasTimeNow():
-                  music = "music/music_christmas1.ogg"
-                  colour_background = prefDict["colour"]
-                  buttons_colour = prefDict["buttoncolour"]         
-              else:
-                  music = prefDict["Music"]
-                  colour_background = prefDict["colour"]
-                  buttons_colour = prefDict["buttoncolour"] 
-                  celebration = False
-              colour = colour_background
-              button_colour = buttons_colour
-          except json.JSONDecodeError:
-              v = 0.5
-              music_list = ['music/music1.ogg', 'music/music2.ogg', 'music/music3.ogg', 'music/music4.ogg', 'music/music5.ogg', 'music/music6.ogg']
-              music = (random.choice(music_list))
-              col_bg = random.uniform(0,1)
-              colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
-              buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
-              colour = colour_background
-              button_colour = buttons_colour
+        with open(".Preferences.json", "r") as file:
+            try:
+                prefDict = json.load(file)
+                v = prefDict["Volume"]
+                pygame.mixer.music.set_volume(v)
+                if isItHalloweenTimeNow():
+                    colour_background = (250,100,0)
+                    buttons_colour =  (255,110,10)
+                    music = "music/music_halloween1.ogg"
+                elif isItValentinesTimeNow():
+                    music = "music/music_valentines1.ogg"
+                    colour_background = (255,0,0)
+                    buttons_colour =  (255,10,10)
+                elif isItStPatricksTimeNow():
+                    music = "music/music_stpatrick1.ogg"
+                    colour_background = (0,150,0)
+                    buttons_colour =  (10,175,10) 
+                elif isItChristmasTimeNow():
+                    music = "music/music_christmas1.ogg"
+                    colour_background = prefDict["colour"]
+                    buttons_colour = prefDict["buttoncolour"]         
+                else:
+                    music = prefDict["Music"]
+                    colour_background = prefDict["colour"]
+                    buttons_colour = prefDict["buttoncolour"] 
+                    celebration = False
+                colour = colour_background
+                button_colour = buttons_colour
+            except json.JSONDecodeError:
+                v = 0.5
+                music_list = ['music/music1.ogg', 'music/music2.ogg', 'music/music3.ogg', 'music/music4.ogg', 'music/music5.ogg', 'music/music6.ogg']
+                music = (random.choice(music_list))
+                col_bg = random.uniform(0,1)
+                colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
+                buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
+                colour = colour_background
+                button_colour = buttons_colour
     except FileNotFoundError:
         v = 0.5
         music_list = ['music/music1.ogg', 'music/music2.ogg', 'music/music3.ogg', 'music/music4.ogg', 'music/music5.ogg', 'music/music6.ogg']

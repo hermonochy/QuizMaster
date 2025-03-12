@@ -122,7 +122,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,pygame.K_5,pygame.K_6,pygame.K_7,pygame.K_8,pygame.K_9]:
                         user_answer = event.key - pygame.K_1
 
-                    if event.key == pygame.K_a and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
+                    if event.key == pygame.K_y and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
                         user_answer =  answerOptions.index(currentQuestion.correctAnswer)
 
             time_remaining -= 1
@@ -273,7 +273,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if event.type == KEYDOWN:
                     if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
                         user_answer = event.key - pygame.K_1
-                    if event.key == pygame.K_a and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
+                    if event.key == pygame.K_y and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
                         user_answer =  answerOptions.index(currentQuestion.correctAnswer)
 
         correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
@@ -399,7 +399,7 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if event.type == KEYDOWN:
                     if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
                         user_answer = event.key - pygame.K_1
-                    if event.key == pygame.K_a and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
+                    if event.key == pygame.K_y and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
                         user_answer =  answerOptions.index(currentQuestion.correctAnswer)
 
         correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
@@ -522,7 +522,7 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if event.type == KEYDOWN:
                     if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
                         user_answer = event.key - pygame.K_1
-                    if event.key == pygame.K_a and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
+                    if event.key == pygame.K_y and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
                         user_answer =  answerOptions.index(currentQuestion.correctAnswer)
 
         correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
