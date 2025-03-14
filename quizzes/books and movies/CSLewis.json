@@ -1,0 +1,264 @@
+{
+    "title": "C. S. Lewis!",
+    "listOfQuestions": [
+      {
+        "question": "What is C. S. Lewis's full name?",
+        "correctAnswer": "Clive Staples Lewis",
+        "wrongAnswers": ["Charles Stewart Lewis", "Christopher Samuel Lewis", "Charles Stokes Lewis"],
+        "timeout": 15
+      },
+      {
+        "question": "In which year was C. S. Lewis born?",
+        "correctAnswer": "1898",
+        "wrongAnswers": ["1900", "1895", "1910"],
+        "timeout": 15
+      },
+      {
+        "question": "C. S. Lewis is best known for which series of books?",
+        "correctAnswer": "The Chronicles of Narnia",
+        "wrongAnswers": ["The Hobbit", "Harry Potter", "Earthsea"],
+        "timeout": 15
+      },
+      {
+        "question": "In which book does the character Aslan first appear?",
+        "correctAnswer": "The Lion, the Witch and the Wardrobe",
+        "wrongAnswers": ["Prince Caspian", "The Silver Chair", "The Magician's Nephew"],
+        "timeout": 15
+      },
+      {
+        "question": "Which of the following is a work of literary criticism written by C. S. Lewis?",
+        "correctAnswer": "The Allegory of Love",
+        "wrongAnswers": ["The Study of Literary History", "A Preface to Paradise Lost", "The Art of Fiction"],
+        "timeout": 15
+      },
+      {
+        "question": "C. S. Lewis held an academic position at which university?",
+        "correctAnswer": "University of Oxford",
+        "wrongAnswers": ["Harvard University", "University of Cambridge", "Yale University"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of C. S. Lewis's book that defends Christianity?",
+        "correctAnswer": "Mere Christianity",
+        "wrongAnswers": ["The Problem of Pain", "The Screwtape Letters", "The Four Loves"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character in The Chronicles of Narnia represents the devil or temptation?",
+        "correctAnswer": "The White Witch",
+        "wrongAnswers": ["Mr. Tumnus", "Aslan", "Prince Caspian"],
+        "timeout": 15
+      },
+      {
+        "question": "In what year was The Chronicles of Narnia: The Lion, the Witch and the Wardrobe published?",
+        "correctAnswer": "1950",
+        "wrongAnswers": ["1949", "1951", "1952"],
+        "timeout": 15
+      },
+      {
+        "question": "What genre does the book 'The Screwtape Letters' belong to?",
+        "correctAnswer": "Satirical fiction",
+        "wrongAnswers": ["Science fiction", "Fantasy", "Poetry"],
+        "timeout": 15
+      },
+      {
+        "question": "C. S. Lewis was a close friend of which famous author?",
+        "correctAnswer": "J. R. R. Tolkien",
+        "wrongAnswers": ["George Orwell", "F. Scott Fitzgerald", "H.G. Wells"],
+        "timeout": 15
+      },
+      {
+        "question": "Which C. S. Lewis book explores the theme of love?",
+        "correctAnswer": "The Four Loves",
+        "wrongAnswers": ["Surprised by Joy", "The Great Divorce", "A Grief Observed"],
+        "timeout": 15
+      },
+      {
+        "question": "What was the name of C. S. Lewis's wife?",
+        "correctAnswer": "Joy Davidman",
+        "wrongAnswers": ["Helen Joy", "Mary Wilson", "Dorothy Collins"],
+        "timeout": 15
+      },
+      {
+        "question": "In which novel does C. S. Lewis discuss his experiences with grief?",
+        "correctAnswer": "A Grief Observed",
+        "wrongAnswers": ["Surprised by Joy", "The Weight of Glory", "The Great Divorce"],
+        "timeout": 15
+      },
+      {
+        "question": "C. S. Lewis wrote a science fiction trilogy that includes which of the following?",
+        "correctAnswer": "Out of the Silent Planet",
+        "wrongAnswers": ["The Hitchhiker's Guide to the Galaxy", "Dune", "The Martian"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the title of the first book in The Chronicles of Narnia series?",
+        "correctAnswer": "The Lion, the Witch and the Wardrobe",
+        "wrongAnswers": ["Prince Caspian", "The Magician's Nephew", "The Silver Chair"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character in Narnia first meets Aslan?",
+        "correctAnswer": "Lucy Pevensie",
+        "wrongAnswers": ["Edmund Pevensie", "Peter Pevensie", "Susan Pevensie"],
+        "timeout": 15
+      },
+      {
+        "question": "C. S. Lewis originally wrote The Chronicles of Narnia for which audience?",
+        "correctAnswer": "Children",
+        "wrongAnswers": ["Adults", "Both children and adults", "Teenagers"],
+        "timeout": 15
+      },
+      {
+        "question": "In which fictional setting does Lewis's book 'The Great Divorce' take place?",
+        "correctAnswer": "Heaven and Hell",
+        "wrongAnswers": ["Narnia", "Middle-Earth", "The Wood Between the Worlds"],
+        "timeout": 15
+      },
+      {
+        "question": "What writing style did C. S. Lewis often employ?",
+        "correctAnswer": "Allegorical",
+        "wrongAnswers": ["Stream of consciousness", "Epistolary", "Magical realism"],
+        "timeout": 15
+      },
+      {
+        "question": "Which of these works was published after Lewis's death?",
+        "correctAnswer": "Letters to Malcolm",
+        "wrongAnswers": ["The Abolition of Man", "The Horse and His Boy", "The Chronicles of Narnia"],
+        "timeout": 15
+      },
+      {
+        "question": "What did Lewis's father do for a living?",
+        "correctAnswer": "Solicitor",
+        "wrongAnswers": ["Teacher", "Doctor", "Clerk"],
+        "timeout": 15
+      },
+      {
+        "question": "What informal debate society did C. S. Lewis participate in at Oxford?",
+        "correctAnswer": "The Inklings",
+        "wrongAnswers": ["The Larks", "The Dreamers", "The Fantastics"],
+        "timeout": 15
+      },
+      {
+        "question": "Where did C. S. Lewis serve during World War I?",
+        "correctAnswer": "The British Army",
+        "wrongAnswers": ["The Royal Air Force", "The Navy", "The Medical Corps"],
+        "timeout": 15
+      },
+      {
+        "question": "What philosophical topic was Lewis particularly interested in?",
+        "correctAnswer": "Christian apologetics",
+        "wrongAnswers": ["Existentialism", "Marxism", "Rationalism"],
+        "timeout": 15
+      },
+      {
+        "question": "C. S. Lewis's concept of 'necessary being' is primarily discussed in which work?",
+        "correctAnswer": "Mere Christianity",
+        "wrongAnswers": ["The Problem of Pain", "The Abolition of Man", "The Screwtape Letters"],
+        "timeout": 15
+      },
+      {
+        "question": "The character of Edmund Pevensie represents which of the following themes?",
+        "correctAnswer": "Redemption",
+        "wrongAnswers": ["Pride", "Greed", "Fear"],
+        "timeout": 15
+      },
+      {
+        "question": "C. S. Lewis wrote a biography about which famous author?",
+        "correctAnswer": "George MacDonald",
+        "wrongAnswers": ["Rainer Maria Rilke", "William Shakespeare", "Jane Austen"],
+        "timeout": 15
+      },
+      {
+        "question": "Which book by Lewis discusses the relationship between love and desire?",
+        "correctAnswer": "The Four Loves",
+        "wrongAnswers": ["The Problem of Pain", "Mere Christianity", "A Grief Observed"],
+        "timeout": 15
+      },
+      {
+        "question": "What was the theme of Lewis's book 'The Abolition of Man'?",
+        "correctAnswer": "Morality and education",
+        "wrongAnswers": ["The human condition", "Science and ethics", "The nature of love"],
+        "timeout": 15
+      },
+      {
+        "question": "Which book contains C. S. Lewis's idea of a 'divorce' between heaven and hell?",
+        "correctAnswer": "The Great Divorce",
+        "wrongAnswers": ["The Screwtape Letters", "Mere Christianity", "The Problem of Pain"],
+        "timeout": 15
+      },
+      {
+        "question": "C. S. Lewis's friend J. R. R. Tolkien is known for which famous series?",
+        "correctAnswer": "The Lord of the Rings",
+        "wrongAnswers": ["Harry Potter", "The Dark Tower", "The Earthsea Cycle"],
+        "timeout": 15
+      },
+      {
+        "question": "In The Chronicles of Narnia, who is the rightful king of Narnia?",
+        "correctAnswer": "Aslan",
+        "wrongAnswers": ["Edmund", "Peter", "Caspian"],
+        "timeout": 15
+      },
+      {
+        "question": "C. S. Lewis had a strong interest in what academic field?",
+        "correctAnswer": "Medieval literature",
+        "wrongAnswers": ["Modern poetry", "Contemporary fiction", "Philosophy"],
+        "timeout": 15
+      },
+      {
+        "question": "Which C. S. Lewis work deals with the problem of suffering?",
+        "correctAnswer": "The Problem of Pain",
+        "wrongAnswers": ["A Grief Observed", "Mere Christianity", "The Great Divorce"],
+        "timeout": 15
+      },
+      {
+        "question": "C. S. Lewis was also known for writing what type of scholarly work?",
+        "correctAnswer": "Essays",
+        "wrongAnswers": ["Novels", "Poems", "Biographies"],
+        "timeout": 15
+      },
+      {
+        "question": "In what year did C. S. Lewis pass away?",
+        "correctAnswer": "1963",
+        "wrongAnswers": ["1965", "1960", "1958"],
+        "timeout": 15
+      },
+      {
+        "question": "Lewis's conversion to Christianity was influenced by which of the following?",
+        "correctAnswer": "J. R. R. Tolkien",
+        "wrongAnswers": ["C. G. Jung", "Sigmund Freud", "George MacDonald"],
+        "timeout": 15
+      },
+      {
+        "question": "What symbolizes sacrifice and redemption in The Chronicles of Narnia?",
+        "correctAnswer": "Aslan's death",
+        "wrongAnswers": ["The White Witch's curse", "The Pevensie children's arrival", "The wardrobe"],
+        "timeout": 15
+      },
+      {
+        "question": "What was one of Lewis's major themes throughout his works?",
+        "correctAnswer": "The existence of God",
+        "wrongAnswers": ["The meaning of life", "The nature of evil", "Human relationships"],
+        "timeout": 15
+      },
+      {
+        "question": "Which book discusses the concept of time in heaven?",
+        "correctAnswer": "The Great Divorce",
+        "wrongAnswers": ["The Chronicles of Narnia", "Mere Christianity", "A Grief Observed"],
+        "timeout": 15
+      },
+      {
+        "question": "What type of creature is Aslan in The Chronicles of Narnia?",
+        "correctAnswer": "Lion",
+        "wrongAnswers": ["Bear", "Eagle", "Dragon"],
+        "timeout": 15
+      },
+      {
+        "question": "Which one of these is a common interpretation of Lewis's allegory in Narnia?",
+        "correctAnswer": "Christian themes",
+        "wrongAnswers": ["Political satire", "Historical fiction", "Science fiction"],
+        "timeout": 15
+      }
+    ],
+    "time given": "15"
+  }

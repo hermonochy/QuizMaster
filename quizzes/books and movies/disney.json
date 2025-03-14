@@ -1,0 +1,264 @@
+{
+    "title": "The World of Disney",
+    "listOfQuestions": [
+      {
+        "question": "What is the name of Mickey Mouse's dog?",
+        "correctAnswer": "Pluto",
+        "wrongAnswers": ["Goofy", "Max", "Chip"],
+        "timeout": 15
+      },
+      {
+        "question": "In which movie does the character Elsa appear?",
+        "correctAnswer": "Frozen",
+        "wrongAnswers": ["Tangled", "Brave", "Moana"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the kingdom where The Little Mermaid takes place?",
+        "correctAnswer": "Ariel's Kingdom",
+        "wrongAnswers": ["Atlantis", "Neverland", "Wonderland"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the villain in Aladdin?",
+        "correctAnswer": "Jafar",
+        "wrongAnswers": ["Scar", "Hades", "Shere Khan"],
+        "timeout": 15
+      },
+      {
+        "question": "What does Dumbo use to fly?",
+        "correctAnswer": "His big ears",
+        "wrongAnswers": ["A magic feather", "His dreams", "A balloon"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the toy cowboy in Toy Story?",
+        "correctAnswer": "Woody",
+        "wrongAnswers": ["Buzz", "Mr. Potato Head", "Rex"],
+        "timeout": 15
+      },
+      {
+        "question": "What color is Mulan's dress when she first attends the matchmaker?",
+        "correctAnswer": "Red",
+        "wrongAnswers": ["Blue", "Yellow", "Pink"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'Beauty and the Beast', what is Belle's father's profession?",
+        "correctAnswer": "Inventor",
+        "wrongAnswers": ["Baker", "Professor", "Merchant"],
+        "timeout": 15
+      },
+      {
+        "question": "What phrase is Buzz Lightyear known for saying?",
+        "correctAnswer": "To infinity and beyond!",
+        "wrongAnswers": ["To the moon and back!", "Reach for the stars!", "Never give up!"],
+        "timeout": 15
+      },
+      {
+        "question": "Which Disney princess has a raccoon for a sidekick?",
+        "correctAnswer": "Pocahontas",
+        "wrongAnswers": ["Snow White", "Cinderella", "Belle"],
+        "timeout": 15
+      },
+      {
+        "question": "What does the 'E' in EPCOT stand for?",
+        "correctAnswer": "Experimental",
+        "wrongAnswers": ["Educational", "Entertainment", "Ecological"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'The Lion King', who is Simba's father?",
+        "correctAnswer": "Mufasa",
+        "wrongAnswers": ["Scar", "Timon", "Zazu"],
+        "timeout": 15
+      },
+      {
+        "question": "What type of animal is Bambi?",
+        "correctAnswer": "A deer",
+        "wrongAnswers": ["A rabbit", "A fox", "A bear"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the fairy in Peter Pan?",
+        "correctAnswer": "Tinker Bell",
+        "wrongAnswers": ["Fawn", "Clover", "Silvermist"],
+        "timeout": 15
+      },
+      {
+        "question": "In which movie do you hear the song 'A Whole New World'?",
+        "correctAnswer": "Aladdin",
+        "wrongAnswers": ["The Little Mermaid", "Mulan", "Frozen"],
+        "timeout": 15
+      },
+      {
+        "question": "What animal is Stitch from 'Lilo & Stitch'?",
+        "correctAnswer": "An alien",
+        "wrongAnswers": ["A dog", "A cat", "A hamster"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the snowman in Frozen?",
+        "correctAnswer": "Olaf",
+        "wrongAnswers": ["Sven", "Kristoff", "Hans"],
+        "timeout": 15
+      },
+      {
+        "question": "Which Disney animated film is set in Paris?",
+        "correctAnswer": "Ratatouille",
+        "wrongAnswers": ["The Aristocats", "Cinderella", "Beauty and the Beast"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the main character in the movie 'Moana'?",
+        "correctAnswer": "Moana",
+        "wrongAnswers": ["Maui", "Heihei", "Tamatoa"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the first fully animated feature film by Disney?",
+        "correctAnswer": "Snow White and the Seven Dwarfs",
+        "wrongAnswers": ["Fantasia", "Dumbo", "Bambi"],
+        "timeout": 15
+      },
+      {
+        "question": "Which classic Disney movie features a glass slipper?",
+        "correctAnswer": "Cinderella",
+        "wrongAnswers": ["Sleeping Beauty", "Snow White", "The Little Mermaid"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the main conflict in 'The Little Mermaid'?",
+        "correctAnswer": "Ariel wants to become human.",
+        "wrongAnswers": ["Ursula takes over the ocean.", "King Triton loses his power.", "Flounder is captured."],
+        "timeout": 15
+      },
+      {
+        "question": "What are the names of the two main characters in 'Frozen'?",
+        "correctAnswer": "Elsa and Anna",
+        "wrongAnswers": ["Elsa and Moana", "Anna and Kristoff", "Elsa and Olaf"],
+        "timeout": 15
+      },
+      {
+        "question": "In the Pixar film 'Inside Out', what is the name of the emotion represented by a red character?",
+        "correctAnswer": "Anger",
+        "wrongAnswers": ["Fear", "Joy", "Sadness"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the bear in 'The Jungle Book'?",
+        "correctAnswer": "Baloo",
+        "wrongAnswers": ["Bagheera", "Shere Khan", "King Louie"],
+        "timeout": 15
+      },
+      {
+        "question": "Who sings 'Let It Go' in Frozen?",
+        "correctAnswer": "Idina Menzel",
+        "wrongAnswers": ["Kristen Bell", "Ariana Grande", "Demi Lovato"],
+        "timeout": 15
+      },
+      {
+        "question": "What type of animal is Dumbo?",
+        "correctAnswer": "An elephant",
+        "wrongAnswers": ["A rabbit", "A dog", "A lion"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the fairy tale that involves a spinning wheel and a sleeping princess?",
+        "correctAnswer": "Sleeping Beauty",
+        "wrongAnswers": ["Snow White", "Cinderella", "Rapunzel"],
+        "timeout": 15
+      },
+      {
+        "question": "Which movie features a character named Scar?",
+        "correctAnswer": "The Lion King",
+        "wrongAnswers": ["Tarzan", "Hercules", "Bambi"],
+        "timeout": 15
+      },
+      {
+        "question": "What kind of animal is Pumbaa in 'The Lion King'?",
+        "correctAnswer": "A warthog",
+        "wrongAnswers": ["A meerkat", "A lion", "A hyena"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the beautiful robot in 'Big Hero 6'?",
+        "correctAnswer": "Baymax",
+        "wrongAnswers": ["Hiro", "GoGo", "Honey Lemon"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'Finding Nemo', what type of fish is Nemo?",
+        "correctAnswer": "Clownfish",
+        "wrongAnswers": ["Goldfish", "Tropical fish", "Angelfish"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the horse in Tangled?",
+        "correctAnswer": "Maximus",
+        "wrongAnswers": ["Pascal", "Flynn", "Rapunzel"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the main character in 'The Hunchback of Notre Dame'?",
+        "correctAnswer": "Quasimodo",
+        "wrongAnswers": ["Gaston", "Esmeralda", "Frollo"],
+        "timeout": 15
+      },
+      {
+        "question": "In which Disney movie would you find a character named Mushu?",
+        "correctAnswer": "Mulan",
+        "wrongAnswers": ["Pocahontas", "The Lion King", "Tarzan"],
+        "timeout": 15
+      },
+      {
+        "question": "What animal is Thumper in 'Bambi'?",
+        "correctAnswer": "A rabbit",
+        "wrongAnswers": ["A deer", "A turtle", "A fox"],
+        "timeout": 15
+      },
+      {
+        "question": "Which Disney movie features a character named Maleficent?",
+        "correctAnswer": "Sleeping Beauty",
+        "wrongAnswers": ["Snow White", "Cinderella", "The Little Mermaid"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the job of the character Nala in 'The Lion King'?",
+        "correctAnswer": "She is a lioness.",
+        "wrongAnswers": ["She is a hyena.", "She is a falcon.", "She is a meerkat."],
+        "timeout": 15
+      },
+      {
+        "question": "In 'Toy Story', what is the name of Andy's favorite toy?",
+        "correctAnswer": "Woody",
+        "wrongAnswers": ["Buzz Lightyear", "Rex", "Mr. Potato Head"],
+        "timeout": 15
+      },
+      {
+        "question": "What does the enchanted rose symbolize in 'Beauty and the Beast'?",
+        "correctAnswer": "The Beast's time running out",
+        "wrongAnswers": ["Belle's love", "Gaston’s power", "The curse"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character is known for saying, 'I'm king of the world!'?",
+        "correctAnswer": "Jack Dawson",
+        "wrongAnswers": ["Hercules", "Simba", "Peter Pan"],
+        "timeout": 15
+      },
+      {
+        "question": "What type of animal is the main character in 'Zootopia'?",
+        "correctAnswer": "A rabbit",
+        "wrongAnswers": ["A fox", "A bear", "A dog"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'The Emperor's New Groove', who gets turned into a llama?",
+        "correctAnswer": "Emperor Kuzco",
+        "wrongAnswers": ["Pacha", "Yzma", "Chaca"],
+        "timeout": 15
+      }
+    ],
+    "time given": "15"
+  }

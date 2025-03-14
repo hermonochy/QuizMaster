@@ -1,0 +1,294 @@
+{
+    "title": "Shakespeare!",
+    "listOfQuestions": [
+      {
+        "question": "What is the name of Shakespeare's wife?",
+        "correctAnswer": "Anne Hathaway",
+        "wrongAnswers": ["Mary Arden", "Judith Shakespeare", "Suzanna Shakespeare"],
+        "timeout": 15
+      },
+      {
+        "question": "Which play features the characters of Oberon and Titania?",
+        "correctAnswer": "A Midsummer Night's Dream",
+        "wrongAnswers": ["Romeo and Juliet", "Hamlet", "The Tempest"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the main theme of 'Hamlet'?",
+        "correctAnswer": "Revenge",
+        "wrongAnswers": ["Love", "Friendship", "Power"],
+        "timeout": 15
+      },
+      {
+        "question": "Which historical figure is the play 'Julius Caesar' based on?",
+        "correctAnswer": "Julius Caesar",
+        "wrongAnswers": ["Brutus", "Marc Antony", "Cassius"],
+        "timeout": 15
+      },
+      {
+        "question": "Which play contains the famous line 'To be, or not to be'?",
+        "correctAnswer": "Hamlet",
+        "wrongAnswers": ["Macbeth", "King Lear", "Othello"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the setting of 'The Tempest'?",
+        "correctAnswer": "An island",
+        "wrongAnswers": ["A castle", "A forest", "A city"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the tragic hero in 'Macbeth'?",
+        "correctAnswer": "Macbeth",
+        "wrongAnswers": ["Banquo", "Duncan", "Lady Macbeth"],
+        "timeout": 15
+      },
+      {
+        "question": "What genre is 'Twelfth Night'?",
+        "correctAnswer": "Comedy",
+        "wrongAnswers": ["Tragedy", "History", "Romance"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character says 'All the world's a stage'?",
+        "correctAnswer": "Jaques",
+        "wrongAnswers": ["Touchstone", "Orlando", "Duke Senior"],
+        "timeout": 15
+      },
+      {
+        "question": "In which play do we find the 'Seven Ages of Man' speech?",
+        "correctAnswer": "As You Like It",
+        "wrongAnswers": ["King Lear", "Hamlet", "The Merchant of Venice"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of King Lear's youngest daughter?",
+        "correctAnswer": "Cordelia",
+        "wrongAnswers": ["Goneril", "Regan", "Portia"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the primary conflict in 'Romeo and Juliet'?",
+        "correctAnswer": "Feud between families",
+        "wrongAnswers": ["Class struggle", "Love vs. duty", "Ghosts"],
+        "timeout": 15
+      },
+      {
+        "question": "Which play features the character Shylock?",
+        "correctAnswer": "The Merchant of Venice",
+        "wrongAnswers": ["Hamlet", "Othello", "Much Ado About Nothing"],
+        "timeout": 15
+      },
+      {
+        "question": "What type of poetry is Shakespeare best known for?",
+        "correctAnswer": "Sonnet",
+        "wrongAnswers": ["Haiku", "Ballad", "Limerick"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character is known for saying 'Et tu, Brute?'",
+        "correctAnswer": "Julius Caesar",
+        "wrongAnswers": ["Brutus", "Cassius", "Cicero"],
+        "timeout": 15
+      },
+      {
+        "question": "Which play includes the phrase 'Something is rotten in the state of Denmark'?",
+        "correctAnswer": "Hamlet",
+        "wrongAnswers": ["Macbeth", "Othello", "King Lear"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the Fairy Queen in 'A Midsummer Night's Dream'?",
+        "correctAnswer": "Titania",
+        "wrongAnswers": ["Oberon", "Puck", "Helena"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'Macbeth,' what do the witches prophesy?",
+        "correctAnswer": "That Macbeth will become king",
+        "wrongAnswers": ["That he will die", "That he will fall in love", "That he will be betrayed"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of Othello's wife?",
+        "correctAnswer": "Desdemona",
+        "wrongAnswers": ["Bianca", "Emilia", "Ophelia"],
+        "timeout": 15
+      },
+      {
+        "question": "Which Shakespeare play is set in Venice?",
+        "correctAnswer": "The Merchant of Venice",
+        "wrongAnswers": ["Romeo and Juliet", "Hamlet", "King Lear"],
+        "timeout": 15
+      },
+      {
+        "question": "Which play is often referred to as the Scottish play?",
+        "correctAnswer": "Macbeth",
+        "wrongAnswers": ["Hamlet", "Othello", "King Lear"],
+        "timeout": 15
+      },
+      {
+        "question": "What's the primary setting of 'Much Ado About Nothing'?",
+        "correctAnswer": "Messina, Sicily",
+        "wrongAnswers": ["Verona", "London", "Paris"],
+        "timeout": 15
+      },
+      {
+        "question": "Who are the main lovers in 'A Midsummer Night's Dream'?",
+        "correctAnswer": "Hermia and Lysander",
+        "wrongAnswers": ["Helen and Demetrius", "Titania and Oberon", "Beatrice and Benedick"],
+        "timeout": 15
+      },
+      {
+        "question": "Which play features Prospero as a central character?",
+        "correctAnswer": "The Tempest",
+        "wrongAnswers": ["Macbeth", "Hamlet", "Julius Caesar"],
+        "timeout": 15
+      },
+      {
+        "question": "What is often referred to as Shakespeare's longest play?",
+        "correctAnswer": "Hamlet",
+        "wrongAnswers": ["King Lear", "Othello", "Julius Caesar"],
+        "timeout": 15
+      },
+      {
+        "question": "Which play is notable for the character Beatrice?",
+        "correctAnswer": "Much Ado About Nothing",
+        "wrongAnswers": ["Twelfth Night", "Hamlet", "King Lear"],
+        "timeout": 15
+      },
+      {
+        "question": "Where was Shakespeare born?",
+        "correctAnswer": "Stratford-upon-Avon",
+        "wrongAnswers": ["London", "Birmingham", "Oxford"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the primary focus of 'The Taming of the Shrew'?",
+        "correctAnswer": "The relationship between men and women",
+        "wrongAnswers": ["Political intrigue", "Family bonds", "Friendship"],
+        "timeout": 15
+      },
+      {
+        "question": "In what year is it believed that Shakespeare was born?",
+        "correctAnswer": "1564",
+        "wrongAnswers": ["1570", "1550", "1580"],
+        "timeout": 15
+      },
+      {
+        "question": "What was Shakespeare's occupation?",
+        "correctAnswer": "Playwright and poet",
+        "wrongAnswers": ["Merchant", "Soldier", "Politician"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character is a handkerchief symbolic in 'Othello'?",
+        "correctAnswer": "Desdemona",
+        "wrongAnswers": ["Bianca", "Emilia", "Portia"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the common term used to refer to Shakespeare's plays?",
+        "correctAnswer": "The Bard's works",
+        "wrongAnswers": ["The Classics", "The Old Masters", "The Elizabethan Plays"],
+        "timeout": 15
+      },
+      {
+        "question": "How many sonnets did Shakespeare write?",
+        "correctAnswer": "154",
+        "wrongAnswers": ["120", "160", "140"],
+        "timeout": 15
+      },
+      {
+        "question": "Which of the following is not a tragedy written by Shakespeare?",
+        "correctAnswer": "The Merchant of Venice",
+        "wrongAnswers": ["Romeo and Juliet", "Hamlet", "Macbeth"],
+        "timeout": 15
+      },
+      {
+        "question": "What infamous crime is Lady Macbeth associated with?",
+        "correctAnswer": "Murder",
+        "wrongAnswers": ["Theft", "Treason", "Fraud"],
+        "timeout": 15
+      },
+      {
+        "question": "In which play would you find the character of Falstaff?",
+        "correctAnswer": "Henry IV",
+        "wrongAnswers": ["Hamlet", "Macbeth", "The Taming of the Shrew"],
+        "timeout": 15
+      },
+      {
+        "question": "In Shakespeare's plays, which character often provides comic relief?",
+        "correctAnswer": "Fools or clowns",
+        "wrongAnswers": ["Dukes", "Kings", "Lovers"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'Romeo and Juliet,' what is Romeo's last name?",
+        "correctAnswer": "Montague",
+        "wrongAnswers": ["Capulet", "Verona", "Paris"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'The Tempest,' who is Ariel?",
+        "correctAnswer": "A spirit",
+        "wrongAnswers": ["A witch", "A knight", "A monster"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the relationship between Hamlet and Gertrude?",
+        "correctAnswer": "Mother and son",
+        "wrongAnswers": ["Uncle and nephew", "Brother and sister", "Cousins"],
+        "timeout": 15
+      },
+      {
+        "question": "Which play features mistaken identities?",
+        "correctAnswer": "Twelfth Night",
+        "wrongAnswers": ["Hamlet", "King Lear", "Othello"],
+        "timeout": 15
+      },
+      {
+        "question": "Which Shakespeare play depicts a shipwreck?",
+        "correctAnswer": "The Tempest",
+        "wrongAnswers": ["A Midsummer Night's Dream", "Romeo and Juliet", "Othello"],
+        "timeout": 15
+      },
+      {
+        "question": "What device is often used in Shakespeare's plays for foreshadowing?",
+        "correctAnswer": "Soliloquy",
+        "wrongAnswers": ["Irony", "Metaphor", "Allegory"],
+        "timeout": 15
+      },
+      {
+        "question": "In which play does the character of Portia appear?",
+        "correctAnswer": "The Merchant of Venice",
+        "wrongAnswers": ["Hamlet", "King Lear", "Much Ado About Nothing"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the antagonist in 'Othello'?",
+        "correctAnswer": "Iago",
+        "wrongAnswers": ["Othello", "Desdemona", "Cassio"],
+        "timeout": 15
+      },
+      {
+        "question": "What does the green-eyed monster refer to in 'Othello'?",
+        "correctAnswer": "Jealousy",
+        "wrongAnswers": ["Greed", "Lust", "Anger"],
+        "timeout": 15
+      },
+      {
+        "question": "In which play is the term 'green-eyed monster' used?",
+        "correctAnswer": "Othello",
+        "wrongAnswers": ["Hamlet", "The Tempest", "Macbeth"],
+        "timeout": 15
+      },
+      {
+        "question": "Which Shakespeare work is a pastoral comedy?",
+        "correctAnswer": "As You Like It",
+        "wrongAnswers": ["Much Ado About Nothing", "Twelfth Night", "Othello"],
+        "timeout": 15
+      }
+    ],
+    "time given": "15"
+  }

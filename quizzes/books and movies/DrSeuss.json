@@ -1,0 +1,276 @@
+{
+    "title": "Dr. Seuss!",
+    "listOfQuestions": [
+      {
+        "question": "What was Dr. Seuss's real name?",
+        "correctAnswer": "Theodor Seuss Geisel",
+        "wrongAnswers": ["Theodore Seuss", "Theodor Geisel", "Seuss Theodor"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the first book published by Dr. Seuss?",
+        "correctAnswer": "And to Think That I Saw It on Mulberry Street",
+        "wrongAnswers": ["Green Eggs and Ham", "The Cat in the Hat", "Horton Hears a Who!"],
+        "timeout": 15
+      },
+      {
+        "question": "Which Dr. Seuss book features a character named the Grinch?",
+        "correctAnswer": "How the Grinch Stole Christmas!",
+        "wrongAnswers": ["Oh, the Places You'll Go!", "The Lorax", "Horton Hears a Who!"],
+        "timeout": 15
+      },
+      {
+        "question": "In which book does Horton the elephant make a promise to protect a tiny community?",
+        "correctAnswer": "Horton Hears a Who!",
+        "wrongAnswers": ["Horton Hatches the Egg", "The Cat in the Hat", "Green Eggs and Ham"],
+        "timeout": 15
+      },
+      {
+        "question": "Which book features a cat in a tall striped hat?",
+        "correctAnswer": "The Cat in the Hat",
+        "wrongAnswers": ["One Fish Two Fish Red Fish Blue Fish", "Fox in Socks", "Horton Hears a Who!"],
+        "timeout": 15
+      },
+      {
+        "question": "What color are the eggs in 'Green Eggs and Ham'?",
+        "correctAnswer": "Green",
+        "wrongAnswers": ["Brown", "Blue", "Yellow"],
+        "timeout": 15
+      },
+      {
+        "question": "What whimsical creature helps save the environment in 'The Lorax'?",
+        "correctAnswer": "The Lorax",
+        "wrongAnswers": ["The Cat", "The Grinch", "The Whos"],
+        "timeout": 15
+      },
+      {
+        "question": "What does the Cat in the Hat bring to entertain the children?",
+        "correctAnswer": "Mischief",
+        "wrongAnswers": ["Silence", "Boredom", "Order"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'Oh, the Places You'll Go!', what does Dr. Seuss encourage readers to do?",
+        "correctAnswer": "Embrace their journey",
+        "wrongAnswers": ["Fear change", "Avoid adventure", "Stay in one place"],
+        "timeout": 15
+      },
+      {
+        "question": "Which Seuss character says, 'I meant what I said and I said what I meant.'?",
+        "correctAnswer": "The Elephant, Horton",
+        "wrongAnswers": ["The Cat in the Hat", "Sam-I-Am", "The Once-ler"],
+        "timeout": 15
+      },
+      {
+        "question": "What creature has a big, curly tail and is friendly in 'Horton Hears a Who!'?",
+        "correctAnswer": "Horton",
+        "wrongAnswers": ["The Grinch", "The Cat in the Hat", "Sam-I-Am"],
+        "timeout": 15
+      },
+      {
+        "question": "What creature lives in a tree and speaks for the trees in 'The Lorax'?",
+        "correctAnswer": "The Lorax",
+        "wrongAnswers": ["The Whos", "Horton", "The Once-ler"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the main theme of 'Green Eggs and Ham'?",
+        "correctAnswer": "Trying new things",
+        "wrongAnswers": ["Not liking food", "Disliking colors", "Avoiding friends"],
+        "timeout": 15
+      },
+      {
+        "question": "What rhyming style is commonly used in Dr. Seuss's books?",
+        "correctAnswer": "Anapestic tetrameter",
+        "wrongAnswers": ["Iambic pentameter", "Free verse", "Haiku"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character says, 'You have brains in your head. You have feet in your shoes.'?",
+        "correctAnswer": "The narrator in 'Oh, the Places You'll Go!'",
+        "wrongAnswers": ["The Cat in the Hat", "Sam-I-Am", "The Grinch"],
+        "timeout": 15
+      },
+      {
+        "question": "What does the Once-ler produce in 'The Lorax'?",
+        "correctAnswer": "Thneeds",
+        "wrongAnswers": ["Balloons", "Wishies", "Truffula Trees"],
+        "timeout": 15
+      },
+      {
+        "question": "What does the 'Sneeches' story highlight?",
+        "correctAnswer": "Prejudice and acceptance",
+        "wrongAnswers": ["Friendship", "Boredom", "Adventure"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'Fox in Socks', what is the main focus?",
+        "correctAnswer": "Tongue twisters",
+        "wrongAnswers": ["Coloring", "Counting", "Cooking"],
+        "timeout": 15
+      },
+      {
+        "question": "What animal hatches from an egg in 'Horton Hatches the Egg'?",
+        "correctAnswer": "A bird",
+        "wrongAnswers": ["A dinosaur", "A puppy", "A cat"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the villain in 'How the Grinch Stole Christmas!'?",
+        "correctAnswer": "The Grinch",
+        "wrongAnswers": ["The Cat in the Hat", "Sam-I-Am", "Horton"],
+        "timeout": 15
+      },
+      {
+        "question": "What do the Whos sing in 'How the Grinch Stole Christmas!'?",
+        "correctAnswer": "We Wish You a Merry Christmas",
+        "wrongAnswers": ["Silent Night", "Jingle Bells", "Frosty the Snowman"],
+        "timeout": 15
+      },
+      {
+        "question": "What shape is the Truffula tree?",
+        "correctAnswer": "Tufted",
+        "wrongAnswers": ["Round", "Tall", "Cone-shaped"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character in 'The Cat in the Hat' is known for their curiosity?",
+        "correctAnswer": "Sally",
+        "wrongAnswers": ["The Cat", "The Fish", "Nick"],
+        "timeout": 15
+      },
+      {
+        "question": "What food does Sam-I-Am offer in 'Green Eggs and Ham'?",
+        "correctAnswer": "Green Eggs and Ham",
+        "wrongAnswers": ["Spaghetti", "Pancakes", "Sushi"],
+        "timeout": 15
+      },
+      {
+        "question": "Who wrote the quote, 'A person's a person, no matter how small.'?",
+        "correctAnswer": "Dr. Seuss",
+        "wrongAnswers": ["Eric Carle", "Shel Silverstein", "Maurice Sendak"],
+        "timeout": 15
+      },
+      {
+        "question": "What do the Cat's friends in 'The Cat in the Hat' do?",
+        "correctAnswer": "Make a mess",
+        "wrongAnswers": ["Play games", "Clean up", "Do homework"],
+        "timeout": 15
+      },
+      {
+        "question": "What do the Truffula trees provide in 'The Lorax'?",
+        "correctAnswer": "Thneeds",
+        "wrongAnswers": ["Fruit", "Shade", "Wood"],
+        "timeout": 15
+      },
+      {
+        "question": "What does the Cat in the Hat use to entertain the children?",
+        "correctAnswer": "Balloon animals",
+        "wrongAnswers": ["A party hat", "A book", "A magic wand"],
+        "timeout": 15
+      },
+      {
+        "question": "Where does 'Oh, the Places You'll Go!' suggest you can go?",
+        "correctAnswer": "Anywhere",
+        "wrongAnswers": ["Nowhere", "Only in town", "Only to school"],
+        "timeout": 15
+      },
+      {
+        "question": "Which Dr. Seuss book features a 'Star-Belly Sneetch'?",
+        "correctAnswer": "Sneetches",
+        "wrongAnswers": ["Horton Hears a Who!", "The Cat in the Hat", "The Lorax"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the main character in 'Horton Hatches the Egg'?",
+        "correctAnswer": "Horton",
+        "wrongAnswers": ["The Grinch", "The Cat", "Sam-I-Am"],
+        "timeout": 15
+      },
+      {
+        "question": "What event does the Truffula tree lead to in 'The Lorax'?",
+        "correctAnswer": "Environmental disaster",
+        "wrongAnswers": ["A celebration", "A party", "A wedding"],
+        "timeout": 15
+      },
+      {
+        "question": "What type of creature is Sam-I-Am?",
+        "correctAnswer": "A person",
+        "wrongAnswers": ["A cat", "An elephant", "A bird"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'The Grinch', what is the Grinch's heart size at the beginning of the story?",
+        "correctAnswer": "Two sizes too small",
+        "wrongAnswers": ["Just right", "One size too big", "Three sizes too small"],
+        "timeout": 15
+      },
+      {
+        "question": "What does the Cat in the Hat bring to the children?",
+        "correctAnswer": "Chaos",
+        "wrongAnswers": ["Presents", "Games", "Toys"],
+        "timeout": 15
+      },
+      {
+        "question": "What does 'The Lorax' stand for?",
+        "correctAnswer": "The trees",
+        "wrongAnswers": ["The animals", "The rivers", "The oceans"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the main lesson in 'Horton Hears a Who!'?",
+        "correctAnswer": "Every person matters",
+        "wrongAnswers": ["Don't be loud", "Be invisible", "Stay quiet"],
+        "timeout": 15
+      },
+      {
+        "question": "What word is repeated many times in 'Green Eggs and Ham'?",
+        "correctAnswer": "Would you?",
+        "wrongAnswers": ["Is it?", "Can I?", "Do you?"],
+        "timeout": 15
+      },
+      {
+        "question": "What does the Grinch learn to embrace?",
+        "correctAnswer": "Christmas spirit",
+        "wrongAnswers": ["Gift giving", "Baking cookies", "Shopping"],
+        "timeout": 15
+      },
+      {
+        "question": "How many fish are in 'One Fish Two Fish Red Fish Blue Fish'?",
+        "correctAnswer": "Four",
+        "wrongAnswers": ["Three", "Five", "Six"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character feels lonely because of his lack of friends in 'The Grinch'?",
+        "correctAnswer": "The Grinch",
+        "wrongAnswers": ["Sam-I-Am", "The Lorax", "Horton"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'Horton Hatches the Egg', what does Horton use to protect the egg?",
+        "correctAnswer": "His patience",
+        "wrongAnswers": ["His strength", "His speed", "His size"],
+        "timeout": 15
+      },
+      {
+        "question": "What story features a man who changes his life by discovering the joy of caring about others?",
+        "correctAnswer": "How the Grinch Stole Christmas!",
+        "wrongAnswers": ["The Cat in the Hat", "Horton Hears a Who!", "The Lorax"],
+        "timeout": 15
+      },
+      {
+        "question": "What creature in 'The Lorax' speaks for the trees?",
+        "correctAnswer": "The Lorax",
+        "wrongAnswers": ["Horton", "Sam-I-Am", "The Once-ler"],
+        "timeout": 15
+      },
+      {
+        "question": "What lesson is taught by the Sneetches?",
+        "correctAnswer": "Importance of equality",
+        "wrongAnswers": ["Teamwork", "Creativity", "Hard work"],
+        "timeout": 15
+      }
+    ],
+    "time given": "15"
+  }

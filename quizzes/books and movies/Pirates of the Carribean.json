@@ -1,0 +1,252 @@
+{
+    "title": "Pirates of the Caribbean",
+    "listOfQuestions": [
+      {
+        "question": "What is the name of the ship captained by Jack Sparrow?",
+        "correctAnswer": "The Black Pearl",
+        "wrongAnswers": ["The Flying Dutchman", "The Queen Anne's Revenge", "The HMS Interceptor"],
+        "timeout": 15
+      },
+      {
+        "question": "Who plays the character of Captain Jack Sparrow?",
+        "correctAnswer": "Johnny Depp",
+        "wrongAnswers": ["Orlando Bloom", "Geoffrey Rush", "Eli Roth"],
+        "timeout": 15
+      },
+      {
+        "question": "What does Captain Jack Sparrow want to retrieve in the first film?",
+        "correctAnswer": "His ship",
+        "wrongAnswers": ["A treasure map", "A cursed gold coin", "A voodoo doll"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character is Elizabeth Swann's love interest?",
+        "correctAnswer": "Will Turner",
+        "wrongAnswers": ["James Norrington", "Davy Jones", "Jack Sparrow"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the main antagonist in 'Dead Man's Chest'?",
+        "correctAnswer": "Davy Jones",
+        "wrongAnswers": ["Cutler Beckett", "Barbossa", "Blackbeard"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the cursed pirate crew in the first movie?",
+        "correctAnswer": "The Undead Crew",
+        "wrongAnswers": ["The Black Spot Crew", "The Ghost Pirates", "The Dead Man's Crew"],
+        "timeout": 15
+      },
+      {
+        "question": "Which actor plays Captain Hector Barbossa?",
+        "correctAnswer": "Geoffrey Rush",
+        "wrongAnswers": ["Javier Bardem", "Bill Nighy", "Ben Kingsley"],
+        "timeout": 15
+      },
+      {
+        "question": "What item must Jack Sparrow return to the Fountain of Youth?",
+        "correctAnswer": "A chalice",
+        "wrongAnswers": ["A sword", "A compass", "A golden coin"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is the captain of the Flying Dutchman?",
+        "correctAnswer": "Davy Jones",
+        "wrongAnswers": ["Blackbeard", "Cutler Beckett", "Salazar"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the curse that Davy Jones imposes on his crew?",
+        "correctAnswer": "They must serve on the Flying Dutchman for eternity",
+        "wrongAnswers": ["To become ghosts", "To turn to stone", "To never die"],
+        "timeout": 15
+      },
+      {
+        "question": "What item does Jack Sparrow use as a compass?",
+        "correctAnswer": "A compass that points to what you want most",
+        "wrongAnswers": ["A treasure map", "A magical stone", "A sundial"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is known as the 'Pirate Lord of the Brethren Court'?",
+        "correctAnswer": "Captain Jack Sparrow",
+        "wrongAnswers": ["Hector Barbossa", "James Norrington", "Blackbeard"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the organization trying to eliminate piracy?",
+        "correctAnswer": "The East India Trading Company",
+        "wrongAnswers": ["The Royal Navy", "The Spanish Armada", "The British Empire"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is Captain Salazar?",
+        "correctAnswer": "A ghostly pirate seeking revenge on Jack Sparrow",
+        "wrongAnswers": ["A ship captain in a rival crew", "A cursed captain", "A merchant trader"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the main goal of the main characters in 'At World's End'?",
+        "correctAnswer": "To rescue Jack Sparrow",
+        "wrongAnswers": ["To find the Fountain of Youth", "To defeat Davy Jones", "To locate a legendary treasure"],
+        "timeout": 15
+      },
+      {
+        "question": "Which film features the character 'Angelica'?",
+        "correctAnswer": "On Stranger Tides",
+        "wrongAnswers": ["Curse of the Black Pearl", "Dead Man's Chest", "At World's End"],
+        "timeout": 15
+      },
+      {
+        "question": "What does Captain Jack Sparrow claim makes him a great pirate?",
+        "correctAnswer": "His charisma",
+        "wrongAnswers": ["His sword skills", "His treasure hoard", "His ship"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character is played by Orlando Bloom?",
+        "correctAnswer": "Will Turner",
+        "wrongAnswers": ["James Norrington", "Davy Jones", "Barbossa"],
+        "timeout": 15
+      },
+      {
+        "question": "What does Jack Sparrow use to defend himself against the Kraken?",
+        "correctAnswer": "A sword",
+        "wrongAnswers": ["A gun", "A shield", "A cannon"],
+        "timeout": 15
+      },
+      {
+        "question": "In which movie do Jack and Barbossa find the Fountain of Youth?",
+        "correctAnswer": "On Stranger Tides",
+        "wrongAnswers": ["Curse of the Black Pearl", "Dead Man's Chest", "At World's End"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is Elizabeth Swann's father?",
+        "correctAnswer": "Governor Weatherby Swann",
+        "wrongAnswers": ["Bootstrap Bill Turner", "Captain Teague", "Davy Jones"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the pirate who betrays Sparrow in 'Dead Man's Chest'?",
+        "correctAnswer": "Davy Jones",
+        "wrongAnswers": ["Barbossa", "Beckett", "Norrington"],
+        "timeout": 15
+      },
+      {
+        "question": "How does Jack avoid execution in 'Curse of the Black Pearl'?",
+        "correctAnswer": "He escapes in a barrel",
+        "wrongAnswers": ["He is rescued by Elizabeth", "He fights his way out", "He bribes the guards"],
+        "timeout": 15
+      },
+      {
+        "question": "What character does Keira Knightley portray in the franchise?",
+        "correctAnswer": "Elizabeth Swann",
+        "wrongAnswers": ["Angelica", "Tia Dalma", "Governor Swann"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the mystical sea creature that haunts Jack in 'Dead Man's Chest'?",
+        "correctAnswer": "The Kraken",
+        "wrongAnswers": ["The Mermaids", "The Leviathan", "The Sirens"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character has a pet monkey?",
+        "correctAnswer": "Jack Sparrow",
+        "wrongAnswers": ["Hector Barbossa", "Will Turner", "James Norrington"],
+        "timeout": 15
+      },
+      {
+        "question": "What does Barbossa want to do with the cursed gold in the first film?",
+        "correctAnswer": "To lift the curse",
+        "wrongAnswers": ["To destroy it", "To sell it", "To bury it"],
+        "timeout": 15
+      },
+      {
+        "question": "Who is known as the 'Pirate King'?",
+        "correctAnswer": "Elizabeth Swann",
+        "wrongAnswers": ["Jack Sparrow", "Davy Jones", "Blackbeard"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the fate of Davy Jones at the end of 'At World's End'?",
+        "correctAnswer": "He is killed by Will Turner",
+        "wrongAnswers": ["He escapes", "He is imprisoned", "He becomes human again"],
+        "timeout": 15
+      },
+      {
+        "question": "What kind of treasure do the pirates search for in 'On Stranger Tides'?",
+        "correctAnswer": "The Fountain of Youth",
+        "wrongAnswers": ["Golden doubloons", "Mermaid tears", "The Black Pearl"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character is a voodoo priestess?",
+        "correctAnswer": "Tia Dalma",
+        "wrongAnswers": ["Angelica", "Elizabeth Swann", "Calypso"],
+        "timeout": 15
+      },
+      {
+        "question": "Which sea creature is represented as a large ship in 'At World's End'?",
+        "correctAnswer": "The Flying Dutchman",
+        "wrongAnswers": ["The Black Pearl", "The Behemoth", "The Leviathan"],
+        "timeout": 15
+      },
+      {
+        "question": "What does Jack take from Barbossa in 'Curse of the Black Pearl'?",
+        "correctAnswer": "A compass",
+        "wrongAnswers": ["A sword", "A map", "A ring"],
+        "timeout": 15
+      },
+      {
+        "question": "In 'Dead Man's Chest', what debt does Jack owe to Davy Jones?",
+        "correctAnswer": "His soul",
+        "wrongAnswers": ["A treasure", "A ship", "A favor"],
+        "timeout": 15
+      },
+      {
+        "question": "Who becomes the captain of the Black Pearl after Jack?",
+        "correctAnswer": "Will Turner",
+        "wrongAnswers": ["Elizabeth Swann", "Hector Barbossa", "Davy Jones"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of Blackbeard's ghost ship?",
+        "correctAnswer": "Queen Anne's Revenge",
+        "wrongAnswers": ["The Flying Dutchman", "The Black Pearl", "The Jolly Roger"],
+        "timeout": 15
+      },
+      {
+        "question": "What creature does Jack face in the waters surrounding the Fountain of Youth?",
+        "correctAnswer": "Mermaids",
+        "wrongAnswers": ["Kraken", "Sea Serpents", "Ghost sharks"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the name of the movie that marks Johnny Depp's last appearance as Jack Sparrow to date?",
+        "correctAnswer": "Dead Men Tell No Tales",
+        "wrongAnswers": ["On Stranger Tides", "At World's End", "Dead Man's Chest"],
+        "timeout": 15
+      },
+      {
+        "question": "Which character's father is Bootstrap Bill Turner?",
+        "correctAnswer": "Will Turner",
+        "wrongAnswers": ["Jack Sparrow", "James Norrington", "Hector Barbossa"],
+        "timeout": 15
+      },
+      {
+        "question": "What is the Black Mark in 'Dead Man's Chest'?",
+        "correctAnswer": "A mark of death",
+        "wrongAnswers": ["A pirate code", "A cursed treasure", "A tattoo"],
+        "timeout": 15
+      },
+      {
+        "question": "What secret does Tia Dalma reveal about Calypso?",
+        "correctAnswer": "Calypso is trapped in human form",
+        "wrongAnswers": ["Calypso is dead", "Calypso is a mermaid", "Calypso is a curse"],
+        "timeout": 15
+      }
+    ],
+    "time given": "15"
+  }
