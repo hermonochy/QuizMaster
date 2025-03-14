@@ -27,6 +27,7 @@ from modules.checker import *
 from modules.searchQuiz import search_str_in_file
 from modules.elements import *
 from modules.gameModes import *
+from modules.otherWindows import about
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
 
 pygame.init()
@@ -299,14 +300,16 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     welcome_image = pygame.image.load("images/logo.png").convert()
     while running:
         screen.fill(BACKGROUND_COLOUR)
-        button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2), 250, 60)
-        button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2), 250, 60)
-        button_preferences = Button("Preferences", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 100), 250, 60)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 100), 250, 60)
+        button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 - 50), 250, 60)
+        button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 50), 250, 60)
+        button_preferences = Button("Preferences", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 50), 250, 60)
+        button_about = Button("About QuizMaster", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 50), 250, 60)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 150), 250, 60)
         display_message("Welcome to QuizMaster!", SCREEN_HEIGHT // 8, 75, BLACK)
         button_make.draw(screen, BUTTON_COLOUR, BLACK)
         button_play.draw(screen, BUTTON_COLOUR, BLACK)
         button_preferences.draw(screen, BUTTON_COLOUR, BLACK)
+        button_about.draw(screen, BUTTON_COLOUR, BLACK)
         button_quit.draw(screen, BUTTON_COLOUR, BLACK)
         screen.blit(welcome_image, (SCREEN_WIDTH//4.75, SCREEN_HEIGHT//12))
         screen.blit(welcome_image, (SCREEN_WIDTH//1.325, SCREEN_HEIGHT//12))
@@ -327,6 +330,8 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                         subprocess.Popen(["python", "quizcreator"])
                 if button_preferences.is_clicked(pos):
                     preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
+                if button_about.is_clicked(pos):
+                    about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
                 if button_play.is_clicked(pos):
                     choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
 

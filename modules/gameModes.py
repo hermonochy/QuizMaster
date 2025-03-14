@@ -4,7 +4,6 @@ import time
 
 from pygame.locals import *
 from modules.elements import *
-from modules.elements import screen_mode
 
 def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     running = True

@@ -105,7 +105,7 @@ def display_message(message, y_position, font_size, colour):
     font = pygame.font.Font(None, font_size)
     words = message.split()
     
-    if len(message) > 60:
+    if len(message) > 50:
         text_lines = []
         line = ""
         
