@@ -16,7 +16,7 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
         screen.fill(BACKGROUND_COLOUR)
         y_position = 50
         button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50)
-        button_back.draw(screen, BUTTON_COLOUR, BLACK)
+        button_back.draw(screen, BUTTON_COLOUR)
         for idx in range(offset, min(offset + items_per_page, total_items)):
             question = incorrect_questions[idx]
             y_position = display_message(question.question, y_position, 30, BLACK)
@@ -82,7 +82,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         buttons = []
         for idx, answer in enumerate(answerOptions):
-            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40)
             buttons.append(button)
 
         while running and time_remaining > 0 and user_answer is None:
@@ -90,14 +90,14 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             display_message(f"Question {questionIndex + 1} out of {totalQuestions} : {currentQuestion.question}", QUESTION_OFFSET, 50, BLACK)
 
             for button in buttons:
-                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR, BLACK)
+                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
             button_end = Button("End Quiz", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+200), 250, 40)  
             button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+250), 250, 40)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+300), 250, 40)
             display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, timeColour)
-            button_end.draw(screen, BUTTON_COLOUR, BLACK)
-            button_go_back.draw(screen, BUTTON_COLOUR, BLACK)
-            button_leave.draw(screen, BUTTON_COLOUR, BLACK)
+            button_end.draw(screen, BUTTON_COLOUR)
+            button_go_back.draw(screen, BUTTON_COLOUR)
+            button_leave.draw(screen, BUTTON_COLOUR)
             pygame.display.update()
             pygame.time.wait(1000)
 
@@ -156,10 +156,10 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
         if incorrect_questions:
           button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40)
-          button_show_incorrect.draw(screen, BUTTON_COLOUR, BLACK)
-        button_go_back.draw(screen, BUTTON_COLOUR, BLACK)
-        button_replay.draw(screen, BUTTON_COLOUR, BLACK)
-        button_quit.draw(screen, BUTTON_COLOUR, BLACK)        
+          button_show_incorrect.draw(screen, BUTTON_COLOUR)
+        button_go_back.draw(screen, BUTTON_COLOUR)
+        button_replay.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)        
         
         pygame.display.update()
 
@@ -222,7 +222,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         buttons = []
         for idx, answer in enumerate(answerOptions):
-            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40)
             buttons.append(button)
 
         while running and user_answer is None:
@@ -242,14 +242,14 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             display_message(f"Question {questionIndex + 1} out of {totalQuestions} : {currentQuestion.question}", QUESTION_OFFSET, 50, BLACK)
 
             for button in buttons:
-                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR, BLACK)
+                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
             button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40)
             button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40)
             display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, timeColour)
-            button_end.draw(screen, BUTTON_COLOUR, BLACK)
-            button_go_back.draw(screen, BUTTON_COLOUR, BLACK)
-            button_leave.draw(screen, BUTTON_COLOUR, BLACK)
+            button_end.draw(screen, BUTTON_COLOUR)
+            button_go_back.draw(screen, BUTTON_COLOUR)
+            button_leave.draw(screen, BUTTON_COLOUR)
             pygame.display.update()
 
             for event in pygame.event.get():
@@ -302,10 +302,10 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
         if incorrect_questions:
             button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2), 250, 40)
-            button_show_incorrect.draw(screen, BUTTON_COLOUR, BLACK)
-        button_go_back.draw(screen, BUTTON_COLOUR, BLACK)
-        button_replay.draw(screen, BUTTON_COLOUR, BLACK)
-        button_quit.draw(screen, BUTTON_COLOUR, BLACK)
+            button_show_incorrect.draw(screen, BUTTON_COLOUR)
+        button_go_back.draw(screen, BUTTON_COLOUR)
+        button_replay.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)
 
         pygame.display.update()
 
@@ -364,7 +364,7 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         buttons = []
         for idx, answer in enumerate(answerOptions):
-            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40)
             buttons.append(button)
 
         while running and user_answer is None:
@@ -372,14 +372,14 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             display_message(f"Question: {currentQuestion.question}", QUESTION_OFFSET, 50, BLACK)
 
             for button in buttons:
-                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR, BLACK)
+                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
             button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40)
             elapsed_time = time.time() - start_time
             display_message(f"Time: {int(elapsed_time)}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, BLACK)
             display_message(f"Lives: {lives}", SCREEN_HEIGHT - (QUESTION_OFFSET + 40), 40, BLACK)
-            button_go_back.draw(screen, BUTTON_COLOUR, BLACK)
-            button_leave.draw(screen, BUTTON_COLOUR, BLACK)
+            button_go_back.draw(screen, BUTTON_COLOUR)
+            button_leave.draw(screen, BUTTON_COLOUR)
             pygame.display.update()
 
             for event in pygame.event.get():
@@ -423,9 +423,9 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
         button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
         button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
-        button_go_back.draw(screen, BUTTON_COLOUR, BLACK)
-        button_replay.draw(screen, BUTTON_COLOUR, BLACK)
-        button_quit.draw(screen, BUTTON_COLOUR, BLACK)
+        button_go_back.draw(screen, BUTTON_COLOUR)
+        button_replay.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)
 
         pygame.display.update()
 
@@ -482,7 +482,7 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         buttons = []
         for idx, answer in enumerate(answerOptions):
-            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40)
             buttons.append(button)
 
         while running and user_answer is None:
@@ -490,15 +490,15 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             display_message(f"Question {questionIndex + 1} out of {totalQuestions} : {currentQuestion.question}", QUESTION_OFFSET, 50, BLACK)
 
             for button in buttons:
-                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR, BLACK)
+                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
             
             button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40)
             button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40)
             display_message(f"Lives remaining: {lives}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, BLACK)
-            button_end.draw(screen, BUTTON_COLOUR, BLACK)
-            button_go_back.draw(screen, BUTTON_COLOUR, BLACK)
-            button_leave.draw(screen, BUTTON_COLOUR, BLACK)
+            button_end.draw(screen, BUTTON_COLOUR)
+            button_go_back.draw(screen, BUTTON_COLOUR)
+            button_leave.draw(screen, BUTTON_COLOUR)
             pygame.display.update()
             
             for event in pygame.event.get():
@@ -552,10 +552,10 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
         if incorrect_questions:
             button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2), 250, 40)
-            button_show_incorrect.draw(screen, BUTTON_COLOUR, BLACK)
-        button_go_back.draw(screen, BUTTON_COLOUR, BLACK)
-        button_replay.draw(screen, BUTTON_COLOUR, BLACK)
-        button_quit.draw(screen, BUTTON_COLOUR, BLACK)
+            button_show_incorrect.draw(screen, BUTTON_COLOUR)
+        button_go_back.draw(screen, BUTTON_COLOUR)
+        button_replay.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)
 
         pygame.display.update()
 

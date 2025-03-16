@@ -18,15 +18,14 @@ from glob import glob
 from enum import Enum
 from pygame.locals import *
 from pygame_widgets.slider import Slider
-from pygame_widgets.textbox import TextBox
 from pygame_widgets.button import Button as button
 from tkinter import *
 
 from modules.persistence import *
 from modules.checker import *
-from modules.searchQuiz import search_str_in_file
 from modules.elements import *
 from modules.gameModes import *
+from modules.searchQuiz import search_str_in_file
 from modules.otherWindows import about
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
 
@@ -192,7 +191,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     while running:
         screen.fill(BACKGROUND_COLOUR)
         for button in buttons:
-            button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR, BLACK)
+            button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
         if len(buttons) > 12:    
            scrollbar.draw(screen)
         pygame.display.update()
@@ -237,10 +236,10 @@ def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofqu
         button_classicV2 = Button("Classic V2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60)
         button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60)
         button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60)           
-        button_classic.draw(screen, BUTTON_COLOUR, BLACK)
-        button_classicV2.draw(screen, BUTTON_COLOUR, BLACK)
-        button_speed.draw(screen, BUTTON_COLOUR, BLACK)
-        button_survival.draw(screen, BUTTON_COLOUR, BLACK)
+        button_classic.draw(screen, BUTTON_COLOUR)
+        button_classicV2.draw(screen, BUTTON_COLOUR)
+        button_speed.draw(screen, BUTTON_COLOUR)
+        button_survival.draw(screen, BUTTON_COLOUR)
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -306,11 +305,11 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
         button_about = Button("About", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 50), 250, 60)
         button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 150), 250, 60)
         display_message("Welcome to QuizMaster!", SCREEN_HEIGHT // 8, 75, BLACK)
-        button_make.draw(screen, BUTTON_COLOUR, BLACK)
-        button_play.draw(screen, BUTTON_COLOUR, BLACK)
-        button_preferences.draw(screen, BUTTON_COLOUR, BLACK)
-        button_about.draw(screen, BUTTON_COLOUR, BLACK)
-        button_quit.draw(screen, BUTTON_COLOUR, BLACK)
+        button_make.draw(screen, BUTTON_COLOUR)
+        button_play.draw(screen, BUTTON_COLOUR)
+        button_preferences.draw(screen, BUTTON_COLOUR)
+        button_about.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)
         screen.blit(welcome_image, (SCREEN_WIDTH//4.75, SCREEN_HEIGHT//12))
         screen.blit(welcome_image, (SCREEN_WIDTH//1.325, SCREEN_HEIGHT//12))
         pygame.display.update()

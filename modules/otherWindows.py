@@ -23,13 +23,13 @@ def about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         screen.fill(BACKGROUND_COLOUR)
         button_license = Button("Licenses", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 250), 250, 40)
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 300), 250, 40)
-        button_website = Button("Our website", (SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 50), 200, 30)
+        button_website = Button("Our website", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, text_colour=(0,0,255))
         display_message("About QuizMaster", SCREEN_HEIGHT // 8, 75, BLACK)
         display_message(description_p1, SCREEN_HEIGHT // 5, 30, BLACK)
         display_message(description_p2, SCREEN_HEIGHT // 3, 30, BLACK)
         display_message(description_p3, SCREEN_HEIGHT // 2.2, 30, BLACK)
         display_message("For more information, please vist", SCREEN_HEIGHT // 1.85, 30, BLACK)
-        button_website.draw(screen, BACKGROUND_COLOUR, text_colour=(0,0,255))
+        button_website.draw(screen, BACKGROUND_COLOUR)
         button_license.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         pygame.display.update()
@@ -41,7 +41,7 @@ def about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 if button_go_back.is_clicked(pos):
                     return
                 if button_website.is_clicked(pos):
-                    webbrowser.open("https://quizmaster-world.github.io/")
+                    webbrowser.open("https://quizmaster-world.github.io/Tutorials/QuizMaster.html")
                 if button_license.is_clicked(pos):
                     Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
 
@@ -55,11 +55,11 @@ def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         screen.fill(BACKGROUND_COLOUR)
         display_message("Licensing", SCREEN_HEIGHT // 8, 75, BLACK)
         display_message(licenses_text, SCREEN_HEIGHT // 5, 40, BLACK)
-        button_GPL = Button("GPL v3", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 - 50), 250, 40)
-        button_CC = Button("Creative Commons", (SCREEN_WIDTH // 2 - 175, SCREEN_HEIGHT // 2), 300, 40)
+        button_GPL = Button("GPL v3", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 - 50), 250, 40, text_colour=(0,0,255))
+        button_CC = Button("Creative Commons", (SCREEN_WIDTH // 2 - 175, SCREEN_HEIGHT // 2), 300, 40, text_colour=(0,0,255))
         button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 300), 250, 40)
-        button_GPL.draw(screen, BACKGROUND_COLOUR, text_colour=(0,0,255))
-        button_CC.draw(screen, BACKGROUND_COLOUR, text_colour=(0,0,255))
+        button_GPL.draw(screen, BACKGROUND_COLOUR)
+        button_CC.draw(screen, BACKGROUND_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         pygame.display.update()
         for event in pygame.event.get():

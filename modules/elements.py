@@ -51,21 +51,50 @@ def screen_mode(BACKGROUND_COLOUR):
         return (0, 0, 0)
 
 class Button:
-    def __init__(self, text, position, width=300, height=60):
+    def __init__(self, text, position, width=300, height=60, text_colour=BLACK):
         self.text = text
         self.position = position
+        self.width = width
+        self.height = height
         self.font = pygame.font.Font(None, FONT_SIZE)
-        text_width, text_height = self.font.size(text)
-        self.width = max(width, text_width + 20)
-        self.height = max(height, text_height + 20) 
         self.rect = pygame.Rect(position[0], position[1], width, height)
+        self.text_colour = text_colour
 
-    def draw(self, screen, colour, text_colour=BLACK):
+    def draw(self, screen, colour):
         pygame.draw.rect(screen, colour, self.rect)
-        font = pygame.font.Font(None, FONT_SIZE)
-        label = font.render(self.text, True, text_colour)
-        text_rect = label.get_rect(center=self.rect.center)
-        screen.blit(label, text_rect)
+        self.render_text(screen)
+
+    def render_text(self, screen):
+        words = self.text.split()
+        lines = []
+        current_line = ""
+        font_size = FONT_SIZE
+
+        while font_size > 10:
+            font = pygame.font.Font(None, font_size)
+            for word in words:
+                test_line = current_line + word + " "
+                if font.size(test_line)[0] <= self.width - 20:
+                    current_line = test_line
+                else:
+                    lines.append(current_line)
+                    current_line = word + " "
+            lines.append(current_line)
+
+            if len(lines) * font.get_height() <= self.height - 20:
+                break
+            else:
+                lines = []
+                current_line = ""
+                font_size -= 2
+
+        font = pygame.font.Font(None, font_size)
+        y_offset = (self.rect.height - len(lines) * font.get_height()) // 2
+        for line in lines:
+            label = font.render(line.strip(), True, self.text_colour)
+            text_rect = label.get_rect(center=(self.rect.centerx, self.rect.y + y_offset + font.get_height() // 2))
+            screen.blit(label, text_rect)
+            y_offset += font.get_height()
 
     def is_clicked(self, pos):
         return self.rect.collidepoint(pos)
@@ -100,6 +129,35 @@ class Scrollbar:
 
     def get_offset(self):
         return int((self.handle_rect.y - self.rect.y) * self.total_items // self.height)
+
+class Checkbox:
+    def __init__(self, text, position, width=20, height=20, checked=False):
+        self.text = text
+        self.position = position
+        self.checked = checked
+        self.width = width
+        self.height = height
+        self.font = pygame.font.Font(None, 36)
+        self.rect = pygame.Rect(position[0], position[1], width, height)
+
+    def draw(self, screen, box_color, check_color, text_color=(0, 0, 0)):
+        pygame.draw.rect(screen, box_color, self.rect)
+        
+        if self.checked:
+            pygame.draw.line(screen, check_color, (self.rect.left, self.rect.centery), (self.rect.centerx, self.rect.bottom), 2)
+            pygame.draw.line(screen, check_color, (self.rect.centerx, self.rect.bottom), (self.rect.right, self.rect.top), 2)
+        
+        text_surf = self.font.render(self.text, True, text_color)
+        text_rect = text_surf.get_rect(midleft=(self.rect.right + 10, self.rect.centery))
+        screen.blit(text_surf, text_rect)
+
+    def is_clicked(self, pos):
+        return self.rect.collidepoint(pos)
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.is_clicked(event.pos):
+                self.checked = not self.checked
 
 def display_message(message, y_position, font_size, colour):
     font = pygame.font.Font(None, font_size)
