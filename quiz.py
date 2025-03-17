@@ -371,12 +371,12 @@ if __name__ == '__main__':
                     buttons_colour =  (255,10,10)
                 elif isItStPatricksTimeNow():
                     music = "music/music_stpatrick1.ogg"
-                    colour_background = (0,150,0)
-                    buttons_colour =  (10,175,10) 
+                    colour_background = (0,225,0)
+                    buttons_colour =  (0,200,0) 
                 elif isItChristmasTimeNow():
                     music = "music/music_christmas1.ogg"
-                    colour_background = prefDict["colour"]
-                    buttons_colour = prefDict["buttoncolour"]         
+                    colour_background = (0,255,0)
+                    buttons_colour = (255,0,0)         
                 else:
                     music = prefDict["Music"]
                     colour_background = prefDict["colour"]

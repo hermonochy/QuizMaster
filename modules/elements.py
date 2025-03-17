@@ -3,9 +3,10 @@ import sys
 
 from pygame.locals import *
 
+from modules.checker import isItChristmasTimeNow
+
 SCREEN_WIDTH = 1300
 SCREEN_HEIGHT = 800
-BLACK = (0, 0, 0)
 FONT_SIZE = 40
 QUESTION_OFFSET = 50
 ANSWER_OFFSET = 200
@@ -45,13 +46,13 @@ def screen_mode(BACKGROUND_COLOUR):
     G = BACKGROUND_COLOUR[1]
     B = BACKGROUND_COLOUR[2]
     global BLACK
-    if R + G + B < 200 and max(R,G,B) < 100:
+    if (R + G + B < 200 and max(R,G,B) < 100) or isItChristmasTimeNow():
         return (255, 255, 255)
     else:
         return (0, 0, 0)
 
 class Button:
-    def __init__(self, text, position, width=300, height=60, text_colour=BLACK):
+    def __init__(self, text, position, width=300, height=60, text_colour = (0,0,0)):
         self.text = text
         self.position = position
         self.width = width

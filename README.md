@@ -25,13 +25,7 @@ If you've got some useful knowledge on top of this, you can create a quiz on it 
 
 #### Then:
 
-Run the command ```pyinstaller quiz.py```. If this does not work, attempt installing pyinstaller: ```pip install pyinstaller```.
-
-#### If you are a Developer:
-
-The `quiz` file is a binary, but the `quiz.py` file contains the actual python code. For this to work, the dependencies need to be manually installed. 
-
-##### Either
+##### Either:
 
 Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are a C++ developer). These scripts may take some time to complete.
 
@@ -44,44 +38,9 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 
 *Steps 1 and 2 are optional but recommended.*
 
-##### Adding Arguments
+### Running QuizMaster
 
-The file `quiz.py` also allows for the quiz path, game mode and volume to be added as arguments when starting the program. This is primarily for quick testing of a quiz; a shortcut for quiz makers.
-
-```
-usage: quiz [-h] [-q [QUIZPATH]] [-g [GAMEMODE]] [-v [VOLUME]]
-
-Main program for QuizMaster. Features include: Playing quiz, preferences and starting QuizCreator.
-
-options:
-  -h, --help            show this help message and exit
-  -q [QUIZPATH], --quizPath [QUIZPATH]
-  -g [GAMEMODE], --gameMode [GAMEMODE]
-  -v , --volume         enter a float (decimal) between 0 and 1
-```
-
-###### Game Mode Options
-
-- classic
-- classicV2
-- speedRun
-- survival
-
-Similarly in QuizCreator, a quiz parameter can be added to the end but for obvious reasons not a game mode parameter.
-
-```
-usage: QuizCreator [-h] [-q [QUIZPATH]]
-
-Side program for QuizMaster, to make quizzes.
-
-options:
-  -h, --help            show this help message and exit
-  -q [QUIZPATH], --quizPath [QUIZPATH]
-```
-
-### Quiz Game
-
-In a command line window, enter `./dist/quiz/quiz` to start the application in Linux, or `dist/quiz/quiz` for Windows. To start the python file in Linux, enter `./run.sh` and `run.bat` for Windows.
+In a command line window,  in Linux, enter `./run.sh` and `run.bat` for Windows.
 
 
  Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open [QuizCreator](#quiz-creator), `Play a Quiz` will start the game (see below).
@@ -121,6 +80,49 @@ There is a preferences window where you can change the song, volume, and backgro
 
 1. Run quizcreator by opening QuizMaster and clicking `Make a Quiz`. You can also start it separately with `./quizcreator` on the command line interface in Linux.
 2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answer and a set of wrong answers, separated by commas. Further instructions can be viewed via the implemented tooltips.
+
+##### Adding Arguments
+
+The file `quiz.py` also allows for the quiz path, game mode and volume to be added as arguments when starting the program. This is primarily for quick testing of a quiz; a shortcut for quiz makers.
+
+```
+usage: quiz [-h] [-q [QUIZPATH]] [-g [GAMEMODE]] [-v [VOLUME]]
+
+Main program for QuizMaster. Features include: Playing quiz, preferences and starting QuizCreator.
+
+options:
+  -h, --help            show this help message and exit
+  -q [QUIZPATH], --quizPath [QUIZPATH]
+  -g [GAMEMODE], --gameMode [GAMEMODE]
+  -v , --volume         enter a float (decimal) between 0 and 1
+```
+
+###### Current Game Mode Options
+
+- classic
+- classicV2
+- speedRun
+- survival
+
+Similarly in QuizCreator, a quiz parameter can be added to the end but for obvious reasons not a game mode parameter.
+
+```
+usage: QuizCreator [-h] [-q [QUIZPATH]]
+
+Side program for QuizMaster, to make quizzes.
+
+options:
+  -h, --help            show this help message and exit
+  -q [QUIZPATH], --quizPath [QUIZPATH]
+```
+
+
+## Tutorials
+
+On our [Organization](https://github.com/QuizMaster-world), several tutorials for using QuizMaster exist.
+
+- [A Basic QuizMaster Tutorial](https://quizmaster-world.github.io/Tutorials/QuizMaster.html)
+
 
 ## Other QuizMaster Versions
 
