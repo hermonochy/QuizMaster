@@ -40,6 +40,7 @@ class GameMode(str, Enum):
     survival = 'survival'
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
+    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
     running = True
     celebration = False
     numList = re.findall(r'\d+', music)     
@@ -132,18 +133,17 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     button_music.hide()
                     button_go_back.hide()
                     button_cancel.hide()
-                    main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
+                    pygame.mixer.music.unload()
+                    pygame.mixer.music.load(music_old)
+                    pygame.mixer.music.play(-1)
+                    pygame.mixer.music.set_volume(v_old)
+                    main(music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, BLACK, v_old)
                     return
 
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     searchTerm = ""
     user_answer = None
-    initialized = False
     while True:
-        if not initialized:
-            screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-            initialized = True
-
         screen.fill(BACKGROUND_COLOUR)
         display_message("Enter Quiz Keyword:", 30, 50, BLACK)
         events = pygame.event.get()
