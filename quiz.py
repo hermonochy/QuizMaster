@@ -362,46 +362,36 @@ if __name__ == '__main__':
                 v = prefDict["Volume"]
                 pygame.mixer.music.set_volume(v)
                 if isItHalloweenTimeNow():
-                    colour_background = (250,100,0)
-                    buttons_colour =  (255,110,10)
+                    colour = (250,100,0)
+                    button_colour =  (255,110,10)
                     music = "music/music_halloween1.ogg"
                 elif isItValentinesTimeNow():
                     music = "music/music_valentines1.ogg"
-                    colour_background = (255,0,0)
-                    buttons_colour =  (255,10,10)
+                    colour = (255,0,0)
+                    button_colour =  (255,10,10)
                 elif isItStPatricksTimeNow():
                     music = "music/music_stpatrick1.ogg"
-                    colour_background = (0,225,0)
-                    buttons_colour =  (0,200,0) 
+                    colour = (0,225,0)
+                    button_colour =  (0,200,0) 
                 elif isItChristmasTimeNow():
                     music = "music/music_christmas1.ogg"
-                    colour_background = (0,255,0)
-                    buttons_colour = (255,0,0)         
+                    colour = (0,255,0)
+                    button_colour = (255,0,0)         
                 else:
                     music = prefDict["Music"]
-                    colour_background = prefDict["colour"]
-                    buttons_colour = prefDict["buttoncolour"] 
+                    colour = prefDict["colour"]
+                    button_colour = prefDict["buttoncolour"] 
                     celebration = False
-                colour = colour_background
-                button_colour = buttons_colour
             except json.JSONDecodeError:
-                v = 0.5
-                music_list = ['music/music1.ogg', 'music/music2.ogg', 'music/music3.ogg', 'music/music4.ogg', 'music/music5.ogg', 'music/music6.ogg']
-                music = (random.choice(music_list))
-                col_bg = random.uniform(0,1)
-                colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
-                buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
-                colour = colour_background
-                button_colour = buttons_colour
+                v = 1.0
+                music = 'music/music1.ogg'
+                colour = (0,245,0)
+                button_colour = (0,255,0)
     except FileNotFoundError:
-        v = 0.5
-        music_list = ['music/music1.ogg', 'music/music2.ogg', 'music/music3.ogg', 'music/music4.ogg', 'music/music5.ogg', 'music/music6.ogg']
-        music = (random.choice(music_list))
-        col_bg = random.uniform(0,1)
-        colour_background = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,0.975))) 
-        buttons_colour = tuple(map(lambda x: 255.0*x, colorsys.hsv_to_rgb(col_bg,1,1))) 
-        colour = colour_background
-        button_colour = buttons_colour
+        v = 1.0
+        music = 'music/music1.ogg'
+        colour = (0,245,0)
+        button_colour = (0,255,0)
         
     textinput = TextInputVisualizer()
     pygame.key.set_repeat(200, 25)
