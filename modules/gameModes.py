@@ -1,3 +1,7 @@
+"""
+Module for the "basic" game modes: Classic, Classic V2, Speed Run and Survival. More complex game modes will be placed in seperate files due to size.
+"""
+
 import pygame
 import random
 import time

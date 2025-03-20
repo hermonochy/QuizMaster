@@ -71,7 +71,7 @@ class Button:
         current_line = ""
         font_size = FONT_SIZE
 
-        while font_size > 10:
+        while font_size > 8:
             font = pygame.font.Font(None, font_size)
             for word in words:
                 test_line = current_line + word + " "
@@ -82,7 +82,7 @@ class Button:
                     current_line = word + " "
             lines.append(current_line)
 
-            if len(lines) * font.get_height() <= self.height - 20:
+            if len(lines) * font.get_height() <= self.height - 15:
                 break
             else:
                 lines = []
@@ -131,6 +131,7 @@ class Scrollbar:
     def get_offset(self):
         return int((self.handle_rect.y - self.rect.y) * self.total_items // self.height)
 
+# For later
 class Checkbox:
     def __init__(self, text, position, width=20, height=20, checked=False):
         self.text = text
@@ -164,12 +165,12 @@ def display_message(message, y_position, font_size, colour):
     font = pygame.font.Font(None, font_size)
     words = message.split()
     
-    if len(message) > 50:
+    if len(message) > 60:
         text_lines = []
         line = ""
         
         for word in words:
-            if font.size(line + word)[0] <= SCREEN_WIDTH:
+            if font.size(line + word)[0] < SCREEN_WIDTH * 0.9: # Padding
                 line += word + " "
             else:
                 text_lines.append(line)
