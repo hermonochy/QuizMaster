@@ -233,7 +233,7 @@ def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofqu
         screen.fill(BACKGROUND_COLOUR)
         display_message("Select Game Mode:", SCREEN_HEIGHT // 2 - 300, 75, BLACK)
         button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), 250, 60)
-        button_classicV2 = Button("Classic V2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60)
+        button_classicV2 = Button("Classic v2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60)
         button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60)
         button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60)           
         button_classic.draw(screen, BUTTON_COLOUR)

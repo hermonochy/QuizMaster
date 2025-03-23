@@ -33,7 +33,7 @@ def isItStPatricksTimeNow():
   return False  
        
        
-def is_silly(question, correct_answer, wrong_answers, question_list):
+def is_silly(question, correct_answer, wrong_answers, time_given, question_list):
 
     if re.search(r'\d{10,}', question):
         return True, "Question contains a very long sequence of numbers!"
@@ -50,5 +50,8 @@ def is_silly(question, correct_answer, wrong_answers, question_list):
     
     if len(wrong_answers) > 9:
         return True, "Too many wrong answer options!"
+
+    if time_given < 5:
+      return True, f"{time_given} seconds is not enough!"
 
     return False, ""
