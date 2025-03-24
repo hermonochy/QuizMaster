@@ -19,7 +19,7 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
     while running:
         screen.fill(BACKGROUND_COLOUR)
         y_position = 50
-        button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50)
+        button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50, BLACK)
         button_back.draw(screen, BUTTON_COLOUR)
         for idx in range(offset, min(offset + items_per_page, total_items)):
             question = incorrect_questions[idx]
@@ -86,7 +86,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         buttons = []
         for idx, answer in enumerate(answerOptions):
-            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40)
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40, BLACK)
             buttons.append(button)
 
         while running and time_remaining > 0 and user_answer is None:
@@ -95,9 +95,9 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
             for button in buttons:
                 button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
-            button_end = Button("End Quiz", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+200), 250, 40)  
-            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+250), 250, 40)
-            button_leave = Button("Quit", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+300), 250, 40)
+            button_end = Button("End Quiz", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+200), 250, 40, BLACK)  
+            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+250), 250, 40, BLACK)
+            button_leave = Button("Quit", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+300), 250, 40, BLACK)
             display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, timeColour)
             button_end.draw(screen, BUTTON_COLOUR)
             button_go_back.draw(screen, BUTTON_COLOUR)
@@ -155,11 +155,11 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         except ZeroDivisionError:
                 display_message("No questions attempted!", y_position,40, BLACK)
     
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
-        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
+        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
+        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
         if incorrect_questions:
-          button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40)
+          button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40, BLACK)
           button_show_incorrect.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_replay.draw(screen, BUTTON_COLOUR)
@@ -226,7 +226,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         buttons = []
         for idx, answer in enumerate(answerOptions):
-            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40)
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40, BLACK)
             buttons.append(button)
 
         while running and user_answer is None:
@@ -247,9 +247,9 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
             for button in buttons:
                 button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
-            button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40)
-            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40)
-            button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40)
+            button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40, BLACK)
+            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
+            button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
             display_message(f"Time remaining: {time_remaining}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, timeColour)
             button_end.draw(screen, BUTTON_COLOUR)
             button_go_back.draw(screen, BUTTON_COLOUR)
@@ -301,11 +301,11 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         except ZeroDivisionError:
             display_message("No questions attempted!", y_position, 40, BLACK)
 
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
-        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
+        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
+        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
         if incorrect_questions:
-            button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2), 250, 40)
+            button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2), 250, 40, BLACK)
             button_show_incorrect.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_replay.draw(screen, BUTTON_COLOUR)
@@ -368,7 +368,7 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         buttons = []
         for idx, answer in enumerate(answerOptions):
-            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40)
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40, BLACK)
             buttons.append(button)
 
         while running and user_answer is None:
@@ -377,8 +377,8 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
             for button in buttons:
                 button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
-            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40)
-            button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40)
+            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
+            button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
             elapsed_time = time.time() - start_time
             display_message(f"Time: {int(elapsed_time)}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, BLACK)
             display_message(f"Lives: {lives}", SCREEN_HEIGHT - (QUESTION_OFFSET + 40), 40, BLACK)
@@ -424,9 +424,9 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     while True:
         screen.fill(BACKGROUND_COLOUR)
         y_position = display_message(f"Speed Run completed! You answered all questions correctly in {total_time} seconds.", SCREEN_HEIGHT // 2 - 200, 40, BLACK)
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
-        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
+        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
+        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_replay.draw(screen, BUTTON_COLOUR)
         button_quit.draw(screen, BUTTON_COLOUR)
@@ -486,7 +486,7 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         buttons = []
         for idx, answer in enumerate(answerOptions):
-            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40)
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40, BLACK)
             buttons.append(button)
 
         while running and user_answer is None:
@@ -496,9 +496,9 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             for button in buttons:
                 button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
             
-            button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40)
-            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40)
-            button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40)
+            button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40, BLACK)
+            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
+            button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
             display_message(f"Lives remaining: {lives}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, BLACK)
             button_end.draw(screen, BUTTON_COLOUR)
             button_go_back.draw(screen, BUTTON_COLOUR)
@@ -551,11 +551,11 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         except ZeroDivisionError:
             display_message("No questions attempted!", y_position, 40, BLACK)
         
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40)
-        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40)
+        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
+        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
         if incorrect_questions:
-            button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2), 250, 40)
+            button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2), 250, 40, BLACK)
             button_show_incorrect.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_replay.draw(screen, BUTTON_COLOUR)

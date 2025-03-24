@@ -80,7 +80,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
         BACKGROUND_COLOUR = (R, G, B)
         BUTTON_COLOUR = (R + 10, G + 10, B + 10)
         BLACK = screen_mode(BACKGROUND_COLOUR)
-        textinput.font_color = (BLACK)
 
         pygame_widgets.update(pygame.event.get())
         pygame.display.update()
@@ -143,6 +142,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     searchTerm = ""
     user_answer = None
+    textinput.font_color = BLACK
     while True:
         screen.fill(BACKGROUND_COLOUR)
         display_message("Enter Quiz Keyword:", 30, 50, BLACK)
@@ -181,7 +181,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         try:
             with open(quizfile, "r", errors="ignore") as file:
                 quiztitle = json.load(file)["title"]
-            button = Button(quiztitle, (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40)
+            button = Button(quiztitle, (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40, BLACK)
             buttons.append(button)
         except json.decoder.JSONDecodeError as ex:
             print(f"Error in quizfile {quizfile}! {ex}")
@@ -232,10 +232,10 @@ def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofqu
     while running:
         screen.fill(BACKGROUND_COLOUR)
         display_message("Select Game Mode:", SCREEN_HEIGHT // 2 - 300, 75, BLACK)
-        button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), 250, 60)
-        button_classicV2 = Button("Classic v2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60)
-        button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60)
-        button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60)           
+        button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
+        button_classicV2 = Button("Classic v2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
+        button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
+        button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)           
         button_classic.draw(screen, BUTTON_COLOUR)
         button_classicV2.draw(screen, BUTTON_COLOUR)
         button_speed.draw(screen, BUTTON_COLOUR)
@@ -299,11 +299,11 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     welcome_image = pygame.image.load("images/logo.png").convert()
     while running:
         screen.fill(BACKGROUND_COLOUR)
-        button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 - 50), 250, 60)
-        button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 50), 250, 60)
-        button_preferences = Button("Preferences", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 50), 250, 60)
-        button_about = Button("About", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 50), 250, 60)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 150), 250, 60)
+        button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 - 50), 250, 60, BLACK)
+        button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 50), 250, 60, BLACK)
+        button_preferences = Button("Preferences", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 50), 250, 60, BLACK)
+        button_about = Button("About", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 50), 250, 60, BLACK)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 + 150), 250, 60, BLACK)
         display_message("Welcome to QuizMaster!", SCREEN_HEIGHT // 8, 75, BLACK)
         button_make.draw(screen, BUTTON_COLOUR)
         button_play.draw(screen, BUTTON_COLOUR)
@@ -410,8 +410,7 @@ if __name__ == '__main__':
         pass
     finally:
         pygame.mixer.music.set_volume(v)
-    BLACK = BLACK = screen_mode(BACKGROUND_COLOUR)
-    textinput.font_color = (BLACK)
+    BLACK = screen_mode(BACKGROUND_COLOUR)
     
     try:
         StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
