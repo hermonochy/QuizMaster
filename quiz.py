@@ -169,7 +169,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
             quizfileSearchResults.append(file)
 
     if not quizfileSearchResults:
-        display_message("No Quiz Results found!", SCREEN_HEIGHT // 2, 75, (255,0,0))
+        display_message("No Matching Quizzes found!", SCREEN_HEIGHT // 2, 75, (255,0,0))
         pygame.display.update()
         pygame.time.wait(250)
         choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)

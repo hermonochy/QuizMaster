@@ -36,12 +36,11 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 3. Install tkinter: ```sudo apt-get install python3-tk```
 4. Install packages in `requirements.txt`: ```pip3 install -r requirements.txt```
 
-*Steps 1 and 2 are optional but recommended.*
+*Steps 1 and 2 are optional, but recommended if you wish to avoid a headache.*
 
 ### Running QuizMaster
 
 In a command line window,  in Linux, enter `./run.sh` and `run.bat` for Windows.
-
 
  Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open [QuizCreator](#quiz-creator), `Play a Quiz` will start the game (see below).
 
@@ -59,14 +58,13 @@ Similar to classic, the time limit of classic V2 is the absolute time, rather th
 
 ##### Speed Run
 
-The speed run game mode challenges you to answer all questions correctly in the shortest time possible. If you answer a question incorrectly, you must redo the question. If three questions are answered incorrectly, you must redo the entire quiz. The game keeps a stopwatch running throughout, and your final time is displayed at the end. Currently it is the most difficult game mode.
+The speed run game mode challenges you to answer all questions correctly in the shortest time possible. If you answer a question incorrectly, you must redo the question. If all lives are lost, you must redo the entire quiz. The game keeps a stopwatch running throughout, and your final time is displayed at the end. Currently it is the most difficult game mode.
 
 ##### Survival
 
-The Survival game mode is a challenging addition to QuizMaster. In this mode, players have a limited number of lives to answer questions correctly. Each incorrect answer costs a life, and the game ends when the player loses all their lives or answers all questions correctly. The objective is to survive as long as possible by maintaining accuracy throughout.
+The Survival game mode is a recent addition to QuizMaster. In this mode, players have a limited number of lives to answer questions correctly. Each incorrect answer costs a life, and the game ends when the player loses all their lives or answers all questions correctly. The objective is to survive as long as possible by maintaining accuracy throughout.
 
 ![](images/QM4.png)
-
 
 ### Preferences
 

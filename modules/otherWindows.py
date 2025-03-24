@@ -60,7 +60,7 @@ def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         display_message(licenses_text, SCREEN_HEIGHT // 5, 40, BLACK)
         button_GPL = Button("GPL v3", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 - 50), 250, 40, text_colour=(0,0,255))
         button_CC = Button("Creative Commons", (SCREEN_WIDTH // 2 - 175, SCREEN_HEIGHT // 2), 300, 40, text_colour=(0,0,255))
-        button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 300), 250, 40)
+        button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
         button_GPL.draw(screen, BACKGROUND_COLOUR)
         button_CC.draw(screen, BACKGROUND_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)

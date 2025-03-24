@@ -40,7 +40,6 @@ def quit():
     pygame.quit()
     sys.exit()
 
-
 def screen_mode(BACKGROUND_COLOUR):
     R = BACKGROUND_COLOUR[0]
     G = BACKGROUND_COLOUR[1]
@@ -75,14 +74,14 @@ class Button:
             font = pygame.font.Font(None, font_size)
             for word in words:
                 test_line = current_line + word + " "
-                if font.size(test_line)[0] <= self.width - 20:
+                if font.size(test_line)[0] <= self.width - 15:
                     current_line = test_line
                 else:
                     lines.append(current_line)
                     current_line = word + " "
             lines.append(current_line)
 
-            if len(lines) * font.get_height() <= self.height - 15:
+            if len(lines) * font.get_height() <= self.height - 10:
                 break
             else:
                 lines = []
@@ -170,7 +169,7 @@ def display_message(message, y_position, font_size, colour):
         line = ""
         
         for word in words:
-            if font.size(line + word)[0] < SCREEN_WIDTH * 0.9: # Padding
+            if font.size(line + word)[0] < SCREEN_WIDTH * 0.9:
                 line += word + " "
             else:
                 text_lines.append(line)

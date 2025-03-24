@@ -340,7 +340,7 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     running = True
     correctAnswers = 0
     totalQuestions = len(originalQuestions)
-    lives = 3
+    lives = int(len(questionList) // 3 + 1)
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
