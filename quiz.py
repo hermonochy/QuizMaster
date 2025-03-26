@@ -38,6 +38,7 @@ class GameMode(str, Enum):
     classicV2 = 'classicV2'
     speedRun = 'speedRun'
     survival = 'survival'
+    practice = 'practice'
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
@@ -235,11 +236,13 @@ def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofqu
         button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
         button_classicV2 = Button("Classic v2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
         button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
-        button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)           
+        button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
+        button_practice = Button("Practice", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 100), 250, 60, BLACK)           
         button_classic.draw(screen, BUTTON_COLOUR)
         button_classicV2.draw(screen, BUTTON_COLOUR)
         button_speed.draw(screen, BUTTON_COLOUR)
         button_survival.draw(screen, BUTTON_COLOUR)
+        button_practice.draw(screen, BUTTON_COLOUR)
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -260,6 +263,10 @@ def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofqu
                 if button_survival.is_clicked(pos):
                     survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
+                if button_practice.is_clicked(pos):
+                    practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    return
+                
 
 def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titleofquiz=None):
     if args.gameMode == GameMode.classic:
@@ -286,6 +293,13 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titl
         except Exception as ex:
             print("Error: ", ex)
             choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+    if args.gameMode == GameMode.practice:
+        try:
+            practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        except Exception as ex:
+            print("Error: ", ex)
+            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+
     if args.quizPath != None and args.gameMode == None:
         choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
     if args.gameMode == None:

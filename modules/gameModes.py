@@ -579,3 +579,115 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     return
                 if button_quit.is_clicked(pos):
                     quit()
+
+                    
+def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+    if questionList is None:
+        pass
+        return
+        
+    running = True
+    questionIndex = 0
+    totalQuestions = len(questionList)
+    BLACK = screen_mode(BACKGROUND_COLOUR)
+    for i in range(3, 0, -1):
+        screen.fill(BACKGROUND_COLOUR)
+        display_message(titleofquiz, QUESTION_OFFSET, 70, BLACK)
+        display_message((f"{i}!"), QUESTION_OFFSET + 200, 150, BLACK)
+        pygame.display.update()
+        pygame.time.delay(1000)
+    screen.fill(BACKGROUND_COLOUR)
+    display_message(("Go!"), QUESTION_OFFSET + 200, 150, BLACK)
+    pygame.display.update()
+    pygame.time.delay(1000)
+    
+    while running and questionIndex < totalQuestions:
+        currentQuestion = questionList[questionIndex]
+
+        user_answer = None
+
+        answerOptions = [currentQuestion.correctAnswer] + currentQuestion.wrongAnswers
+        random.shuffle(answerOptions)
+
+        buttons = []
+        for idx, answer in enumerate(answerOptions):
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40, BLACK)
+            buttons.append(button)
+
+        while running and user_answer is None:
+            screen.fill(BACKGROUND_COLOUR)
+            display_message(f"Question {questionIndex + 1} out of {totalQuestions} : {currentQuestion.question}", QUESTION_OFFSET, 50, BLACK)
+
+            for button in buttons:
+                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
+            button_show = Button("Reveal Answer", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
+            button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40, BLACK)
+            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
+            button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
+            button_end.draw(screen, BUTTON_COLOUR)
+            button_go_back.draw(screen, BUTTON_COLOUR)
+            button_leave.draw(screen, BUTTON_COLOUR)
+            pygame.display.update()
+            
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    quit()
+                if event.type == MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    if button_end.is_clicked(pos):
+                        running = False
+                        break
+                    if button_go_back.is_clicked(pos):
+                        return
+                    if button_leave.is_clicked(pos):
+                        quit()
+                    pygame.time.wait(40)
+                    for idx, button in enumerate(buttons):
+                        if button.is_clicked(pos):
+                            user_answer = idx
+
+                if event.type == KEYDOWN:
+                    if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
+                        user_answer = event.key - pygame.K_1
+                    if event.key == pygame.K_y and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
+                        user_answer =  answerOptions.index(currentQuestion.correctAnswer)
+
+        correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
+        if user_answer is not None:
+            if user_answer == correct_answer_index:
+                display_message("Correct!", SCREEN_HEIGHT // 2 + 200, 70, (0,255,0))
+                pygame.display.update()
+                pygame.time.wait(500)
+            else:
+                display_message("Incorrect!", SCREEN_HEIGHT // 2 + 200, 70, (255,0,0))
+                pygame.display.update()
+                pygame.time.wait(500)
+
+        questionIndex += 1
+
+    while True:
+        screen.fill(BACKGROUND_COLOUR)
+        y_position = display_message(f"Quiz completed!", SCREEN_HEIGHT // 2 - 200, 40, BLACK)
+        
+        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
+        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
+        button_go_back.draw(screen, BUTTON_COLOUR)
+        button_replay.draw(screen, BUTTON_COLOUR)
+        button_quit.draw(screen, BUTTON_COLOUR)
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                quit()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if button_go_back.is_clicked(pos):
+                    return
+                    return
+                if button_replay.is_clicked(pos):
+                    survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    return
+                if button_quit.is_clicked(pos):
+                    quit()

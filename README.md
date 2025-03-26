@@ -64,6 +64,10 @@ The speed run game mode challenges you to answer all questions correctly in the 
 
 The Survival game mode is a recent addition to QuizMaster. In this mode, players have a limited number of lives to answer questions correctly. Each incorrect answer costs a life, and the game ends when the player loses all their lives or answers all questions correctly. The objective is to survive as long as possible by maintaining accuracy throughout.
 
+##### Practice Mode
+
+The practice mode offers a relaxed environment for users to engage with quiz questions at their own pace. Immediate feedback is provided, highlighting correct answers in green and incorrect ones in red. Participants can opt to reveal the correct answer or end the quiz at any time.
+
 ![](images/QM4.png)
 
 ### Preferences
@@ -101,6 +105,7 @@ options:
 - classicV2
 - speedRun
 - survival
+- practice
 
 Similarly in QuizCreator, a quiz parameter can be added to the end but for obvious reasons not a game mode parameter.
 
