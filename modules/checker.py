@@ -35,8 +35,11 @@ def isItStPatricksTimeNow():
        
 def is_silly(question, correct_answer, wrong_answers, time_given, question_list):
 
-    if re.search(r'\d{10,}', question):
+    if re.search(r'\d{10,}', question) or re.search(r'\d{10,}', correct_answer):
         return True, "Question contains a very long sequence of numbers!"
+    
+    if re.search(r'^[a-zA-Z0-9]{20,}$', question):
+      return True, "Question appears to be a string of random characters!"
 
     if len(set(wrong_answers)) != len(wrong_answers):
         return True, "Wrong answers are identical!"

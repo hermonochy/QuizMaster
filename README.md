@@ -66,7 +66,7 @@ The Survival game mode is a recent addition to QuizMaster. In this mode, players
 
 ##### Practice Mode
 
-The practice mode offers a relaxed environment for users to engage with quiz questions at their own pace. Immediate feedback is provided, highlighting correct answers in green and incorrect ones in red. Participants can opt to reveal the correct answer or end the quiz at any time.
+The practice mode offers a relaxed environment for users to engage with quiz questions at their own pace. Immediate feedback is provided, notifying the player if the answer was correct. Participants can opt to reveal the correct answer or end the quiz at any time. Scores are not recorded.
 
 ![](images/QM4.png)
 

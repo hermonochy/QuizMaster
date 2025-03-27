@@ -1,5 +1,5 @@
 """
-Module for the "basic" game modes: Classic, Classic V2, Speed Run and Survival. More complex game modes will be placed in seperate files due to size.
+Module for the "basic" game modes: Classic, Classic V2, Speed Run and Survival. More complex game modes will be placed in seperate files due to length.
 """
 
 import pygame
@@ -580,7 +580,6 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if button_quit.is_clicked(pos):
                     quit()
 
-                    
 def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
@@ -590,6 +589,8 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     questionIndex = 0
     totalQuestions = len(questionList)
     BLACK = screen_mode(BACKGROUND_COLOUR)
+    if BUTTON_COLOUR[1] > 200:
+        BUTTON_COLOUR = (BUTTON_COLOUR[0], 200, BUTTON_COLOUR[2]) # Improve visibility of answer reveal
     for i in range(3, 0, -1):
         screen.fill(BACKGROUND_COLOUR)
         display_message(titleofquiz, QUESTION_OFFSET, 70, BLACK)
@@ -605,6 +606,7 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         currentQuestion = questionList[questionIndex]
 
         user_answer = None
+        reveal_answer = False 
 
         answerOptions = [currentQuestion.correctAnswer] + currentQuestion.wrongAnswers
         random.shuffle(answerOptions)
@@ -618,12 +620,17 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             screen.fill(BACKGROUND_COLOUR)
             display_message(f"Question {questionIndex + 1} out of {totalQuestions} : {currentQuestion.question}", QUESTION_OFFSET, 50, BLACK)
 
-            for button in buttons:
-                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
-            button_show = Button("Reveal Answer", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
-            button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40, BLACK)
-            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
-            button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
+            for idx, button in enumerate(buttons):
+                if reveal_answer and answerOptions[idx] == currentQuestion.correctAnswer:
+                    button.draw(screen, (0, 255, 0))
+                else:
+                    button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
+            
+            button_show = Button("Reveal Answer", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40, BLACK)
+            button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
+            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
+            button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 350), 250, 40, BLACK)
+            button_show.draw(screen, BUTTON_COLOUR)
             button_end.draw(screen, BUTTON_COLOUR)
             button_go_back.draw(screen, BUTTON_COLOUR)
             button_leave.draw(screen, BUTTON_COLOUR)
@@ -634,6 +641,8 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     quit()
                 if event.type == MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
+                    if button_show.is_clicked(pos):
+                        reveal_answer = True
                     if button_end.is_clicked(pos):
                         running = False
                         break
@@ -649,17 +658,15 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if event.type == KEYDOWN:
                     if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
                         user_answer = event.key - pygame.K_1
-                    if event.key == pygame.K_y and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
-                        user_answer =  answerOptions.index(currentQuestion.correctAnswer)
 
         correct_answer_index = answerOptions.index(currentQuestion.correctAnswer)
         if user_answer is not None:
             if user_answer == correct_answer_index:
-                display_message("Correct!", SCREEN_HEIGHT // 2 + 200, 70, (0,255,0))
+                display_message("Correct!", SCREEN_HEIGHT // 2 + 200, 100, (0, 255, 0))
                 pygame.display.update()
                 pygame.time.wait(500)
             else:
-                display_message("Incorrect!", SCREEN_HEIGHT // 2 + 200, 70, (255,0,0))
+                display_message("Incorrect!", SCREEN_HEIGHT // 2 + 200, 100, (255, 0, 0))
                 pygame.display.update()
                 pygame.time.wait(500)
 
@@ -685,9 +692,8 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 pos = pygame.mouse.get_pos()
                 if button_go_back.is_clicked(pos):
                     return
-                    return
                 if button_replay.is_clicked(pos):
-                    survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 if button_quit.is_clicked(pos):
                     quit()

@@ -303,8 +303,6 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titl
     if args.quizPath != None and args.gameMode == None:
         choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
     if args.gameMode == None:
-        icon = pygame.image.load('images/logo1.png')
-        pygame.display.set_icon(icon)
         main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
 
                    
@@ -351,8 +349,8 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        prog='quiz',
-        description='Main program for QuizMaster. Features include: Playing quiz, preferences and starting QuizCreator.',
+        prog='QuizMaster',
+        description='Main program for QuizMaster. Features include: Playing quiz, preferences, description and starting QuizCreator.',
         )
     parser.add_argument('-q', '--quizPath', nargs='?', const="")
     parser.add_argument('-g', '--gameMode', nargs='?', const="", type=GameMode)
@@ -415,6 +413,8 @@ if __name__ == '__main__':
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('QuizMaster')
+    icon = pygame.image.load('images/logo1.png')
+    pygame.display.set_icon(icon)
     pygame.mixer.init()
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
