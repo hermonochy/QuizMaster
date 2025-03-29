@@ -31,7 +31,14 @@ def isItStPatricksTimeNow():
   if datetime.datetime.now().month == 3 and datetime.datetime.now().day == 17:
     return True
   return False  
-       
+
+def isItEasterTimeNow():
+  """
+  Function return True, if current date is Easter.
+  """
+  if datetime.datetime.now().month == 4 or (datetime.datetime.now().month == 3 and datetime.datetime.now().day > 21):
+    return True
+  return False  
        
 def is_silly(question, correct_answer, wrong_answers, time_given, question_list):
 

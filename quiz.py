@@ -109,6 +109,9 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     if isItValentinesTimeNow():
                         celebration = True
                         music = "music/music_valentines1.ogg"
+                    if isItEasterTimeNow():
+                        celebration = True
+                        music = "music/music_easter1.ogg"
                     pygame.mixer.music.load(music)
                     pygame.mixer.music.play(-1)
                 if button_go_back.contains(*pos):
@@ -394,6 +397,10 @@ if __name__ == '__main__':
                     music = "music/music_stpatrick1.ogg"
                     BACKGROUND_COLOUR = (0,225,0)
                     BUTTON_COLOUR =  (0,200,0) 
+                elif isItEasterTimeNow():
+                    music = "music/music_easter1.ogg"
+                    BACKGROUND_COLOUR = (255,192,203)
+                    BUTTON_COLOUR =  (250,250,60)
                 elif isItChristmasTimeNow():
                     music = "music/music_christmas1.ogg"
                     BACKGROUND_COLOUR = (0,255,0)
