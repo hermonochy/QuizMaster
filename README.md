@@ -36,7 +36,7 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 3. Install tkinter: ```sudo apt-get install python3-tk```
 4. Install packages in `requirements.txt`: ```pip3 install -r requirements.txt```
 
-*Steps 1 and 2 are optional, but recommended if you wish to avoid a headache.*
+*Steps 1 and 2 are optional, but recommended if you wish to avoid a headache with Python module conflicts.*
 
 ### Running QuizMaster
 
@@ -64,7 +64,7 @@ The speed run game mode challenges you to answer all questions correctly in the 
 
 The Survival game mode is a recent addition to QuizMaster. In this mode, players have a limited number of lives to answer questions correctly. Each incorrect answer costs a life, and the game ends when the player loses all their lives or answers all questions correctly. The objective is to survive as long as possible by maintaining accuracy throughout.
 
-##### Practice Mode
+##### Practice
 
 The practice mode offers a relaxed environment for users to engage with quiz questions at their own pace. Immediate feedback is provided, notifying the player if the answer was correct. Participants can opt to reveal the correct answer or end the quiz at any time. Scores are not recorded.
 
@@ -119,10 +119,9 @@ options:
   -q [QUIZPATH], --quizPath [QUIZPATH]
 ```
 
-
 ## Tutorials
 
-On our [Organization](https://github.com/QuizMaster-world), several tutorials for using QuizMaster exist.
+Our [Organization](https://github.com/QuizMaster-world) contains several tutorials for using QuizMaster.
 
 - [A Basic QuizMaster Tutorial](https://quizmaster-world.github.io/Tutorials/QuizMaster.html)
 
@@ -152,7 +151,7 @@ Each version of QuizMaster caters to specific needs and environments, ensuring t
 - Ability to answer questions and receive scores.
 - Background music during gameplay.
 - Start QuizCreator
-- Customise background and music
+- Customise background colour and music
 
 ### Quiz Creator:
 

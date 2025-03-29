@@ -44,7 +44,6 @@ def screen_mode(BACKGROUND_COLOUR):
     R = BACKGROUND_COLOUR[0]
     G = BACKGROUND_COLOUR[1]
     B = BACKGROUND_COLOUR[2]
-    global BLACK
     if R + G + B < 200 and max(R,G,B) < 100 or isItChristmasTimeNow():
         return (255, 255, 255)
     else:
@@ -130,36 +129,6 @@ class Scrollbar:
     def get_offset(self):
         return int((self.handle_rect.y - self.rect.y) * self.total_items // self.height)
 
-# For later
-class Checkbox:
-    def __init__(self, text, position, width=20, height=20, checked=False):
-        self.text = text
-        self.position = position
-        self.checked = checked
-        self.width = width
-        self.height = height
-        self.font = pygame.font.Font(None, 36)
-        self.rect = pygame.Rect(position[0], position[1], width, height)
-
-    def draw(self, screen, box_color, check_color, text_color=(0, 0, 0)):
-        pygame.draw.rect(screen, box_color, self.rect)
-        
-        if self.checked:
-            pygame.draw.line(screen, check_color, (self.rect.left, self.rect.centery), (self.rect.centerx, self.rect.bottom), 2)
-            pygame.draw.line(screen, check_color, (self.rect.centerx, self.rect.bottom), (self.rect.right, self.rect.top), 2)
-        
-        text_surf = self.font.render(self.text, True, text_color)
-        text_rect = text_surf.get_rect(midleft=(self.rect.right + 10, self.rect.centery))
-        screen.blit(text_surf, text_rect)
-
-    def is_clicked(self, pos):
-        return self.rect.collidepoint(pos)
-
-    def handle_event(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.is_clicked(event.pos):
-                self.checked = not self.checked
-
 def display_message(message, y_position, font_size, colour):
     font = pygame.font.Font(None, font_size)
     words = message.split()
@@ -169,7 +138,7 @@ def display_message(message, y_position, font_size, colour):
         line = ""
         
         for word in words:
-            if font.size(line + word)[0] < SCREEN_WIDTH * 0.9:
+            if font.size(line + word)[0] < SCREEN_WIDTH * 0.9: # padding
                 line += word + " "
             else:
                 text_lines.append(line)

@@ -1,5 +1,5 @@
 """
-Module for the "basic" game modes: Classic, Classic V2, Speed Run and Survival. More complex game modes will be placed in seperate files due to length.
+Module for the "basic" game modes: Classic, Classic V2, Speed Run, Survival and Practice. More complex game modes will be placed in seperate files due to length.
 """
 
 import pygame
@@ -8,41 +8,7 @@ import time
 
 from pygame.locals import *
 from modules.elements import *
-
-def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
-    running = True
-    total_items = len(incorrect_questions)
-    items_per_page = 10
-    scrollbar = Scrollbar((SCREEN_WIDTH - 40, 100), SCREEN_HEIGHT - 150, total_items, items_per_page)
-    offset = 0
-
-    while running:
-        screen.fill(BACKGROUND_COLOUR)
-        y_position = 50
-        button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50, BLACK)
-        button_back.draw(screen, BUTTON_COLOUR)
-        for idx in range(offset, min(offset + items_per_page, total_items)):
-            question = incorrect_questions[idx]
-            y_position = display_message(question.question, y_position, 30, BLACK)
-            y_position = display_message(f"Correct Answer: {question.correctAnswer}", y_position, 30, BLACK)
-            y_position += 20
-
-        if total_items > items_per_page:
-            scrollbar.draw(screen)
-        pygame.display.update()
-
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                quit()
-            if event.type == MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                if button_back.is_clicked(pos):
-                    return
-            if total_items > items_per_page:
-                scrollbar.handle_event(event)
-
-        offset = scrollbar.get_offset()
-                          
+from modules.otherWindows import show_incorrect_answers                          
 
 def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
@@ -148,9 +114,9 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         try:
             if correctAnswers/totalQuestions > 0.8:
                 display_message(good_praise, y_position,40, BLACK)
-            if correctAnswers/totalQuestions > 0.4 and correctAnswers/totalQuestions < 0.8 or correctAnswers/totalQuestions == 0.8:
+            if correctAnswers/totalQuestions > 0.4 and correctAnswers/totalQuestions <= 0.8:
                 display_message(medium_praise, y_position,40, BLACK)
-            if correctAnswers/totalQuestions < 0.4 or correctAnswers/totalQuestions==0.4:
+            if correctAnswers/totalQuestions <= 0.4:
                 display_message(bad_praise, y_position,40, BLACK)
         except ZeroDivisionError:
                 display_message("No questions attempted!", y_position,40, BLACK)
@@ -296,7 +262,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 display_message(good_praise, y_position, 40, BLACK)
             if correctAnswers / totalQuestions > 0.4 and correctAnswers / totalQuestions <= 0.8 :
                 display_message(medium_praise, y_position, 40, BLACK)
-            if correctAnswers / totalQuestions < 0.4 or correctAnswers / totalQuestions == 0.4:
+            if correctAnswers / totalQuestions <= 0.4:
                 display_message(bad_praise, y_position, 40, BLACK)
         except ZeroDivisionError:
             display_message("No questions attempted!", y_position, 40, BLACK)
@@ -589,8 +555,8 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     questionIndex = 0
     totalQuestions = len(questionList)
     BLACK = screen_mode(BACKGROUND_COLOUR)
-    if BUTTON_COLOUR[1] > 200:
-        BUTTON_COLOUR = (BUTTON_COLOUR[0], 200, BUTTON_COLOUR[2]) # Improve visibility of answer reveal
+    if BUTTON_COLOUR[1] > 220:
+        BUTTON_COLOUR = (BUTTON_COLOUR[0], 220, BUTTON_COLOUR[2]) # Improve visibility of answer reveal
     for i in range(3, 0, -1):
         screen.fill(BACKGROUND_COLOUR)
         display_message(titleofquiz, QUESTION_OFFSET, 70, BLACK)
@@ -626,7 +592,7 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 else:
                     button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
             
-            button_show = Button("Reveal Answer", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40, BLACK)
+            button_show = Button("Reveal Answer", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 300), 300, 50, BLACK)
             button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
             button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 350), 250, 40, BLACK)

@@ -1,4 +1,4 @@
-source venv/bin/activate --quiet
+source venv/bin/activate --quiet || ./setup.sh
 echo "Activated virual enviroment..."
 echo "Attempting update..."
 git pull || echo "Unable to update..."

@@ -12,15 +12,15 @@ import re
 import os
 import subprocess
 import datetime
-import modules.PySimpleGUI as sg
-
 from glob import glob
 from enum import Enum
+
 from pygame.locals import *
 from pygame_widgets.slider import Slider
 from pygame_widgets.button import Button as button
 from tkinter import *
 
+import modules.PySimpleGUI as sg
 from modules.persistence import *
 from modules.checker import *
 from modules.elements import *
@@ -29,9 +29,6 @@ from modules.searchQuiz import search_str_in_file
 from modules.otherWindows import about
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
 
-pygame.init()
-pygame.font.init()
-clock = pygame.time.Clock()
 
 class GameMode(str, Enum):
     classic = 'classic'
@@ -47,7 +44,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     numList = re.findall(r'\d+', music)     
     i = int(numList[0]) if numList else 1 
     screen.fill(BACKGROUND_COLOUR)
-    volumeSlider = Slider(screen, SCREEN_WIDTH // 4, 150, 800, 40, min=0, max=1, step=0.005, initial=v, handleRadius=20)
+    volumeSlider = Slider(screen, SCREEN_WIDTH // 4, 150, 800, 40, min=0, max=1, step=0.01, initial=v, handleRadius=20)
     Rslider = Slider(screen, SCREEN_WIDTH // 4, 280, 800, 40, min=0, max=220, step=0.5, handleColour = (255,0,0), handleRadius=20, initial = BACKGROUND_COLOUR[0])
     Gslider = Slider(screen, SCREEN_WIDTH // 4, 330, 800, 40, min=0, max=245, step=0.5, handleColour = (20,255,50), handleRadius=20, initial = BACKGROUND_COLOUR[1])
     Bslider = Slider(screen, SCREEN_WIDTH // 4, 380, 800, 40, min=0, max=245, step=0.5, handleColour = (0,0,255), handleRadius=20, initial = BACKGROUND_COLOUR[2])
@@ -141,6 +138,13 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     return
 
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
+    """
+    Lets user input search term. Displays all quiz titles associated to search term.
+    Lets user select quiz from list of found quizzes.
+    """
+    textinput = TextInputVisualizer()
+    pygame.key.set_repeat(200, 25)
+
     searchTerm = ""
     user_answer = None
     textinput.font_color = BLACK
@@ -185,7 +189,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
             button = Button(quiztitle, (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40, BLACK)
             buttons.append(button)
         except json.decoder.JSONDecodeError as ex:
-            print(f"Error in quizfile {quizfile}! {ex}")
+            print(f"Error in quizfile {quizfile}: {ex}!")
             continue
 
     running = True
@@ -223,12 +227,12 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 break
             print("Questions:", questionList)
             if args.gameMode == None:
-                choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
                 return
             else:
                 StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
             
-def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz):
+def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz):
     running = True
     while running:
         screen.fill(BACKGROUND_COLOUR)
@@ -251,6 +255,7 @@ def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofqu
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 event_time = pygame.time.get_ticks()
+                # Start game mode functions
                 if button_classic.is_clicked(pos):
                     classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
@@ -269,6 +274,13 @@ def choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofqu
                 
 
 def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titleofquiz=None):
+    if args.quizPath != None:
+        print("Loading quiz: ", args.quizPath)
+        try:
+            questionList, titleofquiz = load_quiz(args.quizPath)
+        except Exception as ex:
+            print("Error:", ex)
+            sys.exit()
     if args.gameMode == GameMode.classic:
         try:
             classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
@@ -299,11 +311,12 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titl
         except Exception as ex:
             print("Error: ", ex)
             choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-
+    # With selected quiz, suppress quiz selection
     if args.quizPath != None and args.gameMode == None:
-        choose_game(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
-    if args.gameMode == None:
-        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
+        choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+    # Start home page
+    if args.gameMode == None and args.quizPath == None:
+        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, volume)
 
                    
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
@@ -356,14 +369,10 @@ if __name__ == '__main__':
     parser.add_argument('-g', '--gameMode', nargs='?', const="", type=GameMode)
     parser.add_argument('-v', '--volume', nargs='?', const="")
     args = parser.parse_args()
-
-    if args.quizPath != None:
-        print("Loading quiz: ", args.quizPath)
-        try:
-            questionList, titleofquiz = load_quiz(args.quizPath)
-        except Exception as ex:
-            print("Error:", ex)
-            sys.exit()
+        
+    pygame.init()
+    pygame.font.init()
+    clock = pygame.time.Clock()
 
     print(asciiartstart)
 
@@ -371,45 +380,39 @@ if __name__ == '__main__':
         with open(".Preferences.json", "r") as file:
             try:
                 prefDict = json.load(file)
-                v = prefDict["Volume"]
-                pygame.mixer.music.set_volume(v)
+                volume = prefDict["Volume"]
+                pygame.mixer.music.set_volume(volume)
                 if isItHalloweenTimeNow():
-                    colour = (250,100,0)
-                    button_colour =  (255,110,10)
+                    BACKGROUND_COLOUR = (250,100,0)
+                    BUTTON_COLOUR =  (255,110,10)
                     music = "music/music_halloween1.ogg"
                 elif isItValentinesTimeNow():
                     music = "music/music_valentines1.ogg"
-                    colour = (255,0,0)
-                    button_colour =  (255,10,10)
+                    BACKGROUND_COLOUR = (255,0,0)
+                    BUTTON_COLOUR =  (255,10,10)
                 elif isItStPatricksTimeNow():
                     music = "music/music_stpatrick1.ogg"
-                    colour = (0,225,0)
-                    button_colour =  (0,200,0) 
+                    BACKGROUND_COLOUR = (0,225,0)
+                    BUTTON_COLOUR =  (0,200,0) 
                 elif isItChristmasTimeNow():
                     music = "music/music_christmas1.ogg"
-                    colour = (0,255,0)
-                    button_colour = (255,0,0)         
+                    BACKGROUND_COLOUR = (0,255,0)
+                    BUTTON_COLOUR = (255,0,0)         
                 else:
                     music = prefDict["Music"]
-                    colour = prefDict["colour"]
-                    button_colour = prefDict["buttoncolour"] 
+                    BACKGROUND_COLOUR = prefDict["colour"]
+                    BUTTON_COLOUR = prefDict["buttoncolour"] 
                     celebration = False
             except json.JSONDecodeError:
-                v = 1.0
+                volume = 1.0
                 music = 'music/music1.ogg'
-                colour = (0,245,0)
-                button_colour = (0,255,0)
+                BACKGROUND_COLOUR = (0,245,0)
+                BUTTON_COLOUR = (0,255,0)
     except FileNotFoundError:
-        v = 1.0
+        volume = 1.0
         music = 'music/music1.ogg'
-        colour = (0,245,0)
-        button_colour = (0,255,0)
-        
-    textinput = TextInputVisualizer()
-    pygame.key.set_repeat(200, 25)
-         
-    BACKGROUND_COLOUR = colour
-    BUTTON_COLOUR = button_colour
+        BACKGROUND_COLOUR = (0,245,0)
+        BUTTON_COLOUR = (0,255,0)
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('QuizMaster')
@@ -419,11 +422,11 @@ if __name__ == '__main__':
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)
     try:
-        v = float(args.volume)
+        volume = float(args.volume)
     except Exception:
         pass
     finally:
-        pygame.mixer.music.set_volume(v)
+        pygame.mixer.music.set_volume(volume)
     BLACK = screen_mode(BACKGROUND_COLOUR)
     
     try:

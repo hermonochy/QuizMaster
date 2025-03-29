@@ -76,3 +76,38 @@ def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                     webbrowser.open("https://raw.githubusercontent.com/hermonochy/QuizMaster/refs/heads/main/quizzes/LICENSE")
                 if button_go_back.is_clicked(pos):
                     return
+
+                    
+def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
+    running = True
+    total_items = len(incorrect_questions)
+    items_per_page = 10
+    scrollbar = Scrollbar((SCREEN_WIDTH - 40, 100), SCREEN_HEIGHT - 150, total_items, items_per_page)
+    offset = 0
+
+    while running:
+        screen.fill(BACKGROUND_COLOUR)
+        y_position = 50
+        button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50, BLACK)
+        button_back.draw(screen, BUTTON_COLOUR)
+        for idx in range(offset, min(offset + items_per_page, total_items)):
+            question = incorrect_questions[idx]
+            y_position = display_message(question.question, y_position, 30, BLACK)
+            y_position = display_message(f"Correct Answer: {question.correctAnswer}", y_position, 30, BLACK)
+            y_position += 20
+
+        if total_items > items_per_page:
+            scrollbar.draw(screen)
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                quit()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if button_back.is_clicked(pos):
+                    return
+            if total_items > items_per_page:
+                scrollbar.handle_event(event)
+
+        offset = scrollbar.get_offset()
