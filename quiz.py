@@ -399,8 +399,8 @@ if __name__ == '__main__':
                     BUTTON_COLOUR =  (0,200,0) 
                 elif isItEasterTimeNow():
                     music = "music/music_easter1.ogg"
-                    BACKGROUND_COLOUR = (255,192,203)
-                    BUTTON_COLOUR =  (250,250,60)
+                    BACKGROUND_COLOUR = (255,170,180)
+                    BUTTON_COLOUR =  (250,250,100)
                 elif isItChristmasTimeNow():
                     music = "music/music_christmas1.ogg"
                     BACKGROUND_COLOUR = (0,255,0)
