@@ -15,7 +15,7 @@ def search_str_in_file(file_path, word):
 
 
 if __name__ == '__main__':
-    quizfiles = glob('./quizzes/**/*.json', recursive=True)
+    quizfiles = glob('./Quizzes/**/*.json', recursive=True)
 
     searchTerm = input("Word to search: ")
 

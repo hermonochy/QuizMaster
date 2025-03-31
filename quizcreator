@@ -169,7 +169,7 @@ if __name__ == '__main__':
 
         if event == 'Save As' or event == 's':
             changes = False
-            current_file_path = sg.popup_get_file('', save_as=True, keep_on_top=True, no_window=True, initial_folder="quizzes",
+            current_file_path = sg.popup_get_file('', save_as=True, keep_on_top=True, no_window=True, initial_folder="Quizzes",
                                                 file_types=(("All JSON Files", "*.json"), ("All Files", "*.*")))
             if current_file_path:
                 save_quiz(current_file_path)
@@ -188,7 +188,7 @@ if __name__ == '__main__':
                 else:
                     continue
             try:
-                filename = sg.popup_get_file("Open quiz", initial_folder="quizzes", no_window=True)
+                filename = sg.popup_get_file("Open quiz", initial_folder="Quizzes", no_window=True)
                 if filename:
                     with open(filename, 'r') as file:
                         try:

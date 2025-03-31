@@ -1,0 +1,3 @@
+[submodule "Quizzes"]
+	path = Quizzes
+	url = https://github.com/QuizMaster-world/Quizzes

@@ -13,5 +13,4 @@ modules/__pycache__/*
 __pycache__
 ()
 .Preferences.json
-quizzes/example.json
 quiz.spec

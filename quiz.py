@@ -169,7 +169,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         pygame.display.update()
         pygame.time.wait(30)
 
-    quizfiles = glob('./quizzes/**/*.json', recursive=True)
+    quizfiles = glob('./Quizzes/**/*.json', recursive=True)
 
     quizfileSearchResults = []
     for file in quizfiles:

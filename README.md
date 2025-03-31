@@ -15,6 +15,9 @@ If you've got some useful knowledge on top of this, you can create a quiz on it 
 #### Either:
 
 1. Clone this repository via terminal ```git clone https://github.com/hermonochy/QuizMaster```
+
+  However, if you would like example quizzes along with it, run this command instead: ```git clone --recurse-submodules https://github.com/hermonochy/QuizMaster```
+
 2. Enter the directory containing the game executable: ```cd QuizMaster```
 
 #### Or:
