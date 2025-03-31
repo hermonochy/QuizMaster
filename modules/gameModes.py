@@ -8,7 +8,7 @@ import time
 
 from pygame.locals import *
 from modules.elements import *
-from modules.otherWindows import show_incorrect_answers                          
+from modules.otherWindows import show_incorrect_answers
 
 def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
@@ -33,10 +33,10 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         display_message((f"{i}!"), QUESTION_OFFSET+200,150, BLACK)
         pygame.display.update()
         pygame.time.delay(1000)
-    screen.fill(BACKGROUND_COLOUR)        
+    screen.fill(BACKGROUND_COLOUR)
     display_message(("Go!"), QUESTION_OFFSET+200, 150, BLACK)
     pygame.display.update()
-    pygame.time.delay(1000)        
+    pygame.time.delay(1000)
 
     
     while running and questionIndex < totalQuestions:
@@ -77,7 +77,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     pos = pygame.mouse.get_pos() 
                     if button_end.is_clicked(pos):
                        time_remaining = 0
-                       totalQuestions = questionIndex       
+                       totalQuestions = questionIndex
                     if button_go_back.is_clicked(pos):
                        return
                     if button_leave.is_clicked(pos):
@@ -111,10 +111,10 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         screen.fill(BACKGROUND_COLOUR)
         y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200,40, BLACK)
         try:
-            if correctAnswers/totalQuestions > 0.8:
-                display_message(good_praise, y_position,40, BLACK)
             if correctAnswers/totalQuestions > 0.4 and correctAnswers/totalQuestions <= 0.8:
                 display_message(medium_praise, y_position,40, BLACK)
+            if correctAnswers/totalQuestions > 0.8:
+                display_message(good_praise, y_position,40, BLACK)
             if correctAnswers/totalQuestions <= 0.4:
                 display_message(bad_praise, y_position,40, BLACK)
         except ZeroDivisionError:
@@ -128,7 +128,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
           button_show_incorrect.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_replay.draw(screen, BUTTON_COLOUR)
-        button_quit.draw(screen, BUTTON_COLOUR)        
+        button_quit.draw(screen, BUTTON_COLOUR)
         
         pygame.display.update()
 
@@ -257,10 +257,10 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         screen.fill(BACKGROUND_COLOUR)
         y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2 - 200, 40, BLACK)
         try:
-            if correctAnswers / totalQuestions > 0.8:
-                display_message(good_praise, y_position, 40, BLACK)
             if correctAnswers / totalQuestions > 0.4 and correctAnswers / totalQuestions <= 0.8 :
                 display_message(medium_praise, y_position, 40, BLACK)
+            if correctAnswers / totalQuestions > 0.8:
+                display_message(good_praise, y_position, 40, BLACK)
             if correctAnswers / totalQuestions <= 0.4:
                 display_message(bad_praise, y_position, 40, BLACK)
         except ZeroDivisionError:
@@ -315,7 +315,7 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         display_message((f"{i}!"), QUESTION_OFFSET+200,150, BLACK)
         pygame.display.update()
         pygame.time.delay(1000)
-    screen.fill(BACKGROUND_COLOUR)        
+    screen.fill(BACKGROUND_COLOUR)
     display_message(("Go!"), QUESTION_OFFSET+200,150, BLACK)
     pygame.display.update()
     pygame.time.delay(1000) 
@@ -404,7 +404,6 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_go_back.is_clicked(pos):
-                    return
                     return
                 if button_replay.is_clicked(pos):
                     speed(originalQuestions[:], titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
@@ -507,10 +506,10 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
         screen.fill(BACKGROUND_COLOUR)
         y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2 - 200, 40, BLACK)
         try:
-            if correctAnswers / totalQuestions > 0.8:
-                display_message(good_praise, y_position, 40, BLACK)
             if correctAnswers / totalQuestions > 0.4 and correctAnswers / totalQuestions <= 0.8:
                 display_message(medium_praise, y_position, 40, BLACK)
+            if correctAnswers / totalQuestions > 0.8:
+                display_message(good_praise, y_position, 40, BLACK)
             if correctAnswers / totalQuestions < 0.4 or correctAnswers / totalQuestions == 0.4:
                 display_message(bad_praise, y_position, 40, BLACK)
         except ZeroDivisionError:
@@ -537,7 +536,6 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     if button_show_incorrect.is_clicked(pos):
                         show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
                 if button_go_back.is_clicked(pos):
-                    return
                     return
                 if button_replay.is_clicked(pos):
                     survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)

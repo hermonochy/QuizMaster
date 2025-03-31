@@ -83,7 +83,7 @@ if __name__ == '__main__':
             print(f"{filename} does not exist!")
 
     while True:
-        event, values = mainWindow.read()      
+        event, values = mainWindow.read()
         if event == 'quizquestionentry':
             changes = True
             if len(values['quizquestionentry']) > 0:

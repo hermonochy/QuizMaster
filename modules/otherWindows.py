@@ -4,7 +4,6 @@ import webbrowser
 
 from modules.elements import *
 
-
 def about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
 
     description_p1 = """
@@ -41,11 +40,11 @@ def about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 pos = pygame.mouse.get_pos()
                 if button_go_back.is_clicked(pos):
                     return
-                if button_website.is_clicked(pos):
+                elif button_website.is_clicked(pos):
                     webbrowser.open("https://quizmaster-world.github.io/index.html")
-                if button_tutorial.is_clicked(pos):
+                elif button_tutorial.is_clicked(pos):
                     webbrowser.open("https://quizmaster-world.github.io/Tutorials/QuizMaster.html")
-                if button_license.is_clicked(pos):
+                elif button_license.is_clicked(pos):
                     Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
 
 def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
@@ -72,12 +71,12 @@ def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 pos = pygame.mouse.get_pos()
                 if button_GPL.is_clicked(pos):
                     webbrowser.open("https://raw.githubusercontent.com/hermonochy/QuizMaster/refs/heads/main/LICENSE")
-                if button_CC.is_clicked(pos):
+                elif button_CC.is_clicked(pos):
                     webbrowser.open("https://raw.githubusercontent.com/hermonochy/QuizMaster/refs/heads/main/quizzes/LICENSE")
-                if button_go_back.is_clicked(pos):
+                elif button_go_back.is_clicked(pos):
                     return
 
-                    
+
 def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     running = True
     total_items = len(incorrect_questions)

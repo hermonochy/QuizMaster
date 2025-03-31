@@ -41,7 +41,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
     running = True
     celebration = False
-    numList = re.findall(r'\d+', music)     
+    numList = re.findall(r'\d+', music)
     i = int(numList[0]) if numList else 1 
     screen.fill(BACKGROUND_COLOUR)
     volumeSlider = Slider(screen, SCREEN_WIDTH // 4, 150, 800, 40, min=0, max=1, step=0.01, initial=v, handleRadius=20)
@@ -176,6 +176,8 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         if search_str_in_file(file, searchTerm):
             quizfileSearchResults.append(file)
 
+    quizfileSearchResults.sort(key=str.lower)
+
     if not quizfileSearchResults:
         display_message("No Matching Quizzes found!", SCREEN_HEIGHT // 2, 75, (255,0,0))
         pygame.display.update()
@@ -200,7 +202,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         screen.fill(BACKGROUND_COLOUR)
         for button in buttons:
             button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
-        if len(buttons) > 12:    
+        if len(buttons) > 12:
            scrollbar.draw(screen)
         pygame.display.update()
         for event in pygame.event.get():
@@ -225,7 +227,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
             try:
                 questionList, titleofquiz  = load_quiz(filename)
             except Exception as ex:
-                print(f"Error in {filename}: {ex}")               
+                print(f"Error in {filename}: {ex}")
                 break
                 break
             print("Questions:", questionList)
@@ -244,7 +246,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
         button_classicV2 = Button("Classic v2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
         button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
         button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
-        button_practice = Button("Practice", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 100), 250, 60, BLACK)           
+        button_practice = Button("Practice", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 100), 250, 60, BLACK)
         button_classic.draw(screen, BUTTON_COLOUR)
         button_classicV2.draw(screen, BUTTON_COLOUR)
         button_speed.draw(screen, BUTTON_COLOUR)
@@ -262,16 +264,16 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
                 if button_classic.is_clicked(pos):
                     classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
-                if button_classicV2.is_clicked(pos):
+                elif button_classicV2.is_clicked(pos):
                     classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
-                if button_speed.is_clicked(pos):
+                elif button_speed.is_clicked(pos):
                     speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
-                if button_survival.is_clicked(pos):
+                elif button_survival.is_clicked(pos):
                     survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
-                if button_practice.is_clicked(pos):
+                elif button_practice.is_clicked(pos):
                     practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 
@@ -284,41 +286,41 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titl
         except Exception as ex:
             print("Error:", ex)
             sys.exit()
-    if args.gameMode == GameMode.classic:
+    elif args.gameMode == GameMode.classic:
         try:
             classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
         except Exception as ex:
             print("Error: ", ex)
             choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-    if args.gameMode == GameMode.classicV2:
+    elif args.gameMode == GameMode.classicV2:
         try:
             classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
         except Exception as ex:
             print("Error: ", ex)
             choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-    if args.gameMode == GameMode.speedRun:
+    elif args.gameMode == GameMode.speedRun:
         try:
             speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
         except Exception as ex:
             print("Error: ", ex)
             choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-    if args.gameMode == GameMode.survival:
+    elif args.gameMode == GameMode.survival:
         try:
             survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
         except Exception as ex:
             print("Error: ", ex)
             choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-    if args.gameMode == GameMode.practice:
+    elif args.gameMode == GameMode.practice:
         try:
             practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
         except Exception as ex:
             print("Error: ", ex)
             choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
     # With selected quiz, suppress quiz selection
-    if args.quizPath != None and args.gameMode == None:
+    elif args.quizPath != None and args.gameMode == None:
         choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
     # Start home page
-    if args.gameMode == None and args.quizPath == None:
+    elif args.gameMode == None and args.quizPath == None:
         main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, volume)
 
                    
@@ -348,21 +350,20 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                if button_quit.is_clicked(pos):
-                    quit()
-                if button_make.is_clicked(pos):
+                if button_play.is_clicked(pos):
+                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+                elif button_make.is_clicked(pos):
                     try:
                         subprocess.Popen(["python3", "quizcreator"])
                     except:
                         subprocess.Popen(["python", "quizcreator"])
-                if button_preferences.is_clicked(pos):
+                elif button_preferences.is_clicked(pos):
                     preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
-                if button_about.is_clicked(pos):
+                elif button_about.is_clicked(pos):
                     about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-                if button_play.is_clicked(pos):
-                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-
-
+                elif button_quit.is_clicked(pos):
+                    quit()
+                
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog='QuizMaster',
@@ -404,7 +405,7 @@ if __name__ == '__main__':
                 elif isItChristmasTimeNow():
                     music = "music/music_christmas1.ogg"
                     BACKGROUND_COLOUR = (0,255,0)
-                    BUTTON_COLOUR = (255,0,0)         
+                    BUTTON_COLOUR = (255,0,0)
                 else:
                     music = prefDict["Music"]
                     BACKGROUND_COLOUR = prefDict["colour"]
