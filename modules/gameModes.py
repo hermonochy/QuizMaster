@@ -8,7 +8,7 @@ import time
 
 from pygame.locals import *
 from modules.elements import *
-from modules.otherWindows import show_incorrect_answers
+from modules.otherWindows import show_incorrect_answers, standard_end_window
 
 def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
@@ -19,12 +19,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     questionIndex = 0
     correctAnswers = 0
     totalQuestions = len(questionList)
-    good_praise_list = [f"Well Done! You know a lot about {titleofquiz.lower()}!",f"You are an expert on {titleofquiz.lower()}!", f" You have mastered {titleofquiz.lower()}!",f"You are amazing at {titleofquiz.lower()}!",f"You truly excel in {titleofquiz.lower()}!", f"Congratulations! You're a whiz on {titleofquiz.lower()}!",f"Bravo! You've nailed {titleofquiz.lower()}!"]
-    good_praise = (random.choice(good_praise_list))
-    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz.lower()}!", f"Not far of mastering {titleofquiz.lower()}!", f"Just a bit more practice on {titleofquiz.lower()}!",f"You’re making steady progress in {titleofquiz.lower()}!", f"You're on the right track with {titleofquiz.lower()}!",f"You've got a solid grasp of {titleofquiz.lower()}!",f"A commendable effort in {titleofquiz.lower()}!",f"You've got the basics of {titleofquiz.lower()} down!",f"Keep it up! You're building a good foundation in {titleofquiz.lower()}!"]
-    medium_praise = (random.choice(medium_praise_list))
-    bad_praise_list = [f"Your forte is definitely not {titleofquiz.lower()}!",f"You are terrible at {titleofquiz.lower()}!", f"You have alot to learn about {titleofquiz.lower()}!", f"You might want to consider revising another topic!", f"Sorry to say, but you're pretty terrible at {titleofquiz.lower()}!", f"You really struggle with {titleofquiz.lower()}!", f"You have a long way to go in mastering {titleofquiz.lower()}!", f"Not to be too hard, but it seems you're not great at {titleofquiz.lower()}!", f"Time to go back to the drawing board on {titleofquiz.lower()}!", f"You might want to consider taking another look at {titleofquiz.lower()}!", f"It's clear you're not an expert on  {titleofquiz.lower()}!", f"Unfortunately, you're not very good at {titleofquiz.lower()}!", f"You need to brush up on your {titleofquiz.lower()} skills!"]
-    bad_praise = (random.choice(bad_praise_list))
+
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
     for i in range(3,0,-1):
@@ -107,47 +102,12 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         questionIndex += 1
 
-    while True:
-        screen.fill(BACKGROUND_COLOUR)
-        y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200,40, BLACK)
-        try:
-            if correctAnswers/totalQuestions > 0.4 and correctAnswers/totalQuestions <= 0.8:
-                display_message(medium_praise, y_position,40, BLACK)
-            if correctAnswers/totalQuestions > 0.8:
-                display_message(good_praise, y_position,40, BLACK)
-            if correctAnswers/totalQuestions <= 0.4:
-                display_message(bad_praise, y_position,40, BLACK)
-        except ZeroDivisionError:
-                display_message("No questions attempted!", y_position,40, BLACK)
-    
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
-        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
-        if incorrect_questions:
-          button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40, BLACK)
-          button_show_incorrect.draw(screen, BUTTON_COLOUR)
-        button_go_back.draw(screen, BUTTON_COLOUR)
-        button_replay.draw(screen, BUTTON_COLOUR)
-        button_quit.draw(screen, BUTTON_COLOUR)
-        
-        pygame.display.update()
+    replay = standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, totalQuestions, correctAnswers, questionIndex, incorrect_questions)
+    if replay:
+        classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+    else:       
+        return
 
-        for event in pygame.event.get(): 
-            if event.type == QUIT:
-               quit()
-            if event.type == MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                if incorrect_questions and questionIndex > 0:
-                    if button_show_incorrect.is_clicked(pos):
-                        show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-                if button_go_back.is_clicked(pos):
-                    return
-                    return
-                if button_replay.is_clicked(pos):
-                    classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return
-                if button_quit.is_clicked(pos):
-                    quit()
                     
 def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
@@ -163,12 +123,6 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     total_time = sum(q.timeout-3 for q in questionList)+10
     start_time = time.time()
 
-    good_praise_list = [f"Well Done! You know a lot about {titleofquiz.lower()}!",f"You are an expert on {titleofquiz.lower()}!", f" You have mastered {titleofquiz.lower()}!",f"You are amazing at {titleofquiz.lower()}!",f"You truly excel in {titleofquiz.lower()}!", f"Congratulations! You're a whiz on {titleofquiz.lower()}!",f"Bravo! You've nailed {titleofquiz.lower()}!"]
-    good_praise = (random.choice(good_praise_list))
-    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz.lower()}!", f"Not far of mastering {titleofquiz.lower()}!", f"Just a bit more practice on {titleofquiz.lower()}!",f"You’re making steady progress in {titleofquiz.lower()}!", f"You're on the right track with {titleofquiz.lower()}!",f"You've got a solid grasp of {titleofquiz.lower()}!",f"A commendable effort in {titleofquiz.lower()}!",f"You've got the basics of {titleofquiz.lower()} down!",f"Keep it up! You're building a good foundation in {titleofquiz.lower()}!"]
-    medium_praise = (random.choice(medium_praise_list))
-    bad_praise_list = [f"Your forte is definitely not {titleofquiz.lower()}!",f"You are terrible at {titleofquiz.lower()}!", f"You have alot to learn about {titleofquiz.lower()}!", f"You might want to consider revising another topic!", f"Sorry to say, but you're pretty terrible at {titleofquiz.lower()}!", f"You really struggle with {titleofquiz.lower()}!", f"You have a long way to go in mastering {titleofquiz.lower()}!", f"Not to be too hard, but it seems you're not great at {titleofquiz.lower()}!", f"Time to go back to the drawing board on {titleofquiz.lower()}!", f"You might want to consider taking another look at {titleofquiz.lower()}!", f"It's clear you're not an expert on  {titleofquiz.lower()}!", f"Unfortunately, you're not very good at {titleofquiz.lower()}!", f"You need to brush up on your {titleofquiz.lower()} skills!"]
-    bad_praise = (random.choice(bad_praise_list))
     BLACK = screen_mode(BACKGROUND_COLOUR)
     for i in range(3, 0, -1):
         screen.fill(BACKGROUND_COLOUR)
@@ -253,47 +207,11 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         questionIndex += 1
 
-    while True:
-        screen.fill(BACKGROUND_COLOUR)
-        y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2 - 200, 40, BLACK)
-        try:
-            if correctAnswers / totalQuestions > 0.4 and correctAnswers / totalQuestions <= 0.8 :
-                display_message(medium_praise, y_position, 40, BLACK)
-            if correctAnswers / totalQuestions > 0.8:
-                display_message(good_praise, y_position, 40, BLACK)
-            if correctAnswers / totalQuestions <= 0.4:
-                display_message(bad_praise, y_position, 40, BLACK)
-        except ZeroDivisionError:
-            display_message("No questions attempted!", y_position, 40, BLACK)
-
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
-        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
-        if incorrect_questions:
-            button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2), 250, 40, BLACK)
-            button_show_incorrect.draw(screen, BUTTON_COLOUR)
-        button_go_back.draw(screen, BUTTON_COLOUR)
-        button_replay.draw(screen, BUTTON_COLOUR)
-        button_quit.draw(screen, BUTTON_COLOUR)
-
-        pygame.display.update()
-
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                quit()
-            if event.type == MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                if incorrect_questions and questionIndex > 0:
-                    if button_show_incorrect.is_clicked(pos):
-                        show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-                if button_go_back.is_clicked(pos):
-                    return
-                    return
-                if button_replay.is_clicked(pos):
-                    classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return
-                if button_quit.is_clicked(pos):
-                    quit()
+    replay = standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, totalQuestions, correctAnswers, questionIndex, incorrect_questions)
+    if replay:
+        classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+    else:       
+        return
 
 
 def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
@@ -423,12 +341,6 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     totalQuestions = len(questionList)
     lives = int(len(questionList) // 3+1)
     
-    good_praise_list = [f"Well Done! You know a lot about {titleofquiz.lower()}!",f"You are an expert on {titleofquiz.lower()}!", f" You have mastered {titleofquiz.lower()}!",f"You are amazing at {titleofquiz.lower()}!",f"You truly excel in {titleofquiz.lower()}!", f"Congratulations! You're a whiz on {titleofquiz.lower()}!",f"Bravo! You've nailed {titleofquiz.lower()}!"]
-    good_praise = (random.choice(good_praise_list))
-    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz.lower()}!", f"Not far of mastering {titleofquiz.lower()}!", f"Just a bit more practice on {titleofquiz.lower()}!",f"You’re making steady progress in {titleofquiz.lower()}!", f"You're on the right track with {titleofquiz.lower()}!",f"You've got a solid grasp of {titleofquiz.lower()}!",f"A commendable effort in {titleofquiz.lower()}!",f"You've got the basics of {titleofquiz.lower()} down!",f"Keep it up! You're building a good foundation in {titleofquiz.lower()}!"]
-    medium_praise = (random.choice(medium_praise_list))
-    bad_praise_list = [f"Your forte is definitely not {titleofquiz.lower()}!",f"You are terrible at {titleofquiz.lower()}!", f"You have alot to learn about {titleofquiz.lower()}!", f"You might want to consider revising another topic!", f"Sorry to say, but you're pretty terrible at {titleofquiz.lower()}!", f"You really struggle with {titleofquiz.lower()}!", f"You have a long way to go in mastering {titleofquiz.lower()}!", f"Not to be too hard, but it seems you're not great at {titleofquiz.lower()}!", f"Time to go back to the drawing board on {titleofquiz.lower()}!", f"You might want to consider taking another look at {titleofquiz.lower()}!", f"It's clear you're not an expert on  {titleofquiz.lower()}!", f"Unfortunately, you're not very good at {titleofquiz.lower()}!", f"You need to brush up on your {titleofquiz.lower()} skills!"]
-    bad_praise = (random.choice(bad_praise_list))
     BLACK = screen_mode(BACKGROUND_COLOUR)
     for i in range(3, 0, -1):
         screen.fill(BACKGROUND_COLOUR)
@@ -503,46 +415,11 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
         questionIndex += 1
 
-    while True:
-        screen.fill(BACKGROUND_COLOUR)
-        y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2 - 200, 40, BLACK)
-        try:
-            if correctAnswers / totalQuestions > 0.4 and correctAnswers / totalQuestions <= 0.8:
-                display_message(medium_praise, y_position, 40, BLACK)
-            if correctAnswers / totalQuestions > 0.8:
-                display_message(good_praise, y_position, 40, BLACK)
-            if correctAnswers / totalQuestions < 0.4 or correctAnswers / totalQuestions == 0.4:
-                display_message(bad_praise, y_position, 40, BLACK)
-        except ZeroDivisionError:
-            display_message("No questions attempted!", y_position, 40, BLACK)
-        
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
-        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
-        if incorrect_questions:
-            button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2), 250, 40, BLACK)
-            button_show_incorrect.draw(screen, BUTTON_COLOUR)
-        button_go_back.draw(screen, BUTTON_COLOUR)
-        button_replay.draw(screen, BUTTON_COLOUR)
-        button_quit.draw(screen, BUTTON_COLOUR)
-
-        pygame.display.update()
-
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                quit()
-            if event.type == MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                if incorrect_questions and questionIndex > 0:
-                    if button_show_incorrect.is_clicked(pos):
-                        show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-                if button_go_back.is_clicked(pos):
-                    return
-                if button_replay.is_clicked(pos):
-                    survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return
-                if button_quit.is_clicked(pos):
-                    quit()
+    replay = standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, totalQuestions, correctAnswers, questionIndex, incorrect_questions)
+    if replay:
+        survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+    else:       
+        return
 
 def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:

@@ -286,36 +286,37 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titl
         except Exception as ex:
             print("Error:", ex)
             sys.exit()
-    elif args.gameMode == GameMode.classic:
-        try:
-            classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-        except Exception as ex:
-            print("Error: ", ex)
-            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-    elif args.gameMode == GameMode.classicV2:
-        try:
-            classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-        except Exception as ex:
-            print("Error: ", ex)
-            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-    elif args.gameMode == GameMode.speedRun:
-        try:
-            speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-        except Exception as ex:
-            print("Error: ", ex)
-            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-    elif args.gameMode == GameMode.survival:
-        try:
-            survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-        except Exception as ex:
-            print("Error: ", ex)
-            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-    elif args.gameMode == GameMode.practice:
-        try:
-            practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
-        except Exception as ex:
-            print("Error: ", ex)
-            choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+    if args.gameMode is not None:
+        if args.gameMode == GameMode.classic:
+            try:
+                classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+            except Exception as ex:
+                print("Error: ", ex)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+        elif args.gameMode == GameMode.classicV2:
+            try:
+                classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+            except Exception as ex:
+                print("Error: ", ex)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+        elif args.gameMode == GameMode.speedRun:
+            try:
+                speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+            except Exception as ex:
+                print("Error: ", ex)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+        elif args.gameMode == GameMode.survival:
+            try:
+                survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+            except Exception as ex:
+                print("Error: ", ex)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+        elif args.gameMode == GameMode.practice:
+            try:
+                practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+            except Exception as ex:
+                print("Error: ", ex)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
     # With selected quiz, suppress quiz selection
     elif args.quizPath != None and args.gameMode == None:
         choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
