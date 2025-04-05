@@ -355,9 +355,9 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
                 elif button_make.is_clicked(pos):
                     try:
-                        subprocess.Popen(["python3", "quizcreator"])
-                    except:
                         subprocess.Popen(["python", "quizcreator"])
+                    except:
+                        subprocess.Popen(["python3", "quizcreator"])
                 elif button_preferences.is_clicked(pos):
                     preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
                 elif button_about.is_clicked(pos):
