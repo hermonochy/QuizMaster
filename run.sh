@@ -1,6 +1,6 @@
-source venv/bin/activate --quiet || ./setup.sh
+source venv/bin/activate || ./setup.sh
 echo "Activated virual enviroment..."
-echo "Attempting update..."
-git pull || echo "Unable to update..."
+echo "Fetching Quizzes..."
+cd Quizzes && git pull && cd ../ || echo "Unable to update..."
 echo "Running QuizMaster..."
 ./quiz.py || (./setup.sh && ./quiz.py)

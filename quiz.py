@@ -139,7 +139,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     """
     Lets user input search term. Displays all quiz titles associated to search term.
-    Lets user select quiz from list of found quizzes. Also includes an option to select a random quiz.
+    Lets user select quiz from list of found quizzes.
     """
     textinput = TextInputVisualizer()
     pygame.key.set_repeat(200, 25)
@@ -149,11 +149,13 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     textinput.font_color = BLACK
     
     button_random_quiz = Button("Random Quiz", (SCREEN_WIDTH // 2 - 150, 400), 300, 40, BLACK)
+    button_general_knowledge = Button("General Knowledge Quiz", (SCREEN_WIDTH // 2 - 150, 450), 300, 40, BLACK)
     
     while True:
         screen.fill(BACKGROUND_COLOUR)
         display_message("Enter Quiz Keyword:", 50, 50, BLACK)
-        display_message("Or:", 350, 40, BLACK)
+        display_message("Or:", 350, 50, BLACK)
+
         events = pygame.event.get()
         for event in events:
             if event.type == QUIT:
@@ -163,6 +165,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         screen.blit(textinput.surface, (500, 100))
         
         button_random_quiz.draw(screen, BUTTON_COLOUR)
+        button_general_knowledge.draw(screen, BUTTON_COLOUR)
 
         if [ev for ev in events if ev.type == pygame.KEYDOWN and ev.key == pygame.K_RETURN]:
             searchTerm = textinput.value
@@ -180,6 +183,25 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                         except Exception as ex:
                             print(f"Error in {filename}: {ex}")
                             break
+                        if args.gameMode == None:
+                            choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                        else:
+                            StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                        return
+                elif button_general_knowledge.is_clicked(pos):
+                    quizfiles = glob('./Quizzes/**/*.json', recursive=True)
+                    if quizfiles:
+                        questionList = []
+                        for _ in range(30):
+                            filename = random.choice(quizfiles)
+                            try:
+                                questions, _ = load_quiz(filename)
+                                question = random.choice(questions)
+                                questionList.append(question)
+                            except Exception as ex:
+                                print(f"Error in {filename}: {ex}")
+                                continue
+                        titleofquiz = "General Knowledge Quiz"
                         if args.gameMode == None:
                             choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
                         else:
@@ -220,7 +242,6 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     running = True
     while running:
         screen.fill(BACKGROUND_COLOUR)
-        display_message("Results:", 50, 50, BLACK)
         for button in buttons:
             button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
         if len(buttons) > 12:
