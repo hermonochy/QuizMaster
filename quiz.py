@@ -9,18 +9,14 @@ import random
 import time
 import math
 import re
-import os
 import subprocess
-import datetime
 from glob import glob
 from enum import Enum
 
 from pygame.locals import *
 from pygame_widgets.slider import Slider
 from pygame_widgets.button import Button as button
-from tkinter import *
 
-import modules.PySimpleGUI as sg
 from modules.persistence import *
 from modules.checker import *
 from modules.elements import *
@@ -143,7 +139,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     """
     Lets user input search term. Displays all quiz titles associated to search term.
-    Lets user select quiz from list of found quizzes.
+    Lets user select quiz from list of found quizzes. Also includes an option to select a random quiz.
     """
     textinput = TextInputVisualizer()
     pygame.key.set_repeat(200, 25)
@@ -151,9 +147,13 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     searchTerm = ""
     user_answer = None
     textinput.font_color = BLACK
+    
+    button_random_quiz = Button("Random Quiz", (SCREEN_WIDTH // 2 - 150, 400), 300, 40, BLACK)
+    
     while True:
         screen.fill(BACKGROUND_COLOUR)
-        display_message("Enter Quiz Keyword:", 30, 50, BLACK)
+        display_message("Enter Quiz Keyword:", 50, 50, BLACK)
+        display_message("Or:", 350, 40, BLACK)
         events = pygame.event.get()
         for event in events:
             if event.type == QUIT:
@@ -161,10 +161,30 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         textinput.update(events)
 
         screen.blit(textinput.surface, (500, 100))
+        
+        button_random_quiz.draw(screen, BUTTON_COLOUR)
 
         if [ev for ev in events if ev.type == pygame.KEYDOWN and ev.key == pygame.K_RETURN]:
             searchTerm = textinput.value
             break
+
+        for event in events:
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if button_random_quiz.is_clicked(pos):
+                    quizfiles = glob('./Quizzes/**/*.json', recursive=True)
+                    if quizfiles:
+                        filename = random.choice(quizfiles)
+                        try:
+                            questionList, titleofquiz = load_quiz(filename)
+                        except Exception as ex:
+                            print(f"Error in {filename}: {ex}")
+                            break
+                        if args.gameMode == None:
+                            choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                        else:
+                            StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                        return
 
         pygame.display.update()
         pygame.time.wait(30)
@@ -200,6 +220,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     running = True
     while running:
         screen.fill(BACKGROUND_COLOUR)
+        display_message("Results:", 50, 50, BLACK)
         for button in buttons:
             button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
         if len(buttons) > 12:
@@ -228,7 +249,6 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 questionList, titleofquiz  = load_quiz(filename)
             except Exception as ex:
                 print(f"Error in {filename}: {ex}")
-                break
                 break
             print("Questions:", questionList)
             if args.gameMode == None:
