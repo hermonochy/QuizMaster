@@ -50,7 +50,7 @@ def screen_mode(BACKGROUND_COLOUR):
         return (0, 0, 0)
 
 class Button:
-    def __init__(self, text, position, width=300, height=60, text_colour = (0,0,0)):
+    def __init__(self, text, position, width=300, height=60, text_colour=(0, 0, 0)):
         self.text = text
         self.position = position
         self.width = width
@@ -59,8 +59,12 @@ class Button:
         self.rect = pygame.Rect(position[0], position[1], width, height)
         self.text_colour = text_colour
 
-    def draw(self, screen, colour):
-        pygame.draw.rect(screen, colour, self.rect)
+    def draw(self, screen, colour, border_radius=20, shadow_offset=3):
+
+        shadow_rect = pygame.Rect(self.rect.x + shadow_offset, self.rect.y + shadow_offset, self.width, self.height)
+        pygame.draw.rect(screen, (150, 150, 150), shadow_rect, border_radius=30)
+        pygame.draw.rect(screen, colour, self.rect, border_radius=30)
+        
         self.render_text(screen)
 
     def render_text(self, screen):
@@ -108,26 +112,63 @@ class Scrollbar:
         self.handle_rect = pygame.Rect(position[0], position[1], 20, int(height * items_per_page // total_items))
         self.dragging = False
         self.offset_y = 0
+        self.arrow_height = 20
+        self.up_arrow_rect = pygame.Rect(position[0], position[1], 20, self.arrow_height)
+        self.down_arrow_rect = pygame.Rect(position[0], position[1] + height - self.arrow_height, 20, self.arrow_height)
 
     def draw(self, screen):
         pygame.draw.rect(screen, (200, 200, 200), self.rect)
         pygame.draw.rect(screen, (100, 100, 100), self.handle_rect)
+
+        pygame.draw.rect(screen, (150, 150, 150), self.up_arrow_rect)
+        pygame.draw.rect(screen, (150, 150, 150), self.down_arrow_rect)
+
+        pygame.draw.polygon(screen, (0, 0, 0), [
+            (self.up_arrow_rect.centerx, self.up_arrow_rect.y + 5),
+            (self.up_arrow_rect.x + 5, self.up_arrow_rect.y + self.arrow_height - 5),
+            (self.up_arrow_rect.right - 5, self.up_arrow_rect.y + self.arrow_height - 5)
+        ])
+
+        pygame.draw.polygon(screen, (0, 0, 0), [
+            (self.down_arrow_rect.centerx, self.down_arrow_rect.bottom - 5),
+            (self.down_arrow_rect.x + 5, self.down_arrow_rect.bottom - self.arrow_height + 5),
+            (self.down_arrow_rect.right - 5, self.down_arrow_rect.bottom - self.arrow_height + 5)
+        ])
 
     def handle_event(self, event):
         if event.type == MOUSEBUTTONDOWN:
             if self.handle_rect.collidepoint(event.pos):
                 self.dragging = True
                 self.offset_y = event.pos[1] - self.handle_rect.y
-        elif event.type == MOUSEBUTTONUP:
+            elif self.up_arrow_rect.collidepoint(event.pos):
+                self.scroll_up()
+            elif self.down_arrow_rect.collidepoint(event.pos):
+                self.scroll_down()
+        if event.type == MOUSEBUTTONUP:
             self.dragging = False
-        elif event.type == MOUSEMOTION:
+        if event.type == MOUSEMOTION:
             if self.dragging:
                 new_y = event.pos[1] - self.offset_y
-                new_y = max(self.rect.y, min(new_y, self.rect.y + self.rect.height - self.handle_rect.height))
+                new_y = max(self.rect.y + self.arrow_height, min(new_y, self.rect.y + self.rect.height - self.handle_rect.height - self.arrow_height))
                 self.handle_rect.y = new_y
+        if event.type == KEYDOWN:
+            if event.key == K_UP:
+                self.scroll_up()
+            elif event.key == K_DOWN:
+                self.scroll_down()
+
+    def scroll_up(self):
+        new_y = self.handle_rect.y - 10
+        new_y = max(self.rect.y + self.arrow_height, new_y)
+        self.handle_rect.y = new_y
+
+    def scroll_down(self):
+        new_y = self.handle_rect.y + 10
+        new_y = min(self.rect.y + self.rect.height - self.handle_rect.height - self.arrow_height, new_y)
+        self.handle_rect.y = new_y
 
     def get_offset(self):
-        return int((self.handle_rect.y - self.rect.y) * self.total_items // self.height)
+        return int((self.handle_rect.y - self.rect.y - self.arrow_height) * self.total_items // (self.height - 2 * self.arrow_height))
 
 def display_message(message, y_position, font_size, colour):
     font = pygame.font.Font(None, font_size)

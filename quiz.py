@@ -149,7 +149,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     textinput.font_color = BLACK
     
     button_random_quiz = Button("Random Quiz", (SCREEN_WIDTH // 2 - 150, 400), 300, 40, BLACK)
-    button_general_knowledge = Button("General Knowledge Quiz", (SCREEN_WIDTH // 2 - 150, 450), 300, 40, BLACK)
+    button_general_knowledge = Button("General Knowledge Quiz", (SCREEN_WIDTH // 2 - 150, 475), 300, 40, BLACK)
     
     while True:
         screen.fill(BACKGROUND_COLOUR)
@@ -217,8 +217,6 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     for file in quizfiles:
         if search_str_in_file(file, searchTerm):
             quizfileSearchResults.append(file)
-
-    quizfileSearchResults.sort(key=str.lower)
 
     if not quizfileSearchResults:
         display_message("No Matching Quizzes found!", SCREEN_HEIGHT // 2, 75, (255,0,0))
