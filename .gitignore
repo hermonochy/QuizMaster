@@ -4,6 +4,7 @@ lib/
 dist/
 build/
 venv/
+.mypy_cache/
 lib64
 None
 pyvenv.cfg

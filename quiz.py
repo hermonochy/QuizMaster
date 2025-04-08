@@ -16,11 +16,13 @@ from enum import Enum
 from pygame.locals import *
 from pygame_widgets.slider import Slider
 from pygame_widgets.button import Button as button
+from pygame_widgets.textbox import TextBox
 
 from modules.persistence import *
 from modules.checker import *
 from modules.elements import *
 from modules.gameModes import *
+from modules.MathQuizMaker import *
 from modules.searchQuiz import search_str_in_file
 from modules.otherWindows import about
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
@@ -133,14 +135,44 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     pygame.mixer.music.load(music_old)
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
+                    BLACK = screen_mode(BACKGROUND_COLOUR)
                     main(music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, BLACK, v_old)
                     return
 
+def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
+    """
+    Function to choose amount of questions for an auto-generated quiz.
+    """
+
+    running = True
+    button_submit = Button("Submit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 1.2), 300, 40, BLACK)
+    question_amount_slider = Slider(screen, SCREEN_WIDTH // 4, SCREEN_HEIGHT // 3, 800, 40, min=1, max=250, step=1, initial = 50)
+    numOutput = TextBox(screen, SCREEN_WIDTH // 2.1, SCREEN_HEIGHT // 4.5, 70, 50, fontSize=30)
+
+    while running:
+        events = pygame.event.get()
+        for event in events:
+            if event.type == QUIT:
+                quit()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if button_submit.is_clicked(pos):
+                    numOfQuestions = question_amount_slider.getValue()
+                    question_amount_slider.hide()
+                    numOutput.hide()
+                    return numOfQuestions
+
+        screen.fill(BACKGROUND_COLOUR)
+        display_message("Settings", 50, 50, BLACK)
+        display_message("Number of Questions:", 125, 40, BLACK)
+        button_submit.draw(screen, BUTTON_COLOUR)
+        numOutput.setText(question_amount_slider.getValue())
+
+        pygame_widgets.update(events)
+        pygame.display.update()
+
+
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
-    """
-    Lets user input search term. Displays all quiz titles associated to search term.
-    Lets user select quiz from list of found quizzes.
-    """
     textinput = TextInputVisualizer()
     pygame.key.set_repeat(200, 25)
 
@@ -150,7 +182,8 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     
     button_random_quiz = Button("Random Quiz", (SCREEN_WIDTH // 2 - 150, 400), 300, 40, BLACK)
     button_general_knowledge = Button("General Knowledge Quiz", (SCREEN_WIDTH // 2 - 150, 475), 300, 40, BLACK)
-    
+    button_math = Button("Math Quiz", (SCREEN_WIDTH // 2 - 150, 550), 300, 40, BLACK)
+
     while True:
         screen.fill(BACKGROUND_COLOUR)
         display_message("Enter Quiz Keyword:", 50, 50, BLACK)
@@ -166,6 +199,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         
         button_random_quiz.draw(screen, BUTTON_COLOUR)
         button_general_knowledge.draw(screen, BUTTON_COLOUR)
+        #button_math.draw(screen, BUTTON_COLOUR)
 
         if [ev for ev in events if ev.type == pygame.KEYDOWN and ev.key == pygame.K_RETURN]:
             searchTerm = textinput.value
@@ -180,6 +214,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                         filename = random.choice(quizfiles)
                         try:
                             questionList, titleofquiz = load_quiz(filename)
+                            print(f"{titleofquiz} \nQuestions: {questionList}")
                         except Exception as ex:
                             print(f"Error in {filename}: {ex}")
                             break
@@ -189,10 +224,11 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                             StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
                         return
                 elif button_general_knowledge.is_clicked(pos):
+                    number_of_questions = choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
                     quizfiles = glob('./Quizzes/**/*.json', recursive=True)
                     if quizfiles:
                         questionList = []
-                        for _ in range(30):
+                        for _ in range(number_of_questions):
                             filename = random.choice(quizfiles)
                             try:
                                 questions, _ = load_quiz(filename)

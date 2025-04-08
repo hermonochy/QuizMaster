@@ -1,5 +1,6 @@
 import pygame
 import sys
+import colorsys
 
 from pygame.locals import *
 
@@ -59,11 +60,15 @@ class Button:
         self.rect = pygame.Rect(position[0], position[1], width, height)
         self.text_colour = text_colour
 
-    def draw(self, screen, colour, border_radius=20, shadow_offset=3):
+    def draw(self, screen, colour, border_radius=20, shadow_offset=5):
 
+        h, s, v = colorsys.rgb_to_hsv(colour[0], colour[1], colour[2])
+        v = max(0, v - 25)
+        shadow_colour = colorsys.hsv_to_rgb(h, s, v)
+        #shadow_colour = (colour[0]-10, colour[1]-30, colour[2]-10)
         shadow_rect = pygame.Rect(self.rect.x + shadow_offset, self.rect.y + shadow_offset, self.width, self.height)
-        pygame.draw.rect(screen, (150, 150, 150), shadow_rect, border_radius=30)
-        pygame.draw.rect(screen, colour, self.rect, border_radius=30)
+        pygame.draw.rect(screen, shadow_colour, shadow_rect, border_radius=border_radius)
+        pygame.draw.rect(screen, colour, self.rect, border_radius=border_radius)
         
         self.render_text(screen)
 
