@@ -5,8 +5,21 @@
  ![](images/logo1.png)
 
 QuizMaster is a fun game testing your knowledge and cognitive ability in many different areas. 
-If you know how to copy and paste text to the command line interface, and can copy or clone this repository, then you're in. 
+ If you can copy and paste text into the command line interface and clone a repository, you're all set to dive in!
 If you've got some useful knowledge on top of this, you can create a quiz on it with `QuizCreator` and create a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/creating-a-pull-request).
+
+
+## Table of Contents
+
+- [Usage](#usage)
+  - [Installation](#installation)
+  - [Running QuizMaster](#running-quizmaster)
+  - [Preferences](#preferences)
+  - [Quiz Creator](#quiz-creator)
+- [Tutorials](#tutorials)
+- [Other QuizMaster Versions](#other-quizmaster-versions)
+- [Summary](#summary)
+- [Future Work](#future-work)
 
 ## Usage
 
@@ -14,7 +27,7 @@ If you've got some useful knowledge on top of this, you can create a quiz on it 
 
 1. Clone this repository via terminal: ```git clone --recurse-submodules https://github.com/hermonochy/QuizMaster```
 
-  However, if you would not like example quizzes along with it, remove the `--recurse-submodules` flag: ```git clone https://github.com/hermonochy/QuizMaster```
+  If you prefer not to include the example quizzes, you can omit the `--recurse-submodules` flag: ```git clone https://github.com/hermonochy/QuizMaster```
 
 2. Enter the directory containing the game executable: ```cd QuizMaster```
 
@@ -35,15 +48,19 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 
 In a command line window,  in Linux, enter `./run.sh` and `run.bat` for Windows.
 
- Press either `Play a Quiz` or `Make a Quiz` in the homepage. `Make a Quiz` will open [QuizCreator](#quiz-creator), `Play a Quiz` will start the game (see below).
+ You'll be greeted by the homepage where you have the option to `Play a Quiz` or `Make a Quiz`. Selecting `Make a Quiz` opens `QuizCreator` while `Play a Quiz` takes you into the game. To select a quiz, simply type the theme you would like to play. Alternativly, you can also select a random quiz or a general knowledge quiz, which takes random questions from random quizzes to create a new and unique quiz. Afterwards, it will request you select a game mode ([see below](#game-modes)).
 
 ![](images/QM1.png)
 
 #### Game modes
 
+Various game modes exist to allow the user to test different strengths in different areas. From the classic countdown to speed runs that challenge your quick thinking, each mode is designed to provide a unique experience. Below are brief overviews of the current game modes.
+
+![](images/QM3.png)
+
 ##### Classic Game
 
-The classic game mode allows you to answer questions with a countdown timer. Your score is recorded, and at the end, it will give advice appropriate to the score. Scores greater than 80% are above average, between 80% and 40% is average, and less than 40% is below average. You can either press the number allocated to the answer or, if you don't have a keyboard, click on the answer. Remember, you have a time limit!
+The classic game mode allows you to answer questions with a countdown timer. Your score is recorded, and at the end, it will give advice appropriate to the score. Scores greater than 80% are above average, between 80% and 40% is average, and less than 40% is below average. Players can choose answers using keyboard inputs allocated to the answer, or mouse clicks, but be mindful of the timer!
 
 ##### Classic V2
 
@@ -51,15 +68,15 @@ Similar to classic, the time limit of classic V2 is the absolute time, rather th
 
 ##### Speed Run
 
-The speed run game mode challenges you to answer all questions correctly in the shortest time possible. If you answer a question incorrectly, you must redo the question. If all lives are lost, you must redo the entire quiz. The game keeps a stopwatch running throughout, and your final time is displayed at the end. Currently it is the most difficult game mode.
+Race against the clock to answer all questions correctly as fast as possible! An incorrect answer forces you to retry the question, and losing all lives results in starting the quiz anew. Your total time is recorded to push for improvement in future attempts. Currently, it's the most challenging game mode.
 
 ##### Survival
 
-The Survival game mode is a recent addition to QuizMaster. In this mode, players have a limited number of lives to answer questions correctly. Each incorrect answer costs a life, and the game ends when the player loses all their lives or answers all questions correctly. The objective is to survive as long as possible by maintaining accuracy throughout.
+In Survival mode, players are allotted a limited number of lives to complete the quiz. Each incorrect response results in a life deduction, and the game concludes when you either exhaust your lives or answer all questions correctly. The objective is to survive as long as possible by maintaining accuracy throughout.
 
 ##### Practice
 
-The practice mode offers a relaxed environment for users to engage with quiz questions at their own pace. Immediate feedback is provided, notifying the player if the answer was correct. Participants can opt to reveal the correct answer or end the quiz at any time. Scores are not recorded.
+A more laid-back approach, this mode allows you to engage in practice sessions at your own pace. You receive immediate feedback on your answers and can choose to continue or end the quiz whenever you wish. Scores are not tracked in this mode.
 
 ![](images/QM4.png)
 
@@ -74,7 +91,8 @@ There is a preferences window where you can change the song, volume, and backgro
 ![](images/QM2.png)
 
 1. Run quizcreator by opening QuizMaster and clicking `Make a Quiz`. You can also start it separately with `./quizcreator` on the command line interface in Linux.
-2. Use it to manage and create quiz questions. The `Add` button can add questions. As it is multiple choice, you need to give a correct answer and a set of wrong answers, separated by commas. Further instructions can be viewed via the implemented tooltips.
+2. Use it to manage and create quiz questions. Click `Add` to include multiple choice questions and ensure you specify the correct answer followed by wrong answers separated by commas. Tooltips provide helpful guidance throughout the process.
+3. Once you have saved it, using the `Save` button or `Save As` for an entirely new quiz, you can easily test-play it using the `play` button, which opens the quiz in practice mode.
 
 ##### Adding Arguments
 
@@ -153,9 +171,9 @@ Each version of QuizMaster caters to specific needs and environments, ensuring t
 
 ---
 
-Enjoy the combined functionalities of creating quizzes and playing quiz games with the Quiz Creator and Quiz Game applications provided in this code! Please add some extra quizzes for others. This repository welcomes contributions from everyone via pull request. 
+Engage with QuizMaster, where creating and playing quizzes is fun and interactive! We welcome contributions to enhance this project further—if you have new quizzes to share, please submit a pull request to [the submodule for quizzes](https://github.com/QuizMaster-world/Quizzes). 
 
-*Warning: Many of the example quizzes are written by AI or schoolchildren, so may contain incorrect or silly information.*
+*Please note: Some example quizzes may contain inaccuracies, as they have been contributed by AI or younger audiences from the [Oxcobu](https://oxcobu.github.io/) branch at [Cheney School](https://github.com/Cheney-School).*
 
 ## Future Work
 

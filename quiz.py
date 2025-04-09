@@ -22,7 +22,6 @@ from modules.persistence import *
 from modules.checker import *
 from modules.elements import *
 from modules.gameModes import *
-from modules.MathQuizMaker import *
 from modules.searchQuiz import search_str_in_file
 from modules.otherWindows import about
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer

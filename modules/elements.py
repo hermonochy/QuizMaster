@@ -60,7 +60,7 @@ class Button:
         self.rect = pygame.Rect(position[0], position[1], width, height)
         self.text_colour = text_colour
 
-    def draw(self, screen, colour, border_radius=20, shadow_offset=5):
+    def draw(self, screen, colour, border_radius=15, shadow_offset=4):
 
         h, s, v = colorsys.rgb_to_hsv(colour[0], colour[1], colour[2])
         v = max(0, v - 25)
