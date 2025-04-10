@@ -33,4 +33,4 @@ about_p3 = """
     """
 
 licenses_text = """
-    This project is primarily licensed under the GPL license. Additionally, the quizzes created within the framework are licensed under the Creative Commons license. For more details, please view the license using the links below:"""
+    This project - and many other versions of it - are primarily licensed under the GPL license. Additionally, the quizzes created within the framework are licensed under the Creative Commons license. For more details, please view the license using the links below:"""

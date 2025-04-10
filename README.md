@@ -8,17 +8,17 @@ QuizMaster is a fun game testing your knowledge and cognitive ability in many di
  If you can copy and paste text into the command line interface and clone a repository, you're all set to dive in!
 If you've got some useful knowledge on top of this, you can create a quiz on it with `QuizCreator` and create a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/creating-a-pull-request).
 
-
-## Table of Contents
+## Table of contents
 
 - [Usage](#usage)
   - [Installation](#installation)
   - [Running QuizMaster](#running-quizmaster)
-  - [Preferences](#preferences)
-  - [Quiz Creator](#quiz-creator)
+    - [Playing a Quiz](#playing-a-quiz)
+    - [Preferences](#preferences)
+    - [Quiz Creator](#quiz-creator)
+    - [Adding Arguments](#adding-arguments)
 - [Tutorials](#tutorials)
 - [Other QuizMaster Versions](#other-quizmaster-versions)
-- [Summary](#summary)
 - [Future Work](#future-work)
 
 ## Usage
@@ -48,45 +48,47 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 
 In a command line window,  in Linux, enter `./run.sh` and `run.bat` for Windows.
 
+#### Playing a Quiz
+
  You'll be greeted by the homepage where you have the option to `Play a Quiz` or `Make a Quiz`. Selecting `Make a Quiz` opens `QuizCreator` while `Play a Quiz` takes you into the game. To select a quiz, simply type the theme you would like to play. Alternativly, you can also select a random quiz or a general knowledge quiz, which takes random questions from random quizzes to create a new and unique quiz. Afterwards, it will request you select a game mode ([see below](#game-modes)).
 
 ![](images/QM1.png)
 
-#### Game modes
+##### Game modes
 
 Various game modes exist to allow the user to test different strengths in different areas. From the classic countdown to speed runs that challenge your quick thinking, each mode is designed to provide a unique experience. Below are brief overviews of the current game modes.
 
 ![](images/QM3.png)
 
-##### Classic Game
+###### Classic Game
 
 The classic game mode allows you to answer questions with a countdown timer. Your score is recorded, and at the end, it will give advice appropriate to the score. Scores greater than 80% are above average, between 80% and 40% is average, and less than 40% is below average. Players can choose answers using keyboard inputs allocated to the answer, or mouse clicks, but be mindful of the timer!
 
-##### Classic V2
+###### Classic V2
 
 Similar to classic, the time limit of classic V2 is the absolute time, rather than induvidual time limits. This game mode is generally the easiest of all.
 
-##### Speed Run
+###### Speed Run
 
 Race against the clock to answer all questions correctly as fast as possible! An incorrect answer forces you to retry the question, and losing all lives results in starting the quiz anew. Your total time is recorded to push for improvement in future attempts. Currently, it's the most challenging game mode.
 
-##### Survival
+###### Survival
 
 In Survival mode, players are allotted a limited number of lives to complete the quiz. Each incorrect response results in a life deduction, and the game concludes when you either exhaust your lives or answer all questions correctly. The objective is to survive as long as possible by maintaining accuracy throughout.
 
-##### Practice
+###### Practice
 
 A more laid-back approach, this mode allows you to engage in practice sessions at your own pace. You receive immediate feedback on your answers and can choose to continue or end the quiz whenever you wish. Scores are not tracked in this mode.
 
 ![](images/QM4.png)
 
-### Preferences
+#### Preferences
 
 There is a preferences window where you can change the song, volume, and background colour:
 
 ![](images/QM5.png)
 
-### Quiz Creator
+#### Quiz Creator
 
 ![](images/QM2.png)
 
@@ -94,7 +96,7 @@ There is a preferences window where you can change the song, volume, and backgro
 2. Use it to manage and create quiz questions. Click `Add` to include multiple choice questions and ensure you specify the correct answer followed by wrong answers separated by commas. Tooltips provide helpful guidance throughout the process.
 3. Once you have saved it, using the `Save` button or `Save As` for an entirely new quiz, you can easily test-play it using the `play` button, which opens the quiz in practice mode.
 
-##### Adding Arguments
+#### Adding Arguments
 
 The file `quiz.py` also allows for the quiz path, game mode and volume to be added as arguments when starting the program. This is primarily for quick testing of a quiz; a shortcut for quiz makers.
 
@@ -141,7 +143,7 @@ Our [Organization](https://github.com/QuizMaster-world) contains several tutoria
 
 While the original QuizMaster app is by far the most feature-rich and aesthetically pleasing option, there are several alternative versions tailored for different use cases and user preferences. All of these versions are organized under the [QuizMaster organization](https://github.com/QuizMaster-world), providing quick accessibility to all. Below is a brief overview of each version:
 
-- [QuizMasterLite](https://github.com/hermonochy/QuizMasterLite): This scaled-down version is designed for use on smaller devices or for users who may have budgetary constraints regarding data volumes. It retains many of the core functionalities, making it a suitable alternative for those who need a simpler interface without sacrificing key features.
+- [QuizMasterMini](https://github.com/hermonochy/QuizMasterMini): This scaled-down version is designed for use on smaller devices or for users who may have budgetary constraints regarding data volumes. It retains many of the core functionalities, making it a suitable alternative for those who need a simpler interface without sacrificing key features.
 
 - [QuizMasterTerminal](https://github.com/QuizMaster-world/QuizMasterTerminal): A minimalist iteration of QuizMaster, QuizMasterTerminal uses only 1.4 MB of storage. The significant difference here is the absence of a graphical user interface; all interactions occur via the terminal. This makes it an excellent choice for users comfortable with command line operations and those using resource-constrained environments.
 
