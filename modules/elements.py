@@ -5,6 +5,7 @@ import colorsys
 from pygame.locals import *
 
 from modules.checker import isItChristmasTimeNow
+from modules.extendedText import asciiartstart, asciiartend
 
 SCREEN_WIDTH = 1300
 SCREEN_HEIGHT = 800
@@ -13,26 +14,6 @@ QUESTION_OFFSET = 50
 ANSWER_OFFSET = 200
 OPTION_HEIGHT = 50
 
-     
-asciiartstart=(r"""
-  ___                _            ___  ___                     __                        __
- / _ \     _   _    (_)    ____   |  \/  |     __ _     ___    | |_      ___     _ __    | |
-| | | |   | | | |   | |   |_  /   | |\/| |    / _` |   / __|   | __|    / _ \   | '__|   | |
-| |_| |   | |_| |   | |    / /    | |  | |   | (_| |   \__ \   | |_    |  __/   | |      |_|
- \__\_\    \__,_|   |_|   /___|   |_|  |_|    \__,_|   |___/    \__|    \___|   |_|      (_)
-                                                                     
-""")          
-
-asciiartend=(r"""
-
- ____                         _ 
-| __ )     _   _      ___    | |
-|  _ \    | | | |    / _ \   | |
-| |_) |   | |_| |   |  __/   |_|
-|____/     \__, |    \___|   (_)
-           |___/                
-
-""")
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -65,7 +46,6 @@ class Button:
         h, s, v = colorsys.rgb_to_hsv(colour[0], colour[1], colour[2])
         v = max(0, v - 25)
         shadow_colour = colorsys.hsv_to_rgb(h, s, v)
-        #shadow_colour = (colour[0]-10, colour[1]-30, colour[2]-10)
         shadow_rect = pygame.Rect(self.rect.x + shadow_offset, self.rect.y + shadow_offset, self.width, self.height)
         pygame.draw.rect(screen, shadow_colour, shadow_rect, border_radius=border_radius)
         pygame.draw.rect(screen, colour, self.rect, border_radius=border_radius)
