@@ -40,9 +40,9 @@ def make_questionEditorWindow():
 def save_quiz(file_path):
     with open(f'{file_path}', 'w') as file:
         try:
-            savedData = {"title": mainWindow['quiz_name'].get(), "listOfQuestions": questionList, "time given": editorValues['time_given']}
+            savedData = {"title": mainWindow['quiz_name'].get(), "listOfQuestions": questionList}
         except NameError:
-            savedData = {"title": mainWindow['quiz_name'].get(), "listOfQuestions": questionList, "time given": 15}
+            savedData = {"title": mainWindow['quiz_name'].get(), "listOfQuestions": questionList}
 
         json.dump(savedData, file, default=vars)
 
@@ -226,4 +226,10 @@ if __name__ == '__main__':
         if event == 'Play':
             changes = False
             save_quiz(current_file_path)
-            subprocess.Popen(["/usr/bin/python", "quiz.py", f"-q{current_file_path}", "-gpractice", "-v0.0"])
+            if questionList is not None:
+                try:
+                    subprocess.Popen(["/usr/bin/python", "quiz.py", f"-q{current_file_path}", "-gpractice", "-v0.0"])
+                except:
+                    subprocess.Popen(["/usr/bin/python3", "quiz.py", f"-q{current_file_path}", "-gpractice", "-v0.0"])
+            else:
+                sg.Popup("Please make a quiz first!", keep_on_top=True, auto_close=True, auto_close_duration=1.5)
