@@ -67,7 +67,7 @@ def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                     return
 
 
-def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
+def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR):
     running = True
     total_items = len(incorrect_questions)
     items_per_page = 10
@@ -77,12 +77,12 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
     while running:
         screen.fill(BACKGROUND_COLOUR)
         y_position = 50
-        button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50, BLACK)
+        button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50)
         button_back.draw(screen, BUTTON_COLOUR)
         for idx in range(offset, min(offset + items_per_page, total_items)):
             question = incorrect_questions[idx]
-            y_position = display_message(question.question, y_position, 30, BLACK)
-            y_position = display_message(f"Correct Answer: {question.correctAnswer}", y_position, 30, BLACK)
+            y_position = display_message(question.question, y_position, 30)
+            y_position = display_message(f"Correct Answer: {question.correctAnswer}", y_position, 30)
             y_position += 20
 
         if total_items > items_per_page:
@@ -113,13 +113,13 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
         y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200,40, BLACK)
         try:
             if correctAnswers/totalQuestions > 0.4 and correctAnswers/totalQuestions <= 0.8:
-                display_message(medium_praise, y_position,40, BLACK)
+                display_message(medium_praise, y_position, 40)
             if correctAnswers/totalQuestions > 0.8:
-                display_message(good_praise, y_position,40, BLACK)
+                display_message(good_praise, y_position, 40)
             if correctAnswers/totalQuestions <= 0.4:
-                display_message(bad_praise, y_position,40, BLACK)
+                display_message(bad_praise, y_position, 40)
         except ZeroDivisionError:
-                display_message("No questions attempted!", y_position,40, BLACK)
+                display_message("No questions attempted!", y_position, 40)
     
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
         button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)
@@ -140,10 +140,23 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
                 pos = pygame.mouse.get_pos()
                 if incorrect_questions and questionIndex > 0:
                     if button_show_incorrect.is_clicked(pos):
-                        show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+                        show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                 if button_go_back.is_clicked(pos):
                     return False
                 if button_replay.is_clicked(pos):
                     return True
                 if button_quit.is_clicked(pos):
                     quit()
+
+def countdown(titleofquiz, BACKGROUND_COLOUR):
+    for i in range(3,0,-1):
+        screen.fill(BACKGROUND_COLOUR)
+        display_message(titleofquiz, QUESTION_OFFSET, 70)
+        display_message((f"{i}!"), QUESTION_OFFSET + 200, 150)
+        pygame.display.update()
+        pygame.time.delay(1000)
+    screen.fill(BACKGROUND_COLOUR)
+    display_message(("Go!"), QUESTION_OFFSET+200, 150)
+    pygame.display.update()
+    pygame.time.delay(1000)
+    return

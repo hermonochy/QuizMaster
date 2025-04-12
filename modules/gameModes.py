@@ -8,7 +8,7 @@ import time
 
 from pygame.locals import *
 from modules.elements import *
-from modules.otherWindows import show_incorrect_answers, standard_end_window
+from modules.otherWindows import show_incorrect_answers, standard_end_window, countdown
 
 def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
@@ -22,17 +22,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    for i in range(3,0,-1):
-        screen.fill(BACKGROUND_COLOUR)
-        display_message(titleofquiz, QUESTION_OFFSET,70, BLACK)
-        display_message((f"{i}!"), QUESTION_OFFSET+200,150, BLACK)
-        pygame.display.update()
-        pygame.time.delay(1000)
-    screen.fill(BACKGROUND_COLOUR)
-    display_message(("Go!"), QUESTION_OFFSET+200, 150, BLACK)
-    pygame.display.update()
-    pygame.time.delay(1000)
-
+    countdown(titleofquiz, BACKGROUND_COLOUR)
     
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
@@ -124,16 +114,8 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     start_time = time.time()
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
-    for i in range(3, 0, -1):
-        screen.fill(BACKGROUND_COLOUR)
-        display_message(titleofquiz, QUESTION_OFFSET, 70, BLACK)
-        display_message((f"{i}!"), QUESTION_OFFSET + 200, 150, BLACK)
-        pygame.display.update()
-        pygame.time.delay(1000)
-    screen.fill(BACKGROUND_COLOUR)
-    display_message(("Go!"), QUESTION_OFFSET + 200, 150, BLACK)
-    pygame.display.update()
-    pygame.time.delay(1000)
+
+    countdown(titleofquiz, BACKGROUND_COLOUR)
 
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
@@ -227,16 +209,8 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    for i in range(3,0,-1):
-        screen.fill(BACKGROUND_COLOUR)
-        display_message(titleofquiz, QUESTION_OFFSET,70, BLACK)
-        display_message((f"{i}!"), QUESTION_OFFSET+200,150, BLACK)
-        pygame.display.update()
-        pygame.time.delay(1000)
-    screen.fill(BACKGROUND_COLOUR)
-    display_message(("Go!"), QUESTION_OFFSET+200,150, BLACK)
-    pygame.display.update()
-    pygame.time.delay(1000) 
+    countdown(titleofquiz, BACKGROUND_COLOUR)
+
     start_time = time.time()
 
     while running:
@@ -342,16 +316,8 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     lives = int(len(questionList) // 3+1)
     
     BLACK = screen_mode(BACKGROUND_COLOUR)
-    for i in range(3, 0, -1):
-        screen.fill(BACKGROUND_COLOUR)
-        display_message(titleofquiz, QUESTION_OFFSET, 70, BLACK)
-        display_message((f"{i}!"), QUESTION_OFFSET + 200, 150, BLACK)
-        pygame.display.update()
-        pygame.time.delay(1000)
-    screen.fill(BACKGROUND_COLOUR)
-    display_message(("Go!"), QUESTION_OFFSET + 200, 150, BLACK)
-    pygame.display.update()
-    pygame.time.delay(1000)
+
+    countdown(titleofquiz, BACKGROUND_COLOUR)
     
     while running and questionIndex < totalQuestions and lives > 0:
         currentQuestion = questionList[questionIndex]
@@ -432,16 +398,8 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     BLACK = screen_mode(BACKGROUND_COLOUR)
     if BUTTON_COLOUR[1] > 220:
         BUTTON_COLOUR = (BUTTON_COLOUR[0], 220, BUTTON_COLOUR[2]) # Improve visibility of answer reveal
-    for i in range(3, 0, -1):
-        screen.fill(BACKGROUND_COLOUR)
-        display_message(titleofquiz, QUESTION_OFFSET, 70, BLACK)
-        display_message((f"{i}!"), QUESTION_OFFSET + 200, 150, BLACK)
-        pygame.display.update()
-        pygame.time.delay(1000)
-    screen.fill(BACKGROUND_COLOUR)
-    display_message(("Go!"), QUESTION_OFFSET + 200, 150, BLACK)
-    pygame.display.update()
-    pygame.time.delay(1000)
+
+    countdown(titleofquiz, BACKGROUND_COLOUR)
     
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]

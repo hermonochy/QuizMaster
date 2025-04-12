@@ -31,6 +31,11 @@ def screen_mode(BACKGROUND_COLOUR):
     else:
         return (0, 0, 0)
 
+def darken(colour):
+    h, s, v = colorsys.rgb_to_hsv(colour[0], colour[1], colour[2])
+    v = max(0, v - 25)
+    return colorsys.hsv_to_rgb(h, s, v)
+
 class Button:
     def __init__(self, text, position, width=300, height=60, text_colour=(0, 0, 0)):
         self.text = text
@@ -42,10 +47,7 @@ class Button:
         self.text_colour = text_colour
 
     def draw(self, screen, colour, border_radius=15, shadow_offset=5):
-
-        h, s, v = colorsys.rgb_to_hsv(colour[0], colour[1], colour[2])
-        v = max(0, v - 25)
-        shadow_colour = colorsys.hsv_to_rgb(h, s, v)
+        shadow_colour = darken(colour)
         shadow_rect = pygame.Rect(self.rect.x + shadow_offset, self.rect.y + shadow_offset, self.width, self.height)
         pygame.draw.rect(screen, shadow_colour, shadow_rect, border_radius=border_radius)
         pygame.draw.rect(screen, colour, self.rect, border_radius=border_radius)
@@ -155,7 +157,7 @@ class Scrollbar:
     def get_offset(self):
         return int((self.handle_rect.y - self.rect.y - self.arrow_height) * self.total_items // (self.height - 2 * self.arrow_height))
 
-def display_message(message, y_position, font_size, colour):
+def display_message(message, y_position, font_size, colour = (0,0,0)):
     font = pygame.font.Font(None, font_size)
     words = message.split()
     
