@@ -46,6 +46,28 @@ def save_quiz(file_path):
 
         json.dump(savedData, file, default=vars)
 
+def Add():
+    questionEditorWindow = make_questionEditorWindow()
+    editorEvent, editorValues = questionEditorWindow.read()
+    if editorEvent == 'Add':
+        question = editorValues['question']
+        correct_answer = editorValues['correct_answer']
+        wrong_answers = editorValues['wrong_answers'].split(',')
+        try:
+            time_given = int(editorValues['time_given'])
+        except ValueError:
+            time_given = 15
+        newquestion = QuizQuestion(question, correct_answer, wrong_answers, time_given)
+        is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, time_given, questionList)
+        if is_silly_question:
+            sg.Popup(f"Silly question detected: {reason}", keep_on_top=True, auto_close=True, auto_close_duration=1.5)
+            questionEditorWindow.close()
+        else:
+            questionList.append(newquestion)
+            questionEditorWindow.close()
+            mainWindow["quizquestionentry"].update(questionList)
+    if editorEvent == 'Cancel':
+        questionEditorWindow.close()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -107,7 +129,7 @@ if __name__ == '__main__':
                 index = int(''.join(map(str, mainWindow["quizquestionentry"].get_indexes())))
                 quizQuestion = questionList[index]
             except ValueError:
-                sg.Popup("Select a message to edit!", keep_on_top=True, auto_close=True, auto_close_duration=1.5)
+                Add()
                 continue
 
             questionEditorWindow = make_questionEditorWindow()
@@ -138,28 +160,8 @@ if __name__ == '__main__':
                 questionEditorWindow.close()
 
         if event == 'Add Question' or event == 'a':
-            questionEditorWindow = make_questionEditorWindow()
-            editorEvent, editorValues = questionEditorWindow.read()
-            if editorEvent == 'Add':
-                question = editorValues['question']
-                correct_answer = editorValues['correct_answer']
-                wrong_answers = editorValues['wrong_answers'].split(',')
-                try:
-                    time_given = int(editorValues['time_given'])
-                except ValueError:
-                    time_given = 15
-                newquestion = QuizQuestion(question, correct_answer, wrong_answers, time_given)
-                is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, time_given, questionList)
-                if is_silly_question:
-                    sg.Popup(f"Silly question detected: {reason}", keep_on_top=True, auto_close=True, auto_close_duration=1.5)
-                    questionEditorWindow.close()
-                else:
-                    questionList.append(newquestion)
-                    questionEditorWindow.close()
-                    mainWindow["quizquestionentry"].update(questionList)
-            if editorEvent == 'Cancel':
-                questionEditorWindow.close()
-
+            Add()
+            
         if event == 'Duplicate Question' or event == 'd':
             try:
                 index = int(''.join(map(str, mainWindow["quizquestionentry"].get_indexes())))
