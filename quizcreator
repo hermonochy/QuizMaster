@@ -2,6 +2,7 @@
 import argparse
 import json
 import subprocess
+import webbrowser
 import modules.PySimpleGUI as sg
 
 from modules.persistence import QuizQuestion
@@ -11,15 +12,20 @@ changes = False
 questionList = []
 current_file_path = None
 
+menuBar = [
+    ['File', ['&New', '&Open', '&Save', 'Save As', '---', '&Quit']],
+    ['Run', ['Play']],
+    ['Help', ['!About', 'Tutorials']]
+]
+
 mainWindowLayout = [
+    [sg.Menu(menuBar)],
     [sg.Text("Title of Quiz:"), sg.InputText(key='quiz_name', tooltip="The title of the quiz that players will see.")],
     [sg.Listbox(questionList, size=(125, 25), key='quizquestionentry', enable_events=True, tooltip="The list of the questions."),
      sg.Text(key='textbox', size=(20, 10))],
-    [sg.Button('Open', tooltip="Open an existing quiz."), sg.Button('Save', tooltip="Save your quiz."),
-     sg.Button('Save As', tooltip="Save your quiz as a new quiz in an appropriate folder."), sg.Button("Edit Question", tooltip="Select a question from the listbox to edit."), 
-     sg.Button("Add Question", tooltip="Add a new question."), sg.Button('Duplicate Question', tooltip="Duplicate the selected question"), 
+    [sg.Button("Add Question", tooltip="Add a new question."), sg.Button("Edit Question", tooltip="Select a question from the listbox to edit."), 
+     sg.Button('Duplicate Question', tooltip="Duplicate the selected question"), 
      sg.Button("Delete Question", tooltip="Select a question from the listbox to delete.")],
-    [sg.Button("Play", tooltip="Test the quiz by playing it.")],
     [sg.Button('Quit')]
 ]
 
@@ -123,6 +129,11 @@ if __name__ == '__main__':
                 else:
                     continue
             break
+        if event == 'New' or event == 'n':
+            questionList = []
+            mainWindow["quizquestionentry"].update(questionList)
+            mainWindow["quiz_name"].update("")
+            current_file_path = None
 
         if event == 'Edit Question' or event == 'e':
             try:
@@ -224,7 +235,6 @@ if __name__ == '__main__':
 
             mainWindow["quizquestionentry"].update(questionList)
 
-
         if event == 'Play':
             changes = False
             save_quiz(current_file_path)
@@ -235,3 +245,6 @@ if __name__ == '__main__':
                     subprocess.Popen(["/usr/bin/python3", "quiz.py", f"-q{current_file_path}", "-gpractice", "-v0.0"])
             else:
                 sg.Popup("Please make a quiz first!", keep_on_top=True, auto_close=True, auto_close_duration=1.5)
+
+        if event == 'Tutorials':
+            webbrowser.open("https://quizmaster-world.github.io/Tutorials/QuizMaster.html")
