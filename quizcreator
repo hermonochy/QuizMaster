@@ -15,9 +15,9 @@ current_file_path = None
 
 menuBar = [
     ['File', ['&New', '&Open', '&Save', 'Save As', '---', '&Restart', '&Quit']],
-    ['Edit', ['&Add Question', '&Edit Question', '&Duplicate Question', '&Delete Question']],
+    ['Edit', ['&Add Question', '&Edit Question', 'Duplicate Question', '&Delete Question']],
     ['Run', ['Test Play']],
-    ['Help', ['!About', 'Tutorials']]
+    ['Help', ['!About', 'Tutorials', 'Github', ['QuizMaster Repository', 'QuizMaster Organisation']]]
 ]
 
 mainWindowLayout = [
@@ -245,7 +245,7 @@ if __name__ == '__main__':
 
             mainWindow["quizquestionentry"].update(questionList)
 
-        if event == 'Play':
+        if event == 'Test Play':
             if questionList is not None:
                 save_quiz(current_file_path)
                 changes = False
@@ -258,3 +258,8 @@ if __name__ == '__main__':
 
         if event == 'Tutorials':
             webbrowser.open("https://quizmaster-world.github.io/Tutorials/QuizMaster.html")
+
+        if event == 'QuizMaster Repository':
+            webbrowser.open("https://github.com/hermonochy/QuizMaster/")
+        if event == 'QuizMaster Organisation':
+            webbrowser.open("https://github.com/QuizMaster-world/")
