@@ -1,4 +1,4 @@
-from typing import List
+from typing import List,Union
 from dataclasses import dataclass, field
 import json
 
@@ -6,8 +6,8 @@ import json
 @dataclass
 class QuizQuestion:
    question: str
-   correctAnswer: str
-   wrongAnswers: List[str]
+   correctAnswer: Union[str,int,float,bool]
+   wrongAnswers: List[Union[str,int,float,bool]]
    timeout: int = field(default=15)
    
    def __repr__(self):
