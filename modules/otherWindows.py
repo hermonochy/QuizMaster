@@ -7,15 +7,14 @@ from modules.elements import *
 from modules.extendedText import *
 
 def about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
-
     running = True
 
     while running:
         screen.fill(BACKGROUND_COLOUR)
         button_license = Button("Licenses", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
-        button_website = Button("For more information, please vist our website...", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 10), 600, 40, text_colour=(0,0,255))
-        button_tutorial = Button("...or view our basic tutorial.", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 75), 600, 40, text_colour=(0,0,255))
+        button_website = Button("For more information, please vist our website...", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 10), 600, 40, text_colour=LINK_COLOUR)
+        button_tutorial = Button("...or view our basic tutorial.", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 75), 600, 40, text_colour=LINK_COLOUR)
         display_message("About QuizMaster", SCREEN_HEIGHT // 8, 75, BLACK)
         display_message(about_p1, SCREEN_HEIGHT // 5, 30, BLACK)
         display_message(about_p2, SCREEN_HEIGHT // 3, 30, BLACK)
@@ -47,8 +46,8 @@ def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         screen.fill(BACKGROUND_COLOUR)
         display_message("Licensing", SCREEN_HEIGHT // 8, 75, BLACK)
         display_message(licenses_text, SCREEN_HEIGHT // 5, 40, BLACK)
-        button_GPL = Button("GPL v3", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 - 50), 250, 40, text_colour=(0,0,255))
-        button_CC = Button("Creative Commons", (SCREEN_WIDTH // 2 - 175, SCREEN_HEIGHT // 2), 300, 40, text_colour=(0,0,255))
+        button_GPL = Button("GPL v3", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 - 50), 250, 40, text_colour=LINK_COLOUR)
+        button_CC = Button("Creative Commons", (SCREEN_WIDTH // 2 - 175, SCREEN_HEIGHT // 2), 300, 40, text_colour=LINK_COLOUR)
         button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
         button_GPL.draw(screen, BACKGROUND_COLOUR, shadow_offset=0)
         button_CC.draw(screen, BACKGROUND_COLOUR, shadow_offset=0)
@@ -67,7 +66,7 @@ def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                     return
 
 
-def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     running = True
     total_items = len(incorrect_questions)
     items_per_page = 10
@@ -81,8 +80,8 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
         button_back.draw(screen, BUTTON_COLOUR)
         for idx in range(offset, min(offset + items_per_page, total_items)):
             question = incorrect_questions[idx]
-            y_position = display_message(question.question, y_position, 30)
-            y_position = display_message(f"Correct Answer: {question.correctAnswer}", y_position, 30)
+            y_position = display_message(question.question, y_position, 30, BLACK)
+            y_position = display_message(f"Correct Answer: {question.correctAnswer}", y_position, 30, BLACK)
             y_position += 20
 
         if total_items > items_per_page:
@@ -113,13 +112,13 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
         y_position = display_message(f"Quiz completed! You got {correctAnswers} out of {totalQuestions} questions correct.", SCREEN_HEIGHT // 2-200,40, BLACK)
         try:
             if correctAnswers/totalQuestions > 0.4 and correctAnswers/totalQuestions <= 0.8:
-                display_message(medium_praise, y_position, 40)
+                display_message(medium_praise, y_position, 40, BLACK)
             if correctAnswers/totalQuestions > 0.8:
-                display_message(good_praise, y_position, 40)
+                display_message(good_praise, y_position, 40, BLACK)
             if correctAnswers/totalQuestions <= 0.4:
-                display_message(bad_praise, y_position, 40)
+                display_message(bad_praise, y_position, 40, BLACK)
         except ZeroDivisionError:
-                display_message("No questions attempted!", y_position, 40)
+                display_message("No questions attempted!", y_position, 40, BLACK)
     
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
         button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)
@@ -140,7 +139,7 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
                 pos = pygame.mouse.get_pos()
                 if incorrect_questions and questionIndex > 0:
                     if button_show_incorrect.is_clicked(pos):
-                        show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
                 if button_go_back.is_clicked(pos):
                     return False
                 if button_replay.is_clicked(pos):
@@ -148,15 +147,15 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
                 if button_quit.is_clicked(pos):
                     quit()
 
-def countdown(titleofquiz, BACKGROUND_COLOUR):
+def countdown(titleofquiz, BACKGROUND_COLOUR, BLACK):
     for i in range(3,0,-1):
         screen.fill(BACKGROUND_COLOUR)
-        display_message(titleofquiz, QUESTION_OFFSET, 70)
-        display_message((f"{i}!"), QUESTION_OFFSET + 200, 150)
+        display_message(titleofquiz, QUESTION_OFFSET, 70, BLACK)
+        display_message((f"{i}!"), QUESTION_OFFSET + 200, 150, BLACK)
         pygame.display.update()
         pygame.time.delay(1000)
     screen.fill(BACKGROUND_COLOUR)
-    display_message(("Go!"), QUESTION_OFFSET+200, 150)
+    display_message(("Go!"), QUESTION_OFFSET+200, 150, BLACK)
     pygame.display.update()
     pygame.time.delay(1000)
     return

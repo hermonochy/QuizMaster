@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import argparse
 import json
-import sys
 import subprocess
 import webbrowser
 import modules.PySimpleGUI as sg
@@ -14,10 +13,10 @@ questionList = []
 current_file_path = None
 
 menuBar = [
-    ['File', ['&New', '&Open', '&Save', 'Save As', '---', '&Restart', '&Quit']],
-    ['Edit', ['&Add Question', '&Edit Question', 'Duplicate Question', '&Delete Question']],
-    ['Run', ['Test Play']],
-    ['Help', ['!About', 'Tutorials', 'Github', ['QuizMaster Repository', 'QuizMaster Organisation']]]
+    ['&File', ['&New', '&Open', '&Save', 'Save &As', '---', '&Restart', '&Quit']],
+    ['&Edit', ['&Add Question', '&Edit Question', 'Dupli&cate Question', '&Delete Question']],
+    ['&Run', ['&Play']],
+    ['&Help', ['!About', '&Tutorials', '&Github', ['QuizMaster &Repository', 'QuizMaster &Organisation']]]
 ]
 
 mainWindowLayout = [
@@ -126,10 +125,12 @@ if __name__ == '__main__':
 
         if event == sg.WIN_CLOSED or event == 'Quit' or event == 'Escape:27':
             if changes:
-                if sg.popup_yes_no("You have unsaved changes! Are you sure you want to leave?", keep_on_top=True) == "Yes":
+                if sg.popup_yes_no("You have unsaved changes! Save before you leave?", keep_on_top=True) == "No":
                     break
                 else:
-                    continue
+                    changes = False
+                    save_quiz(current_file_path)
+                    break
             break
     
         if event == 'Restart':           
@@ -137,9 +138,17 @@ if __name__ == '__main__':
                 subprocess.Popen(["/usr/bin/python", "quizcreator",])
             except:
                 subprocess.Popen(["/usr/bin/python3", "quizcreator"])
-            sys.exit()        
+            quit()       
 
         if event == 'New' or event == 'n':
+            if changes:
+                if sg.popup_yes_no("You have unsaved changes! Save before you leave?", keep_on_top=True) == "No":
+                    pass
+                else:
+                    changes = False
+                    save_quiz(current_file_path)
+                    pass
+            pass
             questionList = []
             mainWindow["quizquestionentry"].update(questionList)
             mainWindow["quiz_name"].update("")
@@ -209,10 +218,14 @@ if __name__ == '__main__':
 
         if event == 'Open' or event == 'o':
             if changes:
-                if sg.popup_yes_no("You have unsaved changes! Are you sure you want to leave?") == "Yes":
+                if sg.popup_yes_no("You have unsaved changes! Save before you leave?", keep_on_top=True) == "No":
                     pass
                 else:
-                    continue
+                    changes = False
+                    save_quiz(current_file_path)
+                    pass
+            pass
+
             try:
                 filename = sg.popup_get_file("Open quiz", initial_folder="Quizzes", no_window=True)
                 if filename:
@@ -245,7 +258,7 @@ if __name__ == '__main__':
 
             mainWindow["quizquestionentry"].update(questionList)
 
-        if event == 'Test Play':
+        if event == 'Play':
             if questionList is not None:
                 save_quiz(current_file_path)
                 changes = False
