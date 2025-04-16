@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import sys
 import subprocess
 import webbrowser
 import modules.PySimpleGUI as sg
@@ -13,8 +14,9 @@ questionList = []
 current_file_path = None
 
 menuBar = [
-    ['File', ['&New', '&Open', '&Save', 'Save As', '---', '&Quit']],
-    ['Run', ['Play']],
+    ['File', ['&New', '&Open', '&Save', 'Save As', '---', '&Restart', '&Quit']],
+    ['Edit', ['&Add Question', '&Edit Question', '&Duplicate Question', '&Delete Question']],
+    ['Run', ['Test Play']],
     ['Help', ['!About', 'Tutorials']]
 ]
 
@@ -129,6 +131,14 @@ if __name__ == '__main__':
                 else:
                     continue
             break
+    
+        if event == 'Restart':           
+            try:
+                subprocess.Popen(["/usr/bin/python", "quizcreator",])
+            except:
+                subprocess.Popen(["/usr/bin/python3", "quizcreator"])
+            sys.exit()        
+
         if event == 'New' or event == 'n':
             questionList = []
             mainWindow["quizquestionentry"].update(questionList)
@@ -236,9 +246,9 @@ if __name__ == '__main__':
             mainWindow["quizquestionentry"].update(questionList)
 
         if event == 'Play':
-            changes = False
-            save_quiz(current_file_path)
             if questionList is not None:
+                save_quiz(current_file_path)
+                changes = False
                 try:
                     subprocess.Popen(["/usr/bin/python", "quiz.py", f"-q{current_file_path}", "-gpractice", "-v0.0"])
                 except:
