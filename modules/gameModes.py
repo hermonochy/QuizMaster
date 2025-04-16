@@ -8,7 +8,7 @@ import time
 
 from pygame.locals import *
 from modules.elements import *
-from modules.otherWindows import show_incorrect_answers, standard_end_window, countdown
+from modules.otherWindows import standard_end_window, countdown
 
 def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
@@ -22,7 +22,7 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    countdown(titleofquiz, BACKGROUND_COLOUR)
+    countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
     
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
@@ -115,7 +115,7 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    countdown(titleofquiz, BACKGROUND_COLOUR)
+    countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
 
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
@@ -209,7 +209,7 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    countdown(titleofquiz, BACKGROUND_COLOUR)
+    countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
 
     start_time = time.time()
 
@@ -317,7 +317,7 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    countdown(titleofquiz, BACKGROUND_COLOUR)
+    countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
     
     while running and questionIndex < totalQuestions and lives > 0:
         currentQuestion = questionList[questionIndex]
@@ -399,7 +399,7 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if BUTTON_COLOUR[1] > 220:
         BUTTON_COLOUR = (BUTTON_COLOUR[0], 220, BUTTON_COLOUR[2]) # Improve visibility of answer reveal
 
-    countdown(titleofquiz, BACKGROUND_COLOUR)
+    countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
     
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]

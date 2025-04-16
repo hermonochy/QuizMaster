@@ -13,7 +13,7 @@ FONT_SIZE = 40
 QUESTION_OFFSET = 50
 ANSWER_OFFSET = 200
 OPTION_HEIGHT = 50
-
+LINK_COLOUR = (50,50,255)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -141,7 +141,7 @@ class Scrollbar:
         if event.type == KEYDOWN:
             if event.key == K_UP:
                 self.scroll_up()
-            elif event.key == K_DOWN:
+            if event.key == K_DOWN:
                 self.scroll_down()
 
     def scroll_up(self):
@@ -157,7 +157,7 @@ class Scrollbar:
     def get_offset(self):
         return int((self.handle_rect.y - self.rect.y - self.arrow_height) * self.total_items // (self.height - 2 * self.arrow_height))
 
-def display_message(message, y_position, font_size, colour = (0,0,0)):
+def display_message(message, y_position, font_size, colour):
     font = pygame.font.Font(None, font_size)
     words = message.split()
     
