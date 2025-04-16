@@ -46,15 +46,15 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     Gslider = Slider(screen, SCREEN_WIDTH // 4, 330, 800, 40, min=0, max=245, step=0.5, handleColour = (20,255,50), handleRadius=20, initial = BACKGROUND_COLOUR[1])
     Bslider = Slider(screen, SCREEN_WIDTH // 4, 380, 800, 40, min=0, max=245, step=0.5, handleColour = (0,0,255), handleRadius=20, initial = BACKGROUND_COLOUR[2])
     button_music = button(screen, SCREEN_WIDTH // 2.5, 520, 300, 50, text="Change Music", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
-    button_go_back = button(screen, SCREEN_WIDTH // 2.5, 620, 300, 50, text="Main Menu", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
-    button_cancel = button(screen, SCREEN_WIDTH // 2.5, 680, 300, 50, text="Cancel", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
+    button_save = button(screen, SCREEN_WIDTH // 2.5, 620, 300, 50, text="Save", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
+    button_go_back = button(screen, SCREEN_WIDTH // 2.5, 680, 300, 50, text="Main Menu", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
     volumeSlider.draw()
     Rslider.draw()
     Gslider.draw()
     Bslider.draw()
     button_music.draw()
     button_go_back.draw()
-    button_cancel.draw()
+    button_save.draw()
     screen.fill(BACKGROUND_COLOUR)
     display_message("Preferences", 50, 75, BLACK)
     display_message("_"*125, 50, 40, BLACK)
@@ -86,6 +86,21 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
+                if isItChristmasTimeNow():
+                    celebration = True
+                    music = ["music/music_christmas1.ogg", "music/music_christmas2.ogg"][i % 2]
+                if isItHalloweenTimeNow():
+                    celebration = True
+                    music = ["music/music_halloween1.ogg", "music/music_halloween2.ogg"][i % 2]
+                if isItStPatricksTimeNow():
+                    celebration = True
+                    music = "music/music_stpatricks1.ogg"
+                if isItValentinesTimeNow():
+                    celebration = True
+                    music = "music/music_valentines1.ogg"
+                if isItEasterTimeNow():
+                    celebration = True
+                    music = "music/music_easter1.ogg"
                 if button_music.contains(*pos):
                     if i < 7:
                         i += 1
@@ -94,23 +109,12 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     pygame.mixer.music.fadeout(1000)
                     pygame.mixer.music.unload()
                     music = f'music/music{i}.ogg'
-                    if isItChristmasTimeNow():
-                        celebration = True
-                        music = ["music/music_christmas1.ogg", "music/music_christmas2.ogg"][i % 2]
-                    if isItHalloweenTimeNow():
-                        celebration = True
-                        music = ["music/music_halloween1.ogg", "music/music_halloween2.ogg"][i % 2]
-                    if isItStPatricksTimeNow():
-                        celebration = True
-                        music = "music/music_stpatricks1.ogg"
-                    if isItValentinesTimeNow():
-                        celebration = True
-                        music = "music/music_valentines1.ogg"
-                    if isItEasterTimeNow():
-                        celebration = True
-                        music = "music/music_easter1.ogg"
                     pygame.mixer.music.load(music)
                     pygame.mixer.music.play(-1)
+                if button_save.contains(*pos):
+                    if not celebration:
+                        save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
                 if button_go_back.contains(*pos):
                     volumeSlider.hide()
                     Rslider.hide()
@@ -118,18 +122,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     Bslider.hide()
                     button_music.hide()
                     button_go_back.hide()
-                    button_cancel.hide()
-                    if not celebration:
-                        save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
-                if button_cancel.contains(*pos):
-                    volumeSlider.hide()
-                    Rslider.hide()
-                    Gslider.hide()
-                    Bslider.hide()
-                    button_music.hide()
-                    button_go_back.hide()
-                    button_cancel.hide()
+                    button_save.hide()
                     pygame.mixer.music.unload()
                     pygame.mixer.music.load(music_old)
                     pygame.mixer.music.play(-1)
