@@ -163,6 +163,55 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         pygame_widgets.update(events)
         pygame.display.update()
 
+def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz):
+    """
+    Displays the quiz details, including the title, the number of questions and questionList.
+    """
+
+    running = True
+    questionLen = len(questionList)
+    # Check if changing length of qiz is applicable
+    if questionLen > 1:
+        drawSlider = True
+    else:
+        drawSlider = False
+    slider = Slider(screen, SCREEN_WIDTH // 3.5, 150, 550, 25, min=1, max=questionLen, step=1, initial=questionLen)
+    button_submit = Button("Play Quiz", (SCREEN_WIDTH // 2 - 200, SCREEN_HEIGHT - 150), 400, 40, BLACK)
+    button_return = Button("Return", (SCREEN_WIDTH // 2 - 200, SCREEN_HEIGHT - 100), 400, 40, BLACK)
+
+    while running:
+        screen.fill(BACKGROUND_COLOUR)
+        display_message(titleofquiz, 50, 75, BLACK)
+        display_message(f"Number of Questions: {slider.getValue()}", 125, 40, BLACK)
+
+        num_questions = int(slider.getValue())
+
+        display_message("Questions:", 210, 40, BLACK)
+        for idx, question in enumerate(questionList[:num_questions]):
+            display_message(f"{question}", 250 + idx * 30, 30, BLACK)
+
+        button_submit.draw(screen, BUTTON_COLOUR)
+        button_return.draw(screen, BUTTON_COLOUR)
+        if drawSlider:
+            slider.draw()
+
+        pygame.display.update()
+
+        events = pygame.event.get()
+        for event in events:
+            if event.type == QUIT:
+                quit()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if button_submit.is_clicked(pos):
+                    selected_questions = questionList[:num_questions]
+                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, selected_questions, titleofquiz)
+                    return
+                if button_return.is_clicked(pos):
+                    return
+        if drawSlider:
+            pygame_widgets.update(events)
+                
 
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     textinput = TextInputVisualizer()
@@ -211,7 +260,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                             print(f"Error in {filename}: {ex}")
                             break
                         if args.gameMode == None:
-                            choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                            quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
                         else:
                             StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
                         return
@@ -299,7 +348,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 break
             print("Questions:", questionList)
             if args.gameMode == None:
-                choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
                 return
             else:
                 StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)

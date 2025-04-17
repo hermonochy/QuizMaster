@@ -75,7 +75,7 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
 
     while running:
         screen.fill(BACKGROUND_COLOUR)
-        y_position = 50
+        y_position = 100
         button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50)
         button_back.draw(screen, BUTTON_COLOUR)
         for idx in range(offset, min(offset + items_per_page, total_items)):
