@@ -33,13 +33,14 @@ If you've got some useful knowledge on top of this, you can create a quiz on it 
 
 ##### Either:
 
-Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are a C++ developer). These scripts may take some time to complete.
+Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (known issues with msys2 python conflict, only worry about this if you are a C++ developer). Do not worry if these scripts take some time to complete.
 
-##### Or: (Advanced, Ubuntu/Debian only):
+##### Or: (Advanced, Linux/Mac only):
 
 1. Set up a new virtual environment: ```python3 -m venv venv```
 2. Activate the environment: ```source venv/bin/activate``` (To decativate, type `deactivate`)
-3. Install tkinter: ```sudo apt-get install python3-tk```
+3. Install tkinter: ```sudo apt-get install python3-tk``` 
+(If you do not use Debian or Ubuntu, you will have to find out your package manager for yourself and replace `apt-get`.)
 4. Install packages in `requirements.txt`: ```pip3 install -r requirements.txt```
 
 *Steps 1 and 2 are optional, but recommended if you wish to avoid a headache with Python module conflicts.*
@@ -50,7 +51,7 @@ To start the application, enter `./run.sh` for Linux or `run.bat` for Windows, i
 
 #### Playing a Quiz
 
- You'll be greeted by the homepage where you have the option to `Play a Quiz` or `Make a Quiz`. Selecting `Make a Quiz` opens `QuizCreator`, while `Play a Quiz` takes you into the game. To select a quiz, simply type the theme you would like to play. Alternatively, you can also select a random quiz or a general knowledge quiz, the latter of which takes random questions from random quizzes to create a new and unique quiz. Afterwards, it will request you select a game mode ([see below](#game-modes)).
+ You'll be greeted by the homepage where you have the option to `Play a Quiz` or `Make a Quiz`. Selecting `Make a Quiz` opens [`QuizCreator`](#quiz-creator), while `Play a Quiz` takes you into the game. To select a quiz, simply type the theme you would like to play. Alternatively, you can also select a random quiz or a general knowledge quiz, the latter of which takes random questions from random quizzes to create a new and unique quiz. Afterwards, it will request you select a game mode ([see below](#game-modes)).
 
 ![](images/QM1.png)
 
