@@ -13,8 +13,9 @@ questionList = []
 current_file_path = None
 
 menuBar = [
-    ['&File', ['&New', '&Open', '&Save', 'Save &As', '---', '&Restart', '&Quit']],
+    ['&File', ['&Clear', '&New', '&Open', '&Save', 'Save &As', '---', '&Restart', '&Quit']],
     ['&Edit', ['&Add Question', '&Edit Question', 'Dupli&cate Question', '&Delete Question']],
+    ['!&View', ['&Question Overview', '!&Editor', '&Raw JSON']],
     ['&Run', ['&Play']],
     ['&Help', ['!About', '&Tutorials', '&Github', ['QuizMaster &Repository', 'QuizMaster &Organisation']]]
 ]
@@ -123,7 +124,7 @@ if __name__ == '__main__':
                 outputtext = "Correct answer: \n" + answers[1] + "\n Wrong answers:\n" + str(answers[3])
                 mainWindow["textbox"].update(outputtext)
 
-        if event == sg.WIN_CLOSED or event == 'Quit' or event == 'Escape:27':
+        if event == sg.WIN_CLOSED or event == 'Quit':
             if changes:
                 if sg.popup_yes_no("You have unsaved changes! Save before you leave?", keep_on_top=True) == "No":
                     break
@@ -140,9 +141,9 @@ if __name__ == '__main__':
                 subprocess.Popen(["/usr/bin/python3", "quizcreator"])
             quit()       
 
-        if event == 'New' or event == 'n':
+        if event == 'Clear':
             if changes:
-                if sg.popup_yes_no("You have unsaved changes! Save before you leave?", keep_on_top=True) == "No":
+                if sg.popup_yes_no("You have unsaved changes! Save before you clear?", keep_on_top=True) == "No":
                     pass
                 else:
                     changes = False
@@ -154,7 +155,13 @@ if __name__ == '__main__':
             mainWindow["quiz_name"].update("")
             current_file_path = None
 
-        if event == 'Edit Question' or event == 'e':
+        if event == 'New':
+            try:
+                subprocess.Popen(["/usr/bin/python", "quizcreator",])
+            except:
+                subprocess.Popen(["/usr/bin/python3", "quizcreator"])
+
+        if event == 'Edit Question':
             try:
                 index = int(''.join(map(str, mainWindow["quizquestionentry"].get_indexes())))
                 quizQuestion = questionList[index]
