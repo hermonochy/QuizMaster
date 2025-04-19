@@ -57,16 +57,16 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     button_cancel.draw()
     screen.fill(BACKGROUND_COLOUR)
     display_message("Preferences", 50, 75, BLACK)
-    display_message("_"*125, 50, 40, BLACK)
+    display_message("_"*85, 50, 40, BLACK)
     display_message("Volume", 120, 40, BLACK)
-    display_message("_"*100, 130, 25, BLACK)
+    display_message("_"*90, 130, 25, BLACK)
     
     display_message("Colours", 230, 40, BLACK)
-    display_message("_"*100, 240, 25, BLACK)
+    display_message("_"*90, 240, 25, BLACK)
 
     display_message("Music", 485, 40, BLACK)
-    display_message("_"*100, 495, 25, BLACK)
-    display_message("_"*125, 550, 40, BLACK)
+    display_message("_"*90, 495, 25, BLACK)
+    display_message("_"*85, 550, 40, BLACK)
 
     while running:
         R = Rslider.getValue()
