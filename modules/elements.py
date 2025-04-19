@@ -26,7 +26,7 @@ def screen_mode(BACKGROUND_COLOUR):
     R = BACKGROUND_COLOUR[0]
     G = BACKGROUND_COLOUR[1]
     B = BACKGROUND_COLOUR[2]
-    if R + G + B < 200 and max(R,G,B) < 100 or isItChristmasTimeNow():
+    if R + G + B < 200 and max(R,G,B) < 125 or isItChristmasTimeNow():
         return (255, 255, 255)
     else:
         return (0, 0, 0)

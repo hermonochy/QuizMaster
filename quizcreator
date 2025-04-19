@@ -38,7 +38,7 @@ def make_questionEditorWindow():
         [sg.Text('Enter the question:'), sg.InputText(key='question', size=105, tooltip="Enter the question.")],
         [sg.Text('Enter the correct answer:'), sg.InputText(key='correct_answer', size=75, tooltip="Enter the answer.")],
         [sg.Text('Enter the wrong answers:'), sg.InputText(key='wrong_answers', size=100, tooltip="Enter some related but incorrect answers, separated by commas.")],
-        [sg.Text('Enter the time given to answer:'), sg.InputText(key='time_given', size=3, tooltip="Enter an integer number of seconds. Average is 10-20.")],
+        [sg.Text('Enter the time given to answer:'), sg.InputText(key='time_given', size=3, tooltip="Enter an integer number of seconds. Average is 10-20, default (if you leave it blank) is 15")],
         [sg.Button('Add'), sg.Button('Cancel')]
     ]
 
@@ -183,7 +183,7 @@ if __name__ == '__main__':
                     time_given = int(editorValues['time_given'])
                 except ValueError:
                     time_given = 15
-                newquestion = QuizQuestion(question, correct_answer, wrong_answers, int(editorValues['time_given']))
+                newquestion = QuizQuestion(question, correct_answer, wrong_answers, time_given)
                 newquestion = QuizQuestion(question, correct_answer, wrong_answers, 15)
                 is_silly_question, reason = is_silly(question, correct_answer, wrong_answers, time_given, questionList)
                 if is_silly_question:
