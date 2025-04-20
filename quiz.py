@@ -163,7 +163,7 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         pygame_widgets.update(events)
         pygame.display.update()
 
-def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz):
+def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz, difficulty):
     """
     Displays the quiz details, including the title, the number of questions and questionList.
     """
@@ -174,21 +174,23 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofqu
         drawSlider = True
     else:
         drawSlider = False
-    slider = Slider(screen, SCREEN_WIDTH // 3.5, 150, 550, 25, min=1, max=questionLen, step=1, initial=questionLen)
+    slider = Slider(screen, SCREEN_WIDTH // 3.5, 200, 550, 25, min=1, max=questionLen, step=1, initial=questionLen)
     button_submit = Button("Play Quiz", (SCREEN_WIDTH // 2 - 200, SCREEN_HEIGHT - 150), 400, 40, BLACK)
     button_return = Button("Return", (SCREEN_WIDTH // 2 - 200, SCREEN_HEIGHT - 100), 400, 40, BLACK)
 
     while running:
         screen.fill(BACKGROUND_COLOUR)
         display_message(titleofquiz, 50, 75, BLACK)
-        display_message(f"Number of Questions: {slider.getValue()}", 125, 40, BLACK)
+        display_message(f"Difficulty: {difficulty}", 125, 40, BLACK)
+        display_message(f"Number of Questions: {slider.getValue()}", 175, 40, BLACK)
 
         num_questions = int(slider.getValue())
 
+        """
         display_message("Questions:", 210, 40, BLACK)
         for idx, question in enumerate(questionList[:num_questions]):
             display_message(f"{question}", 250 + idx * 30, 30, BLACK)
-
+        """
         button_submit.draw(screen, BUTTON_COLOUR)
         button_return.draw(screen, BUTTON_COLOUR)
         if drawSlider:
@@ -222,7 +224,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     
     button_random_quiz = Button("Random Quiz", (SCREEN_WIDTH // 2 - 150, 400), 300, 40, BLACK)
     button_general_knowledge = Button("General Knowledge Quiz", (SCREEN_WIDTH // 2 - 150, 475), 300, 40, BLACK)
-    button_math = Button("Math Quiz", (SCREEN_WIDTH // 2 - 150, 550), 300, 40, BLACK)
+    #button_math = Button("Math Quiz", (SCREEN_WIDTH // 2 - 150, 550), 300, 40, BLACK)
 
     while True:
         screen.fill(BACKGROUND_COLOUR)
@@ -253,13 +255,13 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                     if quizfiles:
                         filename = random.choice(quizfiles)
                         try:
-                            questionList, titleofquiz = load_quiz(filename)
+                            questionList, titleofquiz, difficulty, randomOrder = load_quiz(filename)
                             print(f"{titleofquiz} \nQuestions: {questionList}")
                         except Exception as ex:
                             print(f"Error in {filename}: {ex}")
                             break
                         if args.gameMode == None:
-                            quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                            quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz, difficulty)
                         else:
                             StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
                         return
@@ -271,7 +273,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                         for _ in range(number_of_questions):
                             filename = random.choice(quizfiles)
                             try:
-                                questions, _ = load_quiz(filename)
+                                questions, _, _, _ = load_quiz(filename)
                                 question = random.choice(questions)
                                 questionList.append(question)
                             except Exception as ex:
@@ -349,7 +351,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 break
             print("Questions:", questionList)
             if args.gameMode == None:
-                quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz, difficulty)
                 return
             else:
                 StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)

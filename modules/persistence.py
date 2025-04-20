@@ -21,7 +21,7 @@ def load_quiz(filename):
             qq = QuizQuestion(**q)
             questionList.append(qq)
         titleofquiz = quizDicts["title"]
-        difficulty = quizDicts.get("difficulty", 2)
+        difficulty = quizDicts.get("difficulty", 3)
         randomOrder = quizDicts.get("randomOrder", False)
     return questionList, titleofquiz, difficulty, randomOrder
 
