@@ -7,13 +7,13 @@ from pygame.locals import *
 from modules.checker import isItChristmasTimeNow
 from modules.extendedText import asciiartstart, asciiartend
 
-SCREEN_WIDTH = 1300
-SCREEN_HEIGHT = 800
+SCREEN_WIDTH = 1350
+SCREEN_HEIGHT = 850
 FONT_SIZE = 40
 QUESTION_OFFSET = 50
 ANSWER_OFFSET = 200
 OPTION_HEIGHT = 50
-LINK_COLOUR = (50,50,255)
+LINK_COLOUR = (40,40,255)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -26,7 +26,7 @@ def screen_mode(BACKGROUND_COLOUR):
     R = BACKGROUND_COLOUR[0]
     G = BACKGROUND_COLOUR[1]
     B = BACKGROUND_COLOUR[2]
-    if R + G + B < 200 and max(R,G,B) < 100 or isItChristmasTimeNow():
+    if R + G + B < 200 and max(R,G,B) < 125 or isItChristmasTimeNow():
         return (255, 255, 255)
     else:
         return (0, 0, 0)
