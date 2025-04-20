@@ -170,7 +170,6 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofqu
 
     running = True
     questionLen = len(questionList)
-    # Check if changing length of qiz is applicable
     if questionLen > 1:
         drawSlider = True
     else:
@@ -342,7 +341,9 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
             filename = quizfileSearchResults[user_answer]
 
             try:
-                questionList, titleofquiz  = load_quiz(filename)
+                questionList, titleofquiz, difficulty, randomOrder = load_quiz(filename)
+                if randomOrder:
+                    random.shuffle(questionList)
             except Exception as ex:
                 print(f"Error in {filename}: {ex}")
                 break
