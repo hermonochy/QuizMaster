@@ -65,7 +65,7 @@ def isItEasterTimeNow():
        
 def is_silly(question, correct_answer, wrong_answers, time_given, question_list):
 
-    if re.search(r'\d{10,}', question) or re.search(r'\d{10,}', correct_answer):
+    if re.search(r'\d{50,}', question) or re.search(r'\d{50,}', correct_answer):
         return True, "Question contains a very long sequence of numbers!"
     
     if re.search(r'^[a-zA-Z0-9]{20,}$', question):
