@@ -69,12 +69,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     display_message("_"*85, 550, 40, BLACK)
 
     while running:
-        R = Rslider.getValue()
-        G = Gslider.getValue()
-        B = Bslider.getValue()
-        BACKGROUND_COLOUR = (R, G, B)
-        BUTTON_COLOUR = (R + 10, G + 10, B + 10)
-        BLACK = screen_mode(BACKGROUND_COLOUR)
 
         pygame_widgets.update(pygame.event.get())
         pygame.display.update()
@@ -112,6 +106,12 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     pygame.mixer.music.load(music)
                     pygame.mixer.music.play(-1)
                 if button_save.contains(*pos):
+                    R = Rslider.getValue()
+                    G = Gslider.getValue()
+                    B = Bslider.getValue()
+                    BACKGROUND_COLOUR = (R, G, B)
+                    BUTTON_COLOUR = (R + 10, G + 10, B + 10)
+                    BLACK = screen_mode(BACKGROUND_COLOUR)
                     if not celebration:
                         save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
@@ -127,7 +127,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     pygame.mixer.music.load(music_old)
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
-                    BLACK = screen_mode(BACKGROUND_COLOUR)
                     main(music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, BLACK, v_old)
                     return
 
@@ -163,55 +162,61 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         pygame_widgets.update(events)
         pygame.display.update()
 
-def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz, difficulty):
+def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, title, difficulty):
     """
-    Displays the quiz details, including the title, the number of questions and questionList.
+    Function to display the quiz details, including title, difficulty level,
+    number of questions, a slider to reduce the number of questions, and the questions themselves.
     """
-
     running = True
-    questionLen = len(questionList)
-    if questionLen > 1:
-        drawSlider = True
-    else:
-        drawSlider = False
-    slider = Slider(screen, SCREEN_WIDTH // 3.5, 200, 550, 25, min=1, max=questionLen, step=1, initial=questionLen)
-    button_submit = Button("Play Quiz", (SCREEN_WIDTH // 2 - 200, SCREEN_HEIGHT - 150), 400, 40, BLACK)
-    button_return = Button("Return", (SCREEN_WIDTH // 2 - 200, SCREEN_HEIGHT - 100), 400, 40, BLACK)
+    num_questions = len(questionList)
+
+    question_slider = Slider(screen, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4, 450, 25, min=1, max=num_questions, step=1, initial=num_questions)
+
+    scrollbar = None
+    if num_questions > 10:
+        scrollbar = Scrollbar((SCREEN_WIDTH - 40, 350), 400, num_questions, 10)
+    
+    button_confirm = Button("Confirm", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50, BLACK)
+
+    offset = 0
 
     while running:
-        screen.fill(BACKGROUND_COLOUR)
-        display_message(titleofquiz, 50, 75, BLACK)
-        display_message(f"Difficulty: {difficulty}", 125, 40, BLACK)
-        display_message(f"Number of Questions: {slider.getValue()}", 175, 40, BLACK)
-
-        num_questions = int(slider.getValue())
-
-        """
-        display_message("Questions:", 210, 40, BLACK)
-        for idx, question in enumerate(questionList[:num_questions]):
-            display_message(f"{question}", 250 + idx * 30, 30, BLACK)
-        """
-        button_submit.draw(screen, BUTTON_COLOUR)
-        button_return.draw(screen, BUTTON_COLOUR)
-        if drawSlider:
-            slider.draw()
-
-        pygame.display.update()
-
         events = pygame.event.get()
         for event in events:
             if event.type == QUIT:
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                if button_submit.is_clicked(pos):
-                    selected_questions = questionList[:num_questions]
-                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, selected_questions, titleofquiz)
+                if button_confirm.is_clicked(pos):
+                    selected_num_questions = question_slider.getValue()
+                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList[:selected_num_questions], title)
                     return
-                if button_return.is_clicked(pos):
-                    return
-        if drawSlider:
-            pygame_widgets.update(events)
+            if scrollbar and (event.type == MOUSEBUTTONDOWN or event.type == MOUSEBUTTONUP or event.type == MOUSEMOTION):
+                scrollbar.handle_event(event)
+
+        if scrollbar:
+            offset = scrollbar.get_offset()
+
+        screen.fill(BACKGROUND_COLOUR)
+        
+        display_message(title, 50, 75, BLACK)
+        display_message(f"Difficulty: {difficulty}", 120, 50, BLACK)
+        display_message(f"Number of Questions: {question_slider.getValue()}", 175, 50, BLACK)
+        display_message("Questions:", 275, 50, BLACK)
+
+        visible_questions = questionList[offset:offset + 10] if scrollbar else questionList
+        for idx, question in enumerate(visible_questions):
+            display_message(f"• {question}", 350 + idx * 40, 30, BLACK)
+        
+        question_slider.draw()        
+        
+        if scrollbar:
+            scrollbar.draw(screen)
+        
+        button_confirm.draw(screen, BUTTON_COLOUR)
+
+        pygame_widgets.update(events)
+        pygame.display.update()
                 
 
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
