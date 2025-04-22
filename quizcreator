@@ -23,6 +23,8 @@ menuBar = [
 mainWindowLayout = [
     [sg.Menu(menuBar)],
     [sg.Text("Title of Quiz:"), sg.InputText(key='quiz_name', tooltip="The title of the quiz that players will see.")],
+    [sg.Text("Difficulty:", tooltip="Select the difficulty level for this quiz (1 = Baby Quiz, 3 = Secondary School Level, 5 = Requires a professional understanding of the subject)."), sg.Spin([i for i in range(1, 6)], key='difficulty')],
+    [sg.Checkbox("Randomize Questions", default=False, tooltip="Enable this option to randomize the order of questions when the quiz is played.", key='randomOrder')],
     [sg.Listbox(questionList, size=(125, 25), key='quizquestionentry', enable_events=True, tooltip="The list of the questions."),
      sg.Text(key='textbox', size=(20, 10))],
     [sg.Button("Add Question", tooltip="Add a new question."), sg.Button("Edit Question", tooltip="Select a question from the listbox to edit."), 
@@ -47,11 +49,12 @@ def make_questionEditorWindow():
 
 def save_quiz(file_path):
     with open(f'{file_path}', 'w') as file:
-        try:
-            savedData = {"title": mainWindow['quiz_name'].get(), "listOfQuestions": questionList}
-        except NameError:
-            savedData = {"title": mainWindow['quiz_name'].get(), "listOfQuestions": questionList}
-
+        savedData = {
+            "title": mainWindow['quiz_name'].get(),
+            "difficulty": int(values['difficulty']),
+            "randomOrder": mainWindow['randomOrder'].get(),
+            "listOfQuestions": questionList
+        }
         json.dump(savedData, file, default=vars)
 
 def Add():
@@ -166,8 +169,11 @@ if __name__ == '__main__':
                 index = int(''.join(map(str, mainWindow["quizquestionentry"].get_indexes())))
                 quizQuestion = questionList[index]
             except ValueError:
-                Add()
-                continue
+                try:
+                    quizQuestion = questionList[-1]
+                except IndexError:
+                    Add()
+                    continue
 
             questionEditorWindow = make_questionEditorWindow()
             questionEditorWindow['question'].update(quizQuestion.question)
@@ -221,7 +227,7 @@ if __name__ == '__main__':
             try:
                 save_quiz(current_file_path)
             except:
-                event == 'Save As'
+                pass
 
         if event == 'Open' or event == 'o':
             if changes:
@@ -245,11 +251,18 @@ if __name__ == '__main__':
                                 is_silly_question, reason = is_silly(qq.question, qq.correctAnswer, qq.wrongAnswers, qq.timeout, questionList)
                                 if is_silly_question:
                                     sg.Popup(f"Silly question detected: {reason}", keep_on_top=True, auto_close=True, auto_close_duration=1.5)
-                                    break
+                                    pass
                                 questionList.append(qq)
                             mainWindow["quizquestionentry"].update(questionList)
                             titleofquiz = quizDicts["title"]
                             mainWindow["quiz_name"].update(titleofquiz)
+                            try:
+                                difficulty = quizDicts["difficulty"]
+                                randomOrder = quizDicts["randomOrder"]
+                                mainWindow["randomOrder"].update(randomOrder)
+                                mainWindow["difficulty"].update(difficulty)
+                            except:
+                                pass                    
                             current_file_path = filename
                         except Exception as e:
                             sg.Popup(f"Error with this file! {e}", keep_on_top=True, auto_close=True, auto_close_duration=1.5)

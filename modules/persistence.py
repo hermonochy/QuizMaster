@@ -21,7 +21,9 @@ def load_quiz(filename):
             qq = QuizQuestion(**q)
             questionList.append(qq)
         titleofquiz = quizDicts["title"]
-    return questionList, titleofquiz
+        difficulty = quizDicts.get("difficulty", 3)
+        randomOrder = quizDicts.get("randomOrder", False)
+    return questionList, titleofquiz, difficulty, randomOrder
 
 def save_preferences(volume,music,background_colour,button_colour):
    with open(".Preferences.json", 'w') as file:

@@ -46,7 +46,7 @@ class Button:
         self.rect = pygame.Rect(position[0], position[1], width, height)
         self.text_colour = text_colour
 
-    def draw(self, screen, colour, border_radius=15, shadow_offset=5):
+    def draw(self, screen, colour, border_radius=15, shadow_offset=4):
         shadow_colour = darken(colour)
         shadow_rect = pygame.Rect(self.rect.x + shadow_offset, self.rect.y + shadow_offset, self.width, self.height)
         pygame.draw.rect(screen, shadow_colour, shadow_rect, border_radius=border_radius)

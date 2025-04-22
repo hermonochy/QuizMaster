@@ -46,15 +46,15 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     Gslider = Slider(screen, SCREEN_WIDTH // 4, 330, 800, 40, min=0, max=245, step=0.5, handleColour = (20,255,50), handleRadius=20, initial = BACKGROUND_COLOUR[1])
     Bslider = Slider(screen, SCREEN_WIDTH // 4, 380, 800, 40, min=0, max=245, step=0.5, handleColour = (0,0,255), handleRadius=20, initial = BACKGROUND_COLOUR[2])
     button_music = button(screen, SCREEN_WIDTH // 2.5, 520, 300, 50, text="Change Music", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
-    button_go_back = button(screen, SCREEN_WIDTH // 2.5, 620, 300, 50, text="Main Menu", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
-    button_cancel = button(screen, SCREEN_WIDTH // 2.5, 680, 300, 50, text="Cancel", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
+    button_save = button(screen, SCREEN_WIDTH // 2.5, 620, 300, 50, text="Save", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
+    button_go_back = button(screen, SCREEN_WIDTH // 2.5, 680, 300, 50, text="Main Menu", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
     volumeSlider.draw()
     Rslider.draw()
     Gslider.draw()
     Bslider.draw()
     button_music.draw()
     button_go_back.draw()
-    button_cancel.draw()
+    button_save.draw()
     screen.fill(BACKGROUND_COLOUR)
     display_message("Preferences", 50, 75, BLACK)
     display_message("_"*85, 50, 40, BLACK)
@@ -69,12 +69,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     display_message("_"*85, 550, 40, BLACK)
 
     while running:
-        R = Rslider.getValue()
-        G = Gslider.getValue()
-        B = Bslider.getValue()
-        BACKGROUND_COLOUR = (R, G, B)
-        BUTTON_COLOUR = (R + 10, G + 10, B + 10)
-        BLACK = screen_mode(BACKGROUND_COLOUR)
 
         pygame_widgets.update(pygame.event.get())
         pygame.display.update()
@@ -86,6 +80,21 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
+                if isItChristmasTimeNow():
+                    celebration = True
+                    music = ["music/music_christmas1.ogg", "music/music_christmas2.ogg"][i % 2]
+                if isItHalloweenTimeNow():
+                    celebration = True
+                    music = ["music/music_halloween1.ogg", "music/music_halloween2.ogg"][i % 2]
+                if isItStPatricksTimeNow():
+                    celebration = True
+                    music = "music/music_stpatricks1.ogg"
+                if isItValentinesTimeNow():
+                    celebration = True
+                    music = "music/music_valentines1.ogg"
+                if isItEasterTimeNow():
+                    celebration = True
+                    music = "music/music_easter1.ogg"
                 if button_music.contains(*pos):
                     if i < 7:
                         i += 1
@@ -94,23 +103,18 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     pygame.mixer.music.fadeout(1000)
                     pygame.mixer.music.unload()
                     music = f'music/music{i}.ogg'
-                    if isItChristmasTimeNow():
-                        celebration = True
-                        music = ["music/music_christmas1.ogg", "music/music_christmas2.ogg"][i % 2]
-                    if isItHalloweenTimeNow():
-                        celebration = True
-                        music = ["music/music_halloween1.ogg", "music/music_halloween2.ogg"][i % 2]
-                    if isItStPatricksTimeNow():
-                        celebration = True
-                        music = "music/music_stpatricks1.ogg"
-                    if isItValentinesTimeNow():
-                        celebration = True
-                        music = "music/music_valentines1.ogg"
-                    if isItEasterTimeNow():
-                        celebration = True
-                        music = "music/music_easter1.ogg"
                     pygame.mixer.music.load(music)
                     pygame.mixer.music.play(-1)
+                if button_save.contains(*pos):
+                    R = Rslider.getValue()
+                    G = Gslider.getValue()
+                    B = Bslider.getValue()
+                    BACKGROUND_COLOUR = (R, G, B)
+                    BUTTON_COLOUR = (R + 10, G + 10, B + 10)
+                    BLACK = screen_mode(BACKGROUND_COLOUR)
+                    if not celebration:
+                        save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
                 if button_go_back.contains(*pos):
                     volumeSlider.hide()
                     Rslider.hide()
@@ -118,23 +122,11 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     Bslider.hide()
                     button_music.hide()
                     button_go_back.hide()
-                    button_cancel.hide()
-                    if not celebration:
-                        save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
-                if button_cancel.contains(*pos):
-                    volumeSlider.hide()
-                    Rslider.hide()
-                    Gslider.hide()
-                    Bslider.hide()
-                    button_music.hide()
-                    button_go_back.hide()
-                    button_cancel.hide()
+                    button_save.hide()
                     pygame.mixer.music.unload()
                     pygame.mixer.music.load(music_old)
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
-                    BLACK = screen_mode(BACKGROUND_COLOUR)
                     main(music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, BLACK, v_old)
                     return
 
@@ -170,6 +162,62 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         pygame_widgets.update(events)
         pygame.display.update()
 
+def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, title, difficulty):
+    """
+    Function to display the quiz details, including title, difficulty level,
+    number of questions, a slider to reduce the number of questions, and the questions themselves.
+    """
+    running = True
+    num_questions = len(questionList)
+
+    question_slider = Slider(screen, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4, 450, 25, min=1, max=num_questions, step=1, initial=num_questions)
+
+    scrollbar = None
+    if num_questions > 10:
+        scrollbar = Scrollbar((SCREEN_WIDTH - 40, 350), 400, num_questions, 10)
+    
+    button_confirm = Button("Confirm", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50, BLACK)
+
+    offset = 0
+
+    while running:
+        events = pygame.event.get()
+        for event in events:
+            if event.type == QUIT:
+                quit()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if button_confirm.is_clicked(pos):
+                    selected_num_questions = question_slider.getValue()
+                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList[:selected_num_questions], title)
+                    return
+            if scrollbar and (event.type == MOUSEBUTTONDOWN or event.type == MOUSEBUTTONUP or event.type == MOUSEMOTION):
+                scrollbar.handle_event(event)
+
+        if scrollbar:
+            offset = scrollbar.get_offset()
+
+        screen.fill(BACKGROUND_COLOUR)
+        
+        display_message(title, 50, 75, BLACK)
+        display_message(f"Difficulty: {difficulty}", 120, 50, BLACK)
+        display_message(f"Number of Questions: {question_slider.getValue()}", 175, 50, BLACK)
+        display_message("Questions:", 275, 50, BLACK)
+
+        visible_questions = questionList[offset:offset + 10] if scrollbar else questionList
+        for idx, question in enumerate(visible_questions):
+            display_message(f"• {question}", 350 + idx * 40, 30, BLACK)
+        
+        question_slider.draw()        
+        
+        if scrollbar:
+            scrollbar.draw(screen)
+        
+        button_confirm.draw(screen, BUTTON_COLOUR)
+
+        pygame_widgets.update(events)
+        pygame.display.update()
+                
 
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     textinput = TextInputVisualizer()
@@ -181,7 +229,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     
     button_random_quiz = Button("Random Quiz", (SCREEN_WIDTH // 2 - 150, 400), 300, 40, BLACK)
     button_general_knowledge = Button("General Knowledge Quiz", (SCREEN_WIDTH // 2 - 150, 475), 300, 40, BLACK)
-    button_math = Button("Math Quiz", (SCREEN_WIDTH // 2 - 150, 550), 300, 40, BLACK)
+    #button_math = Button("Math Quiz", (SCREEN_WIDTH // 2 - 150, 550), 300, 40, BLACK)
 
     while True:
         screen.fill(BACKGROUND_COLOUR)
@@ -212,13 +260,13 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                     if quizfiles:
                         filename = random.choice(quizfiles)
                         try:
-                            questionList, titleofquiz = load_quiz(filename)
+                            questionList, titleofquiz, difficulty, randomOrder = load_quiz(filename)
                             print(f"{titleofquiz} \nQuestions: {questionList}")
                         except Exception as ex:
                             print(f"Error in {filename}: {ex}")
                             break
                         if args.gameMode == None:
-                            choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                            quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz, difficulty)
                         else:
                             StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
                         return
@@ -230,7 +278,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                         for _ in range(number_of_questions):
                             filename = random.choice(quizfiles)
                             try:
-                                questions, _ = load_quiz(filename)
+                                questions, _, _, _ = load_quiz(filename)
                                 question = random.choice(questions)
                                 questionList.append(question)
                             except Exception as ex:
@@ -300,13 +348,15 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
             filename = quizfileSearchResults[user_answer]
 
             try:
-                questionList, titleofquiz  = load_quiz(filename)
+                questionList, titleofquiz, difficulty, randomOrder = load_quiz(filename)
+                if randomOrder:
+                    random.shuffle(questionList)
             except Exception as ex:
                 print(f"Error in {filename}: {ex}")
                 break
             print("Questions:", questionList)
             if args.gameMode == None:
-                choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz, difficulty)
                 return
             else:
                 StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
