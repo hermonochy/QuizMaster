@@ -26,6 +26,8 @@ from modules.searchQuiz import search_str_in_file
 from modules.otherWindows import about
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
 
+from modules.AdvancedGameModes.MidasMayhem import midasMayhem
+
 
 class GameMode(str, Enum):
     classic = 'classic'
@@ -33,6 +35,7 @@ class GameMode(str, Enum):
     speedRun = 'speedRun'
     survival = 'survival'
     practice = 'practice'
+    midasMayhem = 'midasMayhem'
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
@@ -365,17 +368,22 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
     running = True
     while running:
         screen.fill(BACKGROUND_COLOUR)
-        display_message("Select Game Mode:", SCREEN_HEIGHT // 2 - 300, 75, BLACK)
+        display_message("Select Game Mode:", 50, 75, BLACK)
+        display_message("Basic Games", 150, 50, BLACK)
         button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
         button_classicV2 = Button("Classic v2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
         button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
         button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
         button_practice = Button("Practice", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 100), 250, 60, BLACK)
+        display_message("Advanced Games", SCREEN_HEIGHT // 2 + 50, 50, BLACK)
+        button_midas = Button("Midas Mayhem", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), 250, 60, BLACK)
         button_classic.draw(screen, BUTTON_COLOUR)
         button_classicV2.draw(screen, BUTTON_COLOUR)
         button_speed.draw(screen, BUTTON_COLOUR)
         button_survival.draw(screen, BUTTON_COLOUR)
         button_practice.draw(screen, BUTTON_COLOUR)
+        button_midas.draw(screen, BUTTON_COLOUR)
+
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -399,6 +407,9 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
                     return
                 elif button_practice.is_clicked(pos):
                     practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    return
+                elif button_midas.is_clicked(pos):
+                    midasMayhem(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 
 
