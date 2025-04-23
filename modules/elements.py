@@ -138,7 +138,34 @@ class Slider:
     def get(self):
         return self.value
 
+class Checkbox:
+    def __init__(self, text, position, width=20, height=20, checked=False):
+        self.text = text
+        self.position = position
+        self.checked = checked
+        self.width = width
+        self.height = height
+        self.font = pygame.font.Font(None, 36)
+        self.rect = pygame.Rect(position[0], position[1], width, height)
 
+    def draw(self, screen, box_color, check_color, text_color=(0, 0, 0)):
+        pygame.draw.rect(screen, box_color, self.rect)
+        
+        if self.checked:
+            pygame.draw.line(screen, check_color, (self.rect.left, self.rect.centery), (self.rect.centerx, self.rect.bottom), 2)
+            pygame.draw.line(screen, check_color, (self.rect.centerx, self.rect.bottom), (self.rect.right, self.rect.top), 2)
+        
+        text_surf = self.font.render(self.text, True, text_color)
+        text_rect = text_surf.get_rect(midleft=(self.rect.right + 10, self.rect.centery))
+        screen.blit(text_surf, text_rect)
+
+    def is_clicked(self, pos):
+        return self.rect.collidepoint(pos)
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.is_clicked(event.pos):
+                self.checked = not self.checked
 
 class Scrollbar:
     def __init__(self, position, height, total_items, items_per_page):
