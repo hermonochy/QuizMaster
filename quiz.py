@@ -182,7 +182,11 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, title, di
     running = True
     num_questions = len(questionList)
 
-    question_slider = Slider((SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4), 450, min=1, max=num_questions, step=1, initial=num_questions)
+    try:
+        question_slider = Slider((SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4), 450, min=1, max=num_questions, step=1, initial=num_questions)
+        makeSlider = True
+    except ZeroDivisionError:
+        makeSlider = False
 
     scrollbar = None
     if num_questions > 10:
@@ -195,14 +199,14 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, title, di
     while running:
         events = pygame.event.get()
         for event in events:
-            question_slider.handle_event(event)
+            if makeSlider:
+                question_slider.handle_event(event)
             if event.type == QUIT:
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_confirm.is_clicked(pos):
-                    selected_num_questions = question_slider.get()
-                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList[:selected_num_questions], title)
+                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList[:num_questions], title)
                     return
             if scrollbar and (event.type == MOUSEBUTTONDOWN or event.type == MOUSEBUTTONUP or event.type == MOUSEMOTION):
                 scrollbar.handle_event(event)
@@ -211,10 +215,12 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, title, di
             offset = scrollbar.get_offset()
 
         screen.fill(BACKGROUND_COLOUR)
-        question_slider.draw(screen)
+        if makeSlider:
+            question_slider.draw(screen)
+            num_questions = question_slider.get()
         display_message(title, 50, 75, BLACK)
         display_message(f"Difficulty: {difficulty}", 120, 50, BLACK)
-        display_message(f"Number of Questions: {question_slider.get()}", 175, 50, BLACK)
+        display_message(f"Number of Questions: {num_questions}", 175, 50, BLACK)
         display_message("Questions:", 275, 50, BLACK)
 
         visible_questions = questionList[offset:offset + 10] if scrollbar else questionList
