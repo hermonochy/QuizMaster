@@ -26,7 +26,8 @@ def screen_mode(BACKGROUND_COLOUR):
     R = BACKGROUND_COLOUR[0]
     G = BACKGROUND_COLOUR[1]
     B = BACKGROUND_COLOUR[2]
-    if R + G + B < 200 and max(R,G,B) < 125 or isItChristmasTimeNow():
+    _,_,v = colorsys.rgb_to_hsv(R,G,B)
+    if v < 120 or isItChristmasTimeNow():
         return (255, 255, 255)
     else:
         return (0, 0, 0)
@@ -88,6 +89,56 @@ class Button:
 
     def is_clicked(self, pos):
         return self.rect.collidepoint(pos)
+
+class Slider:
+    def __init__(self, position, width, min=0, max=100, step=1, initial=0, bar_height=10, bar_colour=(175, 175, 175), handleColour=(100, 100, 100), handleRadius=15):
+        self.position = position
+        self.width = width
+        self.bar_height = bar_height
+        self.bar_color = bar_colour
+        self.handle_color = handleColour
+        self.min_val = min
+        self.max_val = max
+        self.step = step
+        self.value = initial
+        self.handle_radius = handleRadius
+
+        self.bar_rect = pygame.Rect(position[0], position[1] - bar_height // 2, width, bar_height)
+        self.handle_x = self.value_to_position(initial)
+        self.handle_y = position[1]
+        self.dragging = False
+
+    def value_to_position(self, value):
+        proportion = (value - self.min_val) / (self.max_val - self.min_val)
+        return int(self.position[0] + proportion * self.width)
+
+    def position_to_value(self, pos_x):
+        proportion = (pos_x - self.position[0]) / self.width
+        proportion = max(0, min(proportion, 1))
+        raw_value = self.min_val + proportion * (self.max_val - self.min_val)
+        return round(raw_value / self.step) * self.step
+
+    def draw(self, screen):
+        self.screen = screen
+        pygame.draw.rect(self.screen, self.bar_color, self.bar_rect)
+
+        pygame.draw.circle(self.screen, self.handle_color, (self.handle_x, self.handle_y), self.handle_radius)
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if (self.handle_x - event.pos[0]) ** 2 + (self.handle_y - event.pos[1]) ** 2 <= self.handle_radius ** 2:
+                self.dragging = True
+        elif event.type == pygame.MOUSEBUTTONUP:
+            self.dragging = False
+        elif event.type == pygame.MOUSEMOTION:
+            if self.dragging:
+                self.handle_x = max(self.position[0], min(event.pos[0], self.position[0] + self.width))
+                self.value = self.position_to_value(self.handle_x)
+
+    def get(self):
+        return self.value
+
+
 
 class Scrollbar:
     def __init__(self, position, height, total_items, items_per_page):

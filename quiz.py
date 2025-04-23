@@ -14,7 +14,6 @@ from glob import glob
 from enum import Enum
 
 from pygame.locals import *
-from pygame_widgets.slider import Slider
 from pygame_widgets.button import Button as button
 from pygame_widgets.textbox import TextBox
 
@@ -43,42 +42,55 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
     celebration = False
     numList = re.findall(r'\d+', music)
     i = int(numList[0]) if numList else 1 
-    screen.fill(BACKGROUND_COLOUR)
-    volumeSlider = Slider(screen, SCREEN_WIDTH // 4, 150, 800, 40, min=0, max=1, step=0.01, initial=v, handleRadius=20)
-    Rslider = Slider(screen, SCREEN_WIDTH // 4, 280, 800, 40, min=0, max=240, step=0.5, handleColour = (255,0,0), handleRadius=20, initial = BACKGROUND_COLOUR[0])
-    Gslider = Slider(screen, SCREEN_WIDTH // 4, 330, 800, 40, min=0, max=245, step=0.5, handleColour = (20,255,50), handleRadius=20, initial = BACKGROUND_COLOUR[1])
-    Bslider = Slider(screen, SCREEN_WIDTH // 4, 380, 800, 40, min=0, max=245, step=0.5, handleColour = (0,0,255), handleRadius=20, initial = BACKGROUND_COLOUR[2])
-    button_music = button(screen, SCREEN_WIDTH // 2.5, 520, 300, 50, text="Change Music", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
-    button_save = button(screen, SCREEN_WIDTH // 2.5, 620, 300, 50, text="Save", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
-    button_go_back = button(screen, SCREEN_WIDTH // 2.5, 680, 300, 50, text="Main Menu", textColour = BLACK, inactiveColour = BUTTON_COLOUR, shadowDistance = 2, radius = 25)
-    volumeSlider.draw()
-    Rslider.draw()
-    Gslider.draw()
-    Bslider.draw()
-    button_music.draw()
-    button_go_back.draw()
-    button_save.draw()
-    screen.fill(BACKGROUND_COLOUR)
-    display_message("Preferences", 50, 75, BLACK)
-    display_message("_"*85, 50, 40, BLACK)
-    display_message("Volume", 120, 40, BLACK)
-    display_message("_"*90, 130, 25, BLACK)
-    
-    display_message("Colours", 230, 40, BLACK)
-    display_message("_"*90, 240, 25, BLACK)
 
-    display_message("Music", 485, 40, BLACK)
-    display_message("_"*90, 495, 25, BLACK)
-    display_message("_"*85, 550, 40, BLACK)
+    volumeSlider = Slider((SCREEN_WIDTH // 4, 175), 800, min=0, max=1, step=0.01, handleColour=(0,0,0), handleRadius=18, initial=v)
+    Rslider = Slider((SCREEN_WIDTH // 4, 300), 800, min=0, max=240, step=0.5, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0])
+    Gslider = Slider((SCREEN_WIDTH // 4, 350), 800, min=0, max=245, step=0.5, handleColour = (20,255,50), initial = BACKGROUND_COLOUR[1])
+    Bslider = Slider((SCREEN_WIDTH // 4, 400), 800, min=0, max=245, step=0.5, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2])
 
     while running:
+        screen.fill(BACKGROUND_COLOUR)
+        display_message("Preferences", 50, 75, BLACK)
+        display_message("_"*85, 50, 40, BLACK)
+        display_message("Volume", 120, 40, BLACK)
+        display_message("_"*90, 130, 25, BLACK)
 
-        pygame_widgets.update(pygame.event.get())
-        pygame.display.update()
-        v = volumeSlider.getValue()
+        display_message("Colours", 230, 40, BLACK)
+        display_message("_"*90, 240, 25, BLACK)
+
+        display_message("Music", 485, 40, BLACK)
+        display_message("_"*90, 495, 25, BLACK)
+        display_message("_"*85, 550, 40, BLACK)
+        # Redefined every time to update background colour
+        button_music = Button("Change Music", (SCREEN_WIDTH // 2.5, 520), 300, 50, BLACK)
+        button_save = Button("Save", (SCREEN_WIDTH // 2.5, 620), 300, 50, BLACK)
+        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2.5, 680), 300, 50, BLACK)
+
+        button_music.draw(screen, BUTTON_COLOUR)
+        button_go_back.draw(screen, BUTTON_COLOUR)
+        button_save.draw(screen, BUTTON_COLOUR)
+
+
+        volumeSlider.draw(screen)
+        Rslider.draw(screen)
+        Gslider.draw(screen)
+        Bslider.draw(screen)
+        pygame.display.flip()
+        v = volumeSlider.get()
+        R = Rslider.get()
+        G = Gslider.get()
+        B = Bslider.get()
+        BACKGROUND_COLOUR = (R, G, B)
+        BUTTON_COLOUR = (R + 10, G + 10, B + 10)
+        BLACK = screen_mode(BACKGROUND_COLOUR)
         pygame.mixer.music.set_volume(v)
+        #pygame.display.update()
         
         for event in pygame.event.get():
+            volumeSlider.handle_event(event)
+            Rslider.handle_event(event)
+            Gslider.handle_event(event)
+            Bslider.handle_event(event)
             if event.type == QUIT:
                 quit()
             if event.type == MOUSEBUTTONDOWN:
@@ -98,7 +110,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                 if isItEasterTimeNow():
                     celebration = True
                     music = "music/music_easter1.ogg"
-                if button_music.contains(*pos):
+                if button_music.is_clicked(pos):
                     if i < 7:
                         i += 1
                     else:
@@ -108,28 +120,22 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     music = f'music/music{i}.ogg'
                     pygame.mixer.music.load(music)
                     pygame.mixer.music.play(-1)
-                if button_save.contains(*pos):
-                    R = Rslider.getValue()
-                    G = Gslider.getValue()
-                    B = Bslider.getValue()
+                if button_save.is_clicked(pos):
+                    R = Rslider.get()
+                    G = Gslider.get()
+                    B = Bslider.get()
                     BACKGROUND_COLOUR = (R, G, B)
                     BUTTON_COLOUR = (R + 10, G + 10, B + 10)
-                    BLACK = screen_mode(BACKGROUND_COLOUR)
                     if not celebration:
                         save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
-                if button_go_back.contains(*pos):
-                    volumeSlider.hide()
-                    Rslider.hide()
-                    Gslider.hide()
-                    Bslider.hide()
-                    button_music.hide()
-                    button_go_back.hide()
-                    button_save.hide()
+                    print("Saved...")
+                if button_go_back.is_clicked(pos):
                     pygame.mixer.music.unload()
                     pygame.mixer.music.load(music_old)
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
+                    BLACK = screen_mode(BACKGROUND_COLOUR_old)
                     main(music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, BLACK, v_old)
                     return
 
@@ -140,27 +146,30 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
 
     running = True
     button_submit = Button("Submit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 1.2), 300, 40, BLACK)
-    question_amount_slider = Slider(screen, SCREEN_WIDTH // 4, SCREEN_HEIGHT // 3, 800, 40, min=1, max=250, step=1, initial = 50)
+    question_amount_slider = Slider((SCREEN_WIDTH // 4, SCREEN_HEIGHT // 3), 800, min=1, max=250, step=1, initial=30)
+
     numOutput = TextBox(screen, SCREEN_WIDTH // 2.1, SCREEN_HEIGHT // 4.5, 70, 50, fontSize=30)
+    numOutput.disable()
 
     while running:
         events = pygame.event.get()
         for event in events:
+            question_amount_slider.handle_event(event)
             if event.type == QUIT:
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_submit.is_clicked(pos):
-                    numOfQuestions = question_amount_slider.getValue()
-                    question_amount_slider.hide()
+                    numOfQuestions = question_amount_slider.get()
                     numOutput.hide()
                     return numOfQuestions
 
         screen.fill(BACKGROUND_COLOUR)
+        question_amount_slider.draw(screen)
         display_message("Settings", 50, 50, BLACK)
         display_message("Number of Questions:", 125, 40, BLACK)
         button_submit.draw(screen, BUTTON_COLOUR)
-        numOutput.setText(question_amount_slider.getValue())
+        numOutput.setText(question_amount_slider.get())
 
         pygame_widgets.update(events)
         pygame.display.update()
@@ -173,7 +182,7 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, title, di
     running = True
     num_questions = len(questionList)
 
-    question_slider = Slider(screen, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4, 450, 25, min=1, max=num_questions, step=1, initial=num_questions)
+    question_slider = Slider((SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4), 450, min=1, max=num_questions, step=1, initial=num_questions)
 
     scrollbar = None
     if num_questions > 10:
@@ -186,12 +195,13 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, title, di
     while running:
         events = pygame.event.get()
         for event in events:
+            question_slider.handle_event(event)
             if event.type == QUIT:
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_confirm.is_clicked(pos):
-                    selected_num_questions = question_slider.getValue()
+                    selected_num_questions = question_slider.get()
                     choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList[:selected_num_questions], title)
                     return
             if scrollbar and (event.type == MOUSEBUTTONDOWN or event.type == MOUSEBUTTONUP or event.type == MOUSEMOTION):
@@ -201,18 +211,16 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, title, di
             offset = scrollbar.get_offset()
 
         screen.fill(BACKGROUND_COLOUR)
-        
+        question_slider.draw(screen)
         display_message(title, 50, 75, BLACK)
         display_message(f"Difficulty: {difficulty}", 120, 50, BLACK)
-        display_message(f"Number of Questions: {question_slider.getValue()}", 175, 50, BLACK)
+        display_message(f"Number of Questions: {question_slider.get()}", 175, 50, BLACK)
         display_message("Questions:", 275, 50, BLACK)
 
         visible_questions = questionList[offset:offset + 10] if scrollbar else questionList
         for idx, question in enumerate(visible_questions):
             display_message(f"• {question}", 350 + idx * 40, 30, BLACK)
-        
-        question_slider.draw()        
-        
+                
         if scrollbar:
             scrollbar.draw(screen)
         
