@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import pygame
-import pygame_widgets
 import argparse
 import sys
 import colorsys
@@ -14,8 +13,6 @@ from glob import glob
 from enum import Enum
 
 from pygame.locals import *
-from pygame_widgets.button import Button as button
-from pygame_widgets.textbox import TextBox
 
 from modules.persistence import *
 from modules.checker import *
@@ -159,9 +156,6 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     button_submit = Button("Submit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 1.2), 300, 40, BLACK)
     question_amount_slider = Slider((SCREEN_WIDTH // 4, SCREEN_HEIGHT // 3), 800, min=1, max=250, step=1, initial=30)
 
-    numOutput = TextBox(screen, SCREEN_WIDTH // 2.1, SCREEN_HEIGHT // 4.5, 70, 50, fontSize=30)
-    numOutput.disable()
-
     while running:
         events = pygame.event.get()
         for event in events:
@@ -172,17 +166,15 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 pos = pygame.mouse.get_pos()
                 if button_submit.is_clicked(pos):
                     numOfQuestions = question_amount_slider.get()
-                    numOutput.hide()
                     return numOfQuestions
 
         screen.fill(BACKGROUND_COLOUR)
         question_amount_slider.draw(screen)
+        display_message(str(question_amount_slider.get()), SCREEN_HEIGHT // 4, 50, BLACK)
         display_message("Settings", 50, 50, BLACK)
         display_message("Number of Questions:", 125, 40, BLACK)
         button_submit.draw(screen, BUTTON_COLOUR)
-        numOutput.setText(question_amount_slider.get())
 
-        pygame_widgets.update(events)
         pygame.display.update()
 
 def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, title, difficulty):
@@ -243,7 +235,6 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
         
         button_confirm.draw(screen, BUTTON_COLOUR)
 
-        pygame_widgets.update(events)
         pygame.display.update()
                 
 
