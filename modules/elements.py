@@ -148,12 +148,12 @@ class Checkbox:
         self.font = pygame.font.Font(None, 36)
         self.rect = pygame.Rect(position[0], position[1], width, height)
 
-    def draw(self, screen, box_color, check_color, text_color=(0, 0, 0)):
+    def draw(self, screen, box_color = (253,245,230), check_color = (0,0,0), text_color=(0, 0, 0)):
         pygame.draw.rect(screen, box_color, self.rect)
         
         if self.checked:
-            pygame.draw.line(screen, check_color, (self.rect.left, self.rect.centery), (self.rect.centerx, self.rect.bottom), 2)
-            pygame.draw.line(screen, check_color, (self.rect.centerx, self.rect.bottom), (self.rect.right, self.rect.top), 2)
+            pygame.draw.line(screen, check_color, (self.rect.left, self.rect.centery), (self.rect.centerx, self.rect.bottom), 3)
+            pygame.draw.line(screen, check_color, (self.rect.centerx, self.rect.bottom), (self.rect.right, self.rect.top), 3)
         
         text_surf = self.font.render(self.text, True, text_color)
         text_rect = text_surf.get_rect(midleft=(self.rect.right + 10, self.rect.centery))
@@ -166,6 +166,9 @@ class Checkbox:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.is_clicked(event.pos):
                 self.checked = not self.checked
+    
+    def get(self):
+        return self.checked
 
 class Scrollbar:
     def __init__(self, position, height, total_items, items_per_page):

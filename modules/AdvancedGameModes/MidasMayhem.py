@@ -8,7 +8,7 @@ from pygame.locals import *
 from modules.elements import *
 from modules.otherWindows import *
 
-def midasMayhem(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         return
 
@@ -18,8 +18,8 @@ def midasMayhem(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     player_gold = 0
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
-
-    countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
+    if doCountdown:
+        countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
 
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
@@ -158,8 +158,9 @@ def midasMayhem(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                     if button_show_incorrect.is_clicked(pos):
                         show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
                 if button_go_back.is_clicked(pos):
-                    return False
+                    return
                 if button_replay.is_clicked(pos):
-                    return True
+                    midasMayhem(originalQuestions[:], titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    return
                 if button_quit.is_clicked(pos):
                     quit()

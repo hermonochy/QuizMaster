@@ -36,17 +36,19 @@ class GameMode(str, Enum):
     practice = 'practice'
     midasMayhem = 'midasMayhem'
 
-def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
+def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
     running = True
     celebration = False
     numList = re.findall(r'\d+', music)
     i = int(numList[0]) if numList else 1 
 
+    checkbox_countdown = Checkbox("Enable Countdown", (SCREEN_WIDTH // 4, 600), checked=doCountdown)
+
     volumeSlider = Slider((SCREEN_WIDTH // 4, 175), 800, min=0, max=1, step=0.01, handleColour=(0,0,0), handleRadius=18, initial=v)
-    Rslider = Slider((SCREEN_WIDTH // 4, 300), 800, min=0, max=240, step=0.5, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0])
-    Gslider = Slider((SCREEN_WIDTH // 4, 350), 800, min=0, max=245, step=0.5, handleColour = (20,255,50), initial = BACKGROUND_COLOUR[1])
-    Bslider = Slider((SCREEN_WIDTH // 4, 400), 800, min=0, max=245, step=0.5, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2])
+    Rslider = Slider((SCREEN_WIDTH // 4, 280), 800, min=0, max=240, step=0.5, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0])
+    Gslider = Slider((SCREEN_WIDTH // 4, 320), 800, min=0, max=245, step=0.5, handleColour = (20,255,50), initial = BACKGROUND_COLOUR[1])
+    Bslider = Slider((SCREEN_WIDTH // 4, 360), 800, min=0, max=245, step=0.5, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2])
 
     while running:
         screen.fill(BACKGROUND_COLOUR)
@@ -55,17 +57,23 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
         display_message("Volume", 120, 40, BLACK)
         display_message("_"*90, 130, 25, BLACK)
 
-        display_message("Colours", 230, 40, BLACK)
-        display_message("_"*90, 240, 25, BLACK)
+        display_message("Colours", 220, 40, BLACK)
+        display_message("_"*90, 230, 25, BLACK)
 
-        display_message("Music", 485, 40, BLACK)
-        display_message("_"*90, 495, 25, BLACK)
-        display_message("_"*85, 550, 40, BLACK)
+        display_message("Music", 420, 40, BLACK)
+        display_message("_"*90, 430, 25, BLACK)
+
+        display_message("General", 560, 40, BLACK)
+        display_message("_"*90, 570, 25, BLACK)
+
+        display_message("_"*85, 660, 40, BLACK)
+
         # Redefined every time to update background colour
-        button_music = Button("Change Music", (SCREEN_WIDTH // 2.5, 520), 300, 50, BLACK)
-        button_save = Button("Save", (SCREEN_WIDTH // 2.5, 620), 300, 50, BLACK)
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2.5, 680), 300, 50, BLACK)
+        button_music = Button("Change Music", (SCREEN_WIDTH // 2.5, 460), 300, 50, BLACK)
+        button_save = Button("Save", (SCREEN_WIDTH // 2.5, 720), 300, 50, BLACK)
+        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2.5, 780), 300, 50, BLACK)
 
+        checkbox_countdown.draw(screen)
         button_music.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_save.draw(screen, BUTTON_COLOUR)
@@ -91,6 +99,9 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
             Rslider.handle_event(event)
             Gslider.handle_event(event)
             Bslider.handle_event(event)
+            checkbox_countdown.handle_event(event)
+            doCountdown = checkbox_countdown.get()
+
             if event.type == QUIT:
                 quit()
             if event.type == MOUSEBUTTONDOWN:
@@ -127,7 +138,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     BACKGROUND_COLOUR = (R, G, B)
                     BUTTON_COLOUR = (R + 10, G + 10, B + 10)
                     if not celebration:
-                        save_preferences(v, music, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        save_preferences(v, music, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
                     print("Saved...")
                 if button_go_back.is_clicked(pos):
@@ -136,7 +147,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
                     BLACK = screen_mode(BACKGROUND_COLOUR_old)
-                    main(music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, BLACK, v_old)
+                    main(music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, BLACK, doCountdown, v_old)
                     return
 
 def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
@@ -174,7 +185,7 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         pygame_widgets.update(events)
         pygame.display.update()
 
-def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, title, difficulty):
+def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, title, difficulty):
     """
     Function to display the quiz details, including title, difficulty level,
     number of questions, a slider to reduce the number of questions, and the questions themselves.
@@ -236,7 +247,7 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, title, di
         pygame.display.update()
                 
 
-def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
+def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown):
     textinput = TextInputVisualizer()
     pygame.key.set_repeat(200, 25)
 
@@ -283,9 +294,9 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                             print(f"Error in {filename}: {ex}")
                             break
                         if args.gameMode == None:
-                            quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz, difficulty)
+                            quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, titleofquiz, difficulty)
                         else:
-                            StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                            StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, titleofquiz)
                         return
                 elif button_general_knowledge.is_clicked(pos):
                     number_of_questions = choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
@@ -373,7 +384,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 break
             print("Questions:", questionList)
             if args.gameMode == None:
-                quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz, difficulty)
+                quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, titleofquiz, difficulty)
                 return
             else:
                 StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
@@ -408,26 +419,26 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
                 event_time = pygame.time.get_ticks()
                 # Start game mode functions
                 if button_classic.is_clicked(pos):
-                    classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 elif button_classicV2.is_clicked(pos):
-                    classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 elif button_speed.is_clicked(pos):
-                    speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    speed(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 elif button_survival.is_clicked(pos):
-                    survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 elif button_practice.is_clicked(pos):
-                    practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 elif button_midas.is_clicked(pos):
-                    midasMayhem(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 
 
-def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titleofquiz=None):
+def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList=None, titleofquiz=None):
     if args.quizPath != None:
         print("Loading quiz: ", args.quizPath)
         try:
@@ -471,10 +482,10 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList=None, titl
         choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
     # Start home page
     elif args.gameMode == None and args.quizPath == None:
-        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, volume)
+        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, volume)
 
                    
-def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
+def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     running = True
     welcome_image = pygame.image.load("images/logo.png").convert()
     while running:
@@ -501,14 +512,14 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v):
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_play.is_clicked(pos):
-                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown)
                 elif button_make.is_clicked(pos):
                     try:
                         subprocess.Popen(["python", "quizcreator"])
                     except:
                         subprocess.Popen(["python3", "quizcreator"])
                 elif button_preferences.is_clicked(pos):
-                    preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v)
+                    preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
                 elif button_about.is_clicked(pos):
                     about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
                 elif button_quit.is_clicked(pos):
@@ -535,6 +546,7 @@ if __name__ == '__main__':
             try:
                 prefDict = json.load(file)
                 volume = prefDict["Volume"]
+                doCountdown = prefDict["Countdown"]
                 pygame.mixer.music.set_volume(volume)
                 if isItHalloweenTimeNow():
                     BACKGROUND_COLOUR = (250,100,0)
@@ -559,10 +571,11 @@ if __name__ == '__main__':
                 else:
                     music = prefDict["Music"]
                     BACKGROUND_COLOUR = prefDict["colour"]
-                    BUTTON_COLOUR = prefDict["buttoncolour"] 
+                    BUTTON_COLOUR = prefDict["buttoncolour"]
                     celebration = False
-            except json.JSONDecodeError:
+            except:
                 volume = 1.0
+                doCountdown = True
                 music = 'music/music1.ogg'
                 BACKGROUND_COLOUR = (0,245,0)
                 BUTTON_COLOUR = (0,255,0)
@@ -590,4 +603,4 @@ if __name__ == '__main__':
     try:
         StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
     except:
-        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown)
