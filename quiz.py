@@ -23,7 +23,7 @@ from modules.otherWindows import about
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
 
 from modules.AdvancedGameModes.MidasMayhem import midasMayhem
-from modules.AdvancedGameModes.MazeRun import maze_challenge
+from modules.AdvancedGameModes.MazeRun import mazeRun
 
 
 class GameMode(str, Enum):
@@ -33,6 +33,8 @@ class GameMode(str, Enum):
     survival = 'survival'
     practice = 'practice'
     midasMayhem = 'midasMayhem'
+    mazeRun = 'mazeRun'
+
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
@@ -389,7 +391,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
         display_message("Basic Games", 150, 50, BLACK)
         basic_modes = ButtonArray(["Classic", "Classic V2", "Speed Run", "Survival", "Practice"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), button_width=250, button_spacing=50, text_colour=BLACK)
         display_message("Advanced Games", SCREEN_HEIGHT // 2 + 50, 50, BLACK)
-        advanced_modes = ButtonArray(["Midas Mayhem"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
+        advanced_modes = ButtonArray(["Midas Mayhem", "Maze Run"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
         basic_modes.draw(screen, BUTTON_COLOUR)
         advanced_modes.draw(screen, BUTTON_COLOUR)
 
@@ -423,44 +425,53 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
                     elif btn == "Midas Mayhem":
                         midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
+                    elif btn == "Maze Run":
+                        mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        return
                 
 
 def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList=None, titleofquiz=None):
     if args.quizPath != None:
         print("Loading quiz: ", args.quizPath)
         try:
-            questionList, titleofquiz = load_quiz(args.quizPath)
+            questionList, titleofquiz, difficulty, randomOrder = load_quiz(args.quizPath)
         except Exception as ex:
             print("Error:", ex)
             sys.exit()
     if args.gameMode is not None:
         if args.gameMode == GameMode.classic:
             try:
-                classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.classicV2:
             try:
-                classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.speedRun:
             try:
-                speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                speed(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.survival:
             try:
-                survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-        elif args.gameMode == GameMode.practice:
+        elif args.gameMode == GameMode.midasMayhem:
             try:
-                practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+            except Exception as ex:
+                print("Error: ", ex)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+        elif args.gameMode == GameMode.mazeRun:
+            try:
+                mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
@@ -534,7 +545,6 @@ if __name__ == '__main__':
                 prefDict = json.load(file)
                 volume = prefDict["Volume"]
                 doCountdown = prefDict["Countdown"]
-                print(doCountdown, "that was it")
                 pygame.mixer.music.set_volume(volume)
                 if isItHalloweenTimeNow():
                     BACKGROUND_COLOUR = (250,100,0)
