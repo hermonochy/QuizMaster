@@ -90,6 +90,37 @@ class Button:
     def is_clicked(self, pos):
         return self.rect.collidepoint(pos)
 
+class ButtonArray:
+    def __init__(self, button_texts, start_position, button_spacing=10, button_width=300, button_height=60, text_colour=(0, 0, 0), screen_width=SCREEN_WIDTH):
+
+        self.buttons = []
+        current_x, current_y = start_position
+
+        for text in button_texts:
+            if current_x + button_width > screen_width:
+                current_x = start_position[0]
+                current_y += button_height + (button_spacing//1.5)
+
+            button = Button(
+                text=text,
+                position=(current_x, current_y),
+                width=button_width,
+                height=button_height,
+                text_colour=text_colour
+            )
+            self.buttons.append(button)
+            current_x += button_width + button_spacing
+
+    def draw(self, screen, colour, border_radius=15, shadow_offset=4):
+        for button in self.buttons:
+            button.draw(screen, colour, border_radius, shadow_offset)
+
+    def handle_click(self, pos):
+        for button in self.buttons:
+            if button.is_clicked(pos):
+                return True, button.text
+        return None
+
 class Slider:
     def __init__(self, position, width, min=0, max=100, step=1, initial=0, bar_height=10, bar_colour=(175, 175, 175), handleColour=(100, 100, 100), handleRadius=15):
         self.position = position
@@ -269,4 +300,3 @@ def display_message(message, y_position, font_size, colour):
         y_position += text.get_height()
 
     return y_position
-

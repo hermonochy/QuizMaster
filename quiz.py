@@ -23,6 +23,7 @@ from modules.otherWindows import about
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
 
 from modules.AdvancedGameModes.MidasMayhem import midasMayhem
+from modules.AdvancedGameModes.MazeRun import maze_challenge
 
 
 class GameMode(str, Enum):
@@ -386,19 +387,11 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
         screen.fill(BACKGROUND_COLOUR)
         display_message("Select Game Mode:", 50, 75, BLACK)
         display_message("Basic Games", 150, 50, BLACK)
-        button_classic = Button("Classic", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
-        button_classicV2 = Button("Classic v2.0", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
-        button_speed = Button("Speed Run", (SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
-        button_survival = Button("Survival", (SCREEN_WIDTH // 2 + 300, SCREEN_HEIGHT // 2 - 200), 250, 60, BLACK)
-        button_practice = Button("Practice", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 100), 250, 60, BLACK)
+        basic_modes = ButtonArray(["Classic", "Classic V2", "Speed Run", "Survival", "Practice"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), button_width=250, button_spacing=50, text_colour=BLACK)
         display_message("Advanced Games", SCREEN_HEIGHT // 2 + 50, 50, BLACK)
-        button_midas = Button("Midas Mayhem", (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), 250, 60, BLACK)
-        button_classic.draw(screen, BUTTON_COLOUR)
-        button_classicV2.draw(screen, BUTTON_COLOUR)
-        button_speed.draw(screen, BUTTON_COLOUR)
-        button_survival.draw(screen, BUTTON_COLOUR)
-        button_practice.draw(screen, BUTTON_COLOUR)
-        button_midas.draw(screen, BUTTON_COLOUR)
+        advanced_modes = ButtonArray(["Midas Mayhem"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
+        basic_modes.draw(screen, BUTTON_COLOUR)
+        advanced_modes.draw(screen, BUTTON_COLOUR)
 
         pygame.display.update()
 
@@ -407,26 +400,29 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                event_time = pygame.time.get_ticks()
-                # Start game mode functions
-                if button_classic.is_clicked(pos):
-                    classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return
-                elif button_classicV2.is_clicked(pos):
-                    classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return
-                elif button_speed.is_clicked(pos):
-                    speed(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return
-                elif button_survival.is_clicked(pos):
-                    survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return
-                elif button_practice.is_clicked(pos):
-                    practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return
-                elif button_midas.is_clicked(pos):
-                    midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    return
+                try:
+                    btn_clicked, btn = basic_modes.handle_click(pos)
+                except TypeError:
+                    btn_clicked, btn = advanced_modes.handle_click(pos)
+                if btn_clicked:
+                    if btn == "Classic":
+                        classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        return
+                    elif btn == "Classic V2":
+                        classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        return
+                    elif btn == "Speed Run":
+                        speed(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        return
+                    elif btn == "Survival":
+                        survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        return
+                    elif btn == "Practice":
+                        practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        return
+                    elif btn == "Midas Mayhem":
+                        midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        return
                 
 
 def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList=None, titleofquiz=None):
@@ -531,13 +527,14 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
 
     print(asciiartstart)
-
+    doCountdown = True
     try:
         with open(".Preferences.json", "r") as file:
             try:
                 prefDict = json.load(file)
                 volume = prefDict["Volume"]
                 doCountdown = prefDict["Countdown"]
+                print(doCountdown, "that was it")
                 pygame.mixer.music.set_volume(volume)
                 if isItHalloweenTimeNow():
                     BACKGROUND_COLOUR = (250,100,0)
