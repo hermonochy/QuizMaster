@@ -125,11 +125,13 @@ options:
 
 ###### Current Game Mode Options
 
-- classic
-- classicV2
-- speedRun
-- survival
-- practice
+- `classic`
+- `classicV2`
+- `speedRun`
+- `survival`
+- `practice`
+- `midasMayhem`
+- `mazeRun`
 
 Similarly in QuizCreator, a quiz parameter can be added to the end but for obvious reasons not a game mode parameter.
 

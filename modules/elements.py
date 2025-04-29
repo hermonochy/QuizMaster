@@ -119,7 +119,7 @@ class ButtonArray:
         for button in self.buttons:
             if button.is_clicked(pos):
                 return True, button.text
-        return None
+        return None, None
 
 class Slider:
     def __init__(self, position, width, min=0, max=100, step=1, initial=0, bar_height=10, bar_colour=(175, 175, 175), handleColour=(100, 100, 100), handleRadius=15):

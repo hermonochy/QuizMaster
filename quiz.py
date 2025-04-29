@@ -37,7 +37,7 @@ class GameMode(str, Enum):
 
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
-    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
+    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, doCountdown_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, v
     running = True
     celebration = False
     numList = re.findall(r'\d+', music)
@@ -46,7 +46,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     checkbox_countdown = Checkbox("Enable Countdown", (SCREEN_WIDTH // 4, 600), checked=doCountdown)
 
     volumeSlider = Slider((SCREEN_WIDTH // 4, 175), 800, min=0, max=1, step=0.01, handleColour=(0,0,0), handleRadius=18, initial=v)
-    Rslider = Slider((SCREEN_WIDTH // 4, 280), 800, min=0, max=240, step=0.5, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0])
+    Rslider = Slider((SCREEN_WIDTH // 4, 280), 800, min=0, max=245, step=0.5, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0])
     Gslider = Slider((SCREEN_WIDTH // 4, 320), 800, min=0, max=245, step=0.5, handleColour = (20,255,50), initial = BACKGROUND_COLOUR[1])
     Bslider = Slider((SCREEN_WIDTH // 4, 360), 800, min=0, max=245, step=0.5, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2])
 
@@ -78,7 +78,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_save.draw(screen, BUTTON_COLOUR)
 
-
         volumeSlider.draw(screen)
         Rslider.draw(screen)
         Gslider.draw(screen)
@@ -100,7 +99,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
             Gslider.handle_event(event)
             Bslider.handle_event(event)
             checkbox_countdown.handle_event(event)
-            doCountdown = checkbox_countdown.get()
 
             if event.type == QUIT:
                 quit()
@@ -135,11 +133,13 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     R = Rslider.get()
                     G = Gslider.get()
                     B = Bslider.get()
+                    doCountdown = checkbox_countdown.get()
                     BACKGROUND_COLOUR = (R, G, B)
                     BUTTON_COLOUR = (R + 10, G + 10, B + 10)
+                    doCountdown_old, v_old = doCountdown, v
                     if not celebration:
                         save_preferences(v, music, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v
+                    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR
                     print("Saved...")
                 if button_go_back.is_clicked(pos):
                     pygame.mixer.music.unload()
@@ -147,7 +147,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
                     BLACK = screen_mode(BACKGROUND_COLOUR_old)
-                    main(music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, BLACK, doCountdown, v_old)
+                    main(music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, BLACK, doCountdown_old, v_old)
                     return
 
 def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
@@ -402,30 +402,31 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                try:
-                    btn_clicked, btn = basic_modes.handle_click(pos)
-                except TypeError:
-                    btn_clicked, btn = advanced_modes.handle_click(pos)
+
+                basic_btn_clicked, btn_basic = basic_modes.handle_click(pos)
+                advanced_btn_clicked, btn_advanced = advanced_modes.handle_click(pos)
+                btn_clicked = advanced_btn_clicked or basic_btn_clicked
+
                 if btn_clicked:
-                    if btn == "Classic":
+                    if btn_basic == "Classic":
                         classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
-                    elif btn == "Classic V2":
+                    elif btn_basic == "Classic V2":
                         classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
-                    elif btn == "Speed Run":
+                    elif btn_basic == "Speed Run":
                         speed(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
-                    elif btn == "Survival":
+                    elif btn_basic == "Survival":
                         survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
-                    elif btn == "Practice":
+                    elif btn_basic == "Practice":
                         practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
-                    elif btn == "Midas Mayhem":
+                    elif btn_advanced == "Midas Mayhem":
                         midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
-                    elif btn == "Maze Run":
+                    elif btn_advanced == "Maze Run":
                         mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
                 
