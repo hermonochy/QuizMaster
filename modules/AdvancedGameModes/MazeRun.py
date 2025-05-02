@@ -138,7 +138,6 @@ def mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_CO
     def check_endpoint(player_pos, endpoint, question_positions):
         return tuple(player_pos) == endpoint and not question_positions
 
-    # Generate maze and ensure solvability
     maze = generate_maze()
     player_pos = [1, 1]
     endpoint = (len(maze) - 2, len(maze[0]) - 2)
@@ -146,7 +145,6 @@ def mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_CO
     while not is_path_to_endpoint(maze, (1, 1), endpoint):
         maze = generate_maze()
 
-    # Place questions
     question_positions = []
     for y in range(1, len(maze), 2):
         for x in range(1, len(maze[0]), 2):
