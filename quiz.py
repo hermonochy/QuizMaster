@@ -21,10 +21,10 @@ from modules.gameModes import *
 from modules.searchQuiz import search_str_in_file
 from modules.otherWindows import about
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
+from modules.constants import *
 
 from modules.AdvancedGameModes.MidasMayhem import midasMayhem
 from modules.AdvancedGameModes.MazeRun import mazeRun
-
 
 class GameMode(str, Enum):
     classic = 'classic'
@@ -573,16 +573,16 @@ if __name__ == '__main__':
                     BUTTON_COLOUR = prefDict["buttoncolour"]
                     celebration = False
             except:
-                volume = 1.0
+                volume = DEFAULT_VOLUME
                 doCountdown = True
-                music = 'music/music1.ogg'
-                BACKGROUND_COLOUR = (0,245,0)
-                BUTTON_COLOUR = (0,255,0)
+                music = DEFAULT_MUSIC
+                BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
+                BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
     except FileNotFoundError:
-        volume = 1.0
-        music = 'music/music1.ogg'
-        BACKGROUND_COLOUR = (0,245,0)
-        BUTTON_COLOUR = (0,255,0)
+        volume = DEFAULT_VOLUME
+        music = DEFAULT_MUSIC
+        BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
+        BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('QuizMaster')
