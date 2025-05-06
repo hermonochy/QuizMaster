@@ -25,6 +25,7 @@ from modules.constants import *
 
 from modules.AdvancedGameModes.MidasMayhem import midasMayhem
 from modules.AdvancedGameModes.MazeRun import mazeRun
+from modules.AdvancedGameModes.spaceInvaders import spaceInvaders
 
 class GameMode(str, Enum):
     classic = 'classic'
@@ -73,7 +74,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         button_save = Button("Save", (SCREEN_WIDTH // 2.5, 720), 300, 50, BLACK)
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2.5, 780), 300, 50, BLACK)
 
-        checkbox_countdown.draw(screen)
+        checkbox_countdown.draw(screen, text_color=BLACK)
         button_music.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_save.draw(screen, BUTTON_COLOUR)
@@ -314,7 +315,6 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown):
                         return
 
         pygame.display.update()
-        pygame.time.wait(30)
 
     quizfiles = glob('./Quizzes/**/*.json', recursive=True)
 
@@ -391,7 +391,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
         display_message("Basic Games", 150, 50, BLACK)
         basic_modes = ButtonArray(["Classic", "Classic V2", "Speed Run", "Survival", "Practice"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), button_width=250, button_spacing=50, text_colour=BLACK)
         display_message("Advanced Games", SCREEN_HEIGHT // 2 + 50, 50, BLACK)
-        advanced_modes = ButtonArray(["Midas Mayhem", "Maze Run"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
+        advanced_modes = ButtonArray(["Midas Mayhem", "Maze Run", "Space Invaders"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
         basic_modes.draw(screen, BUTTON_COLOUR)
         advanced_modes.draw(screen, BUTTON_COLOUR)
 
@@ -429,6 +429,12 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
                     elif btn_advanced == "Maze Run":
                         mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
+                    elif btn_advanced == "Maze Run":
+                        mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        return
+                    elif btn_advanced == "Space Invaders":
+                        spaceInvaders(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        return
                 
 
 def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList=None, titleofquiz=None):
@@ -461,6 +467,12 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
         elif args.gameMode == GameMode.survival:
             try:
                 survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+            except Exception as ex:
+                print("Error: ", ex)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+        elif args.gameMode == GameMode.practice:
+            try:
+                practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)

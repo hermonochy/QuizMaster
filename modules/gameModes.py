@@ -171,7 +171,6 @@ def classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_
                         return
                     if button_leave.is_clicked(pos):
                         quit()
-                    pygame.time.wait(40)
                     for idx, button in enumerate(buttons):
                         if button.is_clicked(pos):
                             user_answer = idx
