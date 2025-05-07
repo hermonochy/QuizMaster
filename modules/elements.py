@@ -27,7 +27,7 @@ def screen_mode(BACKGROUND_COLOUR):
 
 def darken(colour):
     h, s, v = colorsys.rgb_to_hsv(colour[0], colour[1], colour[2])
-    v = max(0, v - 25)
+    v = max(0, v - 50)
     return colorsys.hsv_to_rgb(h, s, v)
 
 class Button:
@@ -83,16 +83,24 @@ class Button:
     def is_clicked(self, pos):
         return self.rect.collidepoint(pos)
 
-class ButtonArray:
-    def __init__(self, button_texts, start_position, button_spacing=10, button_width=300, button_height=60, text_colour=(0, 0, 0), screen_width=SCREEN_WIDTH):
 
+class ButtonArray:
+    def __init__(self, button_texts, start_position, button_spacing=10, button_width=300, button_height=60, text_colour=(0, 0, 0), screen_width=SCREEN_WIDTH, screen_height=SCREEN_HEIGHT, orientation='horizontal'):
         self.buttons = []
+
         current_x, current_y = start_position
 
         for text in button_texts:
-            if current_x + button_width > screen_width:
-                current_x = start_position[0]
-                current_y += button_height + (button_spacing//1.5)
+            if orientation == 'horizontal':
+                if current_x + button_width > screen_width:
+                    current_x = start_position[0]
+                    current_y += button_height + (button_spacing // 1.5)
+            elif orientation == 'vertical':
+                if screen_height is not None and current_y + button_height > start_position[1] + screen_height:
+                    current_y = start_position[1]
+                    current_x += button_width + button_spacing
+                else:
+                    current_x = start_position[0]
 
             button = Button(
                 text=text,
@@ -102,7 +110,11 @@ class ButtonArray:
                 text_colour=text_colour
             )
             self.buttons.append(button)
-            current_x += button_width + button_spacing
+
+            if orientation == 'horizontal':
+                current_x += button_width + button_spacing
+            elif orientation == 'vertical':
+                current_y += button_height + button_spacing
 
     def draw(self, screen, colour, border_radius=15, shadow_offset=4):
         for button in self.buttons:
