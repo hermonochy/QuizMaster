@@ -25,12 +25,12 @@ def load_quiz(filename):
         randomOrder = quizDicts.get("randomOrder", False)
     return questionList, titleofquiz, difficulty, randomOrder
 
-def save_preferences(volume,music,background_colour,button_colour):
+def save_preferences(volume,music,do_countdown,background_colour,button_colour):
    with open(".Preferences.json", 'w') as file:
       try:
-        savedData = {"Volume": volume , "Music": music , "colour" : background_colour , "buttoncolour": button_colour}
+        savedData = {"Volume": volume , "Music": music , "Countdown" : do_countdown, "colour" : background_colour , "buttoncolour": button_colour}
       except NameError:
-        savedData = {"Volume": 0.3 , "Music": 'music/music1.ogg' , "colour" : background_colour , "buttoncolour": button_colour}
+        print("Unable to save...")
 
-      json.dump(savedData, file, default = vars)  
+      json.dump(savedData, file, default = vars)
      

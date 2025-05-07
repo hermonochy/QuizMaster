@@ -1,5 +1,4 @@
 import pygame
-import pygame_widgets
 import webbrowser
 import random
 

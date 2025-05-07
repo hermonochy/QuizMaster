@@ -6,14 +6,7 @@ from pygame.locals import *
 
 from modules.checker import isItChristmasTimeNow
 from modules.extendedText import asciiartstart, asciiartend
-
-SCREEN_WIDTH = 1350
-SCREEN_HEIGHT = 850
-FONT_SIZE = 40
-QUESTION_OFFSET = 50
-ANSWER_OFFSET = 200
-OPTION_HEIGHT = 50
-LINK_COLOUR = (40,40,255)
+from modules.constants import *
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -26,14 +19,15 @@ def screen_mode(BACKGROUND_COLOUR):
     R = BACKGROUND_COLOUR[0]
     G = BACKGROUND_COLOUR[1]
     B = BACKGROUND_COLOUR[2]
-    if R + G + B < 200 and max(R,G,B) < 125 or isItChristmasTimeNow():
+    _,_,v = colorsys.rgb_to_hsv(R,G,B)
+    if v < 120 or isItChristmasTimeNow():
         return (255, 255, 255)
     else:
         return (0, 0, 0)
 
 def darken(colour):
     h, s, v = colorsys.rgb_to_hsv(colour[0], colour[1], colour[2])
-    v = max(0, v - 25)
+    v = max(0, v - 50)
     return colorsys.hsv_to_rgb(h, s, v)
 
 class Button:
@@ -88,6 +82,129 @@ class Button:
 
     def is_clicked(self, pos):
         return self.rect.collidepoint(pos)
+
+
+class ButtonArray:
+    def __init__(self, button_texts, start_position, button_spacing=10, button_width=300, button_height=60, text_colour=(0, 0, 0), screen_width=SCREEN_WIDTH, screen_height=SCREEN_HEIGHT, orientation='horizontal'):
+        self.buttons = []
+
+        current_x, current_y = start_position
+
+        for text in button_texts:
+            if orientation == 'horizontal':
+                if current_x + button_width > screen_width:
+                    current_x = start_position[0]
+                    current_y += button_height + (button_spacing // 1.5)
+            elif orientation == 'vertical':
+                if screen_height is not None and current_y + button_height > start_position[1] + screen_height:
+                    current_y = start_position[1]
+                    current_x += button_width + button_spacing
+                else:
+                    current_x = start_position[0]
+
+            button = Button(
+                text=text,
+                position=(current_x, current_y),
+                width=button_width,
+                height=button_height,
+                text_colour=text_colour
+            )
+            self.buttons.append(button)
+
+            if orientation == 'horizontal':
+                current_x += button_width + button_spacing
+            elif orientation == 'vertical':
+                current_y += button_height + button_spacing
+
+    def draw(self, screen, colour, border_radius=15, shadow_offset=4):
+        for button in self.buttons:
+            button.draw(screen, colour, border_radius, shadow_offset)
+
+    def handle_click(self, pos):
+        for button in self.buttons:
+            if button.is_clicked(pos):
+                return True, button.text
+        return None, None
+
+class Slider:
+    def __init__(self, position, width, min=0, max=100, step=1, initial=0, bar_height=10, bar_colour=(175, 175, 175), handleColour=(100, 100, 100), handleRadius=15):
+        self.position = position
+        self.width = width
+        self.bar_height = bar_height
+        self.bar_color = bar_colour
+        self.handle_color = handleColour
+        self.min_val = min
+        self.max_val = max
+        self.step = step
+        self.value = initial
+        self.handle_radius = handleRadius
+
+        self.bar_rect = pygame.Rect(position[0], position[1] - bar_height // 2, width, bar_height)
+        self.handle_x = self.value_to_position(initial)
+        self.handle_y = position[1]
+        self.dragging = False
+
+    def value_to_position(self, value):
+        proportion = (value - self.min_val) / (self.max_val - self.min_val)
+        return int(self.position[0] + proportion * self.width)
+
+    def position_to_value(self, pos_x):
+        proportion = (pos_x - self.position[0]) / self.width
+        proportion = max(0, min(proportion, 1))
+        raw_value = self.min_val + proportion * (self.max_val - self.min_val)
+        return round(raw_value / self.step) * self.step
+
+    def draw(self, screen):
+        self.screen = screen
+        pygame.draw.rect(self.screen, self.bar_color, self.bar_rect)
+
+        pygame.draw.circle(self.screen, self.handle_color, (self.handle_x, self.handle_y), self.handle_radius)
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if (self.handle_x - event.pos[0]) ** 2 + (self.handle_y - event.pos[1]) ** 2 <= self.handle_radius ** 2:
+                self.dragging = True
+        elif event.type == pygame.MOUSEBUTTONUP:
+            self.dragging = False
+        elif event.type == pygame.MOUSEMOTION:
+            if self.dragging:
+                self.handle_x = max(self.position[0], min(event.pos[0], self.position[0] + self.width))
+                self.value = self.position_to_value(self.handle_x)
+
+    def get(self):
+        return self.value
+
+class Checkbox:
+    def __init__(self, text, position, width=20, height=20, checked=False):
+        self.text = text
+        self.position = position
+        self.checked = checked
+        self.width = width
+        self.height = height
+        self.font = pygame.font.Font(None, 36)
+        self.rect = pygame.Rect(position[0], position[1], width, height)
+
+    def draw(self, screen, box_color = (253,245,230), check_color = (0,0,0), text_color=(0, 0, 0)):
+        pygame.draw.rect(screen, box_color, self.rect)
+        
+        if self.checked:
+            pygame.draw.line(screen, check_color, (self.rect.left, self.rect.centery), (self.rect.centerx, self.rect.bottom), 3)
+            pygame.draw.line(screen, check_color, (self.rect.centerx, self.rect.bottom), (self.rect.right, self.rect.top), 3)
+        
+        text_surf = self.font.render(self.text, True, text_color)
+        text_rect = text_surf.get_rect(midleft=(self.rect.right + 10, self.rect.centery))
+        screen.blit(text_surf, text_rect)
+
+    def is_clicked(self, pos):
+        return self.rect.collidepoint(pos)
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.is_clicked(event.pos):
+                self.checked = not self.checked
+    
+    def get(self):
+        return self.checked
 
 class Scrollbar:
     def __init__(self, position, height, total_items, items_per_page):
@@ -188,4 +305,3 @@ def display_message(message, y_position, font_size, colour):
         y_position += text.get_height()
 
     return y_position
-

@@ -10,7 +10,7 @@ from pygame.locals import *
 from modules.elements import *
 from modules.otherWindows import standard_end_window, countdown
 
-def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
         return
@@ -22,8 +22,9 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
-    
+    if doCountdown:
+        countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
+
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
 
@@ -94,12 +95,12 @@ def classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     replay = standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, totalQuestions, correctAnswers, questionIndex, incorrect_questions)
     if replay:
-        classic(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
     else:       
         return
 
                     
-def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
         return
@@ -115,7 +116,8 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
+    if doCountdown:
+        countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
 
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
@@ -169,7 +171,6 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                         return
                     if button_leave.is_clicked(pos):
                         quit()
-                    pygame.time.wait(40)
                     for idx, button in enumerate(buttons):
                         if button.is_clicked(pos):
                             user_answer = idx
@@ -191,12 +192,12 @@ def classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     replay = standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, totalQuestions, correctAnswers, questionIndex, incorrect_questions)
     if replay:
-        classicV2(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
     else:       
         return
 
 
-def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def speed(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
         return
@@ -209,7 +210,8 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
+    if doCountdown:
+        countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
 
     start_time = time.time()
 
@@ -298,12 +300,12 @@ def speed(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if button_go_back.is_clicked(pos):
                     return
                 if button_replay.is_clicked(pos):
-                    speed(originalQuestions[:], titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    speed(originalQuestions[:], titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 if button_quit.is_clicked(pos):
                     quit()
 
-def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
         return
@@ -317,8 +319,9 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
-    
+    if doCountdown:
+        countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
+
     while running and questionIndex < totalQuestions and lives > 0:
         currentQuestion = questionList[questionIndex]
 
@@ -383,11 +386,11 @@ def survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
 
     replay = standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, totalQuestions, correctAnswers, questionIndex, incorrect_questions)
     if replay:
-        survival(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
     else:       
         return
 
-def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
         return
@@ -399,8 +402,9 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if BUTTON_COLOUR[1] > 220:
         BUTTON_COLOUR = (BUTTON_COLOUR[0], 220, BUTTON_COLOUR[2]) # Improve visibility of answer reveal
 
-    countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
-    
+    if doCountdown:
+        countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
+
     while running and questionIndex < totalQuestions:
         currentQuestion = questionList[questionIndex]
 
@@ -492,7 +496,7 @@ def practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR):
                 if button_go_back.is_clicked(pos):
                     return
                 if button_replay.is_clicked(pos):
-                    practice(questionList, titleofquiz, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 if button_quit.is_clicked(pos):
                     quit()
