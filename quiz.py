@@ -390,8 +390,8 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
         display_message("Select Game Mode:", 50, 75, BLACK)
         display_message("Basic Games", 150, 50, BLACK)
         basic_modes = ButtonArray(["Classic", "Classic V2", "Speed Run", "Survival", "Practice"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), button_width=250, button_spacing=50, text_colour=BLACK)
-        display_message("Advanced Games", SCREEN_HEIGHT // 2 + 50, 50, BLACK)
-        advanced_modes = ButtonArray(["Midas Mayhem", "Maze Run", "Space Invaders"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
+        display_message("Advanced Games (Beta)", SCREEN_HEIGHT // 2 + 50, 50, BLACK)
+        advanced_modes = ButtonArray([ "Space Invaders", "Midas Mayhem", "Maze Run"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
         basic_modes.draw(screen, BUTTON_COLOUR)
         advanced_modes.draw(screen, BUTTON_COLOUR)
 
@@ -433,7 +433,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
                         mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
                     elif btn_advanced == "Space Invaders":
-                        spaceInvaders(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        spaceInvaders(questionList, titleofquiz, doCountdown)
                         return
                 
 
@@ -490,7 +490,7 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.spaceInvaders:
             try:
-                spaceInvaders(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                spaceInvaders(questionList, titleofquiz, doCountdown)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
