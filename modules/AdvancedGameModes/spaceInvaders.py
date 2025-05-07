@@ -28,7 +28,6 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUT
 
     countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
 
-    # Generate aliens
     def generate_aliens(rows, cols):
         for row in range(rows):
             for col in range(cols):
@@ -64,11 +63,9 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUT
             for button in buttons:
                 button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
             
-            button_end = Button("End Quiz", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 200), 250, 40, BLACK)
-            button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
+            button_go_back = Button("Cancel", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
             display_message(f"Lives remaining: {lives}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, BLACK)
-            button_end.draw(screen, BUTTON_COLOUR)
             button_go_back.draw(screen, BUTTON_COLOUR)
             button_leave.draw(screen, BUTTON_COLOUR)
             pygame.display.update()
@@ -78,9 +75,6 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUT
                     quit()
                 if event.type == MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
-                    if button_end.is_clicked(pos):
-                        running = False
-                        break
                     if button_go_back.is_clicked(pos):
                         return
                     if button_leave.is_clicked(pos):
@@ -170,7 +164,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUT
         if keys[K_SPACE] and ammo > 0:
             projectiles.append({"x": player_x + player_width // 2, "y": player_y})
             ammo -= 1
-            # ensure the player does not shoot more than one
+            # ensure the player does not shoot too many projectiles at once
             pygame.time.wait(50)
 
         for event in pygame.event.get():

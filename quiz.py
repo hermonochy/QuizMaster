@@ -35,7 +35,7 @@ class GameMode(str, Enum):
     practice = 'practice'
     midasMayhem = 'midasMayhem'
     mazeRun = 'mazeRun'
-
+    spaceInvaders = 'spaceInvaders'
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, doCountdown_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, v
@@ -485,6 +485,12 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
         elif args.gameMode == GameMode.mazeRun:
             try:
                 mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+            except Exception as ex:
+                print("Error: ", ex)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+        elif args.gameMode == GameMode.spaceInvaders:
+            try:
+                spaceInvaders(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)

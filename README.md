@@ -50,6 +50,7 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 To start the application, enter `./run.sh` for Linux or `run.bat` for Windows, into the command line interface (Don't forget to run setup files before launching QuizMaster if anything has changed).
 
 ### Updating QuizMaster
+
 QuizMaster is constantly worked on and your copy can quickly become outdated. To update it, simply run `./update.sh` for Linux or `update.bat` for Windows. It is always a good idea to run the setup files after updating in case a module requirement or other is changed.
 
 #### Playing a Quiz
@@ -135,6 +136,7 @@ options:
 - `practice`
 - `midasMayhem`
 - `mazeRun`
+- `spaceInvaders`
 
 Similarly in QuizCreator, a quiz parameter can be added to the end but for obvious reasons not a game mode parameter.
 
