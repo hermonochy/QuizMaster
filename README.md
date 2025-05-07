@@ -69,29 +69,41 @@ Various game modes exist to allow the user to test different strengths in differ
 
 *The Game Mode selection window*
 
-###### Classic
+###### Basic Game Modes
 
-The classic game mode allows you to answer questions with a countdown timer. Your score is recorded, and at the end, it will give advice appropriate to the score. Players can choose answers using keyboard inputs allocated to the answer, or mouse clicks, but be mindful of the timer!
+QuizMasters game modes are split into two sections: Basic and Advanced. The key difference Basic game modes are more focused on the learning, while Advanced game modes are essentially games. 
 
-###### Classic V2
+ **Classic**
 
-Similar to classic, the time limit of classic V2 is the absolute time, rather than induvidual time limits. This game mode is generally the easiest of all.
+The *classic* game mode allows you to answer questions with a countdown timer. Your score is recorded, and at the end, it will give advice appropriate to the score. Players can choose answers using keyboard inputs allocated to the answer, or mouse clicks, but be mindful of the timer!
 
-###### Speed Run
+**Classic V2**
+
+Similar to *Classic*, the time limit of *Classic V2* is the absolute time, rather than induvidual time limits. This game mode is generally the easiest of all.
+
+**Speed Run**
 
 Race against the clock to answer all questions correctly as fast as possible! An incorrect answer forces you to retry the question, and losing all lives results in starting the quiz anew. Your total time is recorded to push for improvement in future attempts. Currently, it's the most challenging game mode.
 
-###### Survival
+**Survival**
 
-In Survival mode, players are allotted a limited number of lives to complete the quiz. Each incorrect response results in a life deduction, and the game concludes when you either exhaust your lives or answer all questions correctly. The objective is to survive as long as possible by maintaining accuracy throughout.
+In *Survival* mode, players are allotted a limited number of lives to complete the quiz. Each incorrect response results in a life deduction, and the game concludes when you either exhaust your lives or answer all questions correctly. The objective is to survive as long as possible by maintaining accuracy throughout.
 
-###### Practice
+**Practice**
 
 A more laid-back approach, this mode allows you to engage in practice sessions at your own pace. You receive immediate feedback on your answers and can choose to continue or end the quiz whenever you wish. Scores are not tracked in this mode.
 
+###### Advanced Game Modes
+
+**Space Invaders**
+
+Currently the finest and most reliable advanced game mode, *Space Invaders* is a highly sophisticated and fun addition to the QuizMaster platform. 
+Players defend their spaceship from a horde of aliens, gaining ammo by answering questions correctly. Unlike the original arcade game, you can still keep hold of your lives if hit, if you can answer the survival question correctly! Be careful; your ammo runs out quicker than you think! *Space Invaders* transforms learning into a fun and interactive adventure.
+
+
 ![](images/QM4.png)
 
-*A Classic V2 game*
+*A Space Invaders game*
 
 #### Preferences
 
