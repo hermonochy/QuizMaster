@@ -23,8 +23,8 @@ menuBar = [
 mainWindowLayout = [
     [sg.Menu(menuBar)],
     [sg.Text("Title of Quiz:"), sg.InputText(key='quiz_name', tooltip="The title of the quiz that players will see.")],
-    [sg.Text("Difficulty:", tooltip="Select the difficulty level for this quiz (1 = Baby Quiz, 3 = Secondary School Level, 5 = Requires a professional understanding of the subject)."), sg.Spin([i for i in range(1, 6)], key='difficulty')],
-    [sg.Checkbox("Randomize Questions", default=False, tooltip="Enable this option to randomize the order of questions when the quiz is played.", key='randomOrder')],
+    [sg.Text("Difficulty:", tooltip="Select the difficulty level for this quiz (1 = Baby Quiz, 3 = Secondary School Level, 5 = Requires a professional understanding of the subject)."), sg.Spin([i for i in range(1, 6)], key='difficulty', initial_value=3)],
+    [sg.Checkbox("Randomize Questions", default=False, tooltip="Randomize the order of questions when the quiz is played.", key='randomOrder')],
     [sg.Listbox(questionList, size=(125, 25), key='quizquestionentry', enable_events=True, tooltip="The list of the questions."),
      sg.Text(key='textbox', size=(20, 10))],
     [sg.Button("Add Question", tooltip="Add a new question."), sg.Button("Edit Question", tooltip="Select a question from the listbox to edit."), 

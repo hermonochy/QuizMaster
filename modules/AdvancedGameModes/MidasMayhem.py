@@ -106,15 +106,15 @@ def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTO
 
             if selected_chest["multiplier"] == 0:
                 player_gold = 0
-                display_message("Landmine! You lost all your gold!", SCREEN_HEIGHT // 2, 40, (0,0,0))
+                display_message("Landmine! You lost all your gold!", SCREEN_HEIGHT // 2, 40, BLACK)
             elif selected_chest["multiplier"] > 0:
                 change = int((player_gold+1) * selected_chest["multiplier"])
                 player_gold += change
-                display_message(f"{selected_chest['label']}! You gained {change} gold!", SCREEN_HEIGHT // 2, 40, (0,0,0))
+                display_message(f"{selected_chest['label']}! You gained {change} gold!", SCREEN_HEIGHT // 2, 40, BLACK)
             else:
                 change = int(player_gold * abs(selected_chest["multiplier"]))
                 player_gold -= change
-                display_message(f"{selected_chest['label']}! You lost {change} gold!", SCREEN_HEIGHT // 2, 40, (0,0,0))
+                display_message(f"{selected_chest['label']}! You lost {change} gold!", SCREEN_HEIGHT // 2, 40, BLACK)
 
             pygame.display.update()
             pygame.time.wait(2000)
