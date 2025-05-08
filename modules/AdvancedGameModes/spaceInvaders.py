@@ -27,9 +27,9 @@ def spaceInvaders(questionList, titleofquiz, doCountdown):
     player_y = SCREEN_HEIGHT - 100
     question_index = 0
     total_questions = len(questionList)
-    cannonFire = pygame.mixer.Sound('soundEffects/spaceInvaders/cannonFire.ogg')
-    explosion = pygame.mixer.Sound('soundEffects/spaceInvaders/explosion.ogg')
-    hit = pygame.mixer.Sound('soundEffects/spaceInvaders/hit.ogg')
+    cannonFire = pygame.mixer.Sound('soundEffects/cannonFire.ogg')
+    explosion = pygame.mixer.Sound('soundEffects/explosion.ogg')
+    hit = pygame.mixer.Sound('soundEffects/hit.ogg')
 
 
     countdown(titleofquiz, BLACK, WHITE)
@@ -107,7 +107,6 @@ def spaceInvaders(questionList, titleofquiz, doCountdown):
     button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, WHITE)
 
     while running and lives > 0:
-
         screen.fill(BLACK)
 
         display_message(f"Lives: {lives}", 10, 50, WHITE)
@@ -119,15 +118,18 @@ def spaceInvaders(questionList, titleofquiz, doCountdown):
 
         pygame.draw.rect(screen, (0, 255, 0), (player_x, player_y, player_width, player_height))
 
+        numAliens = 0
+
         for alien in aliens:
             if alien["alive"]:
+                numAliens += 1
                 pygame.draw.rect(screen, (255, 0, 0), (alien["x"], alien["y"], alien_width, alien_height))
                 alien["x"] += alien_speed
                 if alien["x"] > SCREEN_WIDTH - alien_width or alien["x"] < 0:
                     alien_speed *= -1
                     for a in aliens:
                         a["y"] += 10
-                if random.random() < 0.001:
+                if random.random() < 0.02 * (1/numAliens):
                     cannonFire.play()
                     alien_projectiles.append({"x": alien["x"] + alien_width // 2, "y": alien["y"] + alien_height})
 
@@ -161,7 +163,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown):
                         projectiles.remove(projectile)
 
         if (all(not alien["alive"] for alien in aliens) and question_index >= total_questions) or all(not alien["alive"] for alien in aliens):
-            display_message("You Win!", SCREEN_HEIGHT // 2, 50, WHITE)
+            display_message("You Win!", SCREEN_HEIGHT // 2, 100, (0,255,0))
             pygame.display.update()
             pygame.time.wait(3000)
             break
@@ -194,6 +196,6 @@ def spaceInvaders(questionList, titleofquiz, doCountdown):
 
     if lives == 0 or (question_index >= total_questions and all(alien["alive"] for alien in aliens)):
         explosion.play()
-        display_message("You Lose!", SCREEN_HEIGHT // 2, 50, WHITE)
+        display_message("You Lose!", SCREEN_HEIGHT // 2, 100, (255,0,0))
         pygame.display.update()
         pygame.time.wait(3000)
