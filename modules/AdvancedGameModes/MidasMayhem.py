@@ -136,15 +136,6 @@ def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTO
     while True:
         screen.fill(BACKGROUND_COLOUR)
         y_position = display_message(f"Quiz completed! You got {player_gold} gold.", SCREEN_HEIGHT // 2-200,40, BLACK)
-        try:
-            if correctAnswers/totalQuestions > 0.4 and correctAnswers/totalQuestions <= 0.8:
-                display_message(medium_praise, y_position, 40, BLACK)
-            if correctAnswers/totalQuestions > 0.8:
-                display_message(good_praise, y_position, 40, BLACK)
-            if correctAnswers/totalQuestions <= 0.4:
-                display_message(bad_praise, y_position, 40, BLACK)
-        except:
-                display_message("No questions attempted!", y_position, 40, BLACK)
     
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
         button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)

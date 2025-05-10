@@ -109,9 +109,9 @@ def spaceInvaders(questionList, titleofquiz, doCountdown):
     while running and lives > 0:
         screen.fill(BLACK)
 
-        display_message(f"Lives: {lives}", 10, 50, WHITE)
-        display_message(f"Ammo: {ammo}", 40, 50, WHITE)
-        display_message(f"Question {question_index}/{total_questions}", 70, 50, WHITE)
+        display_message(f"Lives: {lives}", 15, 50, WHITE)
+        display_message(f"Ammo: {ammo}", 45, 50, WHITE)
+        display_message(f"Question {question_index}/{total_questions}", 75, 50, WHITE)
         button_answer.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_leave.draw(screen, BUTTON_COLOUR)
@@ -127,9 +127,11 @@ def spaceInvaders(questionList, titleofquiz, doCountdown):
                 alien["x"] += alien_speed
                 if alien["x"] > SCREEN_WIDTH - alien_width or alien["x"] < 0:
                     alien_speed *= -1
+                    # change x direction
                     for a in aliens:
-                        a["y"] += 10
-                if random.random() < 0.02 * (1/numAliens):
+                        a["y"] += 100/numAliens
+                        # aliens sink lower if more of them
+                if random.random() < 0.015 * (1/numAliens):
                     cannonFire.play()
                     alien_projectiles.append({"x": alien["x"] + alien_width // 2, "y": alien["y"] + alien_height})
 

@@ -29,7 +29,8 @@ def strikeZone(questionList, titleofquiz, doCountdown):
     ENEMY_SPAWN_RATE = 30
     POWER_UP_DURATION = 5000
 
-    player = {"image": pygame.Surface((50, 50)), "rect": pygame.Rect(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 60, 50, 50), "health": 100, "level": 1, "experience": 0}
+    health = int(questionLength * 5)
+    player = {"image": pygame.Surface((50, 50)), "rect": pygame.Rect(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 60, 50, 50), "health": health, "level": 1, "experience": 0}
     projectiles = []
     enemies = []
     powerups = []
@@ -202,7 +203,7 @@ def strikeZone(questionList, titleofquiz, doCountdown):
             pygame.time.wait(3000)
             return
     
-        if question_index == questionLength and score > questionLength*5:
+        if question_index == questionLength and score > questionLength*5 and ammo <= 0:
             display_message("You Win!", 300, 100, GREEN)
             pygame.display.flip()
             pygame.time.wait(3000)
