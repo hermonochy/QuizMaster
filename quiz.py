@@ -23,9 +23,10 @@ from modules.otherWindows import about
 from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
 from modules.constants import *
 
+from modules.AdvancedGameModes.spaceInvaders import spaceInvaders
 from modules.AdvancedGameModes.MidasMayhem import midasMayhem
 from modules.AdvancedGameModes.MazeRun import mazeRun
-from modules.AdvancedGameModes.spaceInvaders import spaceInvaders
+from modules.AdvancedGameModes.strikeZone import strikeZone
 
 class GameMode(str, Enum):
     classic = 'classic'
@@ -36,6 +37,7 @@ class GameMode(str, Enum):
     midasMayhem = 'midasMayhem'
     mazeRun = 'mazeRun'
     spaceInvaders = 'spaceInvaders'
+    strikeZone = 'strikeZone'
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, doCountdown_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, v
@@ -391,7 +393,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
         display_message("Basic Games", 150, 50, BLACK)
         basic_modes = ButtonArray(["Classic", "Classic V2", "Speed Run", "Survival", "Practice"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), button_width=250, button_spacing=50, text_colour=BLACK)
         display_message("Advanced Games", SCREEN_HEIGHT // 2 + 50, 50, BLACK)
-        advanced_modes = ButtonArray([ "Space Invaders", "Midas Mayhem (Beta)", "Maze Run (Beta)"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
+        advanced_modes = ButtonArray([ "Space Invaders", "Strike Zone", "Midas Mayhem (Beta)", "Maze Run (Beta)"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
         basic_modes.draw(screen, BUTTON_COLOUR)
         advanced_modes.draw(screen, BUTTON_COLOUR)
 
@@ -425,6 +427,9 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
                         return
                     elif btn_advanced == "Space Invaders":
                         spaceInvaders(questionList, titleofquiz, doCountdown)
+                        return
+                    elif btn_advanced == "Strike Zone":
+                        strikeZone(questionList, titleofquiz, doCountdown)
                         return
                     elif btn_advanced == "Midas Mayhem (Beta)":
                         midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
@@ -488,6 +493,12 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
         elif args.gameMode == GameMode.spaceInvaders:
             try:
                 spaceInvaders(questionList, titleofquiz, doCountdown)
+            except Exception as ex:
+                print("Error: ", ex)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+        elif args.gameMode == GameMode.strikeZone:
+            try:
+                strikeZone(questionList, titleofquiz, doCountdown)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)

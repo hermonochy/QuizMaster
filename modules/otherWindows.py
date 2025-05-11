@@ -5,6 +5,20 @@ import random
 from modules.elements import *
 from modules.extendedText import *
 
+
+def countdown(titleofquiz, BACKGROUND_COLOUR, BLACK):
+    for i in range(3,0,-1):
+        screen.fill(BACKGROUND_COLOUR)
+        display_message(titleofquiz, QUESTION_OFFSET, 70, BLACK)
+        display_message((f"{i}!"), QUESTION_OFFSET + 200, 150, BLACK)
+        pygame.display.update()
+        pygame.time.delay(1000)
+    screen.fill(BACKGROUND_COLOUR)
+    display_message(("Go!"), QUESTION_OFFSET+200, 150, BLACK)
+    pygame.display.update()
+    pygame.time.delay(1000)
+    return
+
 def about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     running = True
 
@@ -145,16 +159,3 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
                     return True
                 if button_quit.is_clicked(pos):
                     quit()
-
-def countdown(titleofquiz, BACKGROUND_COLOUR, BLACK):
-    for i in range(3,0,-1):
-        screen.fill(BACKGROUND_COLOUR)
-        display_message(titleofquiz, QUESTION_OFFSET, 70, BLACK)
-        display_message((f"{i}!"), QUESTION_OFFSET + 200, 150, BLACK)
-        pygame.display.update()
-        pygame.time.delay(1000)
-    screen.fill(BACKGROUND_COLOUR)
-    display_message(("Go!"), QUESTION_OFFSET+200, 150, BLACK)
-    pygame.display.update()
-    pygame.time.delay(1000)
-    return
