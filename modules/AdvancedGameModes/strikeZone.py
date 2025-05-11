@@ -22,6 +22,7 @@ def strikeZone(questionList, titleofquiz, doCountdown):
     GREEN = (0, 255, 0)
     BLUE = (0, 0, 255)
     BUTTON_COLOUR = (25, 25, 25)
+    ORANGE = (255, 165, 0)
 
     PLAYER_SPEED = 10
     PROJECTILE_SPEED = 20
@@ -39,15 +40,19 @@ def strikeZone(questionList, titleofquiz, doCountdown):
     score = 0
     question_index = 0
     total_questions = questionLength
+    shield_active = False
+    shield_timer = 0
+    all_out_shot_active = False
+    all_out_shot_radius = 0
+    all_out_shot_center = None
     cannonFire = pygame.mixer.Sound('soundEffects/cannonFire.ogg')
     explosion = pygame.mixer.Sound('soundEffects/explosion.ogg')
     hit = pygame.mixer.Sound('soundEffects/hit.ogg')
 
-
     player["image"].fill(BLUE)
 
-    def handle_question(forPowerup=False):
-        nonlocal question_index, ammo
+    def handle_question(forPowerup=False, powerup_type=None):
+        nonlocal question_index, ammo, shield_active, shield_timer, all_out_shot_active, all_out_shot_radius, all_out_shot_center
         if question_index >= total_questions:
             return False
         current_question = questionList[question_index]
@@ -85,7 +90,14 @@ def strikeZone(questionList, titleofquiz, doCountdown):
 
         correct_index = answerOptions.index(current_question.correctAnswer)
         if user_answer == correct_index:
-            if forPowerup:
+            if powerup_type == "white":
+                all_out_shot_active = True
+                all_out_shot_radius = 0
+                all_out_shot_center = player["rect"].center
+            elif powerup_type == "orange":
+                shield_active = True
+                shield_timer = pygame.time.get_ticks() + 10000
+            elif forPowerup:
                 ammo += 250
                 player["health"] += 10
             else:
@@ -100,6 +112,10 @@ def strikeZone(questionList, titleofquiz, doCountdown):
     button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, WHITE)
 
     while running:
+        current_time = pygame.time.get_ticks()
+        if shield_active and current_time > shield_timer:
+            shield_active = False
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 quit()
@@ -161,8 +177,9 @@ def strikeZone(questionList, titleofquiz, doCountdown):
             enemy["rect"].y += dy * ENEMY_SPEED
 
             if player["rect"].colliderect(enemy["rect"]):
-                hit.play()
-                player["health"] -= 1
+                if not shield_active:
+                    hit.play()
+                    player["health"] -= 1
                 enemies.remove(enemy)
 
         for projectile in projectiles[:]:
@@ -173,17 +190,40 @@ def strikeZone(questionList, titleofquiz, doCountdown):
                     projectiles.remove(projectile)
                     score += 1
                     break
+        screen.fill(BLACK)
 
-        if random.random() < 0.001 and len(powerups) < 10:
-            powerups.append({"image": pygame.Surface((30, 30)), "rect": pygame.Rect(random.randint(0, SCREEN_WIDTH - 30), random.randint(0, SCREEN_HEIGHT - 30), 30, 30)})
-            powerups[-1]["image"].fill(GREEN)
+        if random.random() < 0.005 and len(powerups) < 10:
+            powerup_type = random.choices(["green", "white", "orange"], weights=[50, 25, 25])[0]
+            powerup_color = {
+                "green": GREEN,
+                "white": WHITE,
+                "orange": ORANGE
+            }[powerup_type]
+            powerups.append({
+                "image": pygame.Surface((30, 30)),
+                "rect": pygame.Rect(random.randint(0, SCREEN_WIDTH - 30), random.randint(0, SCREEN_HEIGHT - 30), 30, 30),
+                "type": powerup_type
+            })
+            powerups[-1]["image"].fill(powerup_color)
 
         for powerup in powerups[:]:
             if player["rect"].colliderect(powerup["rect"]):
-                handle_question(forPowerup=True)
+                handle_question(forPowerup=True, powerup_type=powerup["type"])
                 powerups.remove(powerup)
 
-        screen.fill(BLACK)
+        if all_out_shot_active:
+            all_out_shot_radius += 10
+            pygame.draw.circle(screen, (255, 255, 255, 120), all_out_shot_center, all_out_shot_radius, 2)
+
+            for enemy in enemies[:]:
+                enemy_center = enemy["rect"].center
+                distance_to_circle = math.hypot(enemy_center[0] - all_out_shot_center[0], enemy_center[1] - all_out_shot_center[1])
+                if distance_to_circle <= all_out_shot_radius:
+                    enemies.remove(enemy)
+
+            if all_out_shot_radius > max(SCREEN_WIDTH, SCREEN_HEIGHT):
+                all_out_shot_active = False
+
         button_answer.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_leave.draw(screen, BUTTON_COLOUR)
@@ -196,7 +236,10 @@ def strikeZone(questionList, titleofquiz, doCountdown):
         for powerup in powerups:
             screen.blit(powerup["image"], powerup["rect"])
 
-        if player["health"] <= 0:
+        if shield_active:
+            pygame.draw.rect(screen, ORANGE, player["rect"], 5)
+
+        if player["health"] <= 0 or (question_index == questionLength and ammo <= 0 and score < questionLength*5):
             explosion.play()
             display_message("You Lose!", 300, 100, RED)
             pygame.display.flip()
