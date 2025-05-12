@@ -159,7 +159,8 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     """
 
     running = True
-    button_submit = Button("Submit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 1.2), 300, 40, BLACK)
+    button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 1.2), 300, 40, BLACK)
+    button_submit = Button("Choose", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 1.3), 300, 40, BLACK)
     question_amount_slider = Slider((SCREEN_WIDTH // 4, SCREEN_HEIGHT // 3), 800, min=1, max=250, step=1, initial=30)
 
     while running:
@@ -172,7 +173,10 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 pos = pygame.mouse.get_pos()
                 if button_submit.is_clicked(pos):
                     numOfQuestions = question_amount_slider.get()
-                    return numOfQuestions
+                    return numOfQuestions, False
+                elif button_go_back.is_clicked(pos):
+                    numOfQuestions = question_amount_slider.get()
+                    return numOfQuestions, True
 
         screen.fill(BACKGROUND_COLOUR)
         question_amount_slider.draw(screen)
@@ -180,6 +184,7 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         display_message("Settings", 50, 50, BLACK)
         display_message("Number of Questions:", 125, 40, BLACK)
         button_submit.draw(screen, BUTTON_COLOUR)
+        button_go_back.draw(screen, BUTTON_COLOUR)
 
         pygame.display.update()
 
@@ -199,9 +204,10 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
 
     scrollbar = None
     if num_questions > 10:
-        scrollbar = Scrollbar((SCREEN_WIDTH - 40, 350), 400, num_questions, 10)
-    
-    button_confirm = Button("Confirm", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT//2 + 250), 300, 50, BLACK)
+        scrollbar = Scrollbar((SCREEN_WIDTH - 40, 300), 400, num_questions, 10)
+
+    button_confirm = Button("Choose", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT//2 + 290), 350, 50, BLACK)
+    button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT//2 + 350), 350, 50, BLACK)
 
     offset = 0
 
@@ -216,7 +222,9 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
                 pos = pygame.mouse.get_pos()
                 if button_confirm.is_clicked(pos):
                     choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList[:num_questions], title)
-                    return
+                    return False
+                elif button_go_back.is_clicked(pos):
+                    return True
             if scrollbar and (event.type == MOUSEBUTTONDOWN or event.type == MOUSEBUTTONUP or event.type == MOUSEMOTION):
                 scrollbar.handle_event(event)
 
@@ -240,6 +248,7 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
             scrollbar.draw(screen)
         
         button_confirm.draw(screen, BUTTON_COLOUR)
+        button_go_back.draw(screen, BUTTON_COLOUR)
 
         pygame.display.update()
                 
@@ -260,6 +269,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown):
             screen.fill(BACKGROUND_COLOUR)
             display_message("Enter Quiz Keyword:", 50, 50, BLACK)
             display_message("Or:", 350, 50, BLACK)
+            button_confirm = Button("Confirm", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT//2 + 250), 300, 50, BLACK)
 
             events = pygame.event.get()
             for event in events:
@@ -291,12 +301,18 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown):
                                 print(f"Error in {filename}: {ex}")
                                 break
                             if args.gameMode == None:
-                                quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, titleofquiz, difficulty)
+                                searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, titleofquiz, difficulty)
+                                if searchAgain:
+                                    break
+                                else:
+                                    return
                             else:
                                 StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, titleofquiz)
                             return
                     elif button_general_knowledge.is_clicked(pos):
-                        number_of_questions = choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+                        number_of_questions, goBack = choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+                        if goBack:
+                            break
                         quizfiles = glob('./Quizzes/**/*.json', recursive=True)
                         if quizfiles:
                             questionList = []
@@ -326,7 +342,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown):
                 quizfileSearchResults.append(file)
 
         if not quizfileSearchResults:
-            display_message("No Matching Quizzes found!", SCREEN_HEIGHT // 2, 75, (255,0,0))
+            display_message("No Matching Quizzes found!", SCREEN_HEIGHT // 4, 80, (255,0,0))
             pygame.display.update()
             pygame.time.wait(250)
             continue
@@ -379,8 +395,11 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown):
                     break
                 print("Questions:", questionList)
                 if args.gameMode == None:
-                    quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, titleofquiz, difficulty)
-                    return
+                    searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, titleofquiz, difficulty)
+                    if searchAgain:
+                        break
+                    else:
+                        return
                 else:
                     StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
             
