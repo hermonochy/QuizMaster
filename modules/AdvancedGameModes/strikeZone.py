@@ -193,7 +193,7 @@ def strikeZone(questionList, titleofquiz, doCountdown):
         screen.fill(BLACK)
 
         if random.random() < 0.005 and len(powerups) < 10:
-            powerup_type = random.choices(["green", "white", "orange"], weights=[50, 25, 25])[0]
+            powerup_type = random.choices(["green", "white", "orange"], weights=[60, 10, 30])[0]
             powerup_color = {
                 "green": GREEN,
                 "white": WHITE,
@@ -213,13 +213,14 @@ def strikeZone(questionList, titleofquiz, doCountdown):
 
         if all_out_shot_active:
             all_out_shot_radius += 10
-            pygame.draw.circle(screen, (255, 255, 255, 120), all_out_shot_center, all_out_shot_radius, 2)
+            pygame.draw.circle(screen, (255, 255, 255), all_out_shot_center, all_out_shot_radius, 5)
 
             for enemy in enemies[:]:
                 enemy_center = enemy["rect"].center
                 distance_to_circle = math.hypot(enemy_center[0] - all_out_shot_center[0], enemy_center[1] - all_out_shot_center[1])
                 if distance_to_circle <= all_out_shot_radius:
                     enemies.remove(enemy)
+                    score += 1
 
             if all_out_shot_radius > max(SCREEN_WIDTH, SCREEN_HEIGHT):
                 all_out_shot_active = False
@@ -239,6 +240,7 @@ def strikeZone(questionList, titleofquiz, doCountdown):
         if shield_active:
             pygame.draw.rect(screen, ORANGE, player["rect"], 5)
 
+        # If player health is a 0 or it is impossible to continue.
         if player["health"] <= 0 or (question_index == questionLength and ammo <= 0 and score < questionLength*5):
             explosion.play()
             display_message("You Lose!", 300, 100, RED)
@@ -246,7 +248,7 @@ def strikeZone(questionList, titleofquiz, doCountdown):
             pygame.time.wait(3000)
             return
     
-        if question_index == questionLength and score > questionLength*5 and ammo <= 0:
+        if question_index == questionLength and score > questionLength*5:
             display_message("You Win!", 300, 100, GREEN)
             pygame.display.flip()
             pygame.time.wait(3000)

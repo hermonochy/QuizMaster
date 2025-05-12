@@ -25,6 +25,11 @@ def screen_mode(BACKGROUND_COLOUR):
     else:
         return (0, 0, 0)
 
+def getOppositeRGB(rgb):
+    contrasting_rgb = tuple(255 - value for value in rgb)
+    return contrasting_rgb
+
+
 def darken(colour):
     h, s, v = colorsys.rgb_to_hsv(colour[0], colour[1], colour[2])
     v = max(0, v - 50)
