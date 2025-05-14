@@ -109,19 +109,19 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                 pos = pygame.mouse.get_pos()
                 if isItChristmasTimeNow():
                     celebration = True
-                    music = ["music/music_christmas1.ogg", "music/music_christmas2.ogg"][i % 2]
+                    music = ["sounds/music_christmas1.ogg", "sounds/music_christmas2.ogg"][i % 2]
                 if isItHalloweenTimeNow():
                     celebration = True
-                    music = ["music/music_halloween1.ogg", "music/music_halloween2.ogg"][i % 2]
+                    music = ["sounds/music_halloween1.ogg", "sounds/music_halloween2.ogg"][i % 2]
                 if isItStPatricksTimeNow():
                     celebration = True
-                    music = "music/music_stpatricks1.ogg"
+                    music = "sounds/music_stpatricks1.ogg"
                 if isItValentinesTimeNow():
                     celebration = True
-                    music = "music/music_valentines1.ogg"
+                    music = "sounds/music_valentines1.ogg"
                 if isItEasterTimeNow():
                     celebration = True
-                    music = "music/music_easter1.ogg"
+                    music = "sounds/music_easter1.ogg"
                 if button_music.is_clicked(pos):
                     if i < 7:
                         i += 1
@@ -129,7 +129,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                         i = 1
                     pygame.mixer.music.fadeout(1000)
                     pygame.mixer.music.unload()
-                    music = f'music/music{i}.ogg'
+                    music = f'sounds/music{i}.ogg'
                     pygame.mixer.music.load(music)
                     pygame.mixer.music.play(-1)
                 if button_save.is_clicked(pos):
@@ -188,7 +188,7 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
 
         pygame.display.update()
 
-def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, title, difficulty):
+def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList, title, difficulty):
     """
     Function to display the quiz details, including title, difficulty level,
     number of questions, a slider to reduce the number of questions, and the questions themselves.
@@ -221,7 +221,7 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_confirm.is_clicked(pos):
-                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList[:num_questions], title)
+                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList[:num_questions], title)
                     return False
                 elif button_go_back.is_clicked(pos):
                     return True
@@ -253,7 +253,7 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
         pygame.display.update()
                 
 
-def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown):
+def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     textinput = TextInputVisualizer()
     pygame.key.set_repeat(200, 25)
     while True:
@@ -301,7 +301,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown):
                                 print(f"Error in {filename}: {ex}")
                                 break
                             if args.gameMode == None:
-                                searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, titleofquiz, difficulty)
+                                searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList, titleofquiz, difficulty)
                                 if searchAgain:
                                     break
                                 else:
@@ -395,7 +395,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown):
                     break
                 print("Questions:", questionList)
                 if args.gameMode == None:
-                    searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, titleofquiz, difficulty)
+                    searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList, titleofquiz, difficulty)
                     if searchAgain:
                         break
                     else:
@@ -403,7 +403,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown):
                 else:
                     StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
             
-def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz):
+def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz):
     running = True
     while running:
         screen.fill(BACKGROUND_COLOUR)
@@ -444,10 +444,10 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titl
                         practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
                     elif btn_advanced == "Space Invaders":
-                        spaceInvaders(questionList, titleofquiz, doCountdown)
+                        spaceInvaders(questionList, titleofquiz, doCountdown, v)
                         return
                     elif btn_advanced == "Strike Zone":
-                        strikeZone(questionList, titleofquiz, doCountdown)
+                        strikeZone(questionList, titleofquiz, doCountdown, v)
                         return
                     elif btn_advanced == "Midas Mayhem (Beta)":
                         midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
@@ -510,13 +510,13 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.spaceInvaders:
             try:
-                spaceInvaders(questionList, titleofquiz, doCountdown)
+                spaceInvaders(questionList, titleofquiz, doCountdown, v)
             except Exception as ex:
                 print("Error: ", ex)
-                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown)
         elif args.gameMode == GameMode.strikeZone:
             try:
-                strikeZone(questionList, titleofquiz, doCountdown)
+                strikeZone(questionList, titleofquiz, doCountdown, v)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
@@ -555,7 +555,7 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_play.is_clicked(pos):
-                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown)
+                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
                 elif button_make.is_clicked(pos):
                     try:
                         subprocess.Popen(["python", "quizcreator"])
@@ -594,21 +594,21 @@ if __name__ == '__main__':
                 if isItHalloweenTimeNow():
                     BACKGROUND_COLOUR = (250,100,0)
                     BUTTON_COLOUR =  (255,110,10)
-                    music = "music/music_halloween1.ogg"
+                    music = "sounds/music_halloween1.ogg"
                 elif isItValentinesTimeNow():
-                    music = "music/music_valentines1.ogg"
+                    music = "sounds/music_valentines1.ogg"
                     BACKGROUND_COLOUR = (255,0,0)
                     BUTTON_COLOUR =  (255,10,10)
                 elif isItStPatricksTimeNow():
-                    music = "music/music_stpatrick1.ogg"
+                    music = "sounds/music_stpatrick1.ogg"
                     BACKGROUND_COLOUR = (0,225,0)
                     BUTTON_COLOUR =  (0,200,0) 
                 elif isItEasterTimeNow():
-                    music = "music/music_easter1.ogg"
+                    music = "sounds/music_easter1.ogg"
                     BACKGROUND_COLOUR = (255,170,180)
                     BUTTON_COLOUR =  (250,250,100)
                 elif isItChristmasTimeNow():
-                    music = "music/music_christmas1.ogg"
+                    music = "sounds/music_christmas1.ogg"
                     BACKGROUND_COLOUR = (0,255,0)
                     BUTTON_COLOUR = (255,0,0)
                 else:

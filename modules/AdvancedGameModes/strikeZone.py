@@ -8,7 +8,7 @@ from modules.elements import *
 from modules.constants import *
 from modules.otherWindows import countdown
 
-def strikeZone(questionList, titleofquiz, doCountdown):
+def strikeZone(questionList, titleofquiz, doCountdown, v):
 
     questionLength = len(questionList)
 
@@ -45,9 +45,12 @@ def strikeZone(questionList, titleofquiz, doCountdown):
     all_out_shot_active = False
     all_out_shot_radius = 0
     all_out_shot_center = None
-    cannonFire = pygame.mixer.Sound('soundEffects/cannonFire.ogg')
-    explosion = pygame.mixer.Sound('soundEffects/explosion.ogg')
-    hit = pygame.mixer.Sound('soundEffects/hit.ogg')
+    cannonFire = pygame.mixer.Sound('sounds/soundEffects/cannonFire.ogg')
+    explosion = pygame.mixer.Sound('sounds/soundEffects/explosion.ogg')
+    hit = pygame.mixer.Sound('sounds/soundEffects/hit.ogg')
+    cannonFire.set_volume(v)
+    explosion.set_volume(v)
+    hit.set_volume(v)
 
     player["image"].fill(BLUE)
 

@@ -6,7 +6,7 @@ from pygame.locals import *
 from modules.elements import *
 from modules.otherWindows import countdown, standard_end_window
 
-def spaceInvaders(questionList, titleofquiz, doCountdown):
+def spaceInvaders(questionList, titleofquiz, doCountdown, v):
     if questionList is None or len(questionList) == 0:
         return
 
@@ -27,10 +27,12 @@ def spaceInvaders(questionList, titleofquiz, doCountdown):
     player_y = SCREEN_HEIGHT - 100
     question_index = 0
     total_questions = len(questionList)
-    cannonFire = pygame.mixer.Sound('soundEffects/cannonFire.ogg')
-    explosion = pygame.mixer.Sound('soundEffects/explosion.ogg')
-    hit = pygame.mixer.Sound('soundEffects/hit.ogg')
-
+    cannonFire = pygame.mixer.Sound('sounds/soundEffects/cannonFire.ogg')
+    explosion = pygame.mixer.Sound('sounds/soundEffects/explosion.ogg')
+    hit = pygame.mixer.Sound('sounds/soundEffects/hit.ogg')
+    cannonFire.set_volume(v)
+    explosion.set_volume(v)
+    hit.set_volume(v)
 
     countdown(titleofquiz, BLACK, WHITE)
 
