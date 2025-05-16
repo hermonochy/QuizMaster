@@ -196,7 +196,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, v):
         screen.fill(BLACK)
 
         if random.random() < 0.005 and len(powerups) < 10:
-            powerup_type = random.choices(["green", "white", "orange"], weights=[60, 10, 30])[0]
+            powerup_type = random.choices(["green", "white", "orange"], weights=[60, 5, 35])[0]
             powerup_color = {
                 "green": GREEN,
                 "white": WHITE,

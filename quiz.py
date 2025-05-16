@@ -24,9 +24,10 @@ from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
 from modules.constants import *
 
 from modules.AdvancedGameModes.spaceInvaders import spaceInvaders
+from modules.AdvancedGameModes.strikeZone import strikeZone
 from modules.AdvancedGameModes.MidasMayhem import midasMayhem
 from modules.AdvancedGameModes.MazeRun import mazeRun
-from modules.AdvancedGameModes.strikeZone import strikeZone
+from modules.AdvancedGameModes.deathRain import deathRain
 
 class GameMode(str, Enum):
     classic = 'classic'
@@ -327,7 +328,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                                     continue
                             titleofquiz = "General Knowledge Quiz"
                             if args.gameMode == None:
-                                choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                                choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
                             else:
                                 StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
                             return
@@ -411,7 +412,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
         display_message("Basic Games", 150, 50, BLACK)
         basic_modes = ButtonArray(["Classic", "Classic V2", "Speed Run", "Survival", "Practice"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), button_width=250, button_spacing=50, text_colour=BLACK)
         display_message("Advanced Games", SCREEN_HEIGHT // 2 + 50, 50, BLACK)
-        advanced_modes = ButtonArray([ "Space Invaders", "Strike Zone", "Midas Mayhem (Beta)", "Maze Run (Beta)"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
+        advanced_modes = ButtonArray([ "Space Invaders", "Strike Zone", "Death Rain", "Midas Mayhem (Beta)", "Maze Run (Beta)"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
         basic_modes.draw(screen, BUTTON_COLOUR)
         advanced_modes.draw(screen, BUTTON_COLOUR)
 
@@ -448,6 +449,9 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
                         return
                     elif btn_advanced == "Strike Zone":
                         strikeZone(questionList, titleofquiz, doCountdown, v)
+                        return
+                    elif btn_advanced == "Death Rain":
+                        deathRain(questionList, titleofquiz, doCountdown, v)
                         return
                     elif btn_advanced == "Midas Mayhem (Beta)":
                         midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
