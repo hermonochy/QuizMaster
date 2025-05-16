@@ -13,7 +13,7 @@ OBSTACLE_HEIGHT = 30
 POWERUP_WIDTH = 30
 POWERUP_HEIGHT = 30
 PLAYER_SPEED = 5
-OBSTACLE_SPEED = 5
+OBSTACLE_SPEED = 1
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -73,13 +73,13 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
     player = Player()
     objects = []
     score = 0
-    total_questions = len(questionList)
+    totalQuestions = len(questionList)
     question_index = 0
     BUTTON_COLOUR = (25,25,25)
 
     def handle_question():
         nonlocal question_index
-        if question_index >= total_questions:
+        if question_index >= totalQuestions:
             return False
         current_question = questionList[question_index]
         question_index += 1
@@ -151,35 +151,6 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
             else:
                 objects.append(PowerUp(x, -POWERUP_HEIGHT, powerup_image))
 
-        for obj in objects:
-            obj.move()
-            if obj.rect.colliderect(player.rect):
-                if isinstance(obj, Obstacle):
-
-                    good_praise_list = [f"Well Done! You know a lot about {titleofquiz.lower()}!",f"You are an expert on {titleofquiz.lower()}!", f" You have mastered {titleofquiz.lower()}!",f"You are amazing at {titleofquiz.lower()}!",f"You truly excel in {titleofquiz.lower()}!", f"Congratulations! You're a whiz on {titleofquiz.lower()}!",f"Bravo! You've nailed {titleofquiz.lower()}!"]
-                    good_praise = (random.choice(good_praise_list))
-                    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz.lower()}!", f"Not far of mastering {titleofquiz.lower()}!", f"Just a bit more practice on {titleofquiz.lower()}!",f"You’re making steady progress in {titleofquiz.lower()}!", f"You're on the right track with {titleofquiz.lower()}!",f"You've got a solid grasp of {titleofquiz.lower()}!",f"A commendable effort in {titleofquiz.lower()}!",f"You've got the basics of {titleofquiz.lower()} down!",f"Keep it up! You're building a good foundation in {titleofquiz.lower()}!"]
-                    medium_praise = (random.choice(medium_praise_list))
-                    bad_praise_list = [f"Your forte is definitely not {titleofquiz.lower()}!",f"You are terrible at {titleofquiz.lower()}!", f"You have alot to learn about {titleofquiz.lower()}!", f"You might want to consider revising another topic!", f"Sorry to say, but you're pretty terrible at {titleofquiz.lower()}!", f"You really struggle with {titleofquiz.lower()}!", f"You have a long way to go in mastering {titleofquiz.lower()}!", f"Not to be too hard, but it seems you're not great at {titleofquiz.lower()}!", f"Time to go back to the drawing board on {titleofquiz.lower()}!", f"You might want to consider taking another look at {titleofquiz.lower()}!", f"It's clear you're not an expert on  {titleofquiz.lower()}!", f"Unfortunately, you're not very good at {titleofquiz.lower()}!", f"You need to brush up on your {titleofquiz.lower()} skills!"]
-                    bad_praise = (random.choice(bad_praise_list))
-                    display_message(f"Game Over! Final Score: {score}", SCREEN_HEIGHT // 2, 75, RED)
-                    try:
-                        if score/totalQuestions > 200 and score/totalQuestions <= 300:
-                            display_message(medium_praise, SCREEN_HEIGHT//2+200, 40, YELLOW)
-                        if score/totalQuestions > 300:
-                            display_message(good_praise, SCREEN_HEIGHT//2+200, 40, GREEN)
-                        if score/totalQuestions <= 200:
-                            display_message(bad_praise, SCREEN_HEIGHT//2+200, 40, RED)
-                    except ZeroDivisionError:
-                            display_message("No questions attempted!", SCREEN_HEIGHT//2+200, 40, YELLOW)
-                    pygame.time.wait(3000)
-                    return
-                elif isinstance(obj, PowerUp):
-                    if handle_question():
-                        player.speed = PLAYER_SPEED * 2
-                        player.speed_boost_time = 500
-                        objects.remove(obj)
-
         objects = [obj for obj in objects if obj.rect.top < SCREEN_HEIGHT]
 
         player.update()
@@ -192,6 +163,40 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
             screen.blit(obj.image, obj.rect.topleft)
 
         display_message(f"Score: {score}", 20, 50, WHITE)
+
+        for obj in objects:
+            obj.move()
+            if obj.rect.colliderect(player.rect):
+                if isinstance(obj, Obstacle):
+
+                    good_praise_list = [f"Well Done! You know a lot about {titleofquiz.lower()}!",f"You are an expert on {titleofquiz.lower()}!", f" You have mastered {titleofquiz.lower()}!",f"You are amazing at {titleofquiz.lower()}!",f"You truly excel in {titleofquiz.lower()}!", f"Congratulations! You're a whiz on {titleofquiz.lower()}!",f"Bravo! You've nailed {titleofquiz.lower()}!"]
+                    good_praise = (random.choice(good_praise_list))
+                    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz.lower()}!", f"Not far of mastering {titleofquiz.lower()}!", f"Just a bit more practice on {titleofquiz.lower()}!",f"You’re making steady progress in {titleofquiz.lower()}!", f"You're on the right track with {titleofquiz.lower()}!",f"You've got a solid grasp of {titleofquiz.lower()}!",f"A commendable effort in {titleofquiz.lower()}!",f"You've got the basics of {titleofquiz.lower()} down!",f"Keep it up! You're building a good foundation in {titleofquiz.lower()}!"]
+                    medium_praise = (random.choice(medium_praise_list))
+                    bad_praise_list = [f"Your forte is definitely not {titleofquiz.lower()}!",f"You are terrible at {titleofquiz.lower()}!", f"You have alot to learn about {titleofquiz.lower()}!", f"You might want to consider revising another topic!", f"Sorry to say, but you're pretty terrible at {titleofquiz.lower()}!", f"You really struggle with {titleofquiz.lower()}!", f"You have a long way to go in mastering {titleofquiz.lower()}!", f"Not to be too hard, but it seems you're not great at {titleofquiz.lower()}!", f"Time to go back to the drawing board on {titleofquiz.lower()}!", f"You might want to consider taking another look at {titleofquiz.lower()}!", f"It's clear you're not an expert on  {titleofquiz.lower()}!", f"Unfortunately, you're not very good at {titleofquiz.lower()}!", f"You need to brush up on your {titleofquiz.lower()} skills!"]
+                    bad_praise = (random.choice(bad_praise_list))
+                    display_message(f"Game Over! Final Score: {score}", SCREEN_HEIGHT // 3, 75, RED)
+                    try:
+                        if score/totalQuestions > 200 and score/totalQuestions <= 300:
+                            display_message(medium_praise, SCREEN_HEIGHT//2, 50, YELLOW)
+                        if score/totalQuestions > 300:
+                            display_message(good_praise, SCREEN_HEIGHT//2, 50, GREEN)
+                        if score/totalQuestions <= 200:
+                            display_message(bad_praise, SCREEN_HEIGHT//2, 50, RED)
+                    except ZeroDivisionError:
+                            display_message("No questions attempted!", SCREEN_HEIGHT//2, 50, YELLOW)
+
+                    pygame.display.update()
+
+                    pygame.time.wait(3000)
+                    return
+                elif isinstance(obj, PowerUp):
+                    if handle_question():
+                        player.speed = PLAYER_SPEED * 2
+                        player.speed_boost_time = 500
+                        objects.remove(obj)
+                    else:
+                        continue
 
         pygame.display.flip()
         clock.tick(60)
