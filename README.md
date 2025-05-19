@@ -214,7 +214,7 @@ Each version of QuizMaster caters to specific needs and environments, ensuring t
 
 Engage with QuizMaster, where creating and playing quizzes is fun and interactive! We welcome contributions to enhance this project further—if you have new quizzes to share, please submit a pull request to [the submodule for quizzes](https://github.com/QuizMaster-world/Quizzes). 
 
-*Please note: Some example quizzes may contain inaccuracies, as they have been contributed by AI or younger audiences from the [Oxcobu](https://oxcobu.github.io/) branch at [Cheney School](https://github.com/Cheney-School).*
+*Please note: Some example quizzes may contain inaccuracies, as they have been contributed to by AI or younger students from the [Cheney School](https://github.com/Cheney-School) branch of [Oxcobu](https://oxcobu.github.io/).*
 
 ## Future Work
 
