@@ -39,6 +39,7 @@ class GameMode(str, Enum):
     mazeRun = 'mazeRun'
     spaceInvaders = 'spaceInvaders'
     strikeZone = 'strikeZone'
+    deathRain = 'deathRain'
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, doCountdown_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, v
@@ -151,7 +152,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
                     BLACK = screen_mode(BACKGROUND_COLOUR_old)
-                    main(music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, BLACK, doCountdown_old, v_old)
                     return
 
 def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
@@ -521,6 +521,12 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
         elif args.gameMode == GameMode.strikeZone:
             try:
                 strikeZone(questionList, titleofquiz, doCountdown, v)
+            except Exception as ex:
+                print("Error: ", ex)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+        elif args.gameMode == GameMode.deathRain:
+            try:
+                deathRain(questionList, titleofquiz, doCountdown, v)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)

@@ -27,8 +27,8 @@ def about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         screen.fill(BACKGROUND_COLOUR)
         button_license = Button("Licenses", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
-        button_website = Button("For more information, please vist our website...", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 10), 600, 40, text_colour=LINK_COLOUR)
-        button_tutorial = Button("...or view our basic tutorial.", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 75), 600, 40, text_colour=LINK_COLOUR)
+        button_website = Button("For more information, please vist our website!", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 10), 600, 40, text_colour=LINK_COLOUR)
+        button_tutorial = Button("You can also view our tutorials.", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 75), 600, 40, text_colour=LINK_COLOUR)
         display_message("About QuizMaster", SCREEN_HEIGHT // 8, 75, BLACK)
         display_message(about_p1, SCREEN_HEIGHT // 5, 30, BLACK)
         display_message(about_p2, SCREEN_HEIGHT // 3, 30, BLACK)
@@ -79,7 +79,6 @@ def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 elif button_go_back.is_clicked(pos):
                     return
 
-
 def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     running = True
     total_items = len(incorrect_questions)
@@ -90,16 +89,18 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
     while running:
         screen.fill(BACKGROUND_COLOUR)
         y_position = 100
+
         button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50)
         button_back.draw(screen, BUTTON_COLOUR)
-        for idx in range(offset, min(offset + items_per_page, total_items)):
+
+        for idx in range(offset, min(offset + items_per_page, total_items)-1):
             question = incorrect_questions[idx]
             y_position = display_message(question.question, y_position, 30, BLACK)
             y_position = display_message(f"Correct Answer: {question.correctAnswer}", y_position, 30, BLACK)
             y_position += 20
-
         if total_items > items_per_page:
             scrollbar.draw(screen)
+
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -113,6 +114,7 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
                 scrollbar.handle_event(event)
 
         offset = scrollbar.get_offset()
+
 
 def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, totalQuestions, correctAnswers, questionIndex, incorrect_questions):
     good_praise_list = [f"Well Done! You know a lot about {titleofquiz.lower()}!",f"You are an expert on {titleofquiz.lower()}!", f" You have mastered {titleofquiz.lower()}!",f"You are amazing at {titleofquiz.lower()}!",f"You truly excel in {titleofquiz.lower()}!", f"Congratulations! You're a whiz on {titleofquiz.lower()}!",f"Bravo! You've nailed {titleofquiz.lower()}!"]

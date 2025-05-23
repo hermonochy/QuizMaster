@@ -100,6 +100,10 @@ A more laid-back approach, this mode allows you to engage in practice sessions a
 Currently the finest and most reliable advanced game mode, *Space Invaders* is a highly sophisticated and fun addition to the QuizMaster platform. 
 Players defend their spaceship from a horde of aliens, gaining ammo by answering questions correctly. Unlike the original arcade game, you can still keep hold of your lives if hit, if you can answer the survival question correctly! Be careful; your ammo runs out quicker than you think! *Space Invaders* transforms learning into a fun and interactive adventure.
 
+![](images/QM4.png)
+
+*A Space Invaders game*
+
 **Strike Zone**
 
 *Strike Zone* is an engaging and fast-paced game mode similar to *Space Invaders* but in 2D. Players must avoid waves of enemies trying to collide with you while carefully managing their health and ammunition. Correctly answering questions earns players power-ups and replenishes their munitions. Players can opt to answer a question without a power-up, but the reward is significantly smaller. Victory comes when all questions are answered, a certain amount of aliens has been killed and all of the munitions have been used up.
@@ -109,10 +113,6 @@ Players defend their spaceship from a horde of aliens, gaining ammo by answering
 |Regular|🟢️|60%|Grants 10 lives and 250 ammo|
 |Shield|🟠️|35%|Grants 10 seconds immunity to enemy attacks|
 |All-out Attack|⚪️|5%|Sends out a blast of energy that destroys all enemies on the screen|
-
-![](images/QM4.png)
-
-*A Space Invaders game*
 
 #### Preferences
 
@@ -158,6 +158,7 @@ options:
 - `midasMayhem`
 - `mazeRun`
 - `spaceInvaders`
+- `deathRain`
 
 Similarly in QuizCreator, a quiz parameter can be added to the end but for obvious reasons not a game mode parameter.
 
