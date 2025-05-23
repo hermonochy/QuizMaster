@@ -21,8 +21,8 @@ def strikeZone(questionList, titleofquiz, doCountdown, v):
     RED = (255, 0, 0)
     GREEN = (0, 255, 0)
     BLUE = (0, 0, 255)
-    BUTTON_COLOUR = (25, 25, 25)
     ORANGE = (255, 165, 0)
+    BUTTON_COLOUR = (25, 25, 25)
 
     PLAYER_SPEED = 10
     PROJECTILE_SPEED = 20

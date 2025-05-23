@@ -1,8 +1,8 @@
+source venv/bin/activate || (./setup.sh && source/venv/bin/activate)
 echo "Activated virual enviroment..."
-source venv/bin/activate
-
+echo "Fetching Quizzes..."
+cd Quizzes
+git pull
+cd ../
 echo "Running QuizMaster..."
-python quiz.py
-
-echo "Deactivating virtual enviroment..."
-deactivate
+./quiz.py || (./setup.sh && ./quiz.py)

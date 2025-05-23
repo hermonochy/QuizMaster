@@ -186,14 +186,24 @@ def mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_CO
         display_message(f"Total Questions: {len(questionList) + len(incorrect_questions)}", SCREEN_HEIGHT // 2 - 150, 40, BLACK)
         display_message(f"Incorrect Questions: {len(incorrect_questions)}", SCREEN_HEIGHT // 2 - 50, 40, BLACK)
 
-        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 100), 200, 50, BLACK)
+        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
+        button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), 250, 40, BLACK)
+        button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
+        button_go_back.draw(screen, BUTTON_COLOUR)
+        button_replay.draw(screen, BUTTON_COLOUR)
         button_quit.draw(screen, BUTTON_COLOUR)
+
         pygame.display.update()
 
         for event in pygame.event.get():
             if event.type == QUIT:
                 quit()
-            elif event.type == MOUSEBUTTONDOWN:
+            if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
+                if button_go_back.is_clicked(pos):
+                    return
+                if button_replay.is_clicked(pos):
+                    mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    return
                 if button_quit.is_clicked(pos):
                     quit()
