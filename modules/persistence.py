@@ -1,7 +1,10 @@
+import json
+import platform
+import subprocess
+import os
+
 from typing import List,Union
 from dataclasses import dataclass, field
-import json
-
 
 @dataclass
 class QuizQuestion:
@@ -34,3 +37,10 @@ def save_preferences(volume,music,do_countdown,background_colour,button_colour):
 
       json.dump(savedData, file, default = vars)
      
+def openFile(file_path):
+    if platform.system() == "Windows":
+        os.startfile(file_path)
+    elif platform.system() == "Darwin":
+        subprocess.run(["open", file_path])
+    else:
+        subprocess.run(["xdg-open", file_path])

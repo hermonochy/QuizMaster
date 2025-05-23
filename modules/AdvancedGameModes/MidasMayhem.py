@@ -1,7 +1,3 @@
-"""
-Gold Miners: A game mode where players attempt to accumulate the most gold by answering questions correctly and choosing chests with varying outcomes.
-"""
-
 import random
 import pygame
 from pygame.locals import *
@@ -52,9 +48,9 @@ def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTO
                 if event.type == MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     if button_go_back.is_clicked(pos):
-                       return
+                        return
                     if button_leave.is_clicked(pos):
-                       quit()
+                        quit()
                     for idx, button in enumerate(buttons):
                         if button.is_clicked(pos):
                             user_answer = idx
@@ -67,16 +63,22 @@ def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTO
         if user_answer == correct_answer_index:
             screen.fill((50,255,50))
             display_message("Correct!", SCREEN_HEIGHT//2-100, 100, (255,255,255))
+            display_message("Click to Progress...", SCREEN_HEIGHT // 2 + 200, 40, (255,255,255))
             pygame.display.update()
-            pygame.time.wait(1000)
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    quit()
+                if event.type == MOUSEBUTTONDOWN:
+                    if self.rect.collidepoint(pygame.mouse.get_pos()):
+                        break
 
             chest_outcomes = [
-                {"label": "Gain Gold", "probability": 0.4, "multiplier": random.uniform(1,2)},
-                {"label": "Lose Gold", "probability": 0.3, "multiplier": random.uniform(-1,-2)},
-                {"label": "Double Gold", "probability": 0.15, "multiplier": 2},
-                {"label": "Triple Gold", "probability": 0.1, "multiplier": 3},
-                {"label": "Jackpot", "probability": 0.002, "multiplier": 10},
-                {"label": "Landmine", "probability": 0.048, "multiplier": 0},
+                {"label": "Gain Gold", "probability": 0.55, "operation": "add", "amount": random.randint(5, (questionIndex+1)*10)},
+                {"label": "Lose Gold", "probability": 0.25, "operation": "subtract", "amount": random.randint(5, (questionIndex+1)*5)},
+                {"label": "Double Gold", "probability": 0.1, "operation": "multiply", "factor": 2},
+                {"label": "Triple Gold", "probability": 0.05, "operation": "multiply", "factor": 3},
+                {"label": "Jackpot!", "probability": 0.002, "operation": "add", "amount": (questionIndex+1)*10},
+                {"label": "Landmine", "probability": 0.048, "operation": "set", "value": 0},
             ]
 
             chests = [{"outcome": random.choices(chest_outcomes, weights=[o["probability"] for o in chest_outcomes])[0]}
@@ -104,34 +106,56 @@ def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTO
                             if button.is_clicked(pos):
                                 selected_chest = chests[i]["outcome"]
 
-            if selected_chest["multiplier"] == 0:
-                player_gold = 0
+            outcome = selected_chest
+            if outcome["operation"] == "set":
+                player_gold = outcome["value"]
                 display_message("Landmine! You lost all your gold!", SCREEN_HEIGHT // 2, 40, BLACK)
-            elif selected_chest["multiplier"] > 0:
-                change = int((player_gold+1) * selected_chest["multiplier"])
-                player_gold += change
-                display_message(f"{selected_chest['label']}! You gained {change} gold!", SCREEN_HEIGHT // 2, 40, BLACK)
+            elif outcome["operation"] == "add":
+                player_gold += outcome["amount"]
+                display_message(f"{outcome['label']}! You gained {outcome['amount']} gold!", SCREEN_HEIGHT // 2, 40, BLACK)
+            elif outcome["operation"] == "subtract":
+                loss = min(player_gold, outcome["amount"])
+                player_gold -= loss
+                display_message(f"{outcome['label']}! You lost {loss} gold!", SCREEN_HEIGHT // 2, 40, BLACK)
+            elif outcome["operation"] == "multiply":
+                if outcome["factor"] > 1:
+                    new_gold = player_gold * outcome["factor"]
+                    gained = new_gold - player_gold
+                    player_gold = new_gold
+                    display_message(f"{outcome['label']}! Your gold increased by {gained}!", SCREEN_HEIGHT // 2, 40, BLACK)
+                else:
+                    player_gold = 0
+                    display_message("You lost all your gold!", SCREEN_HEIGHT // 2, 40, BLACK)
             else:
-                change = int(player_gold * abs(selected_chest["multiplier"]))
-                player_gold -= change
-                display_message(f"{selected_chest['label']}! You lost {change} gold!", SCREEN_HEIGHT // 2, 40, BLACK)
+                display_message("Unknown outcome.", SCREEN_HEIGHT // 2, 40, BLACK)
 
             pygame.display.update()
-            pygame.time.wait(2000)
+            pygame.time.wait(1500)
         else:
             screen.fill((255,10,10))
             display_message("Wrong!", SCREEN_HEIGHT//2-100, 100, (255,255,255))
             display_message(f"Correct Answer: {currentQuestion.correctAnswer}", SCREEN_HEIGHT // 2 + 100, 50, (255,255,255))
+            display_message("Click to Progress...", SCREEN_HEIGHT // 2 + 200, 40, (255,255,255))
             pygame.display.update()
-            pygame.time.wait(1500)
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    quit()
+                if event.type == MOUSEBUTTONDOWN:
+                    pass
+
+        if player_gold < 0:
+            display_message("You Lose! You are in Debt!", SCREEN_HEIGHT//2, 75, (255,0,0))
+            pygame.display.update()
+            pygame.time.wait(2000)
+            return
 
         questionIndex += 1
 
-    good_praise_list = [f"Well Done! You know a lot about {titleofquiz.lower()}!",f"You are an expert on {titleofquiz.lower()}!", f" You have mastered {titleofquiz.lower()}!",f"You are amazing at {titleofquiz.lower()}!",f"You truly excel in {titleofquiz.lower()}!", f"Congratulations! You're a whiz on {titleofquiz.lower()}!",f"Bravo! You've nailed {titleofquiz.lower()}!"]
+    good_praise_list = [f"Well Done! You know a lot about {titleofquiz.lower()}!",f"You are an expert on {titleofquiz.lower()}!", f" You have mastered {titleofquiz.lower()}!",f"You are amazing at {titleofquiz.lower()}!"]
     good_praise = (random.choice(good_praise_list))
-    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz.lower()}!", f"Not far of mastering {titleofquiz.lower()}!", f"Just a bit more practice on {titleofquiz.lower()}!",f"You’re making steady progress in {titleofquiz.lower()}!", f"You're on the right track with {titleofquiz.lower()}!",f"You've got a solid grasp of {titleofquiz.lower()}!",f"A commendable effort in {titleofquiz.lower()}!",f"You've got the basics of {titleofquiz.lower()} down!",f"Keep it up! You're building a good foundation in {titleofquiz.lower()}!"]
+    medium_praise_list = ["Good enough...",f"You have a fair amount of knowledge on {titleofquiz.lower()}!", f"Not far of mastering {titleofquiz.lower()}!", f"Just a bit more practice on {titleofquiz.lower()}!"]
     medium_praise = (random.choice(medium_praise_list))
-    bad_praise_list = [f"Your forte is definitely not {titleofquiz.lower()}!",f"You are terrible at {titleofquiz.lower()}!", f"You have alot to learn about {titleofquiz.lower()}!", f"You might want to consider revising another topic!", f"Sorry to say, but you're pretty terrible at {titleofquiz.lower()}!", f"You really struggle with {titleofquiz.lower()}!", f"You have a long way to go in mastering {titleofquiz.lower()}!", f"Not to be too hard, but it seems you're not great at {titleofquiz.lower()}!", f"Time to go back to the drawing board on {titleofquiz.lower()}!", f"You might want to consider taking another look at {titleofquiz.lower()}!", f"It's clear you're not an expert on  {titleofquiz.lower()}!", f"Unfortunately, you're not very good at {titleofquiz.lower()}!", f"You need to brush up on your {titleofquiz.lower()} skills!"]
+    bad_praise_list = [f"Your forte is definitely not {titleofquiz.lower()}!",f"You are terrible at {titleofquiz.lower()}!", f"You have alot to learn about {titleofquiz.lower()}!", f"You might want to study {titleofquiz.lower()}!"]
     bad_praise = (random.choice(bad_praise_list))
     while True:
         screen.fill(BACKGROUND_COLOUR)
@@ -154,7 +178,7 @@ def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTO
                 if button_go_back.is_clicked(pos):
                     return
                 if button_replay.is_clicked(pos):
-                    midasMayhem(originalQuestions[:], titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 if button_quit.is_clicked(pos):
                     quit()

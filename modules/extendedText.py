@@ -1,5 +1,5 @@
 """
-Module to store extended strings, too big for other programs.
+Module to store extended strings, too long for other programs.
 """
 
 asciiartstart=(r"""
@@ -8,8 +8,8 @@ asciiartstart=(r"""
 | | | |   | | | |   | |   |_  /   | |\/| |    / _` |   / __|   | __|    / _ \   | '__|   | |
 | |_| |   | |_| |   | |    / /    | |  | |   | (_| |   \__ \   | |_    |  __/   | |      |_|
  \__\_\    \__,_|   |_|   /___|   |_|  |_|    \__,_|   |___/    \__|    \___|   |_|      (_)
-                                                                     
-""")          
+
+""")
 
 asciiartend=(r"""
 
@@ -18,7 +18,7 @@ asciiartend=(r"""
 |  _ \    | | | |    / _ \   | |
 | |_) |   | |_| |   |  __/   |_|
 |____/     \__, |    \___|   (_)
-           |___/                
+           |___/ 
 
 """)
 
@@ -33,4 +33,5 @@ about_p3 = """
     """
 
 licenses_text = """
-    This project - and many other versions of it - are primarily licensed under the GPL license. Additionally, the quizzes created within the framework are licensed under the Creative Commons license. For more details, please view the license using the links below:"""
+    This project - and many other versions of it - are primarily licensed under the GPL license. Additionally, the quizzes created within the framework are licensed under the Creative Commons license. For more details, please view the license using the links below:
+    """

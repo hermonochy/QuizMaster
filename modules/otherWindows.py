@@ -3,6 +3,7 @@ import webbrowser
 import random
 
 from modules.elements import *
+from modules.persistence import openFile
 from modules.extendedText import *
 
 
@@ -72,9 +73,9 @@ def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_GPL.is_clicked(pos):
-                    webbrowser.open("https://raw.githubusercontent.com/hermonochy/QuizMaster/refs/heads/main/LICENSE")
+                    openFile("./LICENSE")
                 elif button_CC.is_clicked(pos):
-                    webbrowser.open("https://raw.githubusercontent.com/hermonochy/QuizMaster/refs/heads/main/quizzes/LICENSE")
+                    openFile("Quizzes/LICENSE")
                 elif button_go_back.is_clicked(pos):
                     return
 
