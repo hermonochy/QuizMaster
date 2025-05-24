@@ -93,7 +93,6 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
         if question_index >= totalQuestions:
             return False
         current_question = questionList[question_index]
-        question_index += 1
 
         user_answer = None
         answerOptions = [current_question.correctAnswer] + current_question.wrongAnswers
@@ -138,6 +137,7 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
                         user_answer =  answerOptions.index(currentQuestion.correctAnswer)
 
         correct_index = answerOptions.index(current_question.correctAnswer)
+        question_index += 1
         if user_answer == correct_index:
             return True
         return False
@@ -212,7 +212,7 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
                         player.speed_boost_time = 500
                         objects.remove(obj)
                     else:
-                        continue
+                        break
 
         pygame.display.flip()
         clock.tick(60)
