@@ -153,7 +153,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
                     BLACK = screen_mode(BACKGROUND_COLOUR_old)
-                    return
+                    return music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown
 
 def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     """
@@ -573,7 +573,8 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     except:
                         subprocess.Popen(["python3", "quizcreator"])
                 elif button_preferences.is_clicked(pos):
-                    preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
+                    music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown = preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
+                    BLACK = screen_mode(BACKGROUND_COLOUR)
                 elif button_about.is_clicked(pos):
                     about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
                 elif button_quit.is_clicked(pos):
