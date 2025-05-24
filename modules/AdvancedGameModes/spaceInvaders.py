@@ -1,6 +1,7 @@
 import pygame
 import random
 import time
+import os
 
 from pygame.locals import *
 from modules.elements import *
@@ -27,12 +28,23 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
     player_y = SCREEN_HEIGHT - 100
     question_index = 0
     total_questions = len(questionList)
+    
     cannonFire = pygame.mixer.Sound('sounds/soundEffects/cannonFire.ogg')
     explosion = pygame.mixer.Sound('sounds/soundEffects/explosion.ogg')
     hit = pygame.mixer.Sound('sounds/soundEffects/hit.ogg')
     cannonFire.set_volume(v)
     explosion.set_volume(v)
     hit.set_volume(v)
+
+    player_img = pygame.image.load('images/SpaceshipYou.png')
+    alien_img = pygame.image.load('images/SpaceshipAlien1.png')
+    player_laser_img = pygame.image.load('images/Laser.png')
+    alien_laser_img = pygame.image.load('images/Laser.png')
+    
+    player_img = pygame.transform.scale(player_img, (player_width, player_height))
+    alien_img = pygame.transform.scale(alien_img, (alien_width, alien_height))
+    player_laser_img = pygame.transform.scale(player_laser_img, (15, 50))
+    alien_laser_img = pygame.transform.scale(alien_laser_img, (20,60))
 
     countdown(titleofquiz, BLACK, WHITE)
 
@@ -45,7 +57,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
                     "alive": True
                 })
 
-    generate_aliens(total_questions // 5 + 1, total_questions // 2 + 1)
+    generate_aliens(total_questions // 5+1, total_questions // 2 + 1)
 
     def handle_question(forSurvival):
         nonlocal ammo, question_index
@@ -62,7 +74,6 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
         for idx, answer in enumerate(answerOptions):
             button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40, WHITE)
             buttons.append(button)
-
 
         while user_answer is None:
             screen.fill((0,0,0))
@@ -95,7 +106,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
                     if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
                         user_answer = event.key - pygame.K_1
                     if event.key == pygame.K_y and pygame.key.get_mods() & (pygame.KMOD_CTRL | pygame.KMOD_SHIFT):
-                        user_answer =  answerOptions.index(currentQuestion.correctAnswer)
+                        user_answer = answerOptions.index(current_question.correctAnswer)
 
         correct_index = answerOptions.index(current_question.correctAnswer)
         if user_answer == correct_index:
@@ -118,33 +129,31 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_leave.draw(screen, BUTTON_COLOUR)
 
-        pygame.draw.rect(screen, (0, 255, 0), (player_x, player_y, player_width, player_height))
+        screen.blit(player_img, (player_x, player_y))
 
         numAliens = 0
 
         for alien in aliens:
             if alien["alive"]:
                 numAliens += 1
-                pygame.draw.rect(screen, (255, 0, 0), (alien["x"], alien["y"], alien_width, alien_height))
+                screen.blit(alien_img, (alien["x"], alien["y"]))
                 alien["x"] += alien_speed
                 if alien["x"] > SCREEN_WIDTH - alien_width or alien["x"] < 0:
                     alien_speed *= -1
-                    # change x direction
                     for a in aliens:
                         a["y"] += 100/numAliens
-                        # aliens sink lower if more of them
                 if random.random() < 0.015 * (1/numAliens):
                     cannonFire.play()
                     alien_projectiles.append({"x": alien["x"] + alien_width // 2, "y": alien["y"] + alien_height})
 
         for projectile in projectiles:
-            pygame.draw.rect(screen, (0, 0, 255), (projectile["x"], projectile["y"], 5, 10))
+            screen.blit(player_laser_img, (projectile["x"], projectile["y"]))
             projectile["y"] -= projectile_speed
             if projectile["y"] < 0:
                 projectiles.remove(projectile)
 
         for alien_projectile in alien_projectiles:
-            pygame.draw.rect(screen, (255, 255, 0), (alien_projectile["x"], alien_projectile["y"], 5, 10))
+            screen.blit(alien_laser_img, (alien_projectile["x"], alien_projectile["y"]))
             alien_projectile["y"] += projectile_speed
             if alien_projectile["y"] > SCREEN_HEIGHT:
                 alien_projectiles.remove(alien_projectile)
@@ -181,7 +190,6 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
             cannonFire.play()
             projectiles.append({"x": player_x + player_width // 2, "y": player_y})
             ammo -= 1
-            # ensure the player does not shoot too many projectiles at once
             pygame.time.wait(50)
 
         for event in pygame.event.get():

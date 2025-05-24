@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import pygame
 import argparse
 import sys
@@ -308,7 +309,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                                 else:
                                     return
                             else:
-                                StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList, titleofquiz)
+                                StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList, titleofquiz)
                             return
                     elif button_general_knowledge.is_clicked(pos):
                         number_of_questions, goBack = choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
@@ -330,7 +331,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                             if args.gameMode == None:
                                 choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
                             else:
-                                StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                                StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
                             return
 
             pygame.display.update()
@@ -402,7 +403,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     else:
                         return
                 else:
-                    StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+                    StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
             
 def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz):
     running = True
@@ -461,7 +462,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
                         return
 
 
-def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionList=None, titleofquiz=None):
+def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList=None, titleofquiz=None):
     if args.quizPath != None:
         print("Loading quiz: ", args.quizPath)
         try:
@@ -540,7 +541,7 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, questionLi
                    
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     running = True
-    welcome_image = pygame.image.load("images/logo.png").convert()
+    welcome_image = pygame.image.load("images/Screenshots/logo.png").convert()
     while running:
         screen.fill(BACKGROUND_COLOUR)
         button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 - 50), 250, 60, BLACK)
@@ -591,7 +592,7 @@ if __name__ == '__main__':
     pygame.init()
     pygame.font.init()
     clock = pygame.time.Clock()
-
+    print("\n<QuizMaster> Copyright (C) <2025>  <hermonochy>")
     print(asciiartstart)
     doCountdown = True
     try:
@@ -640,7 +641,7 @@ if __name__ == '__main__':
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('QuizMaster')
-    icon = pygame.image.load('images/logo1.png')
+    icon = pygame.image.load('images/Screenshots/logo1.png')
     pygame.display.set_icon(icon)
     pygame.mixer.init()
     pygame.mixer.music.load(music)
@@ -654,6 +655,6 @@ if __name__ == '__main__':
     BLACK = screen_mode(BACKGROUND_COLOUR)
     
     try:
-        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, volume, questionList, titleofquiz)
     except:
-        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown)
+        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, volume, doCountdown)

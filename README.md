@@ -2,7 +2,7 @@
 
 # QuizMaster
 
- ![](images/logo1.png)
+ ![](images/Screenshots/logo1.png)
 
 QuizMaster is a fun game testing your knowledge and cognitive ability in many different areas. 
  If you can copy and paste text into the command line interface and clone a repository, you're all set to dive in!
@@ -57,7 +57,7 @@ QuizMaster is constantly worked on and your copy can quickly become outdated. To
 
  You'll be greeted by the homepage where you have the option to `Play a Quiz` or `Make a Quiz`. Selecting `Make a Quiz` opens [`QuizCreator`](#quiz-creator), while `Play a Quiz` takes you into the game. To select a quiz, simply type the theme you would like to play. Alternatively, you can also select a random quiz or a general knowledge quiz, the latter of which takes random questions from random quizzes to create a new and unique quiz. Afterwards, it will request you select a game mode ([see below](#game-modes)).
 
-![](images/QM1.png)
+![](images/Screenshots/QM1.png)
 
 *The homepage*
 
@@ -65,7 +65,7 @@ QuizMaster is constantly worked on and your copy can quickly become outdated. To
 
 Various game modes exist to allow the user to test different strengths in different areas. From the classic countdown to speed runs that challenge your quick thinking, each mode is designed to provide a unique experience. For most of the game modes, scores greater than 80% are above average, between 80% and 40% is average, and less than 40% is below average. Below are brief overviews of the current game modes.
 
-![](images/QM3.png)
+![](images/Screenshots/QM3.png)
 
 *The Game Mode selection window*
 
@@ -100,7 +100,7 @@ A more laid-back approach, this mode allows you to engage in practice sessions a
 Currently the finest and most reliable advanced game mode, *Space Invaders* is a highly sophisticated and fun addition to the QuizMaster platform. 
 Players defend their spaceship from a horde of aliens, gaining ammo by answering questions correctly. Unlike the original arcade game, you can still keep hold of your lives if hit, if you can answer the survival question correctly! Be careful; your ammo runs out quicker than you think! *Space Invaders* transforms learning into a fun and interactive adventure.
 
-![](images/QM4.png)
+![](images/Screenshots/QM4.png)
 
 *A Space Invaders game*
 
@@ -118,13 +118,13 @@ Players defend their spaceship from a horde of aliens, gaining ammo by answering
 
 There is a preferences window where you can change the song, volume, and background colour:
 
-![](images/QM5.png)
+![](images/Screenshots/QM5.png)
 
 *The Preferences window*
 
 #### Quiz Creator
 
-![](images/QM2.png)
+![](images/Screenshots/QM2.png)
 
 *The QuizCreator window, having loaded a Harry Potter quiz*
 
