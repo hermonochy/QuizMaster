@@ -20,6 +20,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, v):
     WHITE = (255, 255, 255)
     RED = (255, 0, 0)
     GREEN = (0, 255, 0)
+    YELLOW = (255, 255, 0)
     BLUE = (0, 0, 255)
     ORANGE = (255, 165, 0)
     BUTTON_COLOUR = (25, 25, 25)
@@ -100,9 +101,10 @@ def strikeZone(questionList, titleofquiz, doCountdown, v):
             elif powerup_type == "orange":
                 shield_active = True
                 shield_timer = pygame.time.get_ticks() + 10000
-            elif forPowerup:
+            elif powerup_type == "green":
+                player["health"] += 15
+            elif powerup_type == "yellow":
                 ammo += 250
-                player["health"] += 10
             else:
                 ammo += 100
             return True
@@ -196,8 +198,9 @@ def strikeZone(questionList, titleofquiz, doCountdown, v):
         screen.fill(BLACK)
 
         if random.random() < 0.005 and len(powerups) < 10:
-            powerup_type = random.choices(["green", "white", "orange"], weights=[60, 5, 35])[0]
+            powerup_type = random.choices(["yellow", "green", "white", "orange"], weights=[45, 30, 5, 20])[0]
             powerup_color = {
+                "yellow": YELLOW,
                 "green": GREEN,
                 "white": WHITE,
                 "orange": ORANGE

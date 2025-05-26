@@ -110,9 +110,12 @@ Players defend their spaceship from a horde of aliens, gaining ammo by answering
 
 |Powerup|Colour|Chance|Function|
 |----|----|----|----|
-|Regular|🟢️|60%|Grants 10 lives and 250 ammo|
-|Shield|🟠️|35%|Grants 10 seconds immunity to enemy attacks|
+|Ammo Provider|🟡️|45%|Grants 250 Ammo|
+|Life Restorer|🟢️|30%|Grants 10 lives|
+|Shield|🟠️|20%|Grants 10 seconds immunity to enemy attacks|
 |All-out Attack|⚪️|5%|Sends out a blast of energy that destroys all enemies on the screen|
+
+45, 30, 5, 20
 
 #### Preferences
 

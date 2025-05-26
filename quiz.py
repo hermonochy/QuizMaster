@@ -300,7 +300,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                             filename = random.choice(quizfiles)
                             try:
                                 questionList, titleofquiz, difficulty, randomOrder = load_quiz(filename)
-                                print(f"{titleofquiz} \nQuestions: {questionList}")
+                                print(f"{titleofquiz} \nQuestions: {questionList}\n\n")
                             except Exception as ex:
                                 print(f"Error in {filename}: {ex}")
                                 break

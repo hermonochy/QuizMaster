@@ -57,7 +57,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
                     "alive": True
                 })
 
-    generate_aliens(total_questions // 5+1, total_questions // 2 + 1)
+    generate_aliens(total_questions // 10+3, total_questions // 3 + 5)
 
     def handle_question(forSurvival):
         nonlocal ammo, question_index
@@ -111,7 +111,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
         correct_index = answerOptions.index(current_question.correctAnswer)
         if user_answer == correct_index:
             if not forSurvival:    
-                ammo += 10
+                ammo += total_questions // 10 + 10
             return True
         return False
 
