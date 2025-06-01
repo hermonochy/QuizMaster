@@ -25,6 +25,9 @@ def screen_mode(BACKGROUND_COLOUR):
     else:
         return (0, 0, 0)
 
+def clamp(value):
+    return max(0, min(255, value))
+
 def getOppositeRGB(rgb):
     contrasting_rgb = tuple(255 - value for value in rgb)
     return contrasting_rgb

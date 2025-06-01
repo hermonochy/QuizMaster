@@ -13,7 +13,8 @@ def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTO
     questionIndex = 0
     totalQuestions = len(questionList)
     player_gold = 0
-
+    BACKGROUND_COLOUR = (255,10,10)
+    BUTTON_COLOUR = (212,175,55)
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
     Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=midasMayhem_p1, p2=midasMayhem_p2, p3=midasMayhem_p3)
@@ -67,14 +68,8 @@ def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTO
         if user_answer == correct_answer_index:
             screen.fill((50,255,50))
             display_message("Correct!", SCREEN_HEIGHT//2-100, 100, (255,255,255))
-            display_message("Click to Progress...", SCREEN_HEIGHT // 2 + 200, 40, (255,255,255))
             pygame.display.update()
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    quit()
-                if event.type == MOUSEBUTTONDOWN:
-                    if self.rect.collidepoint(pygame.mouse.get_pos()):
-                        break
+            pygame.time.wait(1000)
 
             chest_outcomes = [
                 {"label": "Gain Gold", "probability": 0.55, "operation": "add", "amount": random.randint(5, (questionIndex+1)*10)},
@@ -138,17 +133,11 @@ def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTO
         else:
             screen.fill((255,10,10))
             display_message("Wrong!", SCREEN_HEIGHT//2-100, 100, (255,255,255))
-            display_message(f"Correct Answer: {currentQuestion.correctAnswer}", SCREEN_HEIGHT // 2 + 100, 50, (255,255,255))
-            display_message("Click to Progress...", SCREEN_HEIGHT // 2 + 200, 40, (255,255,255))
+            display_message(f"Correct Answer: \n{currentQuestion.correctAnswer}", SCREEN_HEIGHT // 2 + 100, 50, (255,255,255))
             pygame.display.update()
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    quit()
-                if event.type == MOUSEBUTTONDOWN:
-                    pass
-
+            pygame.time.wait(2000)
         if player_gold < 0:
-            display_message("You Lose! You are in Debt!", SCREEN_HEIGHT//2, 75, (255,0,0))
+            display_message("Game Over! You are in Debt!", SCREEN_HEIGHT//2, 75, (255,0,0))
             pygame.display.update()
             pygame.time.wait(2000)
             return

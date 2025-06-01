@@ -50,16 +50,29 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     running = True
     celebration = False
     numList = re.findall(r'\d+', music)
-    i = int(numList[0]) if numList else 1 
 
     checkbox_countdown = Checkbox("Enable Countdown", (SCREEN_WIDTH // 4, 600), checked=doCountdown)
 
     volumeSlider = Slider((SCREEN_WIDTH // 4, 175), 800, min=0, max=1, step=0.01, handleColour=(0,0,0), handleRadius=18, initial=v)
     Rslider = Slider((SCREEN_WIDTH // 4, 280), 800, min=0, max=245, step=0.5, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0])
-    Gslider = Slider((SCREEN_WIDTH // 4, 320), 800, min=0, max=245, step=0.5, handleColour = (20,255,50), initial = BACKGROUND_COLOUR[1])
+    Gslider = Slider((SCREEN_WIDTH // 4, 320), 800, min=0, max=245, step=0.5, handleColour = (0,240,0), initial = BACKGROUND_COLOUR[1])
     Bslider = Slider((SCREEN_WIDTH // 4, 360), 800, min=0, max=245, step=0.5, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2])
 
     while running:
+
+        v = volumeSlider.get()
+        R = Rslider.get()
+        G = Gslider.get()
+        B = Bslider.get()
+        BACKGROUND_COLOUR = (R, G, B)
+        if all(i < 245 for i in (R, G, B)):
+            BUTTON_COLOUR = (clamp(R + 10), clamp(G + 10), clamp(B + 10))
+        else:
+            BUTTON_COLOUR = (clamp(R - 10), clamp(G - 10), clamp(B - 10))
+
+        BLACK = screen_mode(BACKGROUND_COLOUR)
+        pygame.mixer.music.set_volume(v)
+
         screen.fill(BACKGROUND_COLOUR)
         display_message("Preferences", 50, 75, BLACK)
         display_message("_"*85, 50, 40, BLACK)
@@ -81,7 +94,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         button_music = Button("Change Music", (SCREEN_WIDTH // 2.5, 460), 300, 50, BLACK)
         button_save = Button("Save", (SCREEN_WIDTH // 2.5, 720), 300, 50, BLACK)
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2.5, 780), 300, 50, BLACK)
-
         checkbox_countdown.draw(screen, text_color=BLACK)
         button_music.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
@@ -92,15 +104,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         Gslider.draw(screen)
         Bslider.draw(screen)
         pygame.display.flip()
-        v = volumeSlider.get()
-        R = Rslider.get()
-        G = Gslider.get()
-        B = Bslider.get()
-        BACKGROUND_COLOUR = (R, G, B)
-        BUTTON_COLOUR = (R + 10, G + 10, B + 10)
-        BLACK = screen_mode(BACKGROUND_COLOUR)
-        pygame.mixer.music.set_volume(v)
-        #pygame.display.update()
         
         for event in pygame.event.get():
             volumeSlider.handle_event(event)
@@ -151,7 +154,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     doCountdown_old, v_old = doCountdown, v
                     if not celebration:
                         save_preferences(v, music, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR
+                    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old, doCountdown_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown
                     print("Saved...")
                 if button_go_back.is_clicked(pos):
                     pygame.mixer.music.unload()
@@ -159,7 +162,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
                     BLACK = screen_mode(BACKGROUND_COLOUR_old)
-                    return music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown
+                    return music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old, doCountdown_old
 
 def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     """
