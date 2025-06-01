@@ -162,3 +162,36 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
                     return True
                 if button_quit.is_clicked(pos):
                     quit()
+
+def Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, **kwargs):
+    while True:
+        for _, value in kwargs.items():
+
+            running = True
+
+            screen.fill(BACKGROUND_COLOUR)
+            display_message("Instructions:", 50, 75, BLACK)
+            display_message(value, SCREEN_HEIGHT//4, 60, BLACK)
+            button_continue = Button("Continue", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+200), 250, 40, BLACK)
+            button_skip = Button("Skip", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+250), 250, 40, BLACK)
+            button_leave = Button("Quit", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+300), 250, 40, BLACK)
+            button_continue.draw(screen, BUTTON_COLOUR)
+            button_skip.draw(screen, BUTTON_COLOUR)
+            button_leave.draw(screen, BUTTON_COLOUR)
+            pygame.display.update()
+            pygame.time.wait(10)
+
+            while running:
+                for event in pygame.event.get():
+                    if event.type == QUIT:
+                        quit()
+                    if event.type == MOUSEBUTTONDOWN:
+                        pos = pygame.mouse.get_pos()
+                        if button_leave.is_clicked(pos):
+                            quit()
+                        elif button_skip.is_clicked(pos):
+                            return
+                        elif button_continue.is_clicked(pos):
+                            running = False
+                            break
+        return

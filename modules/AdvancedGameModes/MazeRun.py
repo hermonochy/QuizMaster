@@ -4,13 +4,16 @@ import random
 from pygame.locals import *
 
 from modules.elements import *
-from modules.otherWindows import countdown, standard_end_window
+from modules.extendedText import mazeRun_p1, mazeRun_p2, mazeRun_p3
+from modules.otherWindows import countdown, standard_end_window, Instructions
 
 TILE_SIZE = 40
 PLAYER_SIZE = 30
 
 def mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
     BLACK = screen_mode(BACKGROUND_COLOUR)
+
+    Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=mazeRun_p1, p2=mazeRun_p2, p3=mazeRun_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)

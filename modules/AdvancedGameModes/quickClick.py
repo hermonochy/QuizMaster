@@ -3,7 +3,8 @@ import random
 import time
 from pygame.locals import *
 from modules.elements import *
-from modules.otherWindows import countdown, standard_end_window
+from modules.extendedText import quickClick_p1, quickClick_p2
+from modules.otherWindows import countdown, standard_end_window, Instructions
 
 class BouncingQuestion:
     def __init__(self, question, x, y):
@@ -49,6 +50,8 @@ def quickClick(questionList, titleofquiz, doCountdown):
         x = random.randint(0, SCREEN_WIDTH - 150)
         y = random.randint(0, SCREEN_HEIGHT - 100)
         bouncing_questions.append(BouncingQuestion(q, x, y))
+
+    Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=quickClick_p1, p2=quickClick_p2)
 
     if doCountdown:
         countdown(titleofquiz, BLACK, WHITE)

@@ -4,6 +4,7 @@ import sys
 
 from pygame.locals import *
 from modules.elements import *
+from modules.extendedText import deathRain_p1, deathRain_p2, deathRain_p3
 from modules.otherWindows import *
 
 PLAYER_WIDTH = 50
@@ -81,6 +82,11 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
     BUTTON_COLOUR = (25,25,25)
     spawn_cooldown = 20 
     last_spawn = 0
+
+    Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=deathRain_p1, p2=deathRain_p2, p3=deathRain_p3)
+
+    if doCountdown:
+        countdown(titleofquiz, BLACK, WHITE)
 
     def get_current_speed():
         return min(BASE_OBSTACLE_SPEED + (score // 100) * (2/len(questionList)), 20)

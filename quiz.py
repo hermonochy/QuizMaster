@@ -43,6 +43,7 @@ class GameMode(str, Enum):
     spaceInvaders = 'spaceInvaders'
     strikeZone = 'strikeZone'
     deathRain = 'deathRain'
+    quickClick = 'quickClick'
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, doCountdown_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, v
@@ -134,7 +135,10 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                         i = 1
                     pygame.mixer.music.fadeout(1000)
                     pygame.mixer.music.unload()
-                    music = f'sounds/music{i}.ogg'
+                    if not celebration:
+                        music = f'sounds/music{i}.ogg'
+                    else:
+                        pass
                     pygame.mixer.music.load(music)
                     pygame.mixer.music.play(-1)
                 if button_save.is_clicked(pos):
@@ -415,7 +419,9 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
         display_message("Basic Games", 150, 50, BLACK)
         basic_modes = ButtonArray(["Classic", "Classic V2", "Speed Run", "Survival", "Practice"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), button_width=250, button_spacing=50, text_colour=BLACK)
         display_message("Advanced Games", SCREEN_HEIGHT // 2 + 50, 50, BLACK)
-        advanced_modes = ButtonArray([ "Space Invaders", "Strike Zone", "Death Rain", "Quick Click", "Midas Mayhem", "Maze Run (Alpha)"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
+        advancedGamemodes = ["Space Invaders", "Strike Zone", "Death Rain", "Quick Click", "Midas Mayhem", "Maze Run (Alpha)"]
+
+        advanced_modes = ButtonArray(advancedGamemodes, (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
         basic_modes.draw(screen, BUTTON_COLOUR)
         advanced_modes.draw(screen, BUTTON_COLOUR)
 
@@ -538,7 +544,7 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questio
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
     # With selected quiz, suppress quiz selection
     elif args.quizPath != None and args.gameMode == None:
-        choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, questionList, titleofquiz)
+        choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
     # Start home page
     elif args.gameMode == None and args.quizPath == None:
         main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, volume)

@@ -5,7 +5,9 @@ import os
 
 from pygame.locals import *
 from modules.elements import *
-from modules.otherWindows import countdown, standard_end_window
+from modules.checker import isItHalloweenTimeNow
+from modules.extendedText import *
+from modules.otherWindows import countdown, standard_end_window, Instructions
 
 def spaceInvaders(questionList, titleofquiz, doCountdown, v):
     if questionList is None or len(questionList) == 0:
@@ -28,25 +30,28 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
     player_y = SCREEN_HEIGHT - 100
     question_index = 0
     total_questions = len(questionList)
-    
-    cannonFire = pygame.mixer.Sound('sounds/soundEffects/cannonFire.ogg')
-    explosion = pygame.mixer.Sound('sounds/soundEffects/explosion.ogg')
-    hit = pygame.mixer.Sound('sounds/soundEffects/hit.ogg')
-    cannonFire.set_volume(v)
-    explosion.set_volume(v)
-    hit.set_volume(v)
 
-    player_img = pygame.image.load('images/SpaceshipYou.png')
+    player_img = pygame.image.load('images/Spaceship.png')
     alien_img = pygame.image.load('images/SpaceshipAlien1.png')
     player_laser_img = pygame.image.load('images/Laser.png')
     alien_laser_img = pygame.image.load('images/Laser.png')
+    cannonFire = pygame.mixer.Sound('sounds/soundEffects/cannonFire.ogg')
+    explosion = pygame.mixer.Sound('sounds/soundEffects/explosion.ogg')
+    hit = pygame.mixer.Sound('sounds/soundEffects/hit.ogg')
+
+    cannonFire.set_volume(v)
+    explosion.set_volume(v)
+    hit.set_volume(v)
     
     player_img = pygame.transform.scale(player_img, (player_width, player_height))
     alien_img = pygame.transform.scale(alien_img, (alien_width, alien_height))
     player_laser_img = pygame.transform.scale(player_laser_img, (15, 50))
     alien_laser_img = pygame.transform.scale(alien_laser_img, (20,60))
 
-    countdown(titleofquiz, BLACK, WHITE)
+    Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=spaceInvaders_p1, p2=spaceInvaders_p2, p3=spaceInvaders_p3)
+
+    if doCountdown:
+        countdown(titleofquiz, BLACK, WHITE)
 
     def generate_aliens(rows, cols):
         for row in range(rows):

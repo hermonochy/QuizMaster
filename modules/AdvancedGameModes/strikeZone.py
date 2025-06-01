@@ -6,7 +6,8 @@ import time
 from pygame.locals import *
 from modules.elements import *
 from modules.constants import *
-from modules.otherWindows import countdown
+from modules.extendedText import strikeZone_p1, strikeZone_p2, strikeZone_p3
+from modules.otherWindows import countdown, Instructions
 
 def strikeZone(questionList, titleofquiz, doCountdown, v):
 
@@ -110,7 +111,10 @@ def strikeZone(questionList, titleofquiz, doCountdown, v):
             return True
         return False
 
-    countdown(titleofquiz, BLACK, WHITE)
+    Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
+
+    if doCountdown:
+        countdown(titleofquiz, BLACK, WHITE)
 
     button_answer = Button("Answer Question", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 190), 300, 50, WHITE)
     button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, WHITE)
