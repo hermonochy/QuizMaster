@@ -280,32 +280,28 @@ class Scrollbar:
 
 def display_message(message, y_position, font_size, colour):
     font = pygame.font.Font(None, font_size)
-    words = message.split()
-    
-    if len(message) > 60:
-        text_lines = []
-        line = ""
-        
-        for word in words:
-            if font.size(line + word)[0] < SCREEN_WIDTH * 0.9: # padding
-                line += word + " "
-            else:
-                text_lines.append(line)
-                line = word + " "
-        
-        if line:
-            text_lines.append(line)
+    lines = []
 
-        for line in text_lines:
-            text = font.render(line, True, colour)
-            text_rect = text.get_rect(center=(SCREEN_WIDTH // 2 , y_position))
-            screen.blit(text, text_rect)
-            y_position += text.get_height()
-    else:
-        text = font.render(message, True, colour)
+    message_lines = message.split('\n')
+    for msg_line in message_lines:
+        words = msg_line.split()
+        if len(msg_line) > 60:
+            line = ""
+            for word in words:
+                if font.size(line + word)[0] < SCREEN_WIDTH * 0.9:
+                    line += word + " "
+                else:
+                    lines.append(line)
+                    line = word + " "
+            if line:
+                lines.append(line)
+        else:
+            lines.append(msg_line)
+
+    for line in lines:
+        text = font.render(line, True, colour)
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, y_position))
         screen.blit(text, text_rect)
-        
         y_position += text.get_height()
 
     return y_position
