@@ -417,7 +417,14 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
         display_message("Basic Games", 150, 50, BLACK)
         basic_modes = ButtonArray(["Classic", "Classic V2", "Speed Run", "Survival", "Practice"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), button_width=250, button_spacing=50, text_colour=BLACK)
         display_message("Advanced Games", SCREEN_HEIGHT // 2 + 50, 50, BLACK)
-        advancedGamemodes = ["Spectre Swarm" if isItHalloweenTimeNow() else "Space Invaders", "Strike Zone", "Death Rain", "Quick Click", "Midas Mayhem", "Maze Run (Alpha)"]
+        advancedGamemodes = [
+            "Spectre Swarm" if isItHalloweenTimeNow() else "Space Invaders", 
+            "Strike Zone", 
+            "Gift Fall" if isItChristmasTimeNow() else "Eggstorm" if isItEasterTimeNow()  else "Death Rain", 
+            "Quick Click", 
+            "Midas Mayhem", 
+            "Maze Run (Alpha)"
+        ]
 
         advanced_modes = ButtonArray(advancedGamemodes, (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
         basic_modes.draw(screen, BUTTON_COLOUR)
@@ -457,7 +464,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
                     elif btn_advanced == "Strike Zone":
                         strikeZone(questionList, titleofquiz, doCountdown, v)
                         return
-                    elif btn_advanced == "Death Rain":
+                    elif btn_advanced == "Death Rain" or btn_advanced == "Gift Fall" or btn_advanced == "Eggstorm":
                         deathRain(questionList, titleofquiz, doCountdown, v)
                         return
                     elif btn_advanced == "Quick Click":

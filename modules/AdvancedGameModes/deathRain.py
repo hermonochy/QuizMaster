@@ -5,12 +5,16 @@ import sys
 from pygame.locals import *
 from modules.elements import *
 from modules.extendedText import deathRain_p1, deathRain_p2, deathRain_p3
+from modules.checker import isItChristmasTimeNow, isItEasterTimeNow
 from modules.otherWindows import *
 
 PLAYER_WIDTH = 70
 PLAYER_HEIGHT = 75
 OBSTACLE_WIDTH = 10
 OBSTACLE_HEIGHT = 50
+if isItChristmasTimeNow():
+    OBSTACLE_WIDTH = 25
+    OBSTACLE_HEIGHT = 25
 POWERUP_WIDTH = 30
 POWERUP_HEIGHT = 30
 PLAYER_SPEED = 5
@@ -27,13 +31,30 @@ YELLOW = (255, 255, 0)
 
 
 player_image = pygame.image.load("images/hotAirBallon.png")
+if isItChristmasTimeNow():
+    player_image = pygame.image.load("images/santa.png")
+elif isItEasterTimeNow():
+    player_image = pygame.image.load("images/easterBunny.png")
 player_image = pygame.transform.scale(player_image, (PLAYER_WIDTH, PLAYER_HEIGHT))
 
 obstacle_image = pygame.image.load("images/arrow.png")
+if isItChristmasTimeNow():
+    obstacle_image = pygame.image.load("images/coal.png")
+elif isItEasterTimeNow():
+    obstacle_image = pygame.image.load("images/carrot.png")
 obstacle_image = pygame.transform.scale(obstacle_image, (OBSTACLE_WIDTH, OBSTACLE_HEIGHT))
 
-powerup_image = pygame.image.load("images/coin.png")
-powerup_image = pygame.transform.scale(powerup_image, (POWERUP_WIDTH, POWERUP_HEIGHT))
+giftList = [
+    "images/present1.png", 
+    "images/present2.png", 
+    "images/present3.png"
+]
+
+eggList = [
+    "images/easterEgg1.png", 
+    "images/easterEgg2.png", 
+    "images/easterEgg3.png", 
+]
 
 cloud_image_files = [
     "images/cloud1.png",
@@ -207,6 +228,15 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
         if frame_counter - last_spawn >= current_spawn_chance:
             x = random.randint(0, SCREEN_WIDTH - OBSTACLE_WIDTH)
             if random.random() < POWERUP_CHANCE:
+                
+                powerup_image = pygame.image.load("images/coin.png")
+                if isItChristmasTimeNow():
+                    gift = random.choice(giftList)
+                    powerup_image = pygame.image.load(gift)
+                elif isItEasterTimeNow():
+                    egg = random.choice(eggList)
+                    powerup_image = pygame.image.load(egg)
+                powerup_image = pygame.transform.scale(powerup_image, (POWERUP_WIDTH, POWERUP_HEIGHT))
                 objects.append(PowerUp(x, -POWERUP_HEIGHT, powerup_image, current_speed))
             else:
                 objects.append(Obstacle(x, -OBSTACLE_HEIGHT, obstacle_image, current_speed))
