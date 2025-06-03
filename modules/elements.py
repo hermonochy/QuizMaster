@@ -28,6 +28,12 @@ def screen_mode(BACKGROUND_COLOUR):
 def clamp(value):
     return max(0, min(255, value))
 
+def button_colour(R, G, B):
+    if all(i < 245 for i in (R, G, B)):
+        return (clamp(R + 10), clamp(G + 10), clamp(B + 10))
+    else:
+        return (clamp(R - 10), clamp(G - 10), clamp(B - 10))
+
 def getOppositeRGB(rgb):
     contrasting_rgb = tuple(255 - value for value in rgb)
     return contrasting_rgb
