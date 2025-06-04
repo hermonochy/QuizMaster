@@ -7,9 +7,9 @@ from modules.elements import *
 from modules.extendedText import deathRain_p1, deathRain_p2, deathRain_p3
 from modules.otherWindows import *
 
-PLAYER_WIDTH = 75
+PLAYER_WIDTH = 70
 PLAYER_HEIGHT = 75
-OBSTACLE_WIDTH = 50
+OBSTACLE_WIDTH = 10
 OBSTACLE_HEIGHT = 50
 POWERUP_WIDTH = 30
 POWERUP_HEIGHT = 30
@@ -34,6 +34,16 @@ obstacle_image = pygame.transform.scale(obstacle_image, (OBSTACLE_WIDTH, OBSTACL
 
 powerup_image = pygame.image.load("images/coin.png")
 powerup_image = pygame.transform.scale(powerup_image, (POWERUP_WIDTH, POWERUP_HEIGHT))
+
+cloud_image_files = [
+    "images/cloud1.png",
+    "images/cloud2.png",
+]
+cloud_images = []
+for path in cloud_image_files:
+    img = pygame.image.load(path).convert_alpha()
+    img = pygame.transform.scale(img, (random.randint(200,350), random.randint(100,200)))
+    cloud_images.append(img)
 
 class Player:
     def __init__(self):
@@ -72,6 +82,22 @@ class PowerUp:
     def move(self):
         self.rect.y += self.speed
 
+class Cloud:
+    def __init__(self, image, x, y, drift_speed):
+        self.image = image
+        self.x = x
+        self.y = y
+        self.drift_speed = drift_speed
+        self.rect = pygame.Rect(x, y, image.get_width(), image.get_height())
+
+    def update(self):
+        self.x += self.drift_speed
+        self.rect.x = int(self.x)
+
+    def is_off_screen(self, screen_width):
+        return self.x + self.image.get_width() < 0 or self.x > screen_width
+
+
 def deathRain(questionList, titleofquiz, doCountdown, v):
 
     if questionList is None or len(questionList) == 0:
@@ -90,6 +116,15 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, WHITE)
+
+    active_clouds = []
+    if cloud_images:
+        chosen_image = random.choice(cloud_images)
+        cloud_x = random.randint(0, SCREEN_WIDTH - chosen_image.get_width())
+        cloud_y = random.randint(0, SCREEN_HEIGHT - 300)
+        drift_speed = random.choice([-0.2, 0.2, 0.3, -0.3, 0.4, -0.4])
+        cloud = Cloud(chosen_image, cloud_x, cloud_y, drift_speed)
+        active_clouds.append(cloud)
 
     def get_current_speed():
         return min(BASE_OBSTACLE_SPEED + (score // 100) * (2/len(questionList)), 20)
@@ -187,6 +222,8 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
         screen.blit(player_image, player.rect.topleft)
         for obj in objects:
             screen.blit(obj.image, obj.rect.topleft)
+        for cloud in active_clouds:
+            screen.blit(cloud.image, (int(cloud.x), int(cloud.y)))
 
         display_message(f"Score: {score}", 20, 50, WHITE)
 
@@ -222,6 +259,17 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
                         objects.remove(obj)
                     else:
                         break
+
+        for cloud in active_clouds:
+            cloud.update()
+        active_clouds = [cloud for cloud in active_clouds if not cloud.is_off_screen(SCREEN_WIDTH)]
+        if len(active_clouds) < 8 and cloud_images:
+            chosen_image = random.choice(cloud_images)
+            cloud_x = random.randint(0, SCREEN_WIDTH - chosen_image.get_width())
+            cloud_y = random.randint(0, SCREEN_HEIGHT - 300)
+            drift_speed = random.uniform(-0.4, 0.4)
+            cloud = Cloud(chosen_image, cloud_x, cloud_y, drift_speed)
+            active_clouds.append(cloud)
 
         pygame.display.flip()
         clock.tick(60)
