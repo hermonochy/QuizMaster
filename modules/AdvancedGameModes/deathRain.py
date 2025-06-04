@@ -7,29 +7,33 @@ from modules.elements import *
 from modules.extendedText import deathRain_p1, deathRain_p2, deathRain_p3
 from modules.otherWindows import *
 
-PLAYER_WIDTH = 50
-PLAYER_HEIGHT = 50
-OBSTACLE_WIDTH = 30
-OBSTACLE_HEIGHT = 30
+PLAYER_WIDTH = 75
+PLAYER_HEIGHT = 75
+OBSTACLE_WIDTH = 50
+OBSTACLE_HEIGHT = 50
 POWERUP_WIDTH = 30
 POWERUP_HEIGHT = 30
 PLAYER_SPEED = 5
 BASE_OBSTACLE_SPEED = 6
 POWERUP_CHANCE = 0.15
 
+BUTTON_COLOUR = (0,100,255)
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+BACKGROUND_COLOUR = (0,181,226)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
 
-player_image = pygame.Surface((PLAYER_WIDTH, PLAYER_HEIGHT))
-player_image.fill(BLUE)
-obstacle_image = pygame.Surface((OBSTACLE_WIDTH, OBSTACLE_HEIGHT))
-obstacle_image.fill(GREEN)
-powerup_image = pygame.Surface((POWERUP_WIDTH, POWERUP_HEIGHT))
-powerup_image.fill(YELLOW)
+
+player_image = pygame.image.load("images/hotAirBallon.png")
+player_image = pygame.transform.scale(player_image, (PLAYER_WIDTH, PLAYER_HEIGHT))
+
+obstacle_image = pygame.image.load("images/arrow.png")
+obstacle_image = pygame.transform.scale(obstacle_image, (OBSTACLE_WIDTH, OBSTACLE_HEIGHT))
+
+powerup_image = pygame.image.load("images/coin.png")
+powerup_image = pygame.transform.scale(powerup_image, (POWERUP_WIDTH, POWERUP_HEIGHT))
 
 class Player:
     def __init__(self):
@@ -79,14 +83,13 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
     score = 0
     totalQuestions = len(questionList)
     question_index = 0
-    BUTTON_COLOUR = (25,25,25)
     spawn_cooldown = 20 
     last_spawn = 0
 
-    Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=deathRain_p1, p2=deathRain_p2, p3=deathRain_p3)
+    Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, WHITE, titleofquiz, p1=deathRain_p1, p2=deathRain_p2, p3=deathRain_p3)
 
     if doCountdown:
-        countdown(titleofquiz, BLACK, WHITE)
+        countdown(titleofquiz, BACKGROUND_COLOUR, WHITE)
 
     def get_current_speed():
         return min(BASE_OBSTACLE_SPEED + (score // 100) * (2/len(questionList)), 20)
@@ -110,11 +113,11 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
             buttons.append(button)
 
         while user_answer is None:
-            screen.fill((0,0,0))
+            screen.fill(BACKGROUND_COLOUR)
             display_message(f"Question: {current_question.question}", QUESTION_OFFSET, 50, WHITE)
 
             for button in buttons:
-                button.draw(screen, BUTTON_COLOUR if user_answer is None else BLACK)
+                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
             
             button_go_back = Button("Cancel", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, WHITE)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, WHITE)
@@ -180,7 +183,7 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
 
         score += 1
 
-        screen.fill(BLACK)
+        screen.fill(BACKGROUND_COLOUR)
         screen.blit(player_image, player.rect.topleft)
         for obj in objects:
             screen.blit(obj.image, obj.rect.topleft)
