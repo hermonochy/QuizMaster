@@ -28,6 +28,12 @@ def screen_mode(BACKGROUND_COLOUR):
 def clamp(value):
     return max(0, min(255, value))
 
+def button_colour(R, G, B):
+    if all(i < 245 for i in (R, G, B)):
+        return (clamp(R + 10), clamp(G + 10), clamp(B + 10))
+    else:
+        return (clamp(R - 10), clamp(G - 10), clamp(B - 10))
+
 def getOppositeRGB(rgb):
     contrasting_rgb = tuple(255 - value for value in rgb)
     return contrasting_rgb
@@ -182,28 +188,39 @@ class Slider:
         return self.value
 
 class Checkbox:
-    def __init__(self, text, position, width=20, height=20, checked=False):
+    def __init__(self, text, position, width=25, height=25, checked=False):
         self.text = text
         self.position = position
         self.checked = checked
         self.width = width
         self.height = height
-        self.font = pygame.font.Font(None, 36)
+        self.font = pygame.font.Font(None, (width + height // 3))
         self.rect = pygame.Rect(position[0], position[1], width, height)
+        self.text_rect = None
 
     def draw(self, screen, box_color = (253,245,230), check_color = (0,0,0), text_color=(0, 0, 0)):
-        pygame.draw.rect(screen, box_color, self.rect)
+        pygame.draw.rect(screen, box_color, self.rect, border_radius=5)
+        pygame.draw.rect(screen, check_color, self.rect, 2, border_radius=5)
         
         if self.checked:
-            pygame.draw.line(screen, check_color, (self.rect.left, self.rect.centery), (self.rect.centerx, self.rect.bottom), 3)
-            pygame.draw.line(screen, check_color, (self.rect.centerx, self.rect.bottom), (self.rect.right, self.rect.top), 3)
+            padding = max(3, self.width // 6)
+            x1, y1 = self.rect.left + padding, self.rect.centery
+            x2, y2 = self.rect.centerx - padding // 2, self.rect.bottom - padding
+            x3, y3 = self.rect.right - padding, self.rect.top + padding
+
+            pygame.draw.lines(
+                screen, check_color, False,
+                [(x1, y1), (x2, y2), (x3, y3)],
+                4
+            )
         
         text_surf = self.font.render(self.text, True, text_color)
         text_rect = text_surf.get_rect(midleft=(self.rect.right + 10, self.rect.centery))
         screen.blit(text_surf, text_rect)
+        self.text_rect = text_rect
 
     def is_clicked(self, pos):
-        return self.rect.collidepoint(pos)
+        return self.rect.collidepoint(pos) or (self.text_rect is not None and self.text_rect.collidepoint(pos))
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -212,6 +229,43 @@ class Checkbox:
     
     def get(self):
         return self.checked
+
+class ProgressBar:
+    def __init__(self, position, size, min_value=0, max_value=100, current_value=0, 
+                 bar_color=(30, 144, 255), bg_color=(220, 220, 220), border_color=(0, 0, 0), border_width=2, show_percentage=False):
+        self.position = position
+        self.size = size
+        self.min_value = min_value
+        self.max_value = max_value
+        self.current_value = current_value
+        self.bar_color = bar_color
+        self.bg_color = bg_color
+        self.border_color = border_color
+        self.border_width = border_width
+        self.show_percentage = show_percentage
+        self.font = pygame.font.Font(None, int(self.size[1] * 0.7))
+
+    def set_value(self, value):
+        self.current_value = max(self.min_value, min(self.max_value, value))
+
+    def draw(self, screen):
+        x, y = self.position
+        width, height = self.size
+
+        bg_rect = pygame.Rect(x, y, width, height)
+        pygame.draw.rect(screen, self.bg_color, bg_rect, border_radius=int(height*0.4))
+        progress = (self.current_value - self.min_value) / (self.max_value - self.min_value)
+        progress_width = int(width * progress)
+        if progress_width > 0:
+            progress_rect = pygame.Rect(x, y, progress_width, height)
+            pygame.draw.rect(screen, self.bar_color, progress_rect, border_radius=int(height*0.4))
+        pygame.draw.rect(screen, self.border_color, bg_rect, self.border_width, border_radius=int(height*0.4))
+
+        if self.show_percentage:
+            percent = int(100 * progress)
+            text_surf = self.font.render(f"{percent}%", True, (0, 0, 0))
+            text_rect = text_surf.get_rect(center=(x + width // 2, y + height // 2))
+            screen.blit(text_surf, text_rect)
 
 class Scrollbar:
     def __init__(self, position, height, total_items, items_per_page):

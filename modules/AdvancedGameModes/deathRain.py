@@ -5,31 +5,66 @@ import sys
 from pygame.locals import *
 from modules.elements import *
 from modules.extendedText import deathRain_p1, deathRain_p2, deathRain_p3
+from modules.checker import isItChristmasTimeNow, isItEasterTimeNow
 from modules.otherWindows import *
 
-PLAYER_WIDTH = 50
-PLAYER_HEIGHT = 50
-OBSTACLE_WIDTH = 30
-OBSTACLE_HEIGHT = 30
+PLAYER_WIDTH = 70
+PLAYER_HEIGHT = 75
+OBSTACLE_WIDTH = 10
+OBSTACLE_HEIGHT = 50
+if isItChristmasTimeNow():
+    OBSTACLE_WIDTH = 25
+    OBSTACLE_HEIGHT = 25
 POWERUP_WIDTH = 30
 POWERUP_HEIGHT = 30
 PLAYER_SPEED = 5
 BASE_OBSTACLE_SPEED = 6
 POWERUP_CHANCE = 0.15
 
+BUTTON_COLOUR = (0,100,255)
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+BACKGROUND_COLOUR = (0,181,226)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
 
-player_image = pygame.Surface((PLAYER_WIDTH, PLAYER_HEIGHT))
-player_image.fill(BLUE)
-obstacle_image = pygame.Surface((OBSTACLE_WIDTH, OBSTACLE_HEIGHT))
-obstacle_image.fill(GREEN)
-powerup_image = pygame.Surface((POWERUP_WIDTH, POWERUP_HEIGHT))
-powerup_image.fill(YELLOW)
+
+player_image = pygame.image.load("images/hotAirBallon.png")
+if isItChristmasTimeNow():
+    player_image = pygame.image.load("images/santa.png")
+elif isItEasterTimeNow():
+    player_image = pygame.image.load("images/easterBunny.png")
+player_image = pygame.transform.scale(player_image, (PLAYER_WIDTH, PLAYER_HEIGHT))
+
+obstacle_image = pygame.image.load("images/arrow.png")
+if isItChristmasTimeNow():
+    obstacle_image = pygame.image.load("images/coal.png")
+elif isItEasterTimeNow():
+    obstacle_image = pygame.image.load("images/carrot.png")
+obstacle_image = pygame.transform.scale(obstacle_image, (OBSTACLE_WIDTH, OBSTACLE_HEIGHT))
+
+giftList = [
+    "images/present1.png", 
+    "images/present2.png", 
+    "images/present3.png"
+]
+
+eggList = [
+    "images/easterEgg1.png", 
+    "images/easterEgg2.png", 
+    "images/easterEgg3.png", 
+]
+
+cloud_image_files = [
+    "images/cloud1.png",
+    "images/cloud2.png",
+]
+cloud_images = []
+for path in cloud_image_files:
+    img = pygame.image.load(path).convert_alpha()
+    img = pygame.transform.scale(img, (random.randint(200,350), random.randint(100,200)))
+    cloud_images.append(img)
 
 class Player:
     def __init__(self):
@@ -68,6 +103,22 @@ class PowerUp:
     def move(self):
         self.rect.y += self.speed
 
+class Cloud:
+    def __init__(self, image, x, y, drift_speed):
+        self.image = image
+        self.x = x
+        self.y = y
+        self.drift_speed = drift_speed
+        self.rect = pygame.Rect(x, y, image.get_width(), image.get_height())
+
+    def update(self):
+        self.x += self.drift_speed
+        self.rect.x = int(self.x)
+
+    def is_off_screen(self, screen_width):
+        return self.x + self.image.get_width() < 0 or self.x > screen_width
+
+
 def deathRain(questionList, titleofquiz, doCountdown, v):
 
     if questionList is None or len(questionList) == 0:
@@ -79,14 +130,22 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
     score = 0
     totalQuestions = len(questionList)
     question_index = 0
-    BUTTON_COLOUR = (25,25,25)
     spawn_cooldown = 20 
     last_spawn = 0
 
-    Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=deathRain_p1, p2=deathRain_p2, p3=deathRain_p3)
+    Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, WHITE, titleofquiz, p1=deathRain_p1, p2=deathRain_p2, p3=deathRain_p3)
 
     if doCountdown:
-        countdown(titleofquiz, BLACK, WHITE)
+        countdown(titleofquiz, BACKGROUND_COLOUR, WHITE)
+
+    active_clouds = []
+    if cloud_images:
+        chosen_image = random.choice(cloud_images)
+        cloud_x = random.randint(0, SCREEN_WIDTH - chosen_image.get_width())
+        cloud_y = random.randint(0, SCREEN_HEIGHT - 300)
+        drift_speed = random.choice([-0.2, 0.2, 0.3, -0.3, 0.4, -0.4])
+        cloud = Cloud(chosen_image, cloud_x, cloud_y, drift_speed)
+        active_clouds.append(cloud)
 
     def get_current_speed():
         return min(BASE_OBSTACLE_SPEED + (score // 100) * (2/len(questionList)), 20)
@@ -110,11 +169,11 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
             buttons.append(button)
 
         while user_answer is None:
-            screen.fill((0,0,0))
+            screen.fill(BACKGROUND_COLOUR)
             display_message(f"Question: {current_question.question}", QUESTION_OFFSET, 50, WHITE)
 
             for button in buttons:
-                button.draw(screen, BUTTON_COLOUR if user_answer is None else BLACK)
+                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
             
             button_go_back = Button("Cancel", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, WHITE)
             button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, WHITE)
@@ -169,6 +228,15 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
         if frame_counter - last_spawn >= current_spawn_chance:
             x = random.randint(0, SCREEN_WIDTH - OBSTACLE_WIDTH)
             if random.random() < POWERUP_CHANCE:
+                
+                powerup_image = pygame.image.load("images/coin.png")
+                if isItChristmasTimeNow():
+                    gift = random.choice(giftList)
+                    powerup_image = pygame.image.load(gift)
+                elif isItEasterTimeNow():
+                    egg = random.choice(eggList)
+                    powerup_image = pygame.image.load(egg)
+                powerup_image = pygame.transform.scale(powerup_image, (POWERUP_WIDTH, POWERUP_HEIGHT))
                 objects.append(PowerUp(x, -POWERUP_HEIGHT, powerup_image, current_speed))
             else:
                 objects.append(Obstacle(x, -OBSTACLE_HEIGHT, obstacle_image, current_speed))
@@ -180,10 +248,12 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
 
         score += 1
 
-        screen.fill(BLACK)
+        screen.fill(BACKGROUND_COLOUR)
         screen.blit(player_image, player.rect.topleft)
         for obj in objects:
             screen.blit(obj.image, obj.rect.topleft)
+        for cloud in active_clouds:
+            screen.blit(cloud.image, (int(cloud.x), int(cloud.y)))
 
         display_message(f"Score: {score}", 20, 50, WHITE)
 
@@ -219,6 +289,17 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
                         objects.remove(obj)
                     else:
                         break
+
+        for cloud in active_clouds:
+            cloud.update()
+        active_clouds = [cloud for cloud in active_clouds if not cloud.is_off_screen(SCREEN_WIDTH)]
+        if len(active_clouds) < 8 and cloud_images:
+            chosen_image = random.choice(cloud_images)
+            cloud_x = random.randint(0, SCREEN_WIDTH - chosen_image.get_width())
+            cloud_y = random.randint(0, SCREEN_HEIGHT - 300)
+            drift_speed = random.uniform(-0.4, 0.4)
+            cloud = Cloud(chosen_image, cloud_x, cloud_y, drift_speed)
+            active_clouds.append(cloud)
 
         pygame.display.flip()
         clock.tick(60)

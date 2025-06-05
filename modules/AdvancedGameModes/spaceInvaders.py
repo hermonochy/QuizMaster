@@ -39,6 +39,11 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
     explosion = pygame.mixer.Sound('sounds/soundEffects/explosion.ogg')
     hit = pygame.mixer.Sound('sounds/soundEffects/hit.ogg')
 
+    if isItHalloweenTimeNow():
+        alien_img = pygame.image.load('images/pumpkin1.png')
+        cannonFire = pygame.mixer.Sound('sounds/soundEffects/laserFire.ogg')
+
+
     cannonFire.set_volume(v)
     explosion.set_volume(v)
     hit.set_volume(v)
