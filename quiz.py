@@ -420,7 +420,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
         advancedGamemodes = [
             "Spectre Swarm" if isItHalloweenTimeNow() else "Space Invaders", 
             "Strike Zone", 
-            "Gift Fall" if isItChristmasTimeNow() else "Eggstorm" if isItEasterTimeNow()  else "Death Rain", 
+            "Gift Fall" if isItChristmasTimeNow() else "Eggstorm" if isItEasterTimeNow() else "Death Rain", 
             "Quick Click", 
             "Midas Mayhem", 
             "Maze Run (Alpha)"

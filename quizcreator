@@ -267,7 +267,7 @@ if __name__ == '__main__':
                         except Exception as e:
                             sg.Popup(f"Error with this file! {e}", keep_on_top=True, auto_close=True, auto_close_duration=1.5)
             except TypeError:
-                ...
+                pass
 
         if event == 'Delete Question' or event == 'Delete':
             try:
