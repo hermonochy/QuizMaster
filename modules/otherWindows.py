@@ -27,7 +27,7 @@ def about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         screen.fill(BACKGROUND_COLOUR)
         button_license = Button("Licenses", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 250), 250, 40, BLACK)
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 300), 250, 40, BLACK)
-        button_website = Button("For more information, please vist our website!", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 10), 600, 40, text_colour=LINK_COLOUR)
+        button_website = Button("For more information, please vist our website!", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 20), 600, 40, text_colour=LINK_COLOUR)
         button_tutorial = Button("You can also view our tutorials.", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 + 75), 600, 40, text_colour=LINK_COLOUR)
         display_message("About QuizMaster", SCREEN_HEIGHT // 8, 75, BLACK)
         display_message(about_p1, SCREEN_HEIGHT // 5, 30, BLACK)
