@@ -101,7 +101,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, v):
                 all_out_shot_center = player["rect"].center
             elif powerup_type == "orange":
                 shield_active = True
-                shield_timer = pygame.time.get_ticks() + 10000
+                shield_timer = pygame.time.get_ticks() + 9000
             elif powerup_type == "green":
                 player["health"] += 15
             elif powerup_type == "yellow":
@@ -121,6 +121,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, v):
     button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, WHITE)
 
     while running:
+        screen.fill(BLACK)
         current_time = pygame.time.get_ticks()
         if shield_active and current_time > shield_timer:
             shield_active = False
@@ -199,10 +200,9 @@ def strikeZone(questionList, titleofquiz, doCountdown, v):
                     projectiles.remove(projectile)
                     score += 1
                     break
-        screen.fill(BLACK)
 
         if random.random() < 0.005 and len(powerups) < 10:
-            powerup_type = random.choices(["yellow", "green", "white", "orange"], weights=[45, 30, 5, 20])[0]
+            powerup_type = random.choices(["yellow", "green", "white", "orange"], weights=[5, 30, 5, 60])[0]
             powerup_color = {
                 "yellow": YELLOW,
                 "green": GREEN,
