@@ -21,7 +21,7 @@ from modules.elements import *
 from modules.gameModes import *
 from modules.searchQuiz import search_str_in_file
 from modules.otherWindows import about
-from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
+from modules.math import returnQuiz
 from modules.constants import *
 
 from modules.AdvancedGameModes.spaceInvaders import spaceInvaders
@@ -266,7 +266,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     while True:
         button_random_quiz = Button("Random Quiz", (SCREEN_WIDTH // 2 - 150, 400), 300, 40, BLACK)
         button_general_knowledge = Button("General Knowledge Quiz", (SCREEN_WIDTH // 2 - 150, 475), 300, 40, BLACK)
-        #button_math = Button("Math Quiz", (SCREEN_WIDTH // 2 - 150, 550), 300, 40, BLACK)
+        button_math = Button("Math Quiz", (SCREEN_WIDTH // 2 - 150, 550), 300, 40, BLACK)
 
         screen.fill(BACKGROUND_COLOUR)
         display_message("Search for a Quiz", 50, 50, BLACK)
@@ -274,7 +274,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         searchBox.draw(screen)
         button_random_quiz.draw(screen, BUTTON_COLOUR)
         button_general_knowledge.draw(screen, BUTTON_COLOUR)
-        #button_math.draw(screen, BUTTON_COLOUR)
+        button_math.draw(screen, BUTTON_COLOUR)
 
         for event in pygame.event.get():
             searchBox.handle_event(event)
@@ -323,6 +323,16 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                         else:
                             StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
                         return
+                elif button_math.is_clicked(pos):
+                    number_of_questions, goBack = choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+                    if goBack:
+                        break
+                    titleofquiz, questionList = returnQuiz(number_of_questions)
+                    if args.gameMode == None:
+                        choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
+                    else:
+                        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
+                    return
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and searchBox.active:
                 searchTerm = searchBox.get().strip()
                 break
