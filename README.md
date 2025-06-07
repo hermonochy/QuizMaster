@@ -45,15 +45,15 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 
 *Steps 1 and 2 are optional, but recommended if you wish to avoid a headache with Python module conflicts.*
 
-### Running QuizMaster
-
-To start the application, enter `./run.sh` for Linux or `run.bat` for Windows, into the command line interface (Don't forget to run setup files before launching QuizMaster if anything has changed).
-
 ### Updating QuizMaster
 
 QuizMaster is constantly worked on and your copy can quickly become outdated. To update it, simply run `./update.sh` for Linux or `update.bat` for Windows. It is always a good idea to run the setup files after updating in case a module requirement or other is changed.
 
-#### Playing a Quiz
+### Running QuizMaster
+
+To start the application, enter `./run.sh` for Linux or `run.bat` for Windows, into the command line interface (Don't forget to run setup files before launching QuizMaster if anything has changed).
+
+### Playing a Quiz
 
  You'll be greeted by the homepage where you have the option to `Play a Quiz` or `Make a Quiz`. Selecting `Make a Quiz` opens [`QuizCreator`](#quiz-creator), while `Play a Quiz` takes you into the game. To select a quiz, simply type the theme you would like to play. Alternatively, you can also select a random quiz or a general knowledge quiz, the latter of which takes random questions from random quizzes to create a new and unique quiz. Afterwards, it will request you select a game mode ([see below](#game-modes)).
 
@@ -61,7 +61,7 @@ QuizMaster is constantly worked on and your copy can quickly become outdated. To
 
 *The homepage*
 
-##### Game modes
+#### Game modes
 
 Various game modes exist to allow the user to test different strengths in different areas. From the classic countdown to speed runs that challenge your quick thinking, each mode is designed to provide a unique experience. For most of the game modes, scores greater than 80% are above average, between 80% and 40% is average, and less than 40% is below average. Below are brief overviews of the current game modes.
 
@@ -69,9 +69,9 @@ Various game modes exist to allow the user to test different strengths in differ
 
 *The Game Mode selection window*
 
-###### Basic Game Modes
+##### Basic Game Modes
 
-QuizMasters game modes are split into two sections: Basic and Advanced. The key difference Basic game modes are more focused on the learning, while Advanced game modes are essentially games. 
+QuizMaster game modes are split into two sections: Basic and Advanced. Basic game modes are more focused on the learning, while Advanced game modes are essentially games, more for entertainment than learning. 
 
  **Classic**
 
@@ -115,7 +115,21 @@ Players defend their spaceship from a horde of aliens, gaining ammo by answering
 |Shield|🟠️|20%|Grants 10 seconds immunity to enemy attacks|
 |All-out Attack|⚪️|5%|Sends out a blast of energy that destroys all enemies on the screen|
 
-45, 30, 5, 20
+**Midas Mayhem**
+
+Test your luck and knowledge in this gold-collecting challenge! In *Midas Mayhem*, each correct answer lets you open a magical chest, but not all chests are friendly—some give you gold, some take it away, and others multiply your fortune or wipe it out. Build up as much gold as you can by answering questions correctly and picking wisely. But beware: falling into debt means game over!
+
+**Maze Run**
+
+Navigate through a randomly generated maze, collecting quiz questions scattered throughout. Your goal is to answer all questions and reach the maze exit. Each question blocks your path until you answer it, and wrong answers will be tallied at the end.
+
+**Death Rain**
+
+Dodge falling obstacles as you pilot your character across the screen. Occasionally, power-ups will appear—collect them and answer a quiz question to gain temporary a boost in speed! It is advised to save the power-ups until later in the game, where the projectiles really start moving! If an obstacle hits you, the game ends and your score is tallied. The longer you survive, the faster and more challenging the game becomes.
+
+**Quick Click**
+
+Questions bounce unpredictably around the screen, and it’s your job to click on them and answer as many as you can, as quickly as you can! Each correct answer increases your score. The game tracks your time and score, challenging you to improve your speed and accuracy with each playthrough.
 
 #### Preferences
 

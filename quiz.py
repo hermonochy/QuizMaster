@@ -288,8 +288,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
             button_random_quiz.draw(screen, BUTTON_COLOUR)
             button_general_knowledge.draw(screen, BUTTON_COLOUR)
             #button_math.draw(screen, BUTTON_COLOUR)
-
-            if [ev for ev in events if ev.type == pygame.KEYDOWN and ev.key == pygame.K_RETURN]:
+            if [ev for ev in events if ev.type == pygame.KEYDOWN and ev.key == pygame.K_RETURN and len(textinput.value) > 0]:
                 searchTerm = textinput.value
                 break
 
@@ -559,6 +558,7 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     running = True
     welcome_image = pygame.image.load("images/Screenshots/logo.png").convert()
     while running:
+        refreshPage = False
         screen.fill(BACKGROUND_COLOUR)
         button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 - 50), 250, 60, BLACK)
         button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 50), 250, 60, BLACK)
@@ -574,27 +574,29 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         screen.blit(welcome_image, (SCREEN_WIDTH//4.75, SCREEN_HEIGHT//12))
         screen.blit(welcome_image, (SCREEN_WIDTH//1.325, SCREEN_HEIGHT//12))
         pygame.display.update()
-        clock.tick(30)
-
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                quit()
-            if event.type == MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                if button_play.is_clicked(pos):
-                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
-                elif button_make.is_clicked(pos):
-                    try:
-                        subprocess.Popen(["python", "quizcreator"])
-                    except:
-                        subprocess.Popen(["python3", "quizcreator"])
-                elif button_preferences.is_clicked(pos):
-                    music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown = preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
-                    BLACK = screen_mode(BACKGROUND_COLOUR)
-                elif button_about.is_clicked(pos):
-                    about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-                elif button_quit.is_clicked(pos):
+        while not refreshPage:
+            for event in pygame.event.get():
+                if event.type == QUIT:
                     quit()
+                if event.type == MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    if button_play.is_clicked(pos):
+                        choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
+                        refreshPage = True
+                    elif button_make.is_clicked(pos):
+                        try:
+                            subprocess.Popen(["python", "quizcreator"])
+                        except:
+                            subprocess.Popen(["python3", "quizcreator"])
+                    elif button_preferences.is_clicked(pos):
+                        music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown = preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
+                        BLACK = screen_mode(BACKGROUND_COLOUR)
+                        refreshPage = True
+                    elif button_about.is_clicked(pos):
+                        about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+                        refreshPage = True
+                    elif button_quit.is_clicked(pos):
+                        quit()
                 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
