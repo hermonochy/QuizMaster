@@ -39,8 +39,9 @@ def generate_math_question():
         correct_answer = smallNum1 * 2
     
     wrong_answers = set()
+    # For loop does not work as some answers may be equal to the correct answer or another wrong answer
     while len(wrong_answers) < 3:
-        wrong_answer = str(correct_answer + random.randint(-10, 10))
+        wrong_answer = correct_answer + random.randint(-10, 10)
         if wrong_answer != correct_answer and wrong_answer not in wrong_answers:
             wrong_answers.add(wrong_answer)
     
@@ -48,9 +49,17 @@ def generate_math_question():
 
 def generate_quiz(num_questions):
     questions = []
-    for _ in range(num_questions):
-        question = generate_math_question()
-        questions.append(question)
+    seen_questions = set()
+    attempts = 0
+    max_attempts = num_questions * 10
+    while len(questions) < num_questions and attempts < max_attempts:
+        question_obj = generate_math_question()
+        if question_obj.question not in seen_questions:
+            questions.append(question_obj)
+            seen_questions.add(question_obj.question)
+        attempts += 1
+    if len(questions) < num_questions:
+        print(f"Warning: Only generated {len(questions)} unique questions out of {num_questions} requested.")
     return questions
 
 def save_quiz_to_json(questions, file_path, title):
