@@ -205,59 +205,67 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questio
     number of questions, a slider to reduce the number of questions, and the questions themselves.
     """
     running = True
-    num_questions = len(questionList)
+    num_questions_total = len(questionList)
+    visible_per_page = 10
 
-    try:
-        question_slider = Slider((SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4), 450, min=1, max=num_questions, step=1, initial=num_questions)
-        makeSlider = True
-    except ZeroDivisionError:
-        makeSlider = False
+    if num_questions_total >= 10:
+        question_slider = Slider((SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4), 450, min=1, max=num_questions_total, step=1, initial=num_questions_total)
+        use_slider = True
+    else:
+        use_slider = False
 
+    button_confirm = Button("Choose", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 290), 350, 50, BLACK)
+    button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 350), 350, 50, BLACK)
     scrollbar = None
-    if num_questions > 10:
-        scrollbar = Scrollbar((SCREEN_WIDTH - 40, 300), 400, num_questions, 10)
-
-    button_confirm = Button("Choose", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT//2 + 290), 350, 50, BLACK)
-    button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT//2 + 350), 350, 50, BLACK)
-
     offset = 0
 
     while running:
         events = pygame.event.get()
         for event in events:
-            if makeSlider:
-                question_slider.handle_event(event)
             if event.type == QUIT:
                 quit()
+            if use_slider:
+                question_slider.handle_event(event)
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_confirm.is_clicked(pos):
-                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList[:num_questions], title)
+                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList[:current_count], title)
                     return False
                 elif button_go_back.is_clicked(pos):
                     return True
-            if scrollbar and (event.type == MOUSEBUTTONDOWN or event.type == MOUSEBUTTONUP or event.type == MOUSEMOTION):
+            if scrollbar:
                 scrollbar.handle_event(event)
 
-        if scrollbar:
+        if use_slider:
+            current_count = question_slider.get()
+        else:
+            current_count = num_questions_total
+
+        if current_count > visible_per_page:
+            if not scrollbar or scrollbar.total_items != current_count:
+                scrollbar = Scrollbar((SCREEN_WIDTH - 40, 300), 400, current_count, visible_per_page)
             offset = scrollbar.get_offset()
+            offset = max(0, min(offset, current_count - visible_per_page))
+            visible_questions = questionList[:current_count][offset:offset + visible_per_page]
+        else:
+            scrollbar = None
+            offset = 0
+            visible_questions = questionList[:current_count]
 
         screen.fill(BACKGROUND_COLOUR)
-        if makeSlider:
+        if use_slider:
             question_slider.draw(screen)
-            num_questions = question_slider.get()
         display_message(title, 50, 75, BLACK)
         display_message(f"Difficulty: {difficulty}", 120, 50, BLACK)
-        display_message(f"Number of Questions: {num_questions}", 175, 50, BLACK)
+        display_message(f"Number of Questions: {current_count}", 175, 50, BLACK)
         display_message("Questions:", 275, 50, BLACK)
 
-        visible_questions = questionList[offset:offset + 10] if scrollbar else questionList
         for idx, question in enumerate(visible_questions):
             display_message(f"• {question}", 350 + idx * 40, 30, BLACK)
-                
+
         if scrollbar:
             scrollbar.draw(screen)
-        
+
         button_confirm.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
 
