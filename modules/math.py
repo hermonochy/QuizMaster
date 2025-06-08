@@ -1,18 +1,18 @@
+
+"""
+Program to generate math quizzes quickly and easily.
+"""
 import math
 import json
 import random
 
 from modules.persistence import QuizQuestion
 
-"""
-Program to generate math quizzes quickly and easily.
-"""
-
 def generate_math_question():
-    smallNum1 = random.randint(1, 6)
-    smallNum2 = random.randint(1, 6)
-    num1 = random.randint(1, 100)
-    num2 = random.randint(1, 100)
+    smallNum1 = random.randint(2, 6)
+    smallNum2 = random.randint(2, 6)
+    num1 = random.randint(2, 100)
+    num2 = random.randint(2, 100)
     operation = random.choice(['+', '-', '*', '/', '!' , '^','root'])
     
     if operation == '+':

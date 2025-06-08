@@ -52,7 +52,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     numList = re.findall(r'\d+', music)
     i = int(numList[0]) if numList else 1
 
-    checkbox_mute = Checkbox("Mute", (SCREEN_WIDTH // 4, 170), checked=(v==0))
+    checkbox_mute = Checkbox("Mute", (SCREEN_WIDTH // 4, 165), checked=(v==0))
     checkbox_countdown = Checkbox("Enable Countdown", (SCREEN_WIDTH // 4, 600), checked=doCountdown)
 
     volumeSlider = Slider((SCREEN_WIDTH // 4 + 150, 175), 550, min=0, max=1, step=0.05, handleColour=(0,0,0), handleRadius=18, initial=v)
@@ -678,7 +678,6 @@ if __name__ == '__main__':
     except Exception:
         pass
     pygame.mixer.music.set_volume(volume)
-    print(volume)
     BLACK = screen_mode(BACKGROUND_COLOUR)
     
     try:

@@ -40,16 +40,14 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
     if isItHalloweenTimeNow():
         alien_img = pygame.image.load('images/pumpkin1.png')
         cannonFire = pygame.mixer.Sound('sounds/soundEffects/laserFire.ogg')
-
     else:
         alien_img = pygame.image.load('images/SpaceshipAlien1.png')
         cannonFire = pygame.mixer.Sound('sounds/soundEffects/cannonFire.ogg')
-        
 
     cannonFire.set_volume(v)
     explosion.set_volume(v)
     hit.set_volume(v)
-    
+
     player_img = pygame.transform.scale(player_img, (player_width, player_height))
     alien_img = pygame.transform.scale(alien_img, (alien_width, alien_height))
     player_laser_img = pygame.transform.scale(player_laser_img, (15, 50))
@@ -60,16 +58,24 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
     if doCountdown:
         countdown(titleofquiz, BLACK, WHITE)
 
-    def generate_aliens(rows, cols):
+    def generate_aliens_bottom_up(rows, cols):
+        aliens.clear()
+        grid_height = rows * (alien_height + 10)
+        bottom_y = 250 - alien_height
         for row in range(rows):
             for col in range(cols):
                 aliens.append({
                     "x": col * (alien_width + 10) + 50,
-                    "y": row * (alien_height + 10) + 50,
+                    "y": bottom_y - row * (alien_height + 10),
                     "alive": True
                 })
-
-    generate_aliens(total_questions // 10+3, total_questions // 3 + 5)
+    if total_questions < 40:
+        rows = total_questions // 10 + 3
+        cols = total_questions // 3 + 5
+    else:
+        cols = 20
+        rows = total_questions*2
+    generate_aliens_bottom_up(rows, cols)
 
     def handle_question(forSurvival):
         nonlocal ammo, question_index
@@ -144,6 +150,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
         screen.blit(player_img, (player_x, player_y))
 
         numAliens = 0
+        max_alien_y = -float('inf')
 
         for alien in aliens:
             if alien["alive"]:
@@ -158,13 +165,16 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
                     cannonFire.play()
                     alien_projectiles.append({"x": alien["x"] + alien_width // 2, "y": alien["y"] + alien_height})
 
-        for projectile in projectiles:
+                if alien["y"] > max_alien_y:
+                    max_alien_y = alien["y"]
+
+        for projectile in projectiles[:]:
             screen.blit(player_laser_img, (projectile["x"], projectile["y"]))
             projectile["y"] -= projectile_speed
             if projectile["y"] < 0:
                 projectiles.remove(projectile)
 
-        for alien_projectile in alien_projectiles:
+        for alien_projectile in alien_projectiles[:]:
             screen.blit(alien_laser_img, (alien_projectile["x"], alien_projectile["y"]))
             alien_projectile["y"] += projectile_speed
             if alien_projectile["y"] > SCREEN_HEIGHT:
@@ -179,7 +189,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
         for alien in aliens:
             if not alien["alive"]:
                 continue
-            for projectile in projectiles:
+            for projectile in projectiles[:]:
                 if (alien["x"] < projectile["x"] < alien["x"] + alien_width and
                         alien["y"] < projectile["y"] < alien["y"] + alien_height):
                     alien["alive"] = False
@@ -218,7 +228,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
 
         pygame.display.update()
 
-    if lives == 0 or (question_index >= total_questions and all(alien["alive"] for alien in aliens)):
+    if lives == 0 or (question_index >= total_questions and all(alien["alive"] for alien in aliens)) or max_alien_y + alien_height >= player_y + player_height // 2:
         explosion.play()
         display_message("You Lose!", SCREEN_HEIGHT // 2, 100, (255,0,0))
         pygame.display.update()

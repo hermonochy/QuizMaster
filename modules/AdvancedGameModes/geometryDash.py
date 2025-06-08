@@ -67,7 +67,7 @@ def geometryDash(questionList, titleofquiz, doCountdown):
             
             if random.random() < 0.3 and question_index < total_questions:
                 dot_x = current_x + PLATFORM_WIDTH/2
-                dot_y = platform_y - 80  # Dot above platform
+                dot_y = platform_y - 80
                 dots.append(GameObject(
                     dot_x, dot_y, 20, 20, YELLOW, 'dot'
                 ))
@@ -80,15 +80,12 @@ def geometryDash(questionList, titleofquiz, doCountdown):
                     obstacle_x, obstacle_y, 20, obstacle_height, BLUE, 'obstacle'
                 ))
             
-            # Move to next platform position with slight variation
             current_x += PLATFORM_WIDTH + random.randint(50, 100)
     
     def generate_level():
-        # Generate initial ground
         ground = GameObject(0, SCREEN_HEIGHT - 100, SCREEN_WIDTH * len(questionList), 100, WHITE, 'ground')
         platforms.append(ground)
         
-        # Generate initial platform sequence
         generate_platform_sequence(SCREEN_WIDTH, 20)
     
     def handle_question():
@@ -138,47 +135,38 @@ def geometryDash(questionList, titleofquiz, doCountdown):
     countdown(titleofquiz, BLACK, WHITE)
     generate_level()
     
-    # Main game loop
     clock = pygame.time.Clock()
     last_platform_x = SCREEN_WIDTH
     
     while running and lives > 0:
         screen.fill(BLACK)
         
-        # Display game info
         display_message(f"Lives: {lives}", 30, 30, WHITE)
         display_message(f"Score: {score}", 60, 30, WHITE)
         
-        # Handle player movement
         keys = pygame.key.get_pressed()
         if keys[K_SPACE] and not is_jumping:
             velocity_y = jump_power
             is_jumping = True
         
-        # Apply gravity
         velocity_y += gravity
         player_y += velocity_y
         
-        # Draw player
         player_rect = pygame.Rect(player_x, player_y, player_size, player_size)
         pygame.draw.rect(screen, GREEN, player_rect)
         
-        # Update and draw platforms
         for platform in platforms[:]:
             platform.rect.x -= game_speed
             pygame.draw.rect(screen, platform.color, platform.rect)
             
-            # Check platform collision
             if player_rect.colliderect(platform.rect) and velocity_y > 0:
                 player_y = platform.rect.top - player_size
                 velocity_y = 0
                 is_jumping = False
             
-            # Remove off-screen platforms
             if platform.rect.right < 0:
                 platforms.remove(platform)
         
-        # Update and draw dots
         for dot in dots[:]:
             dot.rect.x -= game_speed
             if dot.active:
@@ -195,7 +183,6 @@ def geometryDash(questionList, titleofquiz, doCountdown):
             if dot.rect.right < 0:
                 dots.remove(dot)
         
-        # Update and draw obstacles
         for obstacle in obstacles[:]:
             obstacle.rect.x -= game_speed
             pygame.draw.rect(screen, obstacle.color, obstacle.rect)
@@ -208,18 +195,15 @@ def geometryDash(questionList, titleofquiz, doCountdown):
             if obstacle.rect.right < 0:
                 obstacles.remove(obstacle)
         
-        # Generate new platforms when needed
         if last_platform_x - game_speed < SCREEN_WIDTH * 1.5:
             generate_platform_sequence(last_platform_x, 5)
             last_platform_x += (PLATFORM_WIDTH + 75) * 5
         
-        # Check for falling off screen
         if player_y > SCREEN_HEIGHT:
             lives -= 1
             player_y = SCREEN_HEIGHT - 150
             velocity_y = 0
         
-        # Check for game completion
         if question_index >= total_questions:
             display_message("You Win!", SCREEN_HEIGHT // 2, 100, GREEN)
             pygame.display.update()
