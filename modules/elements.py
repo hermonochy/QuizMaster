@@ -139,6 +139,78 @@ class ButtonArray:
                 return True, button.text
         return None, None
 
+class TextBox:
+    def __init__(self, x, y, width, height, font_size=36, text_color=(30,30,30), bg_color=(245,245,245), border_color=(90,90,90), border_width=3, 
+                 placeholder="", placeholder_color=(140, 140, 140), max_length=64, border_radius=12, active_color=(70,120,255)):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.text = ""
+        self.font = pygame.font.Font(None, font_size)
+        self.text_color = text_color
+        self.bg_color = bg_color
+        self.border_color = border_color
+        self.border_width = border_width
+        self.placeholder = placeholder
+        self.placeholder_color = placeholder_color
+        self.max_length = max_length
+        self.border_radius = border_radius
+        self.active_color = active_color
+        self.active = False
+        self.cursor_visible = True
+        self.cursor_counter = 0
+        self.cursor_pos = 0
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                self.active = True
+            else:
+                self.active = False
+        if self.active and event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSPACE:
+                if self.cursor_pos > 0:
+                    self.text = self.text[:self.cursor_pos-1] + self.text[self.cursor_pos:]
+                    self.cursor_pos -= 1
+            elif event.key == pygame.K_DELETE:
+                if self.cursor_pos < len(self.text):
+                    self.text = self.text[:self.cursor_pos] + self.text[self.cursor_pos+1:]
+            elif event.key == pygame.K_LEFT:
+                if self.cursor_pos > 0:
+                    self.cursor_pos -= 1
+            elif event.key == pygame.K_RIGHT:
+                if self.cursor_pos < len(self.text):
+                    self.cursor_pos += 1
+            elif event.key == pygame.K_END:
+                self.cursor_pos = len(self.text)
+            elif event.key == pygame.K_HOME:
+                self.cursor_pos = 0
+            elif event.key == pygame.K_RETURN:
+                pass
+            elif len(self.text) < self.max_length and event.unicode and event.unicode.isprintable():
+                self.text = self.text[:self.cursor_pos] + event.unicode + self.text[self.cursor_pos:]
+                self.cursor_pos += 1
+
+    def get(self):
+        return self.text
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.bg_color, self.rect, border_radius=self.border_radius)
+        border_col = self.active_color if self.active else self.border_color
+        pygame.draw.rect(screen, border_col, self.rect, self.border_width, border_radius=self.border_radius)
+
+        render_text = self.text if self.text else self.placeholder
+        color = self.text_color if self.text else self.placeholder_color
+        txt_surf = self.font.render(render_text, True, color)
+        txt_rect = txt_surf.get_rect(midleft=(self.rect.x+14, self.rect.centery))
+        screen.blit(txt_surf, txt_rect)
+
+        if self.active:
+            self.cursor_counter = (self.cursor_counter + 1) % 60
+            if self.cursor_counter < 30:
+                cursor_x = self.font.size(self.text[:self.cursor_pos])[0] + self.rect.x + 14
+                cursor_y = self.rect.y + 8
+                cursor_h = self.rect.height - 16
+                pygame.draw.line(screen, self.text_color, (cursor_x, cursor_y), (cursor_x, cursor_y + cursor_h), 2)
+
 class Slider:
     def __init__(self, position, width, min=0, max=100, step=1, initial=0, bar_height=10, bar_colour=(175, 175, 175), handleColour=(100, 100, 100), handleRadius=15):
         self.position = position
@@ -335,7 +407,10 @@ class Scrollbar:
     def get_offset(self):
         return int((self.handle_rect.y - self.rect.y - self.arrow_height) * self.total_items // (self.height - 2 * self.arrow_height))
 
-def display_message(message, y_position, font_size, colour):
+def display_message(message, y_position, font_size, colour, x_position=SCREEN_WIDTH // 2):
+    """
+    Display a message on the screen at a given y_position and font_size and colour.
+    """
     font = pygame.font.Font(None, font_size)
     lines = []
 
@@ -357,7 +432,7 @@ def display_message(message, y_position, font_size, colour):
 
     for line in lines:
         text = font.render(line, True, colour)
-        text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, y_position))
+        text_rect = text.get_rect(center=(x_position, y_position))
         screen.blit(text, text_rect)
         y_position += text.get_height()
 
