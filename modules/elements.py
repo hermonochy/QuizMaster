@@ -298,7 +298,7 @@ class Checkbox:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.is_clicked(event.pos):
                 self.checked = not self.checked
-    
+
     def get(self):
         return self.checked
 

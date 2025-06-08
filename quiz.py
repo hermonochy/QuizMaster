@@ -52,16 +52,19 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
     numList = re.findall(r'\d+', music)
     i = int(numList[0]) if numList else 1
 
+    checkbox_mute = Checkbox("Mute", (SCREEN_WIDTH // 4, 170), checked=(v==0))
     checkbox_countdown = Checkbox("Enable Countdown", (SCREEN_WIDTH // 4, 600), checked=doCountdown)
 
-    volumeSlider = Slider((SCREEN_WIDTH // 4, 175), 800, min=0, max=1, step=0.01, handleColour=(0,0,0), handleRadius=18, initial=v)
+    volumeSlider = Slider((SCREEN_WIDTH // 4 + 150, 175), 550, min=0, max=1, step=0.05, handleColour=(0,0,0), handleRadius=18, initial=v)
     Rslider = Slider((SCREEN_WIDTH // 4, 280), 800, min=0, max=245, step=0.5, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0])
     Gslider = Slider((SCREEN_WIDTH // 4, 320), 800, min=0, max=245, step=0.5, handleColour = (0,240,0), initial = BACKGROUND_COLOUR[1])
     Bslider = Slider((SCREEN_WIDTH // 4, 360), 800, min=0, max=245, step=0.5, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2])
 
     while running:
-
-        v = volumeSlider.get()
+        if not checkbox_mute.get():
+            v = volumeSlider.get()
+        else:
+            v = 0
         R = Rslider.get()
         G = Gslider.get()
         B = Bslider.get()
@@ -92,6 +95,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         button_music = Button("Change Music", (SCREEN_WIDTH // 2.5, 460), 300, 50, BLACK)
         button_save = Button("Save", (SCREEN_WIDTH // 2.5, 720), 300, 50, BLACK)
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2.5, 780), 300, 50, BLACK)
+        checkbox_mute.draw(screen, text_color=BLACK)
         checkbox_countdown.draw(screen, text_color=BLACK)
         button_music.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
@@ -109,6 +113,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
             Gslider.handle_event(event)
             Bslider.handle_event(event)
             checkbox_countdown.handle_event(event)
+            checkbox_mute.handle_event(event)
 
             if event.type == QUIT:
                 quit()
@@ -554,7 +559,7 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questio
         choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
     # Start home page
     elif args.gameMode == None and args.quizPath == None:
-        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, volume)
+        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
 
                    
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
@@ -672,8 +677,8 @@ if __name__ == '__main__':
         volume = float(args.volume)
     except Exception:
         pass
-    finally:
-        pygame.mixer.music.set_volume(volume)
+    pygame.mixer.music.set_volume(volume)
+    print(volume)
     BLACK = screen_mode(BACKGROUND_COLOUR)
     
     try:
