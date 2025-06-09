@@ -11,7 +11,7 @@ from modules.elements import *
 from modules.extendedText import *
 from modules.otherWindows import standard_end_window, countdown, Instructions
 
-def classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def classic(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
         return
@@ -23,7 +23,8 @@ def classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_CO
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=classic_p1, p2=classic_p2, p3=classic_p3)
+    if doInstructions:
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
@@ -98,12 +99,12 @@ def classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_CO
 
     replay = standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, totalQuestions, correctAnswers, questionIndex, incorrect_questions)
     if replay:
-        classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        classic(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
     else:       
         return
 
                     
-def classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def classicV2(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
         return
@@ -119,7 +120,8 @@ def classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=classicV2_p1, p2=classicV2_p2, p3=classicV2_p3)
+    if doInstructions:
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
@@ -197,12 +199,12 @@ def classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_
 
     replay = standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, totalQuestions, correctAnswers, questionIndex, incorrect_questions)
     if replay:
-        classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        classicV2(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
     else:       
         return
 
 
-def speed(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def speed(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
         return
@@ -215,7 +217,8 @@ def speed(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLO
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=speedRun_p1, p2=speedRun_p2, p3=speedRun_p3)
+    if doInstructions:
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
@@ -307,12 +310,12 @@ def speed(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLO
                 if button_go_back.is_clicked(pos):
                     return
                 if button_replay.is_clicked(pos):
-                    speed(originalQuestions[:], titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    speed(originalQuestions[:], titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 if button_quit.is_clicked(pos):
                     quit()
 
-def survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def survival(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
         return
@@ -326,7 +329,8 @@ def survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_C
     
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=survival_p1, p2=survival_p2, p3=survival_p3)
+    if doInstructions:
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
@@ -395,11 +399,11 @@ def survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_C
 
     replay = standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, totalQuestions, correctAnswers, questionIndex, incorrect_questions)
     if replay:
-        survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+        survival(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
     else:       
         return
 
-def practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def practice(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
         return
@@ -411,7 +415,8 @@ def practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_C
     if BUTTON_COLOUR[1] > 220:
         BUTTON_COLOUR = (BUTTON_COLOUR[0], 220, BUTTON_COLOUR[2]) # Improve visibility of answer reveal
 
-    Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=practice_p1, p2=practice_p2, p3=practice_p3)
+    if doInstructions:
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
@@ -507,7 +512,7 @@ def practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_C
                 if button_go_back.is_clicked(pos):
                     return
                 if button_replay.is_clicked(pos):
-                    practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    practice(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 if button_quit.is_clicked(pos):
                     quit()

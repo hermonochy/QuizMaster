@@ -45,14 +45,14 @@ class GameMode(str, Enum):
     deathRain = 'deathRain'
     quickClick = 'quickClick'
 
-def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
-    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, doCountdown_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, v
+def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v):
+    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, doCountdown_old, doInstructions_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, doInstructions, v
     running = True
     celebration = False
     numList = re.findall(r'\d+', music)
-    i = int(numList[0]) if numList else 1
 
-    checkbox_countdown = Checkbox("Enable Countdown", (SCREEN_WIDTH // 4, 600), checked=doCountdown)
+    checkbox_countdown = Checkbox("Enable Countdown", (SCREEN_WIDTH // 4, SCREEN_HEIGHT - 280), checked=doCountdown)
+    checkbox_instructions = Checkbox("Enable Instructions", (SCREEN_WIDTH // 4, SCREEN_HEIGHT  - 250), checked=doInstructions)
 
     volumeSlider = Slider((SCREEN_WIDTH // 4, 175), 800, min=0, max=1, step=0.01, handleColour=(0,0,0), handleRadius=18, initial=v)
     Rslider = Slider((SCREEN_WIDTH // 4, 280), 800, min=0, max=245, step=0.5, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0])
@@ -66,7 +66,10 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         G = Gslider.get()
         B = Bslider.get()
         BACKGROUND_COLOUR = (R, G, B)
-        BUTTON_COLOUR = button_colour(R, G, B)
+        if all(i < 245 for i in (R, G, B)):
+            BUTTON_COLOUR = (clamp(R + 10), clamp(G + 10), clamp(B + 10))
+        else:
+            BUTTON_COLOUR = (clamp(R - 10), clamp(G - 10), clamp(B - 10))
 
         BLACK = screen_mode(BACKGROUND_COLOUR)
         pygame.mixer.music.set_volume(v)
@@ -93,6 +96,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         button_save = Button("Save", (SCREEN_WIDTH // 2.5, 720), 300, 50, BLACK)
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2.5, 780), 300, 50, BLACK)
         checkbox_countdown.draw(screen, text_color=BLACK)
+        checkbox_instructions.draw(screen, text_color=BLACK)
         button_music.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_save.draw(screen, BUTTON_COLOUR)
@@ -109,11 +113,28 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
             Gslider.handle_event(event)
             Bslider.handle_event(event)
             checkbox_countdown.handle_event(event)
+            checkbox_instructions.handle_event(event)
+
 
             if event.type == QUIT:
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
+                if isItChristmasTimeNow():
+                    celebration = True
+                    music = ["sounds/music_christmas1.ogg", "sounds/music_christmas2.ogg"][i % 2]
+                if isItHalloweenTimeNow():
+                    celebration = True
+                    music = ["sounds/music_halloween1.ogg", "sounds/music_halloween2.ogg"][i % 2]
+                if isItStPatricksTimeNow():
+                    celebration = True
+                    music = "sounds/music_stpatricks1.ogg"
+                if isItValentinesTimeNow():
+                    celebration = True
+                    music = "sounds/music_valentines1.ogg"
+                if isItEasterTimeNow():
+                    celebration = True
+                    music = "sounds/music_easter1.ogg"
                 if button_music.is_clicked(pos):
                     if i < 7:
                         i += 1
@@ -121,22 +142,10 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                         i = 1
                     pygame.mixer.music.fadeout(1000)
                     pygame.mixer.music.unload()
-                    music = f'sounds/music{i}.ogg'
-                    if isItChristmasTimeNow():
-                        celebration = True
-                        music = ["sounds/music_christmas1.ogg", "sounds/music_christmas2.ogg"][i % 2]
-                    if isItHalloweenTimeNow():
-                        celebration = True
-                        music = ["sounds/music_halloween1.ogg", "sounds/music_halloween2.ogg"][i % 2]
-                    if isItStPatricksTimeNow():
-                        celebration = True
-                        music = "sounds/music_stpatricks1.ogg"
-                    if isItValentinesTimeNow():
-                        celebration = True
-                        music = "sounds/music_valentines1.ogg"
-                    if isItEasterTimeNow():
-                        celebration = True
-                        music = "sounds/music_easter1.ogg"
+                    if not celebration:
+                        music = f'sounds/music{i}.ogg'
+                    else:
+                        pass
                     pygame.mixer.music.load(music)
                     pygame.mixer.music.play(-1)
                 if button_save.is_clicked(pos):
@@ -144,12 +153,13 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     G = Gslider.get()
                     B = Bslider.get()
                     doCountdown = checkbox_countdown.get()
+                    doInstructions = checkbox_instructions.get()
                     BACKGROUND_COLOUR = (R, G, B)
-                    BUTTON_COLOUR = button_colour(R, G, B)
+                    BUTTON_COLOUR = (R + 10, G + 10, B + 10)
                     doCountdown_old, v_old = doCountdown, v
-                    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old, doCountdown_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown
                     if not celebration:
-                        save_preferences(v_old, music_old, doCountdown_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old)
+                        save_preferences(v, music, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old, doCountdown_old , doInstructions_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown, doInstructions
                     print("Saved...")
                 if button_go_back.is_clicked(pos):
                     pygame.mixer.music.unload()
@@ -157,7 +167,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
                     BLACK = screen_mode(BACKGROUND_COLOUR_old)
-                    return music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old, doCountdown_old
+                    return music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old, doCountdown_old, doInstructions_old
 
 def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     """
@@ -194,7 +204,7 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
 
         pygame.display.update()
 
-def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList, title, difficulty):
+def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstructions, questionList, title, difficulty):
     """
     Function to display the quiz details, including title, difficulty level,
     number of questions, a slider to reduce the number of questions, and the questions themselves.
@@ -259,7 +269,7 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questio
         pygame.display.update()
                 
 
-def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
+def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v):
     textinput = TextInputVisualizer()
     pygame.key.set_repeat(200, 25)
     while True:
@@ -307,13 +317,13 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                                 print(f"Error in {filename}: {ex}")
                                 break
                             if args.gameMode == None:
-                                searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList, titleofquiz, difficulty)
+                                searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstructions, questionList, titleofquiz, difficulty)
                                 if searchAgain:
                                     break
                                 else:
                                     return
                             else:
-                                StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList, titleofquiz)
+                                StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstructions, questionList, titleofquiz)
                             return
                     elif button_general_knowledge.is_clicked(pos):
                         number_of_questions, goBack = choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
@@ -401,7 +411,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     break
                 print("Questions:", questionList)
                 if args.gameMode == None:
-                    searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList, titleofquiz, difficulty)
+                    searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstructions, questionList, titleofquiz, difficulty)
                     if searchAgain:
                         break
                     else:
@@ -417,14 +427,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
         display_message("Basic Games", 150, 50, BLACK)
         basic_modes = ButtonArray(["Classic", "Classic V2", "Speed Run", "Survival", "Practice"], (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 - 200), button_width=250, button_spacing=50, text_colour=BLACK)
         display_message("Advanced Games", SCREEN_HEIGHT // 2 + 50, 50, BLACK)
-        advancedGamemodes = [
-            "Spectre Swarm" if isItHalloweenTimeNow() else "Space Invaders", 
-            "Strike Zone", 
-            "Gift Fall" if isItChristmasTimeNow() else "Eggstorm" if isItEasterTimeNow() else "Death Rain", 
-            "Quick Click", 
-            "Midas Mayhem", 
-            "Maze Run (Alpha)"
-        ]
+        advancedGamemodes = ["Space Invaders", "Strike Zone", "Death Rain", "Quick Click", "Midas Mayhem", "Maze Run (Alpha)"]
 
         advanced_modes = ButtonArray(advancedGamemodes, (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
         basic_modes.draw(screen, BUTTON_COLOUR)
@@ -447,38 +450,38 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
                         classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
                     elif btn_basic == "Classic V2":
-                        classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        classicV2(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
                     elif btn_basic == "Speed Run":
-                        speed(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        speed(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
                     elif btn_basic == "Survival":
-                        survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        survival(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
                     elif btn_basic == "Practice":
-                        practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        practice(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
-                    elif btn_advanced == "Space Invaders" or btn_advanced == "Spectre Swarm":
-                        spaceInvaders(questionList, titleofquiz, doCountdown, v)
+                    elif btn_advanced == "Space Invaders":
+                        spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v)
                         return
                     elif btn_advanced == "Strike Zone":
-                        strikeZone(questionList, titleofquiz, doCountdown, v)
+                        strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v)
                         return
-                    elif btn_advanced == "Death Rain" or btn_advanced == "Gift Fall" or btn_advanced == "Eggstorm":
-                        deathRain(questionList, titleofquiz, doCountdown, v)
+                    elif btn_advanced == "Death Rain":
+                        deathRain(questionList, titleofquiz, doCountdown, doInstructions, v)
                         return
                     elif btn_advanced == "Quick Click":
                         quickClick(questionList, titleofquiz, doCountdown)
                         return
                     elif btn_advanced == "Midas Mayhem":
-                        midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        midasMayhem(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
                     elif btn_advanced == "Maze Run (Alpha)":
-                        mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        mazeRun(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
 
 
-def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList=None, titleofquiz=None):
+def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstructions, questionList=None, titleofquiz=None):
     if args.quizPath != None:
         print("Loading quiz: ", args.quizPath)
         try:
@@ -489,61 +492,61 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questio
     if args.gameMode is not None:
         if args.gameMode == GameMode.classic:
             try:
-                classic(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                classic(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.classicV2:
             try:
-                classicV2(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                classicV2(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.speedRun:
             try:
-                speed(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                speed(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.survival:
             try:
-                survival(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                survival(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.practice:
             try:
-                practice(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                practice(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.midasMayhem:
             try:
-                midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                midasMayhem(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.mazeRun:
             try:
-                mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                mazeRun(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.spaceInvaders:
             try:
-                spaceInvaders(questionList, titleofquiz, doCountdown, v)
+                spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown)
         elif args.gameMode == GameMode.strikeZone:
             try:
-                strikeZone(questionList, titleofquiz, doCountdown, v)
+                strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.deathRain:
             try:
-                deathRain(questionList, titleofquiz, doCountdown, v)
+                deathRain(questionList, titleofquiz, doCountdown, doInstructions, v)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
@@ -552,10 +555,10 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questio
         choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
     # Start home page
     elif args.gameMode == None and args.quizPath == None:
-        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, volume)
+        main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, volume)
 
                    
-def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
+def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v):
     running = True
     welcome_image = pygame.image.load("images/Screenshots/logo.png").convert()
     while running:
@@ -582,14 +585,14 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_play.is_clicked(pos):
-                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
+                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v)
                 elif button_make.is_clicked(pos):
                     try:
                         subprocess.Popen(["python", "quizcreator"])
                     except:
                         subprocess.Popen(["python3", "quizcreator"])
                 elif button_preferences.is_clicked(pos):
-                    music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown = preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
+                    music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown, doInstructions = preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v)
                     BLACK = screen_mode(BACKGROUND_COLOUR)
                 elif button_about.is_clicked(pos):
                     about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
@@ -612,12 +615,14 @@ if __name__ == '__main__':
     print("\nQuizMaster Copyright (C) 2025 hermonochy")
     print(asciiartstart)
     doCountdown = True
+    doInstructions = True
     try:
         with open(".Preferences.json", "r") as file:
             try:
                 prefDict = json.load(file)
                 volume = prefDict["Volume"]
                 doCountdown = prefDict["Countdown"]
+                doInstructions = prefDict["Instructions"]
                 pygame.mixer.music.set_volume(volume)
                 if isItHalloweenTimeNow():
                     BACKGROUND_COLOUR = (250,100,0)
@@ -646,12 +651,15 @@ if __name__ == '__main__':
                     celebration = False
             except:
                 volume = DEFAULT_VOLUME
-                doCountdown = True
+                doCountdown = DEFAULT_COUNTDOWN
+                doInstructions = DEFAULT_INSTRUCTIONS
                 music = DEFAULT_MUSIC
                 BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
                 BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
     except FileNotFoundError:
         volume = DEFAULT_VOLUME
+        doCountdown = DEFAULT_COUNTDOWN
+        doInstructions = DEFAULT_INSTRUCTIONS
         music = DEFAULT_MUSIC
         BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
         BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
@@ -674,4 +682,4 @@ if __name__ == '__main__':
     try:
         StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, volume, questionList, titleofquiz)
     except:
-        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, volume, doCountdown)
+        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, volume, doCountdown, doInstructions)

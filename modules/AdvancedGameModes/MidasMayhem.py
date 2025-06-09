@@ -5,7 +5,7 @@ from modules.elements import *
 from modules.extendedText import midasMayhem_p1, midasMayhem_p2, midasMayhem_p3
 from modules.otherWindows import *
 
-def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def midasMayhem(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         return
 
@@ -17,7 +17,8 @@ def midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTO
     BUTTON_COLOUR = (212,175,55)
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=midasMayhem_p1, p2=midasMayhem_p2, p3=midasMayhem_p3)
+    if doInstructions:
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)

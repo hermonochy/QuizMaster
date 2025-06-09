@@ -10,11 +10,12 @@ from modules.otherWindows import countdown, standard_end_window, Instructions
 TILE_SIZE = 40
 PLAYER_SIZE = 30
 
-def mazeRun(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def mazeRun(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR):
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
-    Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=mazeRun_p1, p2=mazeRun_p2, p3=mazeRun_p3)
-
+    if doInstructions:
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
+        
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
 

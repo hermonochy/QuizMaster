@@ -6,7 +6,7 @@ from pygame.locals import *
 from modules.elements import *
 from modules.otherWindows import countdown, standard_end_window
 
-def geometryDash(questionList, titleofquiz, doCountdown):
+def geometryDash(questionList, titleofquiz, doCountdown, doInstructions):
     if questionList is None or len(questionList) == 0:
         return
 

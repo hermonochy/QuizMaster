@@ -119,7 +119,7 @@ class Cloud:
         return self.x + self.image.get_width() < 0 or self.x > screen_width
 
 
-def deathRain(questionList, titleofquiz, doCountdown, v):
+def deathRain(questionList, titleofquiz, doCountdown, doInstructions, v):
 
     if questionList is None or len(questionList) == 0:
         return
@@ -133,7 +133,8 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
     spawn_cooldown = 20 
     last_spawn = 0
 
-    Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, WHITE, titleofquiz, p1=deathRain_p1, p2=deathRain_p2, p3=deathRain_p3)
+    if doInstructions:
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, WHITE)
@@ -228,14 +229,14 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
         if frame_counter - last_spawn >= current_spawn_chance:
             x = random.randint(0, SCREEN_WIDTH - OBSTACLE_WIDTH)
             if random.random() < POWERUP_CHANCE:
-                
-                powerup_image = pygame.image.load("images/coin.png")
                 if isItChristmasTimeNow():
                     gift = random.choice(giftList)
                     powerup_image = pygame.image.load(gift)
                 elif isItEasterTimeNow():
                     egg = random.choice(eggList)
                     powerup_image = pygame.image.load(egg)
+                else:
+                    powerup_image = pygame.image.load("images/coin.png")
                 powerup_image = pygame.transform.scale(powerup_image, (POWERUP_WIDTH, POWERUP_HEIGHT))
                 objects.append(PowerUp(x, -POWERUP_HEIGHT, powerup_image, current_speed))
             else:

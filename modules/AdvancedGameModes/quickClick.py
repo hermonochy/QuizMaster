@@ -13,8 +13,8 @@ class BouncingQuestion:
         self.y = y
         self.width = random.randint(75,175)
         self.height = random.randint(25,100)
-        self.speed_x = random.uniform(1, 5) * random.choice([-1, 1])
-        self.speed_y = random.uniform(1, 5) * random.choice([-1, 1])
+        self.speed_x = random.uniform(-5, 5)
+        self.speed_y = random.uniform(-5, 5)
         self.answered = False
         self.color = (random.randint(50, 255), random.randint(50, 255), random.randint(50, 255))
         
@@ -31,7 +31,7 @@ class BouncingQuestion:
         return (self.x <= pos[0] <= self.x + self.width and 
                 self.y <= pos[1] <= self.y + self.height)
 
-def quickClick(questionList, titleofquiz, doCountdown):
+def quickClick(questionList, titleofquiz, doCountdown, doInstructions):
     if questionList is None or len(questionList) == 0:
         return
 
@@ -51,8 +51,9 @@ def quickClick(questionList, titleofquiz, doCountdown):
         y = random.randint(0, SCREEN_HEIGHT - 100)
         bouncing_questions.append(BouncingQuestion(q, x, y))
 
-    Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=quickClick_p1, p2=quickClick_p2)
-
+    if doInstructions:
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
+        
     if doCountdown:
         countdown(titleofquiz, BLACK, WHITE)
 
@@ -158,14 +159,16 @@ def quickClick(questionList, titleofquiz, doCountdown):
                 quit()
             elif event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                if button_leave.is_clicked(pos):
-                    quit()
-                elif button_go_back.is_clicked(pos):
-                    return
+                # Place bouncing questions first in case user clicks a square above main menu or quit buttons.
                 for question in bouncing_questions:
                     if not question.answered and question.is_clicked(pos):
                         if handle_question(question):
                             question.answered = True
+                            break
+                if button_leave.is_clicked(pos):
+                    quit()
+                elif button_go_back.is_clicked(pos):
+                    return
         
         if questions_answered == total_questions:
             display_message("Quiz Complete!", SCREEN_HEIGHT // 2 - 50, 100, (0, 255, 0))

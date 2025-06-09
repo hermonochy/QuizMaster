@@ -9,7 +9,7 @@ from modules.checker import isItHalloweenTimeNow
 from modules.extendedText import *
 from modules.otherWindows import countdown, standard_end_window, Instructions
 
-def spaceInvaders(questionList, titleofquiz, doCountdown, v):
+def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
     if questionList is None or len(questionList) == 0:
         return
 
@@ -31,18 +31,20 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
     question_index = 0
     total_questions = len(questionList)
 
-    player_img = pygame.image.load('images/Spaceship.png')
-    alien_img = pygame.image.load('images/SpaceshipAlien1.png')
     player_laser_img = pygame.image.load('images/Laser.png')
     alien_laser_img = pygame.image.load('images/Laser.png')
-    cannonFire = pygame.mixer.Sound('sounds/soundEffects/cannonFire.ogg')
     explosion = pygame.mixer.Sound('sounds/soundEffects/explosion.ogg')
     hit = pygame.mixer.Sound('sounds/soundEffects/hit.ogg')
+    player_img = pygame.image.load('images/Spaceship.png')
 
     if isItHalloweenTimeNow():
         alien_img = pygame.image.load('images/pumpkin1.png')
         cannonFire = pygame.mixer.Sound('sounds/soundEffects/laserFire.ogg')
 
+    else:
+        alien_img = pygame.image.load('images/SpaceshipAlien1.png')
+        cannonFire = pygame.mixer.Sound('sounds/soundEffects/cannonFire.ogg')
+        
 
     cannonFire.set_volume(v)
     explosion.set_volume(v)
@@ -53,8 +55,8 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, v):
     player_laser_img = pygame.transform.scale(player_laser_img, (15, 50))
     alien_laser_img = pygame.transform.scale(alien_laser_img, (20,60))
 
-    Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=spaceInvaders_p1, p2=spaceInvaders_p2, p3=spaceInvaders_p3)
-
+    if doInstructions:
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
     if doCountdown:
         countdown(titleofquiz, BLACK, WHITE)
 
