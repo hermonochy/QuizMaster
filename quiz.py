@@ -56,9 +56,9 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
     checkbox_mute = Checkbox("Mute", (SCREEN_WIDTH // 4, 165), checked=(v==0))
 
     volumeSlider = Slider((SCREEN_WIDTH // 4 + 150, 175), 550, min=0, max=1, step=0.05, handleColour=(0,0,0), handleRadius=18, initial=v)
-    Rslider = Slider((SCREEN_WIDTH // 4, 280), 800, min=0, max=245, step=0.5, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0])
-    Gslider = Slider((SCREEN_WIDTH // 4, 320), 800, min=0, max=245, step=0.5, handleColour = (0,240,0), initial = BACKGROUND_COLOUR[1])
-    Bslider = Slider((SCREEN_WIDTH // 4, 360), 800, min=0, max=245, step=0.5, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2])
+    Rslider = Slider((SCREEN_WIDTH // 4, 280), 700, min=0, max=245, step=0.5, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0])
+    Gslider = Slider((SCREEN_WIDTH // 4, 320), 700, min=0, max=245, step=0.5, handleColour = (0,240,0), initial = BACKGROUND_COLOUR[1])
+    Bslider = Slider((SCREEN_WIDTH // 4, 360), 700, min=0, max=245, step=0.5, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2])
 
     while running:
         if not checkbox_mute.get():
@@ -171,7 +171,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
                     BLACK = screen_mode(BACKGROUND_COLOUR_old)
-                    return music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old, doCountdown_old, doInstructions_old
+                    return
 
 def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     """
@@ -424,7 +424,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                         break
                     print("Questions:", questionList)
                     if args.gameMode == None:
-                        searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList, titleofquiz, difficulty)
+                        searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstructions, questionList, titleofquiz, difficulty)
                         if searchAgain:
                             break
                         else:
@@ -494,6 +494,57 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
                         mazeRun(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
 
+def getPreferences():
+    doCountdown = True
+    doInstructions = True
+    try:
+        with open(".Preferences.json", "r") as file:
+            try:
+                prefDict = json.load(file)
+                volume = prefDict["Volume"]
+                doCountdown = prefDict["Countdown"]
+                doInstructions = prefDict["Instructions"]
+                pygame.mixer.music.set_volume(volume)
+                if isItHalloweenTimeNow():
+                    BACKGROUND_COLOUR = (250,100,0)
+                    BUTTON_COLOUR =  (255,110,10)
+                    music = "sounds/music_halloween1.ogg"
+                elif isItValentinesTimeNow():
+                    music = "sounds/music_valentines1.ogg"
+                    BACKGROUND_COLOUR = (255,0,0)
+                    BUTTON_COLOUR =  (255,10,10)
+                elif isItStPatricksTimeNow():
+                    music = "sounds/music_stpatrick1.ogg"
+                    BACKGROUND_COLOUR = (0,225,0)
+                    BUTTON_COLOUR =  (0,200,0) 
+                elif isItEasterTimeNow():
+                    music = "sounds/music_easter1.ogg"
+                    BACKGROUND_COLOUR = (255,170,180)
+                    BUTTON_COLOUR =  (250,250,100)
+                elif isItChristmasTimeNow():
+                    music = "sounds/music_christmas1.ogg"
+                    BACKGROUND_COLOUR = (0,255,0)
+                    BUTTON_COLOUR = (255,0,0)
+                else:
+                    music = prefDict["Music"]
+                    BACKGROUND_COLOUR = prefDict["colour"]
+                    BUTTON_COLOUR = prefDict["buttoncolour"]
+                    celebration = False
+            except:
+                volume = DEFAULT_VOLUME
+                doCountdown = DEFAULT_COUNTDOWN
+                doInstructions = DEFAULT_INSTRUCTIONS
+                music = DEFAULT_MUSIC
+                BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
+                BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
+    except FileNotFoundError:
+        volume = DEFAULT_VOLUME
+        doCountdown = DEFAULT_COUNTDOWN
+        doInstructions = DEFAULT_INSTRUCTIONS
+        music = DEFAULT_MUSIC
+        BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
+        BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
+    return volume, doCountdown, doInstructions, music, BACKGROUND_COLOUR, BUTTON_COLOUR
 
 def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstructions, questionList=None, titleofquiz=None):
     if args.quizPath != None:
@@ -575,6 +626,7 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstruct
     running = True
     welcome_image = pygame.image.load("images/Screenshots/logo.png").convert()
     while running:
+        volume, doCountdown, doInstructions, music, BACKGROUND_COLOUR, BUTTON_COLOUR = getPreferences()
         refreshPage = False
         screen.fill(BACKGROUND_COLOUR)
         button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 - 50), 250, 60, BLACK)
@@ -606,7 +658,7 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstruct
                         except:
                             subprocess.Popen(["python3", "quizcreator"])
                     elif button_preferences.is_clicked(pos):
-                        music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown, doInstructions = preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v)
+                        preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v)
                         BLACK = screen_mode(BACKGROUND_COLOUR)
                         refreshPage = True
                     elif button_about.is_clicked(pos):
@@ -630,55 +682,8 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
     print("\nQuizMaster Copyright (C) 2025 hermonochy")
     print(asciiartstart)
-    doCountdown = True
-    doInstructions = True
-    try:
-        with open(".Preferences.json", "r") as file:
-            try:
-                prefDict = json.load(file)
-                volume = prefDict["Volume"]
-                doCountdown = prefDict["Countdown"]
-                doInstructions = prefDict["Instructions"]
-                pygame.mixer.music.set_volume(volume)
-                if isItHalloweenTimeNow():
-                    BACKGROUND_COLOUR = (250,100,0)
-                    BUTTON_COLOUR =  (255,110,10)
-                    music = "sounds/music_halloween1.ogg"
-                elif isItValentinesTimeNow():
-                    music = "sounds/music_valentines1.ogg"
-                    BACKGROUND_COLOUR = (255,0,0)
-                    BUTTON_COLOUR =  (255,10,10)
-                elif isItStPatricksTimeNow():
-                    music = "sounds/music_stpatrick1.ogg"
-                    BACKGROUND_COLOUR = (0,225,0)
-                    BUTTON_COLOUR =  (0,200,0) 
-                elif isItEasterTimeNow():
-                    music = "sounds/music_easter1.ogg"
-                    BACKGROUND_COLOUR = (255,170,180)
-                    BUTTON_COLOUR =  (250,250,100)
-                elif isItChristmasTimeNow():
-                    music = "sounds/music_christmas1.ogg"
-                    BACKGROUND_COLOUR = (0,255,0)
-                    BUTTON_COLOUR = (255,0,0)
-                else:
-                    music = prefDict["Music"]
-                    BACKGROUND_COLOUR = prefDict["colour"]
-                    BUTTON_COLOUR = prefDict["buttoncolour"]
-                    celebration = False
-            except:
-                volume = DEFAULT_VOLUME
-                doCountdown = DEFAULT_COUNTDOWN
-                doInstructions = DEFAULT_INSTRUCTIONS
-                music = DEFAULT_MUSIC
-                BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
-                BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
-    except FileNotFoundError:
-        volume = DEFAULT_VOLUME
-        doCountdown = DEFAULT_COUNTDOWN
-        doInstructions = DEFAULT_INSTRUCTIONS
-        music = DEFAULT_MUSIC
-        BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
-        BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
+
+    volume, doCountdown, doInstructions, music, BACKGROUND_COLOUR, BUTTON_COLOUR = getPreferences()
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('QuizMaster')
