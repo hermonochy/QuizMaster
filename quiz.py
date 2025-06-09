@@ -21,7 +21,7 @@ from modules.elements import *
 from modules.gameModes import *
 from modules.searchQuiz import search_str_in_file
 from modules.otherWindows import about
-from modules.pygameTextInput.pygame_textinput import TextInputVisualizer
+from modules.math import returnQuiz
 from modules.constants import *
 
 from modules.AdvancedGameModes.spaceInvaders import spaceInvaders
@@ -53,15 +53,18 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
 
     checkbox_countdown = Checkbox("Enable Countdown", (SCREEN_WIDTH // 4, SCREEN_HEIGHT - 280), checked=doCountdown)
     checkbox_instructions = Checkbox("Enable Instructions", (SCREEN_WIDTH // 4, SCREEN_HEIGHT  - 250), checked=doInstructions)
+    checkbox_mute = Checkbox("Mute", (SCREEN_WIDTH // 4, 165), checked=(v==0))
 
-    volumeSlider = Slider((SCREEN_WIDTH // 4, 175), 800, min=0, max=1, step=0.01, handleColour=(0,0,0), handleRadius=18, initial=v)
+    volumeSlider = Slider((SCREEN_WIDTH // 4 + 150, 175), 550, min=0, max=1, step=0.05, handleColour=(0,0,0), handleRadius=18, initial=v)
     Rslider = Slider((SCREEN_WIDTH // 4, 280), 800, min=0, max=245, step=0.5, handleColour = (255,0,0), initial = BACKGROUND_COLOUR[0])
     Gslider = Slider((SCREEN_WIDTH // 4, 320), 800, min=0, max=245, step=0.5, handleColour = (0,240,0), initial = BACKGROUND_COLOUR[1])
     Bslider = Slider((SCREEN_WIDTH // 4, 360), 800, min=0, max=245, step=0.5, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2])
 
     while running:
-
-        v = volumeSlider.get()
+        if not checkbox_mute.get():
+            v = volumeSlider.get()
+        else:
+            v = 0
         R = Rslider.get()
         G = Gslider.get()
         B = Bslider.get()
@@ -95,6 +98,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
         button_music = Button("Change Music", (SCREEN_WIDTH // 2.5, 460), 300, 50, BLACK)
         button_save = Button("Save", (SCREEN_WIDTH // 2.5, 720), 300, 50, BLACK)
         button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2.5, 780), 300, 50, BLACK)
+        checkbox_mute.draw(screen, text_color=BLACK)
         checkbox_countdown.draw(screen, text_color=BLACK)
         checkbox_instructions.draw(screen, text_color=BLACK)
         button_music.draw(screen, BUTTON_COLOUR)
@@ -114,7 +118,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
             Bslider.handle_event(event)
             checkbox_countdown.handle_event(event)
             checkbox_instructions.handle_event(event)
-
+            checkbox_mute.handle_event(event)
 
             if event.type == QUIT:
                 quit()
@@ -210,214 +214,224 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
     number of questions, a slider to reduce the number of questions, and the questions themselves.
     """
     running = True
-    num_questions = len(questionList)
+    num_questions_total = len(questionList)
+    visible_per_page = 10
 
-    try:
-        question_slider = Slider((SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4), 450, min=1, max=num_questions, step=1, initial=num_questions)
-        makeSlider = True
-    except ZeroDivisionError:
-        makeSlider = False
+    if num_questions_total >= 10:
+        question_slider = Slider((SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4), 450, min=1, max=num_questions_total, step=1, initial=num_questions_total)
+        use_slider = True
+    else:
+        use_slider = False
 
+    button_confirm = Button("Choose", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 290), 350, 50, BLACK)
+    button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 350), 350, 50, BLACK)
     scrollbar = None
-    if num_questions > 10:
-        scrollbar = Scrollbar((SCREEN_WIDTH - 40, 300), 400, num_questions, 10)
-
-    button_confirm = Button("Choose", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT//2 + 290), 350, 50, BLACK)
-    button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT//2 + 350), 350, 50, BLACK)
-
     offset = 0
 
     while running:
         events = pygame.event.get()
         for event in events:
-            if makeSlider:
-                question_slider.handle_event(event)
             if event.type == QUIT:
                 quit()
+            if use_slider:
+                question_slider.handle_event(event)
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_confirm.is_clicked(pos):
-                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList[:num_questions], title)
+                    choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList[:current_count], title)
                     return False
                 elif button_go_back.is_clicked(pos):
                     return True
-            if scrollbar and (event.type == MOUSEBUTTONDOWN or event.type == MOUSEBUTTONUP or event.type == MOUSEMOTION):
+            if scrollbar:
                 scrollbar.handle_event(event)
 
-        if scrollbar:
+        if use_slider:
+            current_count = question_slider.get()
+        else:
+            current_count = num_questions_total
+
+        if current_count > visible_per_page:
+            if not scrollbar or scrollbar.total_items != current_count:
+                scrollbar = Scrollbar((SCREEN_WIDTH - 40, 300), 400, current_count, visible_per_page)
             offset = scrollbar.get_offset()
+            offset = max(0, min(offset, current_count - visible_per_page))
+            visible_questions = questionList[:current_count][offset:offset + visible_per_page]
+        else:
+            scrollbar = None
+            offset = 0
+            visible_questions = questionList[:current_count]
 
         screen.fill(BACKGROUND_COLOUR)
-        if makeSlider:
+        if use_slider:
             question_slider.draw(screen)
-            num_questions = question_slider.get()
         display_message(title, 50, 75, BLACK)
         display_message(f"Difficulty: {difficulty}", 120, 50, BLACK)
-        display_message(f"Number of Questions: {num_questions}", 175, 50, BLACK)
+        display_message(f"Number of Questions: {current_count}", 175, 50, BLACK)
         display_message("Questions:", 275, 50, BLACK)
 
-        visible_questions = questionList[offset:offset + 10] if scrollbar else questionList
         for idx, question in enumerate(visible_questions):
             display_message(f"• {question}", 350 + idx * 40, 30, BLACK)
-                
+
         if scrollbar:
             scrollbar.draw(screen)
-        
+
         button_confirm.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
 
         pygame.display.update()
-                
 
-def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v):
-    textinput = TextInputVisualizer()
-    pygame.key.set_repeat(200, 25)
+def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
+    searchTerm = ""
+    user_answer = None
+    searchBox = TextBox(SCREEN_WIDTH // 2 - 250, 120, 550, 54, text_color=(0,0,0), placeholder="Enter quiz keyword (e.g. history, science...)", border_radius=14)
+
     while True:
-        searchTerm = ""
-        user_answer = None
-        textinput.font_color = BLACK
-        
         button_random_quiz = Button("Random Quiz", (SCREEN_WIDTH // 2 - 150, 400), 300, 40, BLACK)
         button_general_knowledge = Button("General Knowledge Quiz", (SCREEN_WIDTH // 2 - 150, 475), 300, 40, BLACK)
-        #button_math = Button("Math Quiz", (SCREEN_WIDTH // 2 - 150, 550), 300, 40, BLACK)
+        button_math = Button("Math Quiz", (SCREEN_WIDTH // 2 - 150, 550), 300, 40, BLACK)
 
-        while True:
-            screen.fill(BACKGROUND_COLOUR)
-            display_message("Enter Quiz Keyword:", 50, 50, BLACK)
-            display_message("Or:", 350, 50, BLACK)
-            button_confirm = Button("Confirm", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT//2 + 250), 300, 50, BLACK)
+        screen.fill(BACKGROUND_COLOUR)
+        display_message("Search for a Quiz", 50, 50, BLACK)
+        display_message("Or:", 350, 50, BLACK)
+        searchBox.draw(screen)
+        button_random_quiz.draw(screen, BUTTON_COLOUR)
+        button_general_knowledge.draw(screen, BUTTON_COLOUR)
+        button_math.draw(screen, BUTTON_COLOUR)
 
-            events = pygame.event.get()
-            for event in events:
-                if event.type == QUIT:
-                    quit()
-            textinput.update(events)
-
-            screen.blit(textinput.surface, (500, 100))
-            
-            button_random_quiz.draw(screen, BUTTON_COLOUR)
-            button_general_knowledge.draw(screen, BUTTON_COLOUR)
-            #button_math.draw(screen, BUTTON_COLOUR)
-
-            if [ev for ev in events if ev.type == pygame.KEYDOWN and ev.key == pygame.K_RETURN]:
-                searchTerm = textinput.value
-                break
-
-            for event in events:
-                if event.type == MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
-                    if button_random_quiz.is_clicked(pos):
-                        quizfiles = glob('./Quizzes/**/*.json', recursive=True)
-                        if quizfiles:
+        for event in pygame.event.get():
+            searchBox.handle_event(event)
+            if event.type == QUIT:
+                quit()
+            if event.type == MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if button_random_quiz.is_clicked(pos):
+                    quizfiles = glob('./Quizzes/**/*.json', recursive=True)
+                    if quizfiles:
+                        filename = random.choice(quizfiles)
+                        try:
+                            questionList, titleofquiz, difficulty, randomOrder = load_quiz(filename)
+                            print(f"{titleofquiz} \nQuestions: {questionList}\n\n")
+                        except Exception as ex:
+                            print(f"Error in {filename}: {ex}")
+                            break
+                        if args.gameMode == None:
+                            searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList, titleofquiz, difficulty)
+                            if searchAgain:
+                                break
+                            else:
+                                return
+                        else:
+                            StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
+                        return
+                elif button_general_knowledge.is_clicked(pos):
+                    number_of_questions, goBack = choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+                    if goBack:
+                        break
+                    quizfiles = glob('./Quizzes/**/*.json', recursive=True)
+                    if quizfiles:
+                        questionList = []
+                        for _ in range(number_of_questions):
                             filename = random.choice(quizfiles)
                             try:
-                                questionList, titleofquiz, difficulty, randomOrder = load_quiz(filename)
-                                print(f"{titleofquiz} \nQuestions: {questionList}\n\n")
+                                questions, _, _, _ = load_quiz(filename)
+                                question = random.choice(questions)
+                                questionList.append(question)
                             except Exception as ex:
                                 print(f"Error in {filename}: {ex}")
-                                break
-                            if args.gameMode == None:
-                                searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstructions, questionList, titleofquiz, difficulty)
-                                if searchAgain:
-                                    break
-                                else:
-                                    return
-                            else:
-                                StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstructions, questionList, titleofquiz)
-                            return
-                    elif button_general_knowledge.is_clicked(pos):
-                        number_of_questions, goBack = choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-                        if goBack:
-                            break
-                        quizfiles = glob('./Quizzes/**/*.json', recursive=True)
-                        if quizfiles:
-                            questionList = []
-                            for _ in range(number_of_questions):
-                                filename = random.choice(quizfiles)
-                                try:
-                                    questions, _, _, _ = load_quiz(filename)
-                                    question = random.choice(questions)
-                                    questionList.append(question)
-                                except Exception as ex:
-                                    print(f"Error in {filename}: {ex}")
-                                    continue
-                            titleofquiz = "General Knowledge Quiz"
-                            if args.gameMode == None:
-                                choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
-                            else:
-                                StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
-                            return
+                                continue
+                        titleofquiz = "General Knowledge Quiz"
+                        if args.gameMode == None:
+                            choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
+                        else:
+                            StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
+                        return
+                elif button_math.is_clicked(pos):
+                    number_of_questions, goBack = choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+                    if goBack:
+                        break
+                    titleofquiz, questionList = returnQuiz(number_of_questions)
+                    if args.gameMode == None:
+                        choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
+                    else:
+                        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
+                    return
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and searchBox.active:
+                searchTerm = searchBox.get().strip()
+                break
 
-            pygame.display.update()
+        pygame.display.update()
 
-        quizfiles = glob('./Quizzes/**/*.json', recursive=True)
+        if searchTerm != "":
+            quizfiles = glob('./Quizzes/**/*.json', recursive=True)
+            quizfileSearchResults = []
+            for file in quizfiles:
+                if search_str_in_file(file, searchTerm):
+                    quizfileSearchResults.append(file)
 
-        quizfileSearchResults = []
-        for file in quizfiles:
-            if search_str_in_file(file, searchTerm):
-                quizfileSearchResults.append(file)
-
-        if not quizfileSearchResults:
-            display_message("No Matching Quizzes found!", SCREEN_HEIGHT // 4, 80, (255,0,0))
-            pygame.display.update()
-            pygame.time.wait(250)
-            continue
-            
-        scrollbar = Scrollbar((SCREEN_WIDTH - 40, ANSWER_OFFSET), SCREEN_HEIGHT - ANSWER_OFFSET - 50, len(quizfileSearchResults), 10)
-        buttons = []
-        for idx, quizfile in enumerate(quizfileSearchResults):
-            try:
-                with open(quizfile, "r", errors="ignore") as file:
-                    quiztitle = json.load(file)["title"]
-                button = Button(quiztitle, (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40, BLACK)
-                buttons.append(button)
-            except json.decoder.JSONDecodeError as ex:
-                print(f"Error in quizfile {quizfile}: {ex}!")
+            if not quizfileSearchResults:
+                display_message("No Matching Quizzes found!", SCREEN_HEIGHT // 4, 80, (255,0,0))
+                pygame.display.update()
+                pygame.time.wait(800)
+                searchTerm = ""
                 continue
 
-        running = True
-        while running:
-            screen.fill(BACKGROUND_COLOUR)
-            for button in buttons:
-                button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
-            if len(buttons) > 12:
-                scrollbar.draw(screen)
-            pygame.display.update()
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    quit()
-                if event.type == MOUSEBUTTONDOWN or event.type == MOUSEBUTTONUP or event.type == MOUSEMOTION:
-                    scrollbar.handle_event(event)
-                if event.type == MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
-                    for idx, button in enumerate(buttons):
-                        if button.is_clicked(pos):
-                            user_answer = idx
-
-            offset = scrollbar.get_offset()
-            for idx, button in enumerate(buttons):
-                button.position = (SCREEN_WIDTH // 2 - 150, 100 + (idx - offset) * OPTION_HEIGHT)
-                button.rect.topleft = button.position
-
-            if user_answer is not None:
-                filename = quizfileSearchResults[user_answer]
-
+            scrollbar = Scrollbar((SCREEN_WIDTH - 40, ANSWER_OFFSET), SCREEN_HEIGHT - ANSWER_OFFSET - 50, len(quizfileSearchResults), 10)
+            buttons = []
+            for idx, quizfile in enumerate(quizfileSearchResults):
                 try:
-                    questionList, titleofquiz, difficulty, randomOrder = load_quiz(filename)
-                    if randomOrder:
-                        random.shuffle(questionList)
-                except Exception as ex:
-                    print(f"Error in {filename}: {ex}")
-                    break
-                print("Questions:", questionList)
-                if args.gameMode == None:
-                    searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstructions, questionList, titleofquiz, difficulty)
-                    if searchAgain:
+                    with open(quizfile, "r", errors="ignore") as file:
+                        quiztitle = json.load(file)["title"]
+                    button = Button(quiztitle, (SCREEN_WIDTH // 2 - 150, ANSWER_OFFSET + idx * OPTION_HEIGHT), 300, 40, BLACK)
+                    buttons.append(button)
+                except json.decoder.JSONDecodeError as ex:
+                    print(f"Error in quizfile {quizfile}: {ex}!")
+                    continue
+
+            running = True
+            user_answer = None
+            while running:
+                screen.fill(BACKGROUND_COLOUR)
+                for button in buttons:
+                    button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
+                if len(buttons) > 12:
+                    scrollbar.draw(screen)
+                pygame.display.update()
+                for event in pygame.event.get():
+                    if event.type == QUIT:
+                        quit()
+                    if event.type == MOUSEBUTTONDOWN or event.type == MOUSEBUTTONUP or event.type == MOUSEMOTION:
+                        scrollbar.handle_event(event)
+                    if event.type == MOUSEBUTTONDOWN:
+                        pos = pygame.mouse.get_pos()
+                        for idx, button in enumerate(buttons):
+                            if button.is_clicked(pos):
+                                user_answer = idx
+
+                offset = scrollbar.get_offset()
+                for idx, button in enumerate(buttons):
+                    button.position = (SCREEN_WIDTH // 2 - 150, 100 + (idx - offset) * OPTION_HEIGHT)
+                    button.rect.topleft = button.position
+
+                if user_answer is not None:
+                    filename = quizfileSearchResults[user_answer]
+
+                    try:
+                        questionList, titleofquiz, difficulty, randomOrder = load_quiz(filename)
+                        if randomOrder:
+                            random.shuffle(questionList)
+                    except Exception as ex:
+                        print(f"Error in {filename}: {ex}")
                         break
+                    print("Questions:", questionList)
+                    if args.gameMode == None:
+                        searchAgain = quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, questionList, titleofquiz, difficulty)
+                        if searchAgain:
+                            break
+                        else:
+                            return
                     else:
-                        return
-                else:
-                    StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
+                        StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
+            searchTerm = ""
             
 def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz):
     running = True
@@ -556,12 +570,12 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
     # Start home page
     elif args.gameMode == None and args.quizPath == None:
         main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, volume)
-
                    
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v):
     running = True
     welcome_image = pygame.image.load("images/Screenshots/logo.png").convert()
     while running:
+        refreshPage = False
         screen.fill(BACKGROUND_COLOUR)
         button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 - 50), 250, 60, BLACK)
         button_make = Button("Make a Quiz", (SCREEN_WIDTH // 2 - 300, SCREEN_HEIGHT // 2 - 50), 250, 60, BLACK)
@@ -577,27 +591,29 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstruct
         screen.blit(welcome_image, (SCREEN_WIDTH//4.75, SCREEN_HEIGHT//12))
         screen.blit(welcome_image, (SCREEN_WIDTH//1.325, SCREEN_HEIGHT//12))
         pygame.display.update()
-        clock.tick(30)
-
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                quit()
-            if event.type == MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                if button_play.is_clicked(pos):
-                    choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v)
-                elif button_make.is_clicked(pos):
-                    try:
-                        subprocess.Popen(["python", "quizcreator"])
-                    except:
-                        subprocess.Popen(["python3", "quizcreator"])
-                elif button_preferences.is_clicked(pos):
-                    music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown, doInstructions = preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v)
-                    BLACK = screen_mode(BACKGROUND_COLOUR)
-                elif button_about.is_clicked(pos):
-                    about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-                elif button_quit.is_clicked(pos):
+        while not refreshPage:
+            for event in pygame.event.get():
+                if event.type == QUIT:
                     quit()
+                if event.type == MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    if button_play.is_clicked(pos):
+                        choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v)
+                        refreshPage = True
+                    elif button_make.is_clicked(pos):
+                        try:
+                            subprocess.Popen(["python", "quizcreator"])
+                        except:
+                            subprocess.Popen(["python3", "quizcreator"])
+                    elif button_preferences.is_clicked(pos):
+                        music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown, doInstructions = preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v)
+                        BLACK = screen_mode(BACKGROUND_COLOUR)
+                        refreshPage = True
+                    elif button_about.is_clicked(pos):
+                        about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
+                        refreshPage = True
+                    elif button_quit.is_clicked(pos):
+                        quit()
                 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -675,8 +691,7 @@ if __name__ == '__main__':
         volume = float(args.volume)
     except Exception:
         pass
-    finally:
-        pygame.mixer.music.set_volume(volume)
+    pygame.mixer.music.set_volume(volume)
     BLACK = screen_mode(BACKGROUND_COLOUR)
     
     try:
