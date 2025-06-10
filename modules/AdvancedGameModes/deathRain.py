@@ -134,7 +134,7 @@ def deathRain(questionList, titleofquiz, doCountdown, doInstructions, v):
     last_spawn = 0
 
     if doInstructions:
-        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
+        Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, WHITE, titleofquiz, p1=deathRain_p1, p2=deathRain_p2, p3=deathRain_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, WHITE)

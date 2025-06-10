@@ -52,8 +52,8 @@ def quickClick(questionList, titleofquiz, doCountdown, doInstructions):
         bouncing_questions.append(BouncingQuestion(q, x, y))
 
     if doInstructions:
-        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
-        
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=quickClick_p1, p2=quickClick_p2)
+
     if doCountdown:
         countdown(titleofquiz, BLACK, WHITE)
 

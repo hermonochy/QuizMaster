@@ -11,6 +11,7 @@ from modules.checker import is_silly
 changes = False
 questionList = []
 current_file_path = None
+difficultyList = [i for i in range(1, 6)]
 
 menuBar = [
     ['&File', ['&Clear', '&New', '&Open', '&Save', 'Save &As', '---', '&Restart', '&Quit']],
@@ -19,11 +20,11 @@ menuBar = [
     ['&Run', ['&Play']],
     ['&Help', ['!About', '&Tutorials', '&Github', ['QuizMaster &Repository', 'QuizMaster &Organisation']]]
 ]
-
 mainWindowLayout = [
     [sg.Menu(menuBar)],
     [sg.Text("Title of Quiz:"), sg.InputText(key='quiz_name', tooltip="The title of the quiz that players will see.")],
-    [sg.Text("Difficulty:", tooltip="Select the difficulty level for this quiz (1 = Baby Quiz, 3 = Secondary School Level, 5 = Requires a professional understanding of the subject)."), sg.Spin([i for i in range(1, 6)], key='difficulty', initial_value=3)],
+    [sg.Text("Difficulty:", tooltip="Select the difficulty level for this quiz (1 = Baby Quiz, 3 = Secondary School Level, 5 = Requires a professional understanding of the subject)."), 
+     sg.Spin(difficultyList, key='difficulty', initial_value=3)],
     [sg.Checkbox("Randomize Questions", default=False, tooltip="Randomize the order of questions when the quiz is played.", key='randomOrder')],
     [sg.Listbox(questionList, size=(125, 25), key='quizquestionentry', enable_events=True, tooltip="The list of the questions."),
      sg.Text(key='textbox', size=(20, 10))],
@@ -120,6 +121,7 @@ if __name__ == '__main__':
 
     while True:
         event, values = mainWindow.read()
+
         if event == 'quizquestionentry':
             changes = True
             if len(values['quizquestionentry']) > 0:
@@ -136,7 +138,11 @@ if __name__ == '__main__':
                     save_quiz(current_file_path)
                     break
             break
-    
+
+        if values['difficulty'] not in difficultyList:
+            sg.Popup("Please select a valid difficulty level!", keep_on_top=True)
+            mainWindow["difficulty"].update(3)
+
         if event == 'Restart':           
             try:
                 subprocess.Popen(["/usr/bin/python", "quizcreator",])

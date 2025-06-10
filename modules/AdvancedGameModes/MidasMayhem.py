@@ -18,7 +18,7 @@ def midasMayhem(questionList, titleofquiz, doCountdown, doInstructions, BACKGROU
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
     if doInstructions:
-        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
+        Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=midasMayhem_p1, p2=midasMayhem_p2, p3=midasMayhem_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
@@ -172,7 +172,7 @@ def midasMayhem(questionList, titleofquiz, doCountdown, doInstructions, BACKGROU
                 if button_go_back.is_clicked(pos):
                     return
                 if button_replay.is_clicked(pos):
-                    midasMayhem(questionList, titleofquiz, doCountdown, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    midasMayhem(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 if button_quit.is_clicked(pos):
                     quit()

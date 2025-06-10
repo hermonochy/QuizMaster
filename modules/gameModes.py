@@ -24,7 +24,7 @@ def classic(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_C
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
     if doInstructions:
-        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
+        Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=classic_p1, p2=classic_p2, p3=classic_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
@@ -121,7 +121,7 @@ def classicV2(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
     if doInstructions:
-        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
+        Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=classicV2_p1, p2=classicV2_p2, p3=classicV2_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
@@ -218,7 +218,7 @@ def speed(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COL
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
     if doInstructions:
-        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
+        Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=speedRun_p1, p2=speedRun_p2, p3=speedRun_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
@@ -330,7 +330,7 @@ def survival(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_
     BLACK = screen_mode(BACKGROUND_COLOUR)
 
     if doInstructions:
-        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
+        Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=survival_p1, p2=survival_p2, p3=survival_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)
@@ -416,7 +416,7 @@ def practice(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_
         BUTTON_COLOUR = (BUTTON_COLOUR[0], 220, BUTTON_COLOUR[2]) # Improve visibility of answer reveal
 
     if doInstructions:
-        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
+        Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, p1=practice_p1, p2=practice_p2, p3=practice_p3)
 
     if doCountdown:
         countdown(titleofquiz, BACKGROUND_COLOUR, BLACK)

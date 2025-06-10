@@ -54,7 +54,8 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
     alien_laser_img = pygame.transform.scale(alien_laser_img, (20,60))
 
     if doInstructions:
-        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=strikeZone_p1, p2=strikeZone_p2, p3=strikeZone_p3)
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=spaceInvaders_p1, p2=spaceInvaders_p2, p3=spaceInvaders_p3)
+        
     if doCountdown:
         countdown(titleofquiz, BLACK, WHITE)
 

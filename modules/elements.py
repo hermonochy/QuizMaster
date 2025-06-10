@@ -260,7 +260,7 @@ class Slider:
         return self.value
 
 class Checkbox:
-    def __init__(self, text, position, width=25, height=25, checked=False):
+    def __init__(self, text, position, width=30, height=30, checked=False):
         self.text = text
         self.position = position
         self.checked = checked
