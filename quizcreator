@@ -140,7 +140,6 @@ if __name__ == '__main__':
             break
 
         if values['difficulty'] not in difficultyList:
-            sg.Popup("Please select a valid difficulty level!", keep_on_top=True)
             mainWindow["difficulty"].update(3)
 
         if event == 'Restart':           

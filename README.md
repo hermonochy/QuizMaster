@@ -91,9 +91,9 @@ In *Survival* mode, players are allotted a limited number of lives to complete t
 
 **Practice**
 
-A more laid-back approach, this mode allows you to engage in practice sessions at your own pace. You receive immediate feedback on your answers and can choose to continue or end the quiz whenever you wish. Scores are not tracked in this mode.
+A more laid-back approach, this mode allows you to engage in practice sessions at your own pace. You receive immediate feedback on your answers and can choose to continue or end the quiz whenever you wish. Scores are not tracked in this mode, and you can reveal the answer if stuck.
 
-###### Advanced Game Modes
+##### Advanced Game Modes
 
 **Space Invaders**
 
