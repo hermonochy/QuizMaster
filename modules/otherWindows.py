@@ -73,7 +73,7 @@ def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_GPL.is_clicked(pos):
-                    openFile("./LICENSE")
+                    openFile("LICENSE")
                 elif button_CC.is_clicked(pos):
                     openFile("Quizzes/LICENSE")
                 elif button_go_back.is_clicked(pos):

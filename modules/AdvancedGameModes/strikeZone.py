@@ -203,7 +203,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                     break
 
         if random.random() < 0.005 and len(powerups) < 10:
-            powerup_type = random.choices(["yellow", "green", "white", "orange"], weights=[5, 30, 5, 60])[0]
+            powerup_type = random.choices(["yellow", "green", "white", "orange"], weights=[45, 30, 5, 20])[0]
             powerup_color = {
                 "yellow": YELLOW,
                 "green": GREEN,
