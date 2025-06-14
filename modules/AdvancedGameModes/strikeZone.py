@@ -174,8 +174,28 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
         enemy_spawn_counter += 1
         if enemy_spawn_counter >= ENEMY_SPAWN_RATE:
             enemy_spawn_counter = 0
-            enemies.append({"image": pygame.Surface((50, 50)), "rect": pygame.Rect(random.randint(0, SCREEN_WIDTH - 50), random.randint(0, SCREEN_HEIGHT - 50), 50, 50)})
+            max_attempts = 20  # Prevent infinite loop
+            safe_distance = 100
+            spawn_x, spawn_y = None, None
+            for _ in range(max_attempts):
+                candidate_x = random.randint(0, SCREEN_WIDTH - 50)
+                candidate_y = random.randint(0, SCREEN_HEIGHT - 50)
+                candidate_rect = pygame.Rect(candidate_x, candidate_y, 50, 50)
+                dx = candidate_rect.centerx - player["rect"].centerx
+                dy = candidate_rect.centery - player["rect"].centery
+                distance = math.hypot(dx, dy)
+                if not candidate_rect.colliderect(player["rect"]) and distance > safe_distance:
+                    spawn_x, spawn_y = candidate_x, candidate_y
+                    break
+            if spawn_x is None or spawn_y is None:
+                spawn_x = random.randint(0, SCREEN_WIDTH - 50)
+                spawn_y = random.randint(0, SCREEN_HEIGHT - 50)
+            enemies.append({
+                "image": pygame.Surface((50, 50)),
+                "rect": pygame.Rect(spawn_x, spawn_y, 50, 50)
+            })
             enemies[-1]["image"].fill(RED)
+
 
         for enemy in enemies[:]:
             dx = player["rect"].x - enemy["rect"].x
