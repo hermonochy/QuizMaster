@@ -22,6 +22,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
     aliens = []
     projectiles = []
     alien_projectiles = []
+    explosions = []
     player_width, player_height = 50, 50
     alien_width, alien_height = 40, 40
     alien_speed = 1
@@ -33,9 +34,10 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
 
     player_laser_img = pygame.image.load('images/Laser.png')
     alien_laser_img = pygame.image.load('images/Laser.png')
-    explosion = pygame.mixer.Sound('sounds/soundEffects/explosion.ogg')
+    explosion_sound = pygame.mixer.Sound('sounds/soundEffects/explosion.ogg')
     hit = pygame.mixer.Sound('sounds/soundEffects/hit.ogg')
     player_img = pygame.image.load('images/Spaceship.png')
+    explosion_img = pygame.image.load('images/explosion.png')
 
     if isItHalloweenTimeNow():
         alien_img = pygame.image.load('images/pumpkin1.png')
@@ -45,13 +47,14 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
         cannonFire = pygame.mixer.Sound('sounds/soundEffects/cannonFire.ogg')
 
     cannonFire.set_volume(v)
-    explosion.set_volume(v)
+    explosion_sound.set_volume(v)
     hit.set_volume(v)
 
     player_img = pygame.transform.scale(player_img, (player_width, player_height))
     alien_img = pygame.transform.scale(alien_img, (alien_width, alien_height))
     player_laser_img = pygame.transform.scale(player_laser_img, (15, 50))
     alien_laser_img = pygame.transform.scale(alien_laser_img, (20,60))
+    explosion_img = pygame.transform.scale(explosion_img, (60, 60))
 
     if doInstructions:
         Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=spaceInvaders_p1, p2=spaceInvaders_p2, p3=spaceInvaders_p3)
@@ -138,6 +141,8 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
     button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, WHITE)
     button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, WHITE)
 
+    can_shoot = True
+
     while running and lives > 0:
         screen.fill(BLACK)
 
@@ -194,9 +199,29 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                 if (alien["x"] < projectile["x"] < alien["x"] + alien_width and
                         alien["y"] < projectile["y"] < alien["y"] + alien_height):
                     alien["alive"] = False
-                    explosion.play()
+                    explosion_sound.play()
                     if projectile in projectiles:
                         projectiles.remove(projectile)
+                    explosions.append({
+                        "x": alien["x"] + alien_width // 2,
+                        "y": alien["y"] + alien_height // 2,
+                        "size": 60,
+                        "start_time": pygame.time.get_ticks(),
+                        "duration": 750
+                    })
+
+        for explosion in explosions[:]:
+            elapsed = pygame.time.get_ticks() - explosion["start_time"]
+            if elapsed > explosion["duration"]:
+                explosions.remove(explosion)
+                continue
+
+            shrink_ratio = 1.0 - (elapsed / explosion["duration"])
+            size = int(explosion["size"] * shrink_ratio)
+            if size < 5:
+                size = 5
+            exp_img_scaled = pygame.transform.scale(explosion_img, (size, size))
+            screen.blit(exp_img_scaled, (explosion["x"] - size // 2, explosion["y"] - size // 2))
 
         if (all(not alien["alive"] for alien in aliens) and question_index >= total_questions) or all(not alien["alive"] for alien in aliens):
             display_message("You Win!", SCREEN_HEIGHT // 2, 100, (0,255,0))
@@ -209,11 +234,6 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
             player_x -= 5
         if keys[K_RIGHT] and player_x < SCREEN_WIDTH - player_width:
             player_x += 5
-        if keys[K_SPACE] and ammo > 0:
-            cannonFire.play()
-            projectiles.append({"x": player_x + player_width // 2, "y": player_y})
-            ammo -= 1
-            pygame.time.wait(50)
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -226,11 +246,20 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                     return
                 elif button_leave.is_clicked(pos):
                     quit()
+            if event.type == KEYDOWN:
+                if event.key == K_SPACE and can_shoot and ammo > 0:
+                    cannonFire.play()
+                    projectiles.append({"x": player_x + player_width // 2, "y": player_y})
+                    ammo -= 1
+                    can_shoot = False
+            if event.type == KEYUP:
+                if event.key == K_SPACE:
+                    can_shoot = True
 
         pygame.display.update()
 
     if lives == 0 or (question_index >= total_questions and all(alien["alive"] for alien in aliens)) or max_alien_y + alien_height >= player_y + player_height // 2:
-        explosion.play()
+        explosion_sound.play()
         display_message("You Lose!", SCREEN_HEIGHT // 2, 100, (255,0,0))
         pygame.display.update()
         pygame.time.wait(3000)
