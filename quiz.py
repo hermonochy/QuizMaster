@@ -171,6 +171,8 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
                     BLACK = screen_mode(BACKGROUND_COLOUR_old)
                     return
 
+                    
+
 def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     """
     Function to choose amount of questions for an auto-generated quiz.
@@ -234,7 +236,11 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
                     choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList[:current_count], title)
                     return False
                 elif button_go_back.is_clicked(pos):
-                    return True
+                    
+                    if popup("Go Back?", "Are you sure you want to go back?", buttons=("Return", "Stay")) == "Return":
+                        return True
+                    else:
+                        continue
             if scrollbar:
                 scrollbar.handle_event(event)
 

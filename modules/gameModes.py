@@ -69,7 +69,7 @@ def classic(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_C
                        time_remaining = 0
                        totalQuestions = questionIndex
                     if button_go_back.is_clicked(pos):
-                       return
+                        return
                     if button_leave.is_clicked(pos):
                        quit()
                     for idx, button in enumerate(buttons):
@@ -262,7 +262,10 @@ def speed(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COL
                     pos = pygame.mouse.get_pos()
                     for idx, button in enumerate(buttons):
                         if button_go_back.is_clicked(pos):
-                           return
+                            if popup("Go Back?", "Are you sure you want to go back?", buttons=("Return", "Stay")) == "Return":
+                                return
+                            else:
+                                continue
                         if button_leave.is_clicked(pos):
                            quit()
                         if button.is_clicked(pos):
@@ -373,7 +376,10 @@ def survival(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_
                         running = False
                         break
                     if button_go_back.is_clicked(pos):
-                        return
+                        if popup("Go Back?", "Are you sure you want to go back?", buttons=("Return", "Stay")) == "Return":
+                            return
+                        else:
+                            continue
                     if button_leave.is_clicked(pos):
                         quit()
                     pygame.time.wait(40)
@@ -466,7 +472,10 @@ def practice(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_
                         running = False
                         break
                     if button_go_back.is_clicked(pos):
-                        return
+                        if popup("Go Back?", "Are you sure you want to go back?", buttons=("Return", "Stay")) == "Return":
+                            return
+                        else:
+                            continue
                     if button_leave.is_clicked(pos):
                         quit()
                     pygame.time.wait(40)

@@ -38,9 +38,9 @@ def getOppositeRGB(rgb):
     contrasting_rgb = tuple(255 - value for value in rgb)
     return contrasting_rgb
 
-def darken(colour):
+def darken(colour, amount=50):
     h, s, v = colorsys.rgb_to_hsv(colour[0], colour[1], colour[2])
-    v = max(0, v - 50)
+    v = max(0, v - amount)
     return colorsys.hsv_to_rgb(h, s, v)
 
 class Button:
@@ -339,6 +339,7 @@ class ProgressBar:
             text_rect = text_surf.get_rect(center=(x + width // 2, y + height // 2))
             screen.blit(text_surf, text_rect)
 
+
 class Scrollbar:
     def __init__(self, position, height, total_items, items_per_page):
         self.position = position
@@ -406,6 +407,116 @@ class Scrollbar:
 
     def get_offset(self):
         return int((self.handle_rect.y - self.rect.y - self.arrow_height) * self.total_items // (self.height - 2 * self.arrow_height))
+
+def popup(
+    title="Popup",
+    message="",
+    buttons=("OK",),
+    width=420,
+    height=240,
+    font_title_size=44,
+    font_msg_size=28,
+    popup_color=(250, 250, 255),
+    border_radius=18,
+    shadow_offset=5,
+    shadow_color=(120, 120, 120),
+    border_color=(80, 140, 255),
+    border_width=4,
+    title_color=(40, 60, 120),
+    msg_color=(35, 35, 35),
+    button_color=(80, 140, 255),
+    button_text_color=(255, 255, 255),
+    button_hover_color=(60, 120, 235)
+):
+
+    popup_rect = pygame.Rect(
+        (screen.get_width() - width) // 2,
+        (screen.get_height() - height) // 2,
+        width, height
+    )
+    shadow_rect = popup_rect.move(shadow_offset, shadow_offset)
+
+    font_title = pygame.font.Font(None, font_title_size)
+    font_msg = pygame.font.Font(None, font_msg_size)
+
+    btn_width = 120
+    btn_height = 48
+    spacing = 20
+    total_btn_width = len(buttons) * btn_width + (len(buttons) - 1) * spacing
+    btn_y = popup_rect.y + height - btn_height - 30
+    btn_x = popup_rect.x + (width - total_btn_width) // 2
+
+    btn_rects = []
+    for i in range(len(buttons)):
+        btn_rect = pygame.Rect(
+            btn_x + i * (btn_width + spacing),
+            btn_y,
+            btn_width,
+            btn_height
+        )
+        btn_rects.append(btn_rect)
+
+    def wrap_text(text, font, max_width):
+        words = text.split()
+        lines = []
+        current = ""
+        for word in words:
+            test = current + word + " "
+            if font.size(test)[0] <= max_width:
+                current = test
+            else:
+                lines.append(current)
+                current = word + " "
+        if current:
+            lines.append(current)
+        return lines
+
+    hover = [False] * len(buttons)
+
+    def draw():
+        pygame.draw.rect(screen, shadow_color, shadow_rect, border_radius=border_radius)
+        pygame.draw.rect(screen, popup_color, popup_rect, border_radius=border_radius)
+        pygame.draw.rect(screen, border_color, popup_rect, border_width, border_radius=border_radius)
+        title_surf = font_title.render(title, True, title_color)
+        title_rect = title_surf.get_rect(center=(popup_rect.centerx, popup_rect.y + 38))
+        screen.blit(title_surf, title_rect)
+        y_msg = title_rect.bottom + 16
+        lines = wrap_text(message, font_msg, width - 60)
+        for line in lines:
+            msg_surf = font_msg.render(line, True, msg_color)
+            msg_rect = msg_surf.get_rect(center=(popup_rect.centerx, y_msg))
+            screen.blit(msg_surf, msg_rect)
+            y_msg += msg_surf.get_height() + 2
+        for i, btn_rect in enumerate(btn_rects):
+            col = button_hover_color if hover[i] else button_color
+            pygame.draw.rect(screen, col, btn_rect, border_radius=10)
+            txt_surf = font_msg.render(str(buttons[i]), True, button_text_color)
+            txt_rect = txt_surf.get_rect(center=btn_rect.center)
+            screen.blit(txt_surf, txt_rect)
+        pygame.display.update()
+
+    while True:
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif e.type == pygame.MOUSEMOTION:
+                mouse = e.pos
+                for i, rect in enumerate(btn_rects):
+                    hover[i] = rect.collidepoint(mouse)
+            elif e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
+                for i, rect in enumerate(btn_rects):
+                    if rect.collidepoint(e.pos):
+                        return buttons[i]
+            elif e.type == pygame.KEYDOWN:
+                if e.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
+                    return buttons[0]
+                elif e.key == pygame.K_ESCAPE and len(buttons) > 1:
+                    return buttons[-1]
+        dim = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
+        dim.fill((0, 0, 0, 250))
+        screen.blit(dim, (0, 0))
+        draw()
 
 def display_message(message, y_position, font_size, colour, x_position=SCREEN_WIDTH // 2):
     """

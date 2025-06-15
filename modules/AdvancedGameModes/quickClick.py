@@ -167,8 +167,11 @@ def quickClick(questionList, titleofquiz, doCountdown, doInstructions):
                             break
                 if button_leave.is_clicked(pos):
                     quit()
-                elif button_go_back.is_clicked(pos):
-                    return
+                if button_go_back.is_clicked(pos):
+                    if popup("Go Back?", "Are you sure you want to go back?", buttons=("Return", "Stay")) == "Return":
+                        return
+                    else:
+                        continue
         
         if questions_answered == total_questions:
             display_message("Quiz Complete!", SCREEN_HEIGHT // 2 - 50, 100, (0, 255, 0))

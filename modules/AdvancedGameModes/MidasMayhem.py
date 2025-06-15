@@ -54,7 +54,10 @@ def midasMayhem(questionList, titleofquiz, doCountdown, doInstructions, BACKGROU
                 if event.type == MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     if button_go_back.is_clicked(pos):
-                        return
+                        if popup("Go Back?", "Are you sure you want to go back?", buttons=("Return", "Stay")) == "Return":
+                            return
+                        else:
+                            continue
                     if button_leave.is_clicked(pos):
                         quit()
                     for idx, button in enumerate(buttons):

@@ -243,7 +243,10 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                 if button_answer.is_clicked(pos):
                     handle_question(False)
                 elif button_go_back.is_clicked(pos):
-                    return
+                    if popup("Go Back?", "Are you sure you want to go back?", buttons=("Return", "Stay")) == "Return":
+                        return
+                    else:
+                        continue
                 elif button_leave.is_clicked(pos):
                     quit()
             if event.type == KEYDOWN:
