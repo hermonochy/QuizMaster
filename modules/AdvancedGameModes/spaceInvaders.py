@@ -78,7 +78,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
         cols = total_questions // 3 + 5
     else:
         cols = 20
-        rows = total_questions*2
+        rows = total_questions - 32
     generate_aliens_bottom_up(rows, cols)
 
     def handle_question(forSurvival):
