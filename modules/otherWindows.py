@@ -17,7 +17,7 @@ def countdown(titleofquiz, BACKGROUND_COLOUR, BLACK):
     screen.fill(BACKGROUND_COLOUR)
     display_message(("Go!"), QUESTION_OFFSET+200, 150, BLACK)
     pygame.display.update()
-    pygame.time.delay(1000)
+    pygame.time.delay(900)
     return
 
 def about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
