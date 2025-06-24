@@ -60,9 +60,10 @@ practice_p1 = " No time pressure or lives. Practice answering at your own pace, 
 practice_p2 = " No win/lose—practice makes perfect!"
 practice_p3 = " - Click an answer or use keys 1–9.\n\n - Click 'Reveal Answer' to see the correct answer."
 
-spaceInvaders_p1 = " Control your spaceship and shoot aliens. Earn ammo by answering questions correctly."
-spaceInvaders_p2 = " Destroy all the aliens without losing all your lives."
-spaceInvaders_p3 = " - Move: Left/Right arrow keys.\n\n - Shoot: Spacebar (if you have ammo).\n\n - Answer Question: Click 'Answer Question' button, then use buttons or keys 1–9."
+spaceInvaders_p1 = " Defend your spaceship from waves of advancing aliens! Earn ammo by correctly answering quiz questions and use it to shoot down enemies. \
+                        \n\nSome aliens are tougher or have better guns—watch out! \n\nIf you are hit, you have the opportunity to save a life by answering a question. \
+                        \n\nEach alien earns you some money - use it to invest in your defense. To buy, press Shop."
+spaceInvaders_p2 = " - Move: Left/Right arrow keys.\n\n - Shoot: Spacebar (if you have ammo).\n\n - Answer Question: Click 'Answer Question' button, then use buttons or keys 1–9."
 
 strikeZone_p1 = " Dodge enemies and stay alive. Collect power-ups by answering questions."
 strikeZone_p2 = " Survive as long as possible and defeat enemies for a high score."

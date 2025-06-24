@@ -15,29 +15,42 @@ ALIEN_TYPES = [
         "img": "images/SpaceshipAlien1.png" if not isItHalloweenTimeNow() else "images/pumpkin1.png",
         "health": 1,
         "probability": 0.8,
-        "gun": "normal"
-    },
-    {
-        "name": "tough",
-        "img": "images/SpaceshipAlien2.png" if not isItHalloweenTimeNow() else "images/pumpkin2.png",
-        "health": 4,
-        "probability": 0.1,
-        "gun": "normal"
+        "gun": "normal",
+        "kill_value": 1,
     },
     {
         "name": "shooter",
-        "img": "images/SpaceshipAlien3.png" if not isItHalloweenTimeNow() else "images/ghost1.png",
+        "img": "images/SpaceshipAlien2.png" if not isItHalloweenTimeNow() else "images/ghost1.png",
         "health": 1,
         "probability": 0.08,
-        "gun": "strong"
+        "gun": "strong",
+        "kill_value": 2,
+    },
+    {
+        "name": "tough",
+        "img": "images/SpaceshipAlien3.png" if not isItHalloweenTimeNow() else "images/pumpkin2.png",
+        "health": 4,
+        "probability": 0.1,
+        "gun": "normal",
+        "kill_value": 3,
     },
     {
         "name": "leader",
         "img": "images/SpaceshipAlienLeader.png" if not isItHalloweenTimeNow() else "images/ghost1.png",
         "health": 10,
         "probability": 0.02,
-        "gun": "strong"
+        "gun": "strong",
+        "kill_value": 10,
     }
+]
+
+SHOP_ITEMS = [
+    {"name": "Speed Boost", "desc": "Move faster for 15s", "cost": 10, "type": "speed"},
+    {"name": "Laser Power", "desc": "Extra laser damage for 15s", "cost": 10, "type": "laser"},
+    {"name": "Extra Life", "desc": "Gain +10 life", "cost": 16, "type": "life"},
+    {"name": "Ammo Bonus", "desc": "+10 ammo per answer for 1 minute", "cost": 15, "type": "ammo"},
+    {"name": "Shield", "desc": "Invulnerable for 15s", "cost": 20, "type": "shield"},
+    {"name": "Auto-Fire", "desc": "Auto-shoot for 15s", "cost": 6, "type": "autofire"},
 ]
 
 def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
@@ -62,13 +75,24 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
     player_y = SCREEN_HEIGHT - 100
     question_index = 0
     total_questions = len(questionList)
-
+    kill_currency = 0
 
     if doInstructions:
-        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=spaceInvaders_p1, p2=spaceInvaders_p2, p3=spaceInvaders_p3)
+        Instructions(BLACK, BUTTON_COLOUR, WHITE, titleofquiz, p1=spaceInvaders_p1, p2=spaceInvaders_p2)
 
     if doCountdown:
         countdown(titleofquiz, BLACK, WHITE)
+
+    timed_effects = {}
+
+    shop_bg_color = (45, 40, 80)
+    shop_border_color = (160, 80, 255)
+    shop_title_color = (255, 255, 140)
+    shop_item_bg = (60, 50, 120)
+    shop_highlight = (100, 255, 160)
+    shop_text_color = (220, 220, 255)
+    shop_desc_color = (130, 230, 255)
+    shop_unavailable_color = (90, 90, 90)
 
     ALIEN_IMAGES = {}
     for atype in ALIEN_TYPES:
@@ -133,6 +157,124 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
         rows = total_questions - 32
     generate_aliens(rows, cols)
 
+    def get_effect(name, default=0):
+        now = pygame.time.get_ticks()
+        if name in timed_effects:
+            exp, val = timed_effects[name]
+            if exp > now:
+                return val
+            else:
+                del timed_effects[name]
+        return default
+
+    def set_effect(name, value, duration_ms):
+        timed_effects[name] = [pygame.time.get_ticks() + duration_ms, value]
+
+    def handle_shop():
+        nonlocal kill_currency, lives, ammo, timed_effects
+        shop_width = 600
+        shop_height = 700
+        shop_rect = pygame.Rect((SCREEN_WIDTH - shop_width)//2, (SCREEN_HEIGHT - shop_height)//2, shop_width, shop_height)
+        font = pygame.font.Font(None, 52)
+        item_font = pygame.font.Font(None, 38)
+        desc_font = pygame.font.Font(None, 30)
+        selected = 0
+        clock = pygame.time.Clock()
+        running_shop = True
+
+        # Fade in effect
+        for alpha in range(0, 180, 15):
+            dim = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
+            dim.fill((20, 20, 20, alpha))
+            screen.blit(dim, (0, 0))
+            pygame.display.update()
+            pygame.time.wait(10)
+
+        while running_shop:
+            screen.fill((0,0,0))
+            dim = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
+            dim.fill((30, 30, 30, 160))
+            screen.blit(dim, (0, 0))
+            pygame.draw.rect(screen, shop_bg_color, shop_rect, border_radius=26)
+            pygame.draw.rect(screen, shop_border_color, shop_rect, 7, border_radius=26)
+            title = font.render("Space Shop", True, shop_title_color)
+            screen.blit(title, (shop_rect.centerx - title.get_width()//2, shop_rect.y+24))
+
+            coins_txt = desc_font.render(f"Kills: {kill_currency}", True, (255,240,160))
+            screen.blit(coins_txt, (shop_rect.right-180, shop_rect.y+10))
+
+            btn_w, btn_h = 340, 68
+            btn_x = shop_rect.centerx - btn_w//2
+            btn_y = shop_rect.y + 100
+
+            for idx, item in enumerate(SHOP_ITEMS):
+                is_selected = (selected == idx)
+                color = shop_highlight if is_selected else shop_item_bg
+                pygame.draw.rect(screen, color, (btn_x, btn_y+idx*80, btn_w, btn_h), border_radius=15)
+                enough = kill_currency >= item["cost"]
+                txt_col = shop_text_color if enough else shop_unavailable_color
+                item_name = item_font.render(f"{item['name']} [ {item['cost']} ]", True, txt_col)
+                screen.blit(item_name, (btn_x+24, btn_y+idx*80+12))
+                desc = desc_font.render(item["desc"], True, shop_desc_color)
+                screen.blit(desc, (btn_x+32, btn_y+idx*80+42))
+
+            info = desc_font.render("Arrows: Select   Enter: Buy   Esc: Close", True, (210,210,255))
+            screen.blit(info, (shop_rect.centerx-info.get_width()//2, shop_rect.bottom-48))
+
+            pygame.display.update()
+            clock.tick(30)
+
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    quit()
+                if event.type == KEYDOWN:
+                    if event.key in [K_DOWN, K_s]:
+                        selected = (selected+1)%len(SHOP_ITEMS)
+                    if event.key in [K_UP, K_w]:
+                        selected = (selected-1)%len(SHOP_ITEMS)
+                    if event.key in [K_RETURN, K_KP_ENTER]:
+                        item = SHOP_ITEMS[selected]
+                        if kill_currency >= item["cost"]:
+                            kill_currency -= item["cost"]
+                            now = pygame.time.get_ticks()
+                            if item["type"] == "speed":
+                                set_effect("speed", 11, 15000)
+                            elif item["type"] == "laser":
+                                set_effect("laser_power", 2.5, 15000)
+                            elif item["type"] == "life":
+                                lives += 10
+                            elif item["type"] == "ammo":
+                                set_effect("ammo_per_answer", 18, 60000)
+                            elif item["type"] == "shield":
+                                set_effect("shield", True, 15000)
+                            elif item["type"] == "autofire":
+                                set_effect("autofire", True, 15000)
+                            running_shop = False
+                            break
+                    if event.key == K_ESCAPE:
+                        running_shop = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mx, my = pygame.mouse.get_pos()
+                    for idx in range(len(SHOP_ITEMS)):
+                        if pygame.Rect(btn_x, btn_y+idx*80, btn_w, btn_h).collidepoint(mx, my):
+                            item = SHOP_ITEMS[idx]
+                            if kill_currency >= item["cost"]:
+                                kill_currency -= item["cost"]
+                                if item["type"] == "speed":
+                                    set_effect("speed", 11, 15000)
+                                elif item["type"] == "laser":
+                                    set_effect("laser_power", 2.5, 15000)
+                                elif item["type"] == "life":
+                                    lives += 10
+                                elif item["type"] == "ammo":
+                                    set_effect("ammo_per_answer", 18, 60000)
+                                elif item["type"] == "shield":
+                                    set_effect("shield", True, 15000)
+                                elif item["type"] == "autofire":
+                                    set_effect("autofire", True, 15000)
+                                running_shop = False
+                                break
+
     def handle_question(forSurvival):
         nonlocal ammo, question_index
         if question_index >= total_questions:
@@ -185,25 +327,42 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
         correct_index = answerOptions.index(current_question.correctAnswer)
         if user_answer == correct_index:
             if not forSurvival:
-                ammo += total_questions // 10 + 10
+                ammo += get_effect("ammo_per_answer", total_questions // 10 + 10)
             return True
         return False
 
     button_answer = Button("Answer Question", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 190), 300, 50, WHITE)
-    button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 250), 250, 40, WHITE)
-    button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 300), 250, 40, WHITE)
+    button_shop = Button("Shop", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 250), 300, 50, WHITE)
+    button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 310), 250, 40, WHITE)
+    button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 360), 250, 40, WHITE)
 
     can_shoot = True
+    auto_fire_timer = 0
 
     while running and lives > 0:
         screen.fill(BLACK)
 
-        display_message(f"Lives: {lives}", 15, 50, WHITE)
-        display_message(f"Ammo: {ammo}", 45, 50, WHITE)
-        display_message(f"Question {question_index}/{total_questions}", 75, 50, WHITE)
+        display_message(f"Money: ${kill_currency}", 45, 45, (255,255,150), x_position=120)
+        display_message(f"Lives: {lives}", 45, 50, WHITE)
+        display_message(f"Ammo: {ammo}", 75, 50, WHITE)
+        display_message(f"Question {question_index}/{total_questions}", 105, 50, WHITE)
+
+        xfx = SCREEN_WIDTH-200
+        yfx = 15
+        for fx in timed_effects:
+            exp, _ = timed_effects[fx]
+            remain = max(0, (exp-pygame.time.get_ticks())//1000)
+            color = (130,255,200) if remain > 0 else (200,200,200)
+            display_message(f"{fx} ({remain}s)", yfx, 36, color, x_position=xfx)
+            yfx += 28
+
         button_answer.draw(screen, BUTTON_COLOUR)
+        button_shop.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_leave.draw(screen, BUTTON_COLOUR)
+
+        if get_effect("shield", False):
+            pygame.draw.ellipse(screen, (240,255,255,120), (player_x-10, player_y-10, player_width+20, player_height+20), 5)
 
         screen.blit(player_img, (player_x, player_y))
 
@@ -263,10 +422,13 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                 alien_projectiles.remove(alien_projectile)
             elif (player_x < alien_projectile["x"] < player_x + player_width and
                   player_y < alien_projectile["y"] < player_y + player_height):
-                alien_projectiles.remove(alien_projectile)
-                hit.play()
-                if not handle_question(True):
-                    lives -= 1
+                if not get_effect("shield", False):
+                    alien_projectiles.remove(alien_projectile)
+                    hit.play()
+                    if not handle_question(True):
+                        lives -= 1
+                else:
+                    alien_projectiles.remove(alien_projectile)
 
         for alien in aliens:
             if not alien["alive"]:
@@ -274,8 +436,8 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
             for projectile in projectiles[:]:
                 if (alien["x"] < projectile["x"] < alien["x"] + alien_width and
                         alien["y"] < projectile["y"] < alien["y"] + alien_height):
-                    # ensure the shield regeneration does not mess logic up
-                    alien["health"] -= 1.5
+                    laser_power = get_effect("laser_power", 1.5)
+                    alien["health"] -= laser_power
                     if alien["health"] <= 0:
                         alien["alive"] = False
                         explosion_sound.play()
@@ -286,6 +448,10 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                             "start_time": pygame.time.get_ticks(),
                             "duration": 1000
                         })
+                        for t in ALIEN_TYPES:
+                            if alien["type"] == t["name"]:
+                                kill_currency += t["kill_value"]
+                                break
                     else:
                         hit.play()
                     if projectile in projectiles:
@@ -296,7 +462,6 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
             if elapsed > explosion["duration"]:
                 explosions.remove(explosion)
                 continue
-
             shrink_ratio = 1.0 - (elapsed / explosion["duration"])
             size = int(explosion["size"] * shrink_ratio)
             if size < 5:
@@ -304,17 +469,26 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
             exp_img_scaled = pygame.transform.scale(explosion_img, (size, size))
             screen.blit(exp_img_scaled, (explosion["x"] - size // 2, explosion["y"] - size // 2))
 
-        if (all(not alien["alive"] for alien in aliens) and question_index >= total_questions) or all(not alien["alive"] for alien in aliens):
+        if all(not alien["alive"] for alien in aliens):
             display_message("You Win!", SCREEN_HEIGHT // 2, 100, (0,255,0))
             pygame.display.update()
             pygame.time.wait(3000)
             break
 
         keys = pygame.key.get_pressed()
+        move_speed = get_effect("speed", 5)
         if keys[K_LEFT] and player_x > 0:
-            player_x -= 5
+            player_x -= move_speed
         if keys[K_RIGHT] and player_x < SCREEN_WIDTH - player_width:
-            player_x += 5
+            player_x += move_speed
+
+        if get_effect("autofire", False) and ammo > 0:
+            auto_fire_timer += 1
+            if auto_fire_timer > 10:
+                cannonFire.play()
+                projectiles.append({"x": player_x + player_width // 2, "y": player_y})
+                ammo -= 1
+                auto_fire_timer = 0
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -323,6 +497,8 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                 pos = pygame.mouse.get_pos()
                 if button_answer.is_clicked(pos):
                     handle_question(False)
+                elif button_shop.is_clicked(pos):
+                    handle_shop()
                 elif button_go_back.is_clicked(pos):
                     if popup("Go Back?", "Are you sure you want to go back?", buttons=("Return", "Stay")) == "Return":
                         return
@@ -331,7 +507,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                 elif button_leave.is_clicked(pos):
                     quit()
             if event.type == KEYDOWN:
-                if event.key == K_SPACE and can_shoot and ammo > 0:
+                if event.key == K_SPACE and can_shoot and ammo > 0 and not get_effect("autofire", False):
                     cannonFire.play()
                     projectiles.append({"x": player_x + player_width // 2, "y": player_y})
                     ammo -= 1
