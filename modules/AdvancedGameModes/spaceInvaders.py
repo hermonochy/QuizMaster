@@ -518,7 +518,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
 
         pygame.display.update()
 
-    if lives < 0 or (question_index >= total_questions and all(alien["alive"] for alien in aliens)) or max_alien_y + alien_height >= player_y + player_height // 2:
+    if lives <= 0 or (question_index >= total_questions and all(alien["alive"] for alien in aliens)) or max_alien_y + alien_height >= player_y + player_height // 2:
         explosion_sound.play()
         display_message("You Lose!", SCREEN_HEIGHT // 2, 100, (255, 0, 0))
         pygame.display.update()

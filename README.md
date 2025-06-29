@@ -98,7 +98,7 @@ A more laid-back approach, this mode allows you to engage in practice sessions a
 **Space Invaders**
 
 Currently the finest and most reliable advanced game mode, *Space Invaders* is a highly sophisticated and fun addition to the QuizMaster platform. 
-Players defend their spaceship from a horde of aliens, gaining ammo by answering questions correctly. Unlike the original arcade game, you can still keep hold of your lives if hit, if you can answer the survival question correctly! Be careful; your ammo runs out quicker than you think! *Space Invaders* transforms learning into a fun and interactive adventure.
+Players defend their spaceship from a horde of aliens, gaining ammo by answering questions correctly. Unlike the original arcade game, you can still keep hold of your lives if hit, if you can answer the survival question correctly! *Space Invaders* transforms learning into a fun and interactive adventure.
 
 ![](images/Screenshots/QM4.png)
 
@@ -106,13 +106,13 @@ Players defend their spaceship from a horde of aliens, gaining ammo by answering
 
 **Strike Zone**
 
-*Strike Zone* is an engaging and fast-paced game mode similar to *Space Invaders* but in 2D. Players must avoid waves of enemies trying to collide with you while carefully managing their health and ammunition. Correctly answering questions earns players power-ups and replenishes their munitions. Players can opt to answer a question without a power-up, but the reward is significantly smaller. Victory comes when all questions are answered, a certain amount of aliens has been killed and all of the munitions have been used up.
+*Strike Zone* is an engaging and fast-paced game mode similar to *Space Invaders* but in 2D. Players must avoid waves of enemies trying to collide with you while carefully managing their health and ammunition. Correctly answering questions earns players power-ups and replenishes their munitions. Players can opt to answer a question without a power-up, but the reward is significantly smaller. Victory comes when all questions are answered, a certain amount of aliens has been killed and all of the munitions have been used up. Be careful; your lives run out quicker than you think! 
 
 |Powerup|Colour|Chance|Function|
 |----|----|----|----|
-|Ammo Provider|🟡️|45%|Grants 250 Ammo|
-|Life Restorer|🟢️|30%|Grants 10 lives|
-|Shield|🟠️|20%|Grants 10 seconds immunity to enemy attacks|
+|Ammo Provider|🟡️|50%|Grants 25 Ammo|
+|Life Restorer|🟢️|30%|Grants 2 lives|
+|Shield|🟠️|15%|Grants 10 seconds immunity to enemy attacks|
 |All-out Attack|⚪️|5%|Sends out a blast of energy that destroys all enemies on the screen|
 
 **Midas Mayhem**
