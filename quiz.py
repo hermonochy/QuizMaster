@@ -216,8 +216,11 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
     running = True
     num_questions_total = len(questionList)
     visible_per_page = 10
-
-    question_slider = Slider((SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4), 450, min=1, max=num_questions_total, step=1, initial=num_questions_total)
+    useSlider = True
+    try:
+        question_slider = Slider((SCREEN_WIDTH // 3, SCREEN_HEIGHT // 4), 450, min=1, max=num_questions_total, step=1, initial=num_questions_total)
+    except ZeroDivisionError:
+        useSlider = False
 
     button_confirm = Button("Choose", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 290), 350, 50, BLACK)
     button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 350), 350, 50, BLACK)
@@ -229,7 +232,8 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
         for event in events:
             if event.type == QUIT:
                 quit()
-            question_slider.handle_event(event)
+            if useSlider:
+                question_slider.handle_event(event)
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_confirm.is_clicked(pos):
@@ -244,7 +248,10 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
             if scrollbar:
                 scrollbar.handle_event(event)
 
-        current_count = question_slider.get()
+        if useSlider:
+            current_count = question_slider.get()
+        else: 
+            current_count = len(questionList)
 
         if current_count > visible_per_page:
             if not scrollbar or scrollbar.total_items != current_count:
@@ -258,7 +265,8 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
             visible_questions = questionList[:current_count]
 
         screen.fill(BACKGROUND_COLOUR)
-        question_slider.draw(screen)
+        if useSlider:
+            question_slider.draw(screen)
         display_message(title, 50, 75, BLACK)
         display_message(f"Difficulty: {difficulty}", 120, 50, BLACK)
         display_message(f"Number of Questions: {current_count}", 175, 50, BLACK)

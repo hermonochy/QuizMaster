@@ -97,8 +97,7 @@ A more laid-back approach, this mode allows you to engage in practice sessions a
 
 **Space Invaders**
 
-Currently the finest and most reliable advanced game mode, *Space Invaders* is a highly sophisticated and fun addition to the QuizMaster platform. 
-Players defend their spaceship from a horde of aliens, gaining ammo by answering questions correctly. Unlike the original arcade game, you can still keep hold of your lives if hit, if you can answer the survival question correctly! *Space Invaders* transforms learning into a fun and interactive adventure.
+A visually engaging, feature-rich arcade mode where you defend your ship against waves of aliens by answering quiz questions and blasting through enemies. Each correct answer earns you ammo, while wrong answers cost you lives. Aliens come in several types, including tougher and shooter variants. Earn “kill currency” by defeating aliens and spend it in the in-game shop to buy power-ups such as speed boosts, shields, auto-fire, increased ammo, and more. Most power-ups are time-limited but can turn the tide of battle in your favor, if used properly. Unlike the original arcade game, you can still keep hold of your lives if hit, if you can answer the survival question correctly! The game ends if you run out of lives or aliens reach your ship.
 
 ![](images/Screenshots/QM4.png)
 
@@ -106,7 +105,7 @@ Players defend their spaceship from a horde of aliens, gaining ammo by answering
 
 **Strike Zone**
 
-*Strike Zone* is an engaging and fast-paced game mode similar to *Space Invaders* but in 2D. Players must avoid waves of enemies trying to collide with you while carefully managing their health and ammunition. Correctly answering questions earns players power-ups and replenishes their munitions. Players can opt to answer a question without a power-up, but the reward is significantly smaller. Victory comes when all questions are answered, a certain amount of aliens has been killed and all of the munitions have been used up. Be careful; your lives run out quicker than you think! 
+A frantic 2D survival shooter that combines quiz action with fast-paced dodging and shooting. Navigate your character to avoid incoming enemies and answer questions to unlock power-ups and ammo. Use a growing arsenal of upgradable weapons—Pistol, Shotgun, Sniper, Laser, and Rocket—each with its own strengths and tactical uses. Defeat enemies to earn score and spend it in the “Gun Shop” to unlock new weapons during play. Power-ups appear randomly on the battlefield and require you to answer a quiz question to collect their bonus—these include extra ammo, health, temporary shields, and an all-out attack that wipes out all on-screen enemies. Players can opt to answer a question without a power-up, but the reward is significantly smaller. Strategic use of ammo, weapon choice, and timely question answering are key to surviving until the end. Be careful; your lives run out quicker than you think! 
 
 |Powerup|Colour|Chance|Function|
 |----|----|----|----|
