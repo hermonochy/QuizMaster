@@ -242,15 +242,20 @@ class Slider:
     def draw(self, screen):
         self.screen = screen
         pygame.draw.rect(self.screen, self.bar_color, self.bar_rect)
-
         pygame.draw.circle(self.screen, self.handle_color, (self.handle_x, self.handle_y), self.handle_radius)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if (self.handle_x - event.pos[0]) ** 2 + (self.handle_y - event.pos[1]) ** 2 <= self.handle_radius ** 2:
                 self.dragging = True
+            elif self.bar_rect.collidepoint(event.pos):
+                self.handle_x = max(self.position[0], min(event.pos[0], self.position[0] + self.width))
+                self.value = self.position_to_value(self.handle_x)
+                self.dragging = True
+
         elif event.type == pygame.MOUSEBUTTONUP:
             self.dragging = False
+
         elif event.type == pygame.MOUSEMOTION:
             if self.dragging:
                 self.handle_x = max(self.position[0], min(event.pos[0], self.position[0] + self.width))
