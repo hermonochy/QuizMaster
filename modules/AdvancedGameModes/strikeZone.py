@@ -21,15 +21,25 @@ GUNS = [
         "kills_cost": 0
     },
     {
+        "name": "SMG",
+        "desc": "Rapid fire, low damage, cheap ammo",
+        "damage": 0.5,
+        "ammo_cost": 1,
+        "cooldown": 15,
+        "projectile_speed": 19,
+        "color": (180, 180, 180),
+        "kills_cost": 5
+    },
+    {
         "name": "Shotgun",
-        "desc": "Fires 5 spread shots, high ammo use",
+        "desc": "Fires 3 spread shots, medium ammo use",
         "damage": 1,
-        "ammo_cost": 5,
-        "cooldown": 500,
+        "ammo_cost": 3,
+        "cooldown": 250,
         "projectile_speed": 13,
         "color": (255, 160, 40),
         "spread": 18,
-        "pellets": 5,
+        "pellets": 3,
         "kills_cost": 30
     },
     {
@@ -43,6 +53,18 @@ GUNS = [
         "kills_cost": 35
     },
     {
+      "name": "Burst Rifle",
+      "desc": "Shoots a quick 5-round burst, balanced damage and speed",
+      "damage": 1,
+      "ammo_cost": 5,
+      "cooldown": 500,
+      "projectile_speed": 20,
+      "color": (120, 200, 255),
+      "pellets": 5,
+      "spread": 8,
+      "kills_cost": 45
+    },
+    {
         "name": "Laser",
         "desc": "Pierces through enemies, costly, fast",
         "damage": 2,
@@ -52,6 +74,28 @@ GUNS = [
         "color": (220, 40, 255),
         "piercing": True,
         "kills_cost": 50
+    },
+    {
+        "name": "Mine",
+        "desc": "Explosive, moderate damage",
+        "damage": 7,
+        "ammo_cost": 6,
+        "cooldown": 500,
+        "projectile_speed": 0,
+        "color": (75,54,33),
+        "explosive": True,
+        "kills_cost": 60
+    },
+    {
+        "name": "Railgun",
+        "desc": "Piercing beam, very high damage, slow reload",
+        "damage": 10,
+        "ammo_cost": 5,
+        "cooldown": 1200,
+        "projectile_speed": 200,
+        "color": (100, 255, 255),
+        "piercing": True,
+        "kills_cost": 75
     },
     {
         "name": "Rocket",
@@ -174,7 +218,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
     def handle_shop():
         nonlocal score, owned_guns, current_gun_index
         shop_width = 600
-        shop_height = 460
+        shop_height = 750
         shop_rect = pygame.Rect((SCREEN_WIDTH - shop_width)//2, (SCREEN_HEIGHT - shop_height)//2, shop_width, shop_height)
         font = pygame.font.Font(None, 52)
         item_font = pygame.font.Font(None, 38)
@@ -309,7 +353,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
             if event.type == QUIT:
                 quit()
             elif event.type == KEYDOWN:
-                if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5]:
+                if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
                     idx = event.key - pygame.K_1
                     if idx in owned_guns:
                         current_gun_index = idx
@@ -469,7 +513,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                     if projectile.get("explosive"):
                         explosion.play()
                         for near_enemy in enemies[:]:
-                            if near_enemy != enemy and pygame.Rect.colliderect(projectile["rect"].inflate(70,70), near_enemy["rect"]):
+                            if pygame.Rect.colliderect(projectile["rect"].inflate(200,200), near_enemy["rect"]):
                                 enemies.remove(near_enemy)
                                 score += 1
                     elif projectile.get("piercing"):
