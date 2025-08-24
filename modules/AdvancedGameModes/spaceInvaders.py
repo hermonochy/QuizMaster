@@ -48,7 +48,8 @@ SHOP_ITEMS = [
     {"name": "Speed Boost", "desc": "Move faster for 15s", "cost": 10, "type": "speed"},
     {"name": "Laser Power", "desc": "Extra laser damage for 15s", "cost": 10, "type": "laser"},
     {"name": "Extra Life", "desc": "Gain +10 life", "cost": 16, "type": "life"},
-    {"name": "Ammo Bonus", "desc": "+10 ammo per answer for 1 minute", "cost": 15, "type": "ammo"},
+    {"name": "Extra Ammo", "desc": "+100 ammo", "cost": 20, "type": "ammo"},
+    {"name": "Ammo Bonus", "desc": "+10 ammo per answer for 1 minute", "cost": 15, "type": "ammo_bonus"},
     {"name": "Shield", "desc": "Invulnerable for 15s", "cost": 20, "type": "shield"},
     {"name": "Auto-Fire", "desc": "Auto-shoot for 15s", "cost": 6, "type": "autofire"},
 ]
@@ -243,8 +244,10 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                                 set_effect("laser_power", 2.5, 15000)
                             elif item["type"] == "life":
                                 lives += 10
-                            elif item["type"] == "ammo":
+                            elif item["type"] == "ammo_bonus":
                                 set_effect("ammo_per_answer", 18, 60000)
+                            elif item["type"] == "ammo":
+                                ammo += 100
                             elif item["type"] == "shield":
                                 set_effect("shield", True, 15000)
                             elif item["type"] == "autofire":
@@ -266,7 +269,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                                     set_effect("laser_power", 2.5, 15000)
                                 elif item["type"] == "life":
                                     lives += 10
-                                elif item["type"] == "ammo":
+                                elif item["type"] == "ammo_bonus":
                                     set_effect("ammo_per_answer", 18, 60000)
                                 elif item["type"] == "shield":
                                     set_effect("shield", True, 15000)

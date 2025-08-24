@@ -431,7 +431,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
         if enemy_spawn_counter >= ENEMY_SPAWN_RATE:
             enemy_spawn_counter = 0
             max_attempts = 20
-            safe_distance = 100
+            safe_distance = 500
             spawn_x, spawn_y = None, None
             for _ in range(max_attempts):
                 candidate_x = random.randint(0, SCREEN_WIDTH - 50)
