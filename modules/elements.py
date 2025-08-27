@@ -10,6 +10,10 @@ from modules.constants import *
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+pygame.mixer.init()
+
+click = pygame.mixer.Sound('sounds/soundEffects/click.ogg')
+
 def quit():
     print(asciiartend)
     pygame.quit()
@@ -94,8 +98,10 @@ class Button:
             y_offset += font.get_height()
 
     def is_clicked(self, pos):
-        return self.rect.collidepoint(pos)
-
+        if self.rect.collidepoint(pos):
+            click.play()
+            return True
+        return False
 
 class ButtonArray:
     def __init__(self, button_texts, start_position, button_spacing=10, button_width=300, button_height=60, text_colour=(0, 0, 0), screen_width=SCREEN_WIDTH, screen_height=SCREEN_HEIGHT, orientation='horizontal'):
