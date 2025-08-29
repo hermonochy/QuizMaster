@@ -4,13 +4,10 @@ import colorsys
 
 from pygame.locals import *
 
+from modules.initialise import *
 from modules.checker import isItChristmasTimeNow
 from modules.extendedText import asciiartstart, asciiartend
 from modules.constants import *
-
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-pygame.mixer.init()
 
 click = pygame.mixer.Sound('sounds/soundEffects/click.ogg')
 

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import pygame
-import argparse
 import sys
 import colorsys
 import json
@@ -11,10 +10,10 @@ import math
 import re
 import subprocess
 from glob import glob
-from enum import Enum
 
 from pygame.locals import *
 
+from modules.initialise import *
 from modules.persistence import *
 from modules.checker import *
 from modules.elements import *
@@ -31,19 +30,6 @@ from modules.AdvancedGameModes.MazeRun import mazeRun
 from modules.AdvancedGameModes.deathRain import deathRain
 from modules.AdvancedGameModes.quickClick import quickClick
 
-
-class GameMode(str, Enum):
-    classic = 'classic'
-    classicV2 = 'classicV2'
-    speedRun = 'speedRun'
-    survival = 'survival'
-    practice = 'practice'
-    midasMayhem = 'midasMayhem'
-    mazeRun = 'mazeRun'
-    spaceInvaders = 'spaceInvaders'
-    strikeZone = 'strikeZone'
-    deathRain = 'deathRain'
-    quickClick = 'quickClick'
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v):
     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, doCountdown_old, doInstructions_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, doInstructions, v
@@ -504,57 +490,6 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
                         mazeRun(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
 
-def getPreferences():
-    doCountdown = True
-    doInstructions = True
-    try:
-        with open(".Preferences.json", "r") as file:
-            try:
-                prefDict = json.load(file)
-                volume = prefDict["Volume"]
-                doCountdown = prefDict["Countdown"]
-                doInstructions = prefDict["Instructions"]
-                pygame.mixer.music.set_volume(volume)
-                if isItHalloweenTimeNow():
-                    BACKGROUND_COLOUR = (250,100,0)
-                    BUTTON_COLOUR =  (255,110,10)
-                    music = "sounds/music_halloween1.ogg"
-                elif isItValentinesTimeNow():
-                    music = "sounds/music_valentines1.ogg"
-                    BACKGROUND_COLOUR = (255,0,0)
-                    BUTTON_COLOUR =  (255,10,10)
-                elif isItStPatricksTimeNow():
-                    music = "sounds/music_stpatrick1.ogg"
-                    BACKGROUND_COLOUR = (0,225,0)
-                    BUTTON_COLOUR =  (0,200,0) 
-                elif isItEasterTimeNow():
-                    music = "sounds/music_easter1.ogg"
-                    BACKGROUND_COLOUR = (255,170,180)
-                    BUTTON_COLOUR =  (250,250,100)
-                elif isItChristmasTimeNow():
-                    music = "sounds/music_christmas1.ogg"
-                    BACKGROUND_COLOUR = (0,255,0)
-                    BUTTON_COLOUR = (255,0,0)
-                else:
-                    music = prefDict["Music"]
-                    BACKGROUND_COLOUR = prefDict["colour"]
-                    BUTTON_COLOUR = prefDict["buttoncolour"]
-                    celebration = False
-            except:
-                volume = DEFAULT_VOLUME
-                doCountdown = DEFAULT_COUNTDOWN
-                doInstructions = DEFAULT_INSTRUCTIONS
-                music = DEFAULT_MUSIC
-                BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
-                BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
-    except FileNotFoundError:
-        volume = DEFAULT_VOLUME
-        doCountdown = DEFAULT_COUNTDOWN
-        doInstructions = DEFAULT_INSTRUCTIONS
-        music = DEFAULT_MUSIC
-        BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
-        BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
-    return volume, doCountdown, doInstructions, music, BACKGROUND_COLOUR, BUTTON_COLOUR
 
 def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstructions, questionList=None, titleofquiz=None):
     if args.quizPath != None:
@@ -684,37 +619,9 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstruct
                         quit()
                 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        prog='QuizMaster',
-        description='Main program for QuizMaster. Features include: Playing quiz, preferences, description and starting QuizCreator.',
-        )
-    parser.add_argument('-q', '--quizPath', nargs='?', const="")
-    parser.add_argument('-g', '--gameMode', nargs='?', const="", type=GameMode)
-    parser.add_argument('-v', '--volume', nargs='?', const="")
-    args = parser.parse_args()
-        
-    pygame.init()
-    pygame.font.init()
-    clock = pygame.time.Clock()
-    print("\nQuizMaster Copyright (C) 2025 hermonochy")
-    print(asciiartstart)
 
-    volume, doCountdown, doInstructions, music, BACKGROUND_COLOUR, BUTTON_COLOUR = getPreferences()
-
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption('QuizMaster')
-    icon = pygame.image.load('images/Screenshots/logo1.png')
-    pygame.display.set_icon(icon)
-    pygame.mixer.init()
-    pygame.mixer.music.load(music)
-    pygame.mixer.music.play(-1)
-    try:
-        volume = float(args.volume)
-    except Exception:
-        pass
-    pygame.mixer.music.set_volume(volume)
     BLACK = screen_mode(BACKGROUND_COLOUR)
-    
+
     try:
         StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, volume, questionList, titleofquiz)
     except:
