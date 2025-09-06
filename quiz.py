@@ -34,6 +34,7 @@ from modules.AdvancedGameModes.quickClick import quickClick
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v):
     music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, doCountdown_old, doInstructions_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, doInstructions, v
     running = True
+    changes = False
     celebration = False
     numList = re.findall(r'\d+', music)
     i = int(numList[0]) if numList else 1

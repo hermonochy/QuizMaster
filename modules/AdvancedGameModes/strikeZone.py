@@ -73,7 +73,7 @@ GUNS = [
         "projectile_speed": 100,
         "color": (220, 40, 255),
         "piercing": True,
-        "kills_cost": 50
+        "kills_cost": 59
     },
     {
         "name": "Mine",
@@ -84,18 +84,8 @@ GUNS = [
         "projectile_speed": 0,
         "color": (75,54,33),
         "explosive": True,
+        "explosion_size": 200,
         "kills_cost": 60
-    },
-    {
-        "name": "Railgun",
-        "desc": "Piercing beam, very high damage, slow reload",
-        "damage": 10,
-        "ammo_cost": 5,
-        "cooldown": 1200,
-        "projectile_speed": 200,
-        "color": (100, 255, 255),
-        "piercing": True,
-        "kills_cost": 75
     },
     {
         "name": "Rocket",
@@ -106,7 +96,20 @@ GUNS = [
         "projectile_speed": 11,
         "color": (255, 60, 60),
         "explosive": True,
-        "kills_cost": 100
+        "explosion_size": 250,
+        "kills_cost": 150
+    },
+    {
+        "name": "Missile",
+        "desc": "Very high damage, slow, very expensive",
+        "damage": 100,
+        "ammo_cost": 25,
+        "cooldown": 1500,
+        "projectile_speed": 5,
+        "color": (200, 0, 0),
+        "explosive": True,
+        "explosion_size": 1500,
+        "kills_cost": 499
     }
 ]
 
@@ -373,7 +376,8 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                                     "angle": angle,
                                     "damage": gun["damage"],
                                     "piercing": gun.get("piercing", False),
-                                    "explosive": gun.get("explosive", False)
+                                    "explosive": gun.get("explosive", False),
+                                    "explosion_size": gun.get("explosion_size", 200)
                                 })
                         else:
                             angle = math.atan2(pygame.mouse.get_pos()[1] - player["rect"].centery, pygame.mouse.get_pos()[0] - player["rect"].centerx)
@@ -384,7 +388,8 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                                 "angle": angle,
                                 "damage": gun["damage"],
                                 "piercing": gun.get("piercing", False),
-                                "explosive": gun.get("explosive", False)
+                                "explosive": gun.get("explosive", False),
+                                "explosion_size": gun.get("explosion_size", 200)
                             })
                         ammo -= gun["ammo_cost"]
                         fire_cooldown = gun["cooldown"]
@@ -513,7 +518,8 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                     if projectile.get("explosive"):
                         explosion.play()
                         for near_enemy in enemies[:]:
-                            if pygame.Rect.colliderect(projectile["rect"].inflate(200,200), near_enemy["rect"]):
+                            size = projectile.get("explosion_size")
+                            if pygame.Rect.colliderect(projectile["rect"].inflate(size,size), near_enemy["rect"]):
                                 enemies.remove(near_enemy)
                                 score += 1
                     elif projectile.get("piercing"):
@@ -543,5 +549,6 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
 
         fire_cooldown = max(0, fire_cooldown-16)
 
+        #ENEMY_SPAWN_RATE += 1
         pygame.display.flip()
         pygame.time.Clock().tick(60)
