@@ -364,6 +364,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                     gun = GUNS[current_gun_index]
                     if ammo >= gun["ammo_cost"]:
                         cannonFire.play()
+                        now = pygame.time.get_ticks()  # Get time for projectile creation
                         if gun.get("pellets", 0) > 1:
                             for i in range(gun["pellets"]):
                                 spread = random.uniform(-gun["spread"], gun["spread"])
@@ -378,7 +379,10 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                                     "damage": gun["damage"],
                                     "piercing": gun.get("piercing", False),
                                     "explosive": gun.get("explosive", False),
-                                    "explosion_size": gun.get("explosion_size", 200)
+                                    "explosion_size": gun.get("explosion_size", 200),
+                                    "owner": "player",
+                                    "spawn_time": now,
+                                    "can_hurt_player_after": now + 400,  # 400ms grace period
                                 })
                         else:
                             angle = math.atan2(pygame.mouse.get_pos()[1] - player["rect"].centery, pygame.mouse.get_pos()[0] - player["rect"].centerx)
@@ -391,7 +395,10 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                                 "damage": gun["damage"],
                                 "piercing": gun.get("piercing", False),
                                 "explosive": gun.get("explosive", False),
-                                "explosion_size": gun.get("explosion_size", 200)
+                                "explosion_size": gun.get("explosion_size", 200),
+                                "owner": "player",
+                                "spawn_time": now,
+                                "can_hurt_player_after": now + 400,  # 400ms grace period
                             })
                         ammo -= gun["ammo_cost"]
                         fire_cooldown = gun["cooldown"]
@@ -425,12 +432,23 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
 
         player["rect"].clamp_ip(pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
 
+        # Move projectiles with their own speed
         for projectile in projectiles[:]:
             speed = projectile.get("projectile_speed", PROJECTILE_SPEED)
             projectile["rect"].x += speed * math.cos(projectile["angle"])
             projectile["rect"].y += speed * math.sin(projectile["angle"])
             if not pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT).contains(projectile["rect"]):
                 projectiles.remove(projectile)
+
+        # --- Player can be hit by their own ammo ---
+        current_time = pygame.time.get_ticks()
+        for projectile in projectiles[:]:
+            if projectile.get("owner") == "player":
+                if current_time >= projectile.get("can_hurt_player_after", 0):
+                    if player["rect"].colliderect(projectile["rect"]):
+                        hit.play()
+                        player["health"] -= 1
+                        projectiles.remove(projectile)
 
         enemy_spawn_counter += 1
         if enemy_spawn_counter >= ENEMY_SPAWN_RATE:
@@ -549,6 +567,5 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
 
         fire_cooldown = max(0, fire_cooldown-16)
 
-        #ENEMY_SPAWN_RATE += 1
         pygame.display.flip()
         pygame.time.Clock().tick(60)

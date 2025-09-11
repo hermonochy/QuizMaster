@@ -105,9 +105,9 @@ A visually engaging, feature-rich arcade mode where you defend your ship against
 
 **Strike Zone**
 
-A frantic 2D survival shooter that combines quiz action with fast-paced dodging and shooting. Navigate your character to avoid incoming enemies and answer questions to unlock power-ups and ammo. Use a growing arsenal of upgradable weapons—Pistol, Shotgun, Sniper, Laser, and Rocket—each with its own strengths and tactical uses. Defeat enemies to earn score and spend it in the “Gun Shop” to unlock new weapons during play. Power-ups appear randomly on the battlefield and require you to answer a quiz question to collect their bonus—these include extra ammo, health, temporary shields, and an all-out attack that wipes out all on-screen enemies. Players can opt to answer a question without a power-up, but the reward is significantly smaller. Strategic use of ammo, weapon choice, and timely question answering are key to surviving until the end. Be careful; your lives run out quicker than you think! 
+A frantic 2D survival shooter that combines quiz action with fast-paced dodging and shooting. Navigate your character to avoid incoming enemies and answer questions to unlock power-ups and ammo. Use a growing arsenal of upgradable weapons—Pistol, SMG, Shotgun, Sniper, Burst Rifle, Laser, Mine, Rocket and Missile—each with its own strengths and tactical uses. Defeat enemies to earn score and spend it in the “Gun Shop” to unlock new weapons during play. Power-ups appear randomly on the battlefield and require you to answer a quiz question to collect their bonus—these include extra ammo, health, shields, and an all-out attack that wipes out all on-screen enemies. Players can answer a question without a power-up, but the reward is significantly smaller. Strategic use of ammo, weapon choice, and timely question answering are key to surviving until the end. Be wary of your mines. You may just fall into your own trap!
 
-|Powerup|Colour|Chance|Function|
+|Powerup|Colour|Chance of Appearance|Function|
 |----|----|----|----|
 |Ammo Provider|🟡️|50%|Grants 25 Ammo|
 |Life Restorer|🟢️|30%|Grants 2 lives|
