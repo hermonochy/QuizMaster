@@ -374,6 +374,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                                     "color": gun["color"],
                                     "rect": proj_rect,
                                     "angle": angle,
+                                    "projectile_speed": gun.get("projectile_speed", PROJECTILE_SPEED),
                                     "damage": gun["damage"],
                                     "piercing": gun.get("piercing", False),
                                     "explosive": gun.get("explosive", False),
@@ -386,6 +387,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                                 "color": gun["color"],
                                 "rect": proj_rect,
                                 "angle": angle,
+                                "projectile_speed": gun.get("projectile_speed", PROJECTILE_SPEED),
                                 "damage": gun["damage"],
                                 "piercing": gun.get("piercing", False),
                                 "explosive": gun.get("explosive", False),
@@ -424,9 +426,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
         player["rect"].clamp_ip(pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
 
         for projectile in projectiles[:]:
-            idx = current_gun_index
-            gun = GUNS[idx]
-            speed = gun.get("projectile_speed", PROJECTILE_SPEED)
+            speed = projectile.get("projectile_speed", PROJECTILE_SPEED)
             projectile["rect"].x += speed * math.cos(projectile["angle"])
             projectile["rect"].y += speed * math.sin(projectile["angle"])
             if not pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT).contains(projectile["rect"]):
