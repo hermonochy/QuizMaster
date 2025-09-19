@@ -72,8 +72,13 @@ strikeZone_p3 = " - Move: Arrow keys.\n\n - Aim: Mouse Direction.\n\n - Shoot: S
 farmFrenzy_p1=""" Plant and nurture crops on your farm! Once they are mature, harvest them to earn coins that can be spent on upgrades to your farm. 
     \n\nKeep an eye on your available seeds and plan your planting to maximize your harvest!"""
 farmFrenzy_p2=""" Answer quiz questions to earn more seeds and coins—these are vital for keeping your farm running.
+ Use keys 1—7 to plant a seed on the plot. Once it is ripe, click on it to harvest.
  \n\nCorrect answers reward you with extra resources, while wrong answers can cause you to lose farm hearts.
   \n\nWatch out for the pesky pests trying to eat your crops!"""
+
+blastField_p1="Move with arrow keys. Press SPACE to place a bomb! Bombs explode, revealing questions in their blast radius."
+blastField_p2="Click a revealed question to answer it. Correct clears tiles and awards points, wrong costs a life. Power-ups may appear: extra bombs, or instant answer."
+blastField_p3="Game ends if you run out of lives or questions. Maximize your score!"
 
 deathRain_p1 = " Dodge falling obstacles and collect power-ups. Power-ups trigger a question—answer it to claim their effect!"
 deathRain_p2 = " Survive as long as possible and get a high score."

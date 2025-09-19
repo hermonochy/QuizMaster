@@ -26,9 +26,9 @@ CROP_IMAGES = {
 DOG_IMAGE = pygame.image.load("images/dog.png")
 
 CROP_TYPES = [
-    {"name": "Wheat", "grow_time": 4500, "value": 10, "image": CROP_IMAGES["Wheat"]},
-    {"name": "Tomato", "grow_time": 6000, "value": 18, "image": CROP_IMAGES["Tomato"]},
-    {"name": "Carrot", "grow_time": 7500, "value": 25, "image": CROP_IMAGES["Carrot"]},
+    {"name": "Wheat", "grow_time": 4500, "value": 5, "image": CROP_IMAGES["Wheat"]},
+    {"name": "Tomato", "grow_time": 6000, "value": 10, "image": CROP_IMAGES["Tomato"]},
+    {"name": "Carrot", "grow_time": 7500, "value": 15, "image": CROP_IMAGES["Carrot"]},
 ]
 
 SHOP_ITEMS = [
@@ -53,7 +53,7 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
     crops = []
     pests = []
     pest_timer = 0
-    pest_grace_questions = max(2, len(questionList) // 3)
+    pest_grace_questions = min(10, max(2, len(questionList) // 3))
     grow_boost = 1.0
     dog_active = False
     dog_timer = 0

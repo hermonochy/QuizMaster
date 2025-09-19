@@ -5,10 +5,14 @@ from pygame.locals import *
 from modules.elements import *
 from modules.extendedText import *
 from modules.otherWindows import countdown, Instructions
+from modules.extendedText import blastField_p1, blastField_p2, blastField_p3
 
 EXPLOSION_IMG = pygame.image.load("images/explosion.png")
 QUESTION_IMG = pygame.image.load("images/coin.png")
 PLAYER_IMG = pygame.image.load("images/figure.png")
+BLUE = (200, 215, 255)
+GREEN = (210, 255, 235)
+
 
 POWERUP_COLOURS = {
     "bomb": (90,180,255),
@@ -23,10 +27,8 @@ def compute_grid_size(total_questions):
     rows = math.ceil(N / cols)
     return int(cols), int(rows)
 
-def tile_color(x, y):
-    color1 = (210, 235, 255)
-    color2 = (210, 255, 235)
-    return color1 if (x + y) % 2 == 0 else color2
+def tile_colour(x, y):
+    return BLUE if (x + y) % 2 == 0 else GREEN
 
 def get_explosion_tiles(cx, cy, grid_cols, grid_rows):
     tiles = [(cx, cy)]
@@ -47,7 +49,7 @@ def blastField(questionList, titleofquiz, doCountdown, doInstructions, v):
             self.x = grid_cols // 2
             self.y = grid_rows // 2
             self.lives = 3
-            self.bomb_count = max(3, total_questions // 6)
+            self.bomb_count = max(3, total_questions // 5)
             self.max_bomb_count = max(3, total_questions // 4)
             self.blast_radius = 1
             self.score = 0
@@ -78,14 +80,9 @@ def blastField(questionList, titleofquiz, doCountdown, doInstructions, v):
     else: countdown_time = 45
 
     if doInstructions:
-        Instructions(
-            (210, 235, 255), (60, 130, 130), (20,30,80), titleofquiz,
-            p1="Move with arrow keys. Press SPACE to place a bomb! Bombs explode, revealing questions in their blast radius.",
-            p2="Click a revealed question to answer it. Correct clears tiles and awards points, wrong costs a life. Power-ups may appear: extra bombs, or instant answer.",
-            p3="Game ends if you run out of lives or questions. Maximize your score!"
-        )
+        Instructions(BLUE, GREEN, (0,0,0), titleofquiz, p1=blastField_p1, p2=blastField_p2, p3=blastField_p3)
     if doCountdown:
-        countdown(titleofquiz, (210,235,255), (20,30,80))
+        countdown(titleofquiz, BLUE, (0,0,0))
 
     clock = pygame.time.Clock()
     running = True
@@ -104,14 +101,14 @@ def blastField(questionList, titleofquiz, doCountdown, doInstructions, v):
         t_now = pygame.time.get_ticks()
         
         if popup_question is None:
-            screen.fill((210, 235, 255))
+            screen.fill(BLUE)
             
             for x in range(grid_cols):
                 for y in range(grid_rows):
                     rect = get_tile_rect(x, y)
-                    color = tile_color(x, y)
-                    pygame.draw.rect(screen, color, rect)
-                    pygame.draw.rect(screen, (110,180,220), rect, 2)
+                    colour = tile_colour(x, y)
+                    pygame.draw.rect(screen, colour, rect)
+                    pygame.draw.rect(screen, (255,180,220), rect, 2)
 
             
             for (qx, qy), qdata in questions.items():
@@ -120,29 +117,25 @@ def blastField(questionList, titleofquiz, doCountdown, doInstructions, v):
                     img = pygame.transform.smoothscale(QUESTION_IMG, (min(TILE_W, TILE_H)-14, min(TILE_W, TILE_H)-14))
                     screen.blit(img, (qrect.centerx-img.get_width()//2, qrect.centery-img.get_height()//2))
 
-            
             for (px, py), pdata in powerups.items():
                 rect = get_tile_rect(px, py)
-                color = POWERUP_COLOURS.get(pdata["type"], (255,255,255))
-                pygame.draw.circle(screen, color, rect.center, min(TILE_W, TILE_H)//3)
+                colour = POWERUP_COLOURS.get(pdata["type"], (255,255,255))
+                pygame.draw.circle(screen, colour, rect.center, min(TILE_W, TILE_H)//3)
                 label = POWERUP_LABELS.get(pdata["type"], "?")
                 font = pygame.font.Font(None, min(TILE_W, TILE_H)//2)
                 txt = font.render(label, True, (40,40,40))
                 txt_rect = txt.get_rect(center=rect.center)
                 screen.blit(txt, txt_rect)
 
-            
             prect = get_tile_rect(player.x, player.y)
             img = pygame.transform.smoothscale(PLAYER_IMG, (min(TILE_W, TILE_H)-8, min(TILE_W, TILE_H)-8))
             screen.blit(img, (prect.centerx-img.get_width()//2, prect.centery-img.get_height()//2))
-
             
             for bomb in bombs:
                 if not bomb.get("exploded", False):
                     brect = get_tile_rect(bomb["x"], bomb["y"])
                     pygame.draw.circle(screen, (255,100,100), brect.center, min(TILE_W, TILE_H)//4)
                     pygame.draw.circle(screen, (255,255,255), brect.center, min(TILE_W, TILE_H)//4, 2)
-
             
             to_remove = []
             for exp in explosions:
@@ -197,8 +190,7 @@ def blastField(questionList, titleofquiz, doCountdown, doInstructions, v):
                                 qdata["answered"] = True
                                 player.instant_answer = False
                                 player.score += 25
-                                if random.random() < 0.5:
-                                    spawn_powerup((qx, qy))
+                                spawn_powerup((qx, qy))
                                 break
                             popup_question = qdata
                             popup_tile = (qx, qy)

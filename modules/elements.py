@@ -52,6 +52,7 @@ class Button:
         width=300,
         height=60,
         text_colour=(0, 0, 0),
+        enabled=True,
         use_outline=False,
         outline_color=(0,0,0)
     ):
@@ -62,6 +63,7 @@ class Button:
         self.font = pygame.font.Font(None, FONT_SIZE)
         self.rect = pygame.Rect(position[0], position[1], width, height)
         self.text_colour = text_colour
+        self.enabled = enabled
         self.use_outline = use_outline
         self.outline_color = outline_color
 
@@ -69,6 +71,8 @@ class Button:
         shadow_colour = darken(colour)
         shadow_rect = pygame.Rect(self.rect.x + shadow_offset, self.rect.y + shadow_offset, self.width, self.height)
         pygame.draw.rect(screen, shadow_colour, shadow_rect, border_radius=border_radius)
+        if not self.enabled:
+            colour = darken(colour, 25)
         pygame.draw.rect(screen, colour, self.rect, border_radius=border_radius)
         if self.use_outline:
             pygame.draw.rect(screen, self.outline_color, self.rect, 3, border_radius=border_radius)
@@ -107,9 +111,10 @@ class Button:
             y_offset += font.get_height()
 
     def is_clicked(self, pos):
-        if self.rect.collidepoint(pos):
-            click.play()
-            return True
+        if self.enabled:
+            if self.rect.collidepoint(pos):
+                click.play()
+                return True
         return False
 
 class ButtonArray:

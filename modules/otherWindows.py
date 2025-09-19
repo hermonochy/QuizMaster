@@ -197,9 +197,6 @@ def Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, **kwargs)
             button_skip.draw(screen, BUTTON_COLOUR)
             button_leave.draw(screen, BUTTON_COLOUR)
 
-            if isItHalloweenTimeNow():
-                drawSpiderWebs(screen)
-
             pygame.display.update()
             pygame.time.wait(10)
 
