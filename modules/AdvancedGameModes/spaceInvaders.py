@@ -51,7 +51,7 @@ SHOP_ITEMS = [
     {"name": "Extra Ammo", "desc": "+100 ammo", "cost": 20, "type": "ammo"},
     {"name": "Ammo Bonus", "desc": "+10 ammo per answer for 1 minute", "cost": 15, "type": "ammo_bonus"},
     {"name": "Shield", "desc": "Invulnerable for 15s", "cost": 20, "type": "shield"},
-    {"name": "Auto-Fire", "desc": "Auto-shoot for 15s", "cost": 6, "type": "autofire"},
+    {"name": "Auto-Fire", "desc": "Auto-shoot for 10s", "cost": 6, "type": "autofire"},
 ]
 
 def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
@@ -251,7 +251,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                             elif item["type"] == "shield":
                                 set_effect("shield", True, 15000)
                             elif item["type"] == "autofire":
-                                set_effect("autofire", True, 15000)
+                                set_effect("autofire", True, 10000)
                             running_shop = False
                             break
                     if event.key == K_ESCAPE:
