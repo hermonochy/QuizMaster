@@ -6,7 +6,7 @@ import colorsys
 import json
 import random
 import time
-import math
+#import math
 import re
 import subprocess
 from glob import glob
@@ -17,7 +17,7 @@ from modules.initialise import *
 from modules.persistence import *
 from modules.checker import *
 from modules.elements import *
-from modules.gameModes import *
+from modules.gameModes import classic, classicV2, speedRun, survival, practice
 from modules.searchQuiz import search_str_in_file
 from modules.otherWindows import about
 from modules.math import returnQuiz
@@ -27,6 +27,7 @@ from modules.AdvancedGameModes.spaceInvaders import spaceInvaders
 from modules.AdvancedGameModes.strikeZone import strikeZone
 from modules.AdvancedGameModes.MidasMayhem import midasMayhem
 from modules.AdvancedGameModes.MazeRun import mazeRun
+from modules.AdvancedGameModes.coinSprint import coinSprint
 from modules.AdvancedGameModes.deathRain import deathRain
 from modules.AdvancedGameModes.quickClick import quickClick
 
@@ -156,9 +157,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
                     pygame.mixer.music.play(-1)
                     pygame.mixer.music.set_volume(v_old)
                     BLACK = screen_mode(BACKGROUND_COLOUR_old)
-                    return
-
-                    
+                    return                 
 
 def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     """
@@ -464,7 +463,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
                         classicV2(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
                     elif btn_basic == "Speed Run":
-                        speed(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                        speedRun(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                         return
                     elif btn_basic == "Survival":
                         survival(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
@@ -515,7 +514,7 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
         elif args.gameMode == GameMode.speedRun:
             try:
-                speed(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                speedRun(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
@@ -622,7 +621,6 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstruct
 if __name__ == '__main__':
 
     BLACK = screen_mode(BACKGROUND_COLOUR)
-
     try:
         StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, volume, questionList, titleofquiz)
     except:

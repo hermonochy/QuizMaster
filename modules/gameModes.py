@@ -204,7 +204,7 @@ def classicV2(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND
         return
 
 
-def speed(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR):
+def speedRun(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR):
     if questionList is None:
         pass
         return
@@ -313,7 +313,7 @@ def speed(questionList, titleofquiz, doCountdown, doInstructions, BACKGROUND_COL
                 if button_go_back.is_clicked(pos):
                     return
                 if button_replay.is_clicked(pos):
-                    speed(originalQuestions[:], titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
+                    speedRun(originalQuestions[:], titleofquiz, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
                     return
                 if button_quit.is_clicked(pos):
                     quit()

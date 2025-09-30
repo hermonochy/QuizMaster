@@ -3,10 +3,12 @@ import platform
 import subprocess
 import os
 
+from pathlib import PureWindowsPath
 from typing import List,Union
 from dataclasses import dataclass, field
 
 from modules.constants import *
+from modules.checker import *
 
 @dataclass
 class QuizQuestion:
@@ -46,35 +48,13 @@ def getPreferences():
         with open(".Preferences.json", "r") as file:
             try:
                 prefDict = json.load(file)
+                music = prefDict["Music"]
+                BACKGROUND_COLOUR = prefDict["colour"]
+                BUTTON_COLOUR = prefDict["buttoncolour"]
                 volume = prefDict["Volume"]
                 doCountdown = prefDict["Countdown"]
                 doInstructions = prefDict["Instructions"]
                 pygame.mixer.music.set_volume(volume)
-                if isItHalloweenTimeNow():
-                    BACKGROUND_COLOUR = (250,100,0)
-                    BUTTON_COLOUR =  (255,110,10)
-                    music = "sounds/music_halloween1.ogg"
-                elif isItValentinesTimeNow():
-                    music = "sounds/music_valentines1.ogg"
-                    BACKGROUND_COLOUR = (255,0,0)
-                    BUTTON_COLOUR =  (255,10,10)
-                elif isItStPatricksTimeNow():
-                    music = "sounds/music_stpatrick1.ogg"
-                    BACKGROUND_COLOUR = (0,225,0)
-                    BUTTON_COLOUR =  (0,200,0) 
-                elif isItEasterTimeNow():
-                    music = "sounds/music_easter1.ogg"
-                    BACKGROUND_COLOUR = (255,170,180)
-                    BUTTON_COLOUR =  (250,250,100)
-                elif isItChristmasTimeNow():
-                    music = "sounds/music_christmas1.ogg"
-                    BACKGROUND_COLOUR = (0,255,0)
-                    BUTTON_COLOUR = (255,0,0)
-                else:
-                    music = prefDict["Music"]
-                    BACKGROUND_COLOUR = prefDict["colour"]
-                    BUTTON_COLOUR = prefDict["buttoncolour"]
-                    celebration = False
             except:
                 volume = DEFAULT_VOLUME
                 doCountdown = DEFAULT_COUNTDOWN
@@ -89,12 +69,32 @@ def getPreferences():
         music = DEFAULT_MUSIC
         BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
         BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
+    if isItHalloweenTimeNow():
+        BACKGROUND_COLOUR = (250,100,0)
+        BUTTON_COLOUR =  (255,110,10)
+        music = "sounds/music_halloween1.ogg"
+    elif isItValentinesTimeNow():
+        music = "sounds/music_valentines1.ogg"
+        BACKGROUND_COLOUR = (255,0,0)
+        BUTTON_COLOUR =  (255,10,10)
+    elif isItStPatricksTimeNow():
+        music = "sounds/music_stpatrick1.ogg"
+        BACKGROUND_COLOUR = (0,225,0)
+        BUTTON_COLOUR =  (0,200,0) 
+    elif isItEasterTimeNow():
+        music = "sounds/music_easter1.ogg"
+        BACKGROUND_COLOUR = (255,170,180)
+        BUTTON_COLOUR =  (250,250,100)
+    elif isItChristmasTimeNow():
+        music = "sounds/music_christmas1.ogg"
+        BACKGROUND_COLOUR = (0,255,0)
+        BUTTON_COLOUR = (255,0,0)
     return volume, doCountdown, doInstructions, music, BACKGROUND_COLOUR, BUTTON_COLOUR
-
      
 def openFile(file_path):
     if platform.system() == "Windows":
-        os.startfile(file_path)
+        windows_path = str(PureWindowsPath(file_path))
+        os.startfile(windows_path)
     elif platform.system() == "Darwin":
         subprocess.run(["open", file_path])
     else:
