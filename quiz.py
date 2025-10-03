@@ -27,7 +27,7 @@ from modules.AdvancedGameModes.spaceInvaders import spaceInvaders
 from modules.AdvancedGameModes.strikeZone import strikeZone
 from modules.AdvancedGameModes.MidasMayhem import midasMayhem
 from modules.AdvancedGameModes.MazeRun import mazeRun
-from modules.AdvancedGameModes.coinSprint import coinSprint
+#from modules.AdvancedGameModes.coinSprint import coinSprint
 from modules.AdvancedGameModes.deathRain import deathRain
 from modules.AdvancedGameModes.quickClick import quickClick
 
