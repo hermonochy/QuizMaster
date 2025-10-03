@@ -40,7 +40,6 @@ print("\nQuizMaster Copyright (C) 2025 hermonochy")
 print(asciiartstart)
 
 volume, doCountdown, doInstructions, music, BACKGROUND_COLOUR, BUTTON_COLOUR = getPreferences()
-
 pygame.display.set_caption('QuizMaster')
 icon = pygame.image.load('images/Screenshots/logo1.png')
 pygame.display.set_icon(icon)

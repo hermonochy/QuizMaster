@@ -54,8 +54,7 @@ def getPreferences():
                 volume = prefDict["Volume"]
                 doCountdown = prefDict["Countdown"]
                 doInstructions = prefDict["Instructions"]
-                pygame.mixer.music.set_volume(volume)
-            except:
+            except Exception:
                 volume = DEFAULT_VOLUME
                 doCountdown = DEFAULT_COUNTDOWN
                 doInstructions = DEFAULT_INSTRUCTIONS
@@ -69,16 +68,17 @@ def getPreferences():
         music = DEFAULT_MUSIC
         BACKGROUND_COLOUR = DEFAULT_BACKGROUND_COLOUR
         BUTTON_COLOUR = DEFAULT_BUTTON_COLOUR
+
     if isItHalloweenTimeNow():
+        music = "sounds/music_halloween1.ogg"
         BACKGROUND_COLOUR = (250,100,0)
         BUTTON_COLOUR =  (255,110,10)
-        music = "sounds/music_halloween1.ogg"
     elif isItValentinesTimeNow():
         music = "sounds/music_valentines1.ogg"
         BACKGROUND_COLOUR = (255,0,0)
         BUTTON_COLOUR =  (255,10,10)
     elif isItStPatricksTimeNow():
-        music = "sounds/music_stpatrick1.ogg"
+        music = "sounds/music_stpatricks1.ogg"
         BACKGROUND_COLOUR = (0,225,0)
         BUTTON_COLOUR =  (0,200,0) 
     elif isItEasterTimeNow():

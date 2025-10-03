@@ -31,9 +31,11 @@ from modules.AdvancedGameModes.MazeRun import mazeRun
 from modules.AdvancedGameModes.deathRain import deathRain
 from modules.AdvancedGameModes.quickClick import quickClick
 
-
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v):
-    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, doCountdown_old, doInstructions_old, v_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, doInstructions, v
+    # Save originals for restoring if user cancels
+    music_orig, BACKGROUND_COLOUR_orig, BUTTON_COLOUR_orig, doCountdown_orig, doInstructions_orig, v_orig = (
+        music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, doInstructions, v
+    )
     running = True
     changes = False
     celebration = False
@@ -49,50 +51,60 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
     Gslider = Slider((SCREEN_WIDTH // 4, 320), 700, min=0, max=245, step=0.5, handleColour = (0,240,0), initial = BACKGROUND_COLOUR[1])
     Bslider = Slider((SCREEN_WIDTH // 4, 360), 700, min=0, max=245, step=0.5, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2])
 
+    # This holds the session's current value (could be changed during the prefs window)
+    session_music = music
+    session_BG = BACKGROUND_COLOUR
+    session_BTN = BUTTON_COLOUR
+    session_v = v
+    session_doCountdown = doCountdown
+    session_doInstructions = doInstructions
+    session_BLACK = BLACK
+
     while running:
+        # Get values from sliders and checkboxes
         if not checkbox_mute.get():
-            v = volumeSlider.get()
+            session_v = volumeSlider.get()
         else:
-            v = 0
+            session_v = 0
         R = Rslider.get()
         G = Gslider.get()
         B = Bslider.get()
-        BACKGROUND_COLOUR = (R, G, B)
+        session_BG = (R, G, B)
         if all(i < 245 for i in (R, G, B)):
-            BUTTON_COLOUR = (clamp(R + 10), clamp(G + 10), clamp(B + 10))
+            session_BTN = (clamp(R + 10), clamp(G + 10), clamp(B + 10))
         else:
-            BUTTON_COLOUR = (clamp(R - 10), clamp(G - 10), clamp(B - 10))
+            session_BTN = (clamp(R - 10), clamp(G - 10), clamp(B - 10))
 
-        BLACK = screen_mode(BACKGROUND_COLOUR)
-        pygame.mixer.music.set_volume(v)
+        session_BLACK = screen_mode(session_BG)
+        pygame.mixer.music.set_volume(session_v)
 
-        screen.fill(BACKGROUND_COLOUR)
-        display_message("Preferences", 50, 75, BLACK)
-        display_message("_"*85, 50, 40, BLACK)
-        display_message("Volume", 120, 40, BLACK)
-        display_message("_"*90, 130, 25, BLACK)
+        screen.fill(session_BG)
+        display_message("Preferences", 50, 75, session_BLACK)
+        display_message("_"*85, 50, 40, session_BLACK)
+        display_message("Volume", 120, 40, session_BLACK)
+        display_message("_"*90, 130, 25, session_BLACK)
 
-        display_message("Colours", 220, 40, BLACK)
-        display_message("_"*90, 230, 25, BLACK)
+        display_message("Colours", 220, 40, session_BLACK)
+        display_message("_"*90, 230, 25, session_BLACK)
 
-        display_message("Music", 420, 40, BLACK)
-        display_message("_"*90, 430, 25, BLACK)
+        display_message("Music", 420, 40, session_BLACK)
+        display_message("_"*90, 430, 25, session_BLACK)
 
-        display_message("General", 560, 40, BLACK)
-        display_message("_"*90, 570, 25, BLACK)
+        display_message("General", 560, 40, session_BLACK)
+        display_message("_"*90, 570, 25, session_BLACK)
 
-        display_message("_"*85, 660, 40, BLACK)
+        display_message("_"*85, 660, 40, session_BLACK)
 
         # Redefined every time to update background colour
-        button_music = Button("Change Music", (SCREEN_WIDTH // 2.5, 460), 300, 50, BLACK)
-        button_save = Button("Save", (SCREEN_WIDTH // 2.5, 720), 300, 50, BLACK)
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2.5, 780), 300, 50, BLACK)
-        checkbox_mute.draw(screen, text_color=BLACK)
-        checkbox_countdown.draw(screen, text_color=BLACK)
-        checkbox_instructions.draw(screen, text_color=BLACK)
-        button_music.draw(screen, BUTTON_COLOUR)
-        button_go_back.draw(screen, BUTTON_COLOUR)
-        button_save.draw(screen, BUTTON_COLOUR)
+        button_music = Button("Change Music", (SCREEN_WIDTH // 2.5, 460), 300, 50, session_BLACK)
+        button_save = Button("Save", (SCREEN_WIDTH // 2.5, 720), 300, 50, session_BLACK)
+        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2.5, 780), 300, 50, session_BLACK)
+        checkbox_mute.draw(screen, text_color=session_BLACK)
+        checkbox_countdown.draw(screen, text_color=session_BLACK)
+        checkbox_instructions.draw(screen, text_color=session_BLACK)
+        button_music.draw(screen, session_BTN)
+        button_go_back.draw(screen, session_BTN)
+        button_save.draw(screen, session_BTN)
 
         volumeSlider.draw(screen)
         Rslider.draw(screen)
@@ -114,50 +126,57 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if button_music.is_clicked(pos):
-                    if i < 7:
+                    if i <= 6:
                         i += 1
                     else:
                         i = 1
                     pygame.mixer.music.fadeout(1000)
                     pygame.mixer.music.unload()
-                    music = f'sounds/music{i}.ogg'
+                    session_music = f'sounds/music{i}.ogg'
                     if isItChristmasTimeNow():
                         celebration = True
-                        music = ["sounds/music_christmas1.ogg", "sounds/music_christmas2.ogg"][i % 2]
-                    if isItHalloweenTimeNow():
+                        session_music = ["sounds/music_christmas1.ogg", "sounds/music_christmas2.ogg"][i % 2]
+                    elif isItHalloweenTimeNow():
                         celebration = True
-                        music = ["sounds/music_halloween1.ogg", "sounds/music_halloween2.ogg"][i % 2]
-                    if isItStPatricksTimeNow():
+                        session_music = ["sounds/music_halloween1.ogg", "sounds/music_halloween2.ogg"][i % 2]
+                    elif isItStPatricksTimeNow():
                         celebration = True
-                        music = "sounds/music_stpatricks1.ogg"
-                    if isItValentinesTimeNow():
+                        session_music = "sounds/music_stpatricks1.ogg"
+                    elif isItValentinesTimeNow():
                         celebration = True
-                        music = "sounds/music_valentines1.ogg"
-                    if isItEasterTimeNow():
+                        session_music = "sounds/music_valentines1.ogg"
+                    elif isItEasterTimeNow():
                         celebration = True
-                        music = "sounds/music_easter1.ogg"
-                    pygame.mixer.music.load(music)
+                        session_music = "sounds/music_easter1.ogg"
+                    pygame.mixer.music.load(session_music)
                     pygame.mixer.music.play(-1)
                 if button_save.is_clicked(pos):
-                    R = Rslider.get()
-                    G = Gslider.get()
-                    B = Bslider.get()
-                    doCountdown = checkbox_countdown.get()
-                    doInstructions = checkbox_instructions.get()
-                    BACKGROUND_COLOUR = (R, G, B)
-                    BUTTON_COLOUR = (R + 10, G + 10, B + 10)
-                    doCountdown_old, v_old = doCountdown, v
+                    session_doCountdown = checkbox_countdown.get()
+                    session_doInstructions = checkbox_instructions.get()
+                    session_BG = (Rslider.get(), Gslider.get(), Bslider.get())
+                    if all(i < 245 for i in session_BG):
+                        session_BTN = (clamp(session_BG[0] + 10), clamp(session_BG[1] + 10), clamp(session_BG[2] + 10))
+                    else:
+                        session_BTN = (clamp(session_BG[0] - 10), clamp(session_BG[1] - 10), clamp(session_BG[2] - 10))
+                    save_music = session_music
                     if not celebration:
-                        save_preferences(v, music, doCountdown, doInstructions, BACKGROUND_COLOUR, BUTTON_COLOUR)
-                    music_old, BACKGROUND_COLOUR_old, BUTTON_COLOUR_old, v_old, doCountdown_old , doInstructions_old = music, BACKGROUND_COLOUR, BUTTON_COLOUR, v, doCountdown, doInstructions
-                    print("Saved...")
+                        save_preferences(session_v, save_music, session_doCountdown, session_doInstructions, session_BG, session_BTN)
+                        print("Saved...")
+                    music_orig = save_music
+                    BACKGROUND_COLOUR_orig = session_BG
+                    BUTTON_COLOUR_orig = session_BTN
+                    v_orig = session_v
+                    doCountdown_orig = session_doCountdown
+                    doInstructions_orig = session_doInstructions
+                    session_BLACK = screen_mode(BACKGROUND_COLOUR_orig)
+                    BLACK = session_BLACK
                 if button_go_back.is_clicked(pos):
                     pygame.mixer.music.unload()
-                    pygame.mixer.music.load(music_old)
+                    pygame.mixer.music.load(music_orig)
                     pygame.mixer.music.play(-1)
-                    pygame.mixer.music.set_volume(v_old)
-                    BLACK = screen_mode(BACKGROUND_COLOUR_old)
-                    return                 
+                    pygame.mixer.music.set_volume(v_orig)
+                    BLACK = screen_mode(BACKGROUND_COLOUR_orig)
+                    return BLACK, v_orig, doCountdown_orig, doInstructions_orig, music_orig, BACKGROUND_COLOUR_orig, BUTTON_COLOUR_orig
 
 def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     """
@@ -577,7 +596,6 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstruct
     running = True
     welcome_image = pygame.image.load("images/Screenshots/logo.png").convert()
     while running:
-        volume, doCountdown, doInstructions, music, BACKGROUND_COLOUR, BUTTON_COLOUR = getPreferences()
         refreshPage = False
         screen.fill(BACKGROUND_COLOUR)
         button_play = Button("Play a Quiz", (SCREEN_WIDTH // 2 + 50, SCREEN_HEIGHT // 2 - 50), 250, 60, BLACK)
@@ -609,8 +627,7 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstruct
                         except:
                             subprocess.Popen(["python3", "quizcreator"])
                     elif button_preferences.is_clicked(pos):
-                        preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v)
-                        BLACK = screen_mode(BACKGROUND_COLOUR)
+                        BLACK, volume, doCountdown, doInstructions, music, BACKGROUND_COLOUR, BUTTON_COLOUR = preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v)
                         refreshPage = True
                     elif button_about.is_clicked(pos):
                         about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
