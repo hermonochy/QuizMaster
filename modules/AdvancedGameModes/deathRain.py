@@ -228,14 +228,14 @@ def deathRain(questionList, titleofquiz, doCountdown, v):
         if frame_counter - last_spawn >= current_spawn_chance:
             x = random.randint(0, SCREEN_WIDTH - OBSTACLE_WIDTH)
             if random.random() < POWERUP_CHANCE:
-                
-                powerup_image = pygame.image.load("images/coin.png")
                 if isItChristmasTimeNow():
                     gift = random.choice(giftList)
                     powerup_image = pygame.image.load(gift)
                 elif isItEasterTimeNow():
                     egg = random.choice(eggList)
                     powerup_image = pygame.image.load(egg)
+                else:
+                    powerup_image = pygame.image.load("images/coin.png")
                 powerup_image = pygame.transform.scale(powerup_image, (POWERUP_WIDTH, POWERUP_HEIGHT))
                 objects.append(PowerUp(x, -POWERUP_HEIGHT, powerup_image, current_speed))
             else:
