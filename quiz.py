@@ -22,23 +22,22 @@ from modules.searchQuiz import search_str_in_file
 from modules.otherWindows import about
 from modules.math import returnQuiz
 from modules.constants import *
+from modules.overlays import drawSpiderWebs
 
 from modules.AdvancedGameModes.spaceInvaders import spaceInvaders
 from modules.AdvancedGameModes.strikeZone import strikeZone
 from modules.AdvancedGameModes.MidasMayhem import midasMayhem
 from modules.AdvancedGameModes.MazeRun import mazeRun
-#from modules.AdvancedGameModes.coinSprint import coinSprint
 from modules.AdvancedGameModes.deathRain import deathRain
 from modules.AdvancedGameModes.quickClick import quickClick
 
 def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v):
-    # Save originals for restoring if user cancels
     music_orig, BACKGROUND_COLOUR_orig, BUTTON_COLOUR_orig, doCountdown_orig, doInstructions_orig, v_orig = (
         music, BACKGROUND_COLOUR, BUTTON_COLOUR, doCountdown, doInstructions, v
     )
     running = True
     changes = False
-    celebration = False
+    celebration = isItCelebrationNow()
     numList = re.findall(r'\d+', music)
     i = int(numList[0]) if numList else 1
 
@@ -51,7 +50,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
     Gslider = Slider((SCREEN_WIDTH // 4, 320), 700, min=0, max=245, step=0.5, handleColour = (0,240,0), initial = BACKGROUND_COLOUR[1])
     Bslider = Slider((SCREEN_WIDTH // 4, 360), 700, min=0, max=245, step=0.5, handleColour = (0,0,255), initial = BACKGROUND_COLOUR[2])
 
-    # This holds the session's current value (could be changed during the prefs window)
     session_music = music
     session_BG = BACKGROUND_COLOUR
     session_BTN = BUTTON_COLOUR
@@ -61,7 +59,6 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
     session_BLACK = BLACK
 
     while running:
-        # Get values from sliders and checkboxes
         if not checkbox_mute.get():
             session_v = volumeSlider.get()
         else:
@@ -110,6 +107,10 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
         Rslider.draw(screen)
         Gslider.draw(screen)
         Bslider.draw(screen)
+
+        if isItHalloweenTimeNow():
+            drawSpiderWebs(screen)
+
         pygame.display.flip()
         
         for event in pygame.event.get():
@@ -134,19 +135,14 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
                     pygame.mixer.music.unload()
                     session_music = f'sounds/music{i}.ogg'
                     if isItChristmasTimeNow():
-                        celebration = True
                         session_music = ["sounds/music_christmas1.ogg", "sounds/music_christmas2.ogg"][i % 2]
                     elif isItHalloweenTimeNow():
-                        celebration = True
                         session_music = ["sounds/music_halloween1.ogg", "sounds/music_halloween2.ogg"][i % 2]
                     elif isItStPatricksTimeNow():
-                        celebration = True
                         session_music = "sounds/music_stpatricks1.ogg"
                     elif isItValentinesTimeNow():
-                        celebration = True
                         session_music = "sounds/music_valentines1.ogg"
                     elif isItEasterTimeNow():
-                        celebration = True
                         session_music = "sounds/music_easter1.ogg"
                     pygame.mixer.music.load(session_music)
                     pygame.mixer.music.play(-1)
@@ -177,6 +173,7 @@ def preferences(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doI
                     pygame.mixer.music.set_volume(v_orig)
                     BLACK = screen_mode(BACKGROUND_COLOUR_orig)
                     return BLACK, v_orig, doCountdown_orig, doInstructions_orig, music_orig, BACKGROUND_COLOUR_orig, BUTTON_COLOUR_orig
+
 
 def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     """
@@ -210,6 +207,9 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         display_message("Number of Questions:", 125, 40, BLACK)
         button_submit.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
+
+        if isItHalloweenTimeNow():
+            drawSpiderWebs(screen)
 
         pygame.display.update()
 
@@ -286,6 +286,9 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
         button_confirm.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
 
+        if isItHalloweenTimeNow():
+            drawSpiderWebs(screen)
+
         pygame.display.update()
 
 def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
@@ -305,6 +308,9 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         button_random_quiz.draw(screen, BUTTON_COLOUR)
         button_general_knowledge.draw(screen, BUTTON_COLOUR)
         button_math.draw(screen, BUTTON_COLOUR)
+
+        if isItHalloweenTimeNow():
+            drawSpiderWebs(screen)
 
         for event in pygame.event.get():
             searchBox.handle_event(event)
@@ -383,7 +389,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                 searchTerm = ""
                 continue
 
-            scrollbar = Scrollbar((SCREEN_WIDTH - 40, ANSWER_OFFSET), SCREEN_HEIGHT - ANSWER_OFFSET - 50, len(quizfileSearchResults), 10)
+            scrollbar = Scrollbar((SCREEN_WIDTH - 75, ANSWER_OFFSET-15), SCREEN_HEIGHT - ANSWER_OFFSET - 100, len(quizfileSearchResults), 10)
             buttons = []
             for idx, quizfile in enumerate(quizfileSearchResults):
                 try:
@@ -403,6 +409,10 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
                 if len(buttons) > 12:
                     scrollbar.draw(screen)
+
+                if isItHalloweenTimeNow():
+                    drawSpiderWebs(screen)
+
                 pygame.display.update()
                 for event in pygame.event.get():
                     if event.type == QUIT:
@@ -461,7 +471,8 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
         advanced_modes = ButtonArray(advancedGamemodes, (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
         basic_modes.draw(screen, BUTTON_COLOUR)
         advanced_modes.draw(screen, BUTTON_COLOUR)
-
+        if isItHalloweenTimeNow():
+            drawSpiderWebs(screen)
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -594,7 +605,15 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
                    
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v):
     running = True
-    welcome_image = pygame.image.load("images/Screenshots/logo.png").convert()
+    if isItCelebrationNow():
+        if isItHalloweenTimeNow():
+            welcome_image = pygame.transform.scale(pygame.image.load("images/pumpkin2.png"), (60, 60))
+        elif isItChristmasTimeNow():
+            welcome_image = pygame.transform.scale(pygame.image.load("images/santa.png"), (60,60))
+        elif isItEasterTimeNow():
+            welcome_image = pygame.transform.scale(pygame.image.load("images/easterEgg1.png"), (60,65))
+    else:
+        welcome_image = pygame.image.load("images/Screenshots/logo.png").convert()
     while running:
         refreshPage = False
         screen.fill(BACKGROUND_COLOUR)
@@ -609,7 +628,9 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstruct
         button_preferences.draw(screen, BUTTON_COLOUR)
         button_about.draw(screen, BUTTON_COLOUR)
         button_quit.draw(screen, BUTTON_COLOUR)
-        screen.blit(welcome_image, (SCREEN_WIDTH//4.75, SCREEN_HEIGHT//12))
+        if isItHalloweenTimeNow():
+            drawSpiderWebs(screen)
+        screen.blit(welcome_image, (SCREEN_WIDTH//4.8, SCREEN_HEIGHT//12))
         screen.blit(welcome_image, (SCREEN_WIDTH//1.325, SCREEN_HEIGHT//12))
         pygame.display.update()
         while not refreshPage:

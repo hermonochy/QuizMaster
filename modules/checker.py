@@ -4,6 +4,19 @@ from datetime import datetime
 from collections import Counter
  
  
+def isItCelebrationNow():
+  if isItChristmasTimeNow():
+    return True
+  elif isItHalloweenTimeNow():
+    return True
+  elif isItEasterTimeNow():
+    return True
+  elif isItValentinesTimeNow():
+    return True
+  elif isItStPatricksTimeNow():
+    return True
+  return False
+
 def isItChristmasTimeNow():
   """
   Function return True, if current date is in range [1-25] December, False otherwise.

@@ -5,6 +5,8 @@ import random
 from modules.elements import *
 from modules.persistence import openFile
 from modules.extendedText import *
+from modules.checker import isItHalloweenTimeNow
+from modules.overlays import drawSpiderWebs
 
 
 def countdown(titleofquiz, BACKGROUND_COLOUR, BLACK):
@@ -36,6 +38,10 @@ def about(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         button_tutorial.draw(screen, BACKGROUND_COLOUR, shadow_offset=0)
         button_license.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
+
+        if isItHalloweenTimeNow():
+            drawSpiderWebs(screen)
+
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -65,6 +71,10 @@ def Licenses(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         button_GPL.draw(screen, BACKGROUND_COLOUR, shadow_offset=0)
         button_CC.draw(screen, BACKGROUND_COLOUR, shadow_offset=0)
         button_go_back.draw(screen, BUTTON_COLOUR)
+
+        if isItHalloweenTimeNow():
+            drawSpiderWebs(screen)
+
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -102,6 +112,9 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
             y_position += 20
         if total_items > items_per_page:
             scrollbar.draw(screen)
+
+        if isItHalloweenTimeNow():
+            drawSpiderWebs(screen)
 
         pygame.display.update()
 
@@ -147,6 +160,9 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_replay.draw(screen, BUTTON_COLOUR)
         button_quit.draw(screen, BUTTON_COLOUR)
+
+        if isItHalloweenTimeNow():
+            drawSpiderWebs(screen)
         
         pygame.display.update()
 
@@ -180,6 +196,10 @@ def Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, **kwargs)
             button_continue.draw(screen, BUTTON_COLOUR)
             button_skip.draw(screen, BUTTON_COLOUR)
             button_leave.draw(screen, BUTTON_COLOUR)
+
+            if isItHalloweenTimeNow():
+                drawSpiderWebs(screen)
+
             pygame.display.update()
             pygame.time.wait(10)
 
