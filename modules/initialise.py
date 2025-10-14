@@ -24,6 +24,7 @@ class GameMode(str, Enum):
     spaceInvaders = 'spaceInvaders'
     strikeZone = 'strikeZone'
     deathRain = 'deathRain'
+    farmFrenzy = 'farmFrenzy'
     quickClick = 'quickClick'
 
 parser = argparse.ArgumentParser(

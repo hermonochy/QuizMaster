@@ -1,5 +1,5 @@
 """
-Module for the "basic" game modes: Classic, Classic V2, Speed Run, Survival and Practice. More complex game modes will be placed in seperate files due to length.
+Module for the "basic" game modes: Classic, Classic V2, Speed Run, Survival and Practice. More complex game modes are placed in seperate files due to size.
 """
 
 import pygame

@@ -26,6 +26,7 @@ from modules.overlays import drawSpiderWebs
 
 from modules.AdvancedGameModes.spaceInvaders import spaceInvaders
 from modules.AdvancedGameModes.strikeZone import strikeZone
+from modules.AdvancedGameModes.farmFrenzy import farmFrenzy
 from modules.AdvancedGameModes.MidasMayhem import midasMayhem
 from modules.AdvancedGameModes.MazeRun import mazeRun
 from modules.AdvancedGameModes.deathRain import deathRain
@@ -450,7 +451,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     else:
                         StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz)
             searchTerm = ""
-            
+
 def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, titleofquiz):
     running = True
     while running:
@@ -462,6 +463,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
         advancedGamemodes = [
             "Spectre Swarm" if isItHalloweenTimeNow() else "Space Invaders", 
             "Strike Zone", 
+            "Farm Frenzy",
             "Gift Fall" if isItChristmasTimeNow() else "Eggstorm" if isItEasterTimeNow() else "Death Rain", 
             "Quick Click", 
             "Midas Mayhem", 
@@ -509,6 +511,9 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
                         return
                     elif btn_advanced == "Death Rain" or btn_advanced == "Gift Fall" or btn_advanced == "Eggstorm":
                         deathRain(questionList, titleofquiz, doCountdown, doInstructions, v)
+                        return
+                    elif btn_advanced == "Farm Frenzy":
+                        farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v)
                         return
                     elif btn_advanced == "Quick Click":
                         quickClick(questionList, titleofquiz, doCountdown, doInstructions)
@@ -575,6 +580,12 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
         elif args.gameMode == GameMode.spaceInvaders:
             try:
                 spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v)
+            except Exception as ex:
+                print("Error: ", ex)
+                choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown)
+        elif args.gameMode == GameMode.farmFrenzy:
+            try:
+                farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v)
             except Exception as ex:
                 print("Error: ", ex)
                 choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown)

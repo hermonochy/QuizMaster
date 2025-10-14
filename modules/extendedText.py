@@ -69,6 +69,12 @@ strikeZone_p1 = " Dodge enemies and stay alive. Collect power-ups by answering q
 strikeZone_p2 = " Survive as long as possible and defeat enemies for a high score."
 strikeZone_p3 = " - Move: Arrow keys.\n\n - Aim: Mouse Direction.\n\n - Shoot: Spacebar (if you have ammo).\n\n - Collect power-ups: Move into them, then answer a quiz question."
 
+farmFrenzy_p1=""" Plant and nurture crops on your farm! Once they are mature, harvest them to earn coins that can be spent on upgrades to your farm. 
+    \n\nKeep an eye on your available seeds and plan your planting to maximize your harvest!"""
+farmFrenzy_p2=""" Answer quiz questions to earn more seeds and coins—these are vital for keeping your farm running.
+ \n\nCorrect answers reward you with extra resources, while wrong answers can cause you to lose farm hearts.
+  \n\nWatch out for the pesky pests trying to eat your crops!"""
+
 deathRain_p1 = " Dodge falling obstacles and collect power-ups. Power-ups trigger a question—answer it to claim their effect!"
 deathRain_p2 = " Survive as long as possible and get a high score."
 deathRain_p3 = " - Move: Left/Right arrow keys."

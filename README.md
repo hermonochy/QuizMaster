@@ -114,6 +114,10 @@ A frantic 2D survival shooter that combines quiz action with fast-paced dodging 
 |Shield|🟠️|15%|Grants 10 seconds immunity to enemy attacks|
 |All-out Attack|⚪️|5%|Sends out a blast of energy that destroys all enemies on the screen|
 
+**Farm Frenzy**
+
+In this vibrant, cartoon-style game mode, your goal is to plant, grow, and harvest as many crops as possible while answering quiz questions. To get started, use your seeds to plant crops by selecting an empty plot (press keys 1 to 9 or click a plot). Each crop type grows at a different speed and rewards you with coins when harvested. Correctly answering quiz questions gives you extra seeds and coins, helping you expand your farm. As you progress, pests will begin to appear—these mischievous bugs can eat your crops unless you use your upgrades. You can visit the farm shop at any time to spend your coins on upgrades: speed up crop growth, restore farm hearts, or buy more seeds. If you run out of farm hearts, the game ends, so stay alert! Your ultimate aim is to complete all the quiz questions with a flourishing, pest-free farm and a basket full of harvested crops.
+
 **Midas Mayhem**
 
 Test your luck and knowledge in this gold-collecting challenge! In *Midas Mayhem*, each correct answer lets you open a magical chest, but not all chests are friendly—some give you gold, some take it away, and others multiply your fortune or wipe it out. Build up as much gold as you can by answering questions correctly and picking wisely. But beware: falling into debt means game over!
@@ -175,6 +179,7 @@ options:
 - `mazeRun`
 - `spaceInvaders`
 - `deathRain`
+- `Farm Frenzy`
 
 Similarly in QuizCreator, a quiz parameter can be added to the end but for obvious reasons not a game mode parameter.
 
