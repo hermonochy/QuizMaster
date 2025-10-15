@@ -10,28 +10,34 @@ from modules.otherWindows import countdown, Instructions
 SKY_BLUE = (135, 206, 250)
 GRASS_GREEN = (120, 220, 80)
 DIRT_BROWN = (180, 120, 60)
-CROP_YELLOW = (255, 240, 80)
-CROP_RED = (255, 110, 110)
-CROP_ORANGE = (255, 180, 80)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BUTTON_COLOR = (250, 225, 100)
 BUTTON_OUTLINE = (90, 70, 0)
-PEST_COLOR = (80, 80, 120)
-PEST_OUTLINE = (255, 0, 120)
 HEALTH_COLOR = (255, 70, 70)
 COIN_COLOR = (255, 230, 46)
 SEED_COLOR = (220, 220, 255)
 
+CROP_IMAGES = {
+    "Wheat": pygame.image.load("images/wheat.png"),
+    "Tomato": pygame.image.load("images/tomato.png"),
+    "Carrot": pygame.image.load("images/carrot.png"),
+}
+DOG_IMAGE = pygame.image.load("images/dog.png")
+
 CROP_TYPES = [
-    {"name": "Wheat", "grow_time": 4500, "value": 10, "color": CROP_YELLOW},
-    {"name": "Tomato", "grow_time": 6000, "value": 18, "color": CROP_RED},
-    {"name": "Carrot", "grow_time": 7500, "value": 25, "color": CROP_ORANGE},
+    {"name": "Wheat", "grow_time": 4500, "value": 10, "image": CROP_IMAGES["Wheat"]},
+    {"name": "Tomato", "grow_time": 6000, "value": 18, "image": CROP_IMAGES["Tomato"]},
+    {"name": "Carrot", "grow_time": 7500, "value": 25, "image": CROP_IMAGES["Carrot"]},
 ]
 
 SHOP_ITEMS = [
     {"name": "Sprinkler", "desc": "Crops grow 2x faster for 20s", "cost": 40, "type": "grow_boost"},
     {"name": "Friendly Dog", "desc": "Blocks pests for 30s", "cost": 50, "type": "dog"},
+    {"name": "Golden Shovel", "desc": "Harvest all ready crops instantly", "cost": 60, "type": "shovel"},
+    {"name": "Bug Spray", "desc": "Remove all pests instantly", "cost": 50, "type": "spray"},
+    {"name": "Double Coins", "desc": "2x coins for 20s", "cost": 45, "type": "double_coins"},
+    {"name": "Extra Plot", "desc": "Gain an extra plot for 30s", "cost": 55, "type": "extra_plot"},
     {"name": "Seed Bag", "desc": "+4 seeds", "cost": 18, "type": "seeds"},
     {"name": "Farm Snack", "desc": "Restore 1 farm heart", "cost": 25, "type": "heal"},
 ]
@@ -51,13 +57,31 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
     grow_boost = 1.0
     dog_active = False
     dog_timer = 0
+    double_coins = False
+    double_coins_timer = 0
+    extra_plot_active = False
+    extra_plot_timer = 0
     question_index = 0
     total_questions = len(questionList)
     last_plant_time = 0
 
-    if doInstructions:
-        Instructions(SKY_BLUE, BUTTON_COLOR, BLACK, titleofquiz, p1=farmFrenzy_p1, p2=farmFrenzy_p2)
+    plot_rects = []
+    n_plots = 7
+    plot_w, plot_h = 80, 60
+    for i in range(n_plots):
+        x = 80 + i * 105
+        y = SCREEN_HEIGHT // 2 + 40
+        plot_rects.append(pygame.Rect(x, y, plot_w, plot_h))
+    extra_plot_rect = pygame.Rect(80 + n_plots * 105, SCREEN_HEIGHT // 2 + 40, plot_w, plot_h)
 
+    clock = pygame.time.Clock()
+
+    if doInstructions:
+        Instructions(
+            SKY_BLUE, BUTTON_COLOR, BLACK, titleofquiz,
+            p1=farmFrenzy_p1,
+            p2=farmFrenzy_p2,
+        )
     if doCountdown:
         countdown(titleofquiz, SKY_BLUE, BLACK)
 
@@ -65,15 +89,6 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
     button_shop = Button("Shop", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 250), 300, 50, BLACK)
     button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 310), 250, 40, BLACK)
     button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 360), 250, 40, BLACK)
-
-    plot_rects = []
-    n_plots = 7
-    for i in range(n_plots):
-        x = 90 + i * 110
-        y = SCREEN_HEIGHT // 2 + 40
-        plot_rects.append(pygame.Rect(x, y, 80, 60))
-
-    clock = pygame.time.Clock()
 
     def handle_question():
         nonlocal seeds, farm_hearts, question_index, coins
@@ -107,13 +122,13 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
                         if button.is_clicked(pos):
                             user_answer = idx
                 if event.type == KEYDOWN:
-                    if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
+                    if pygame.K_1 <= event.key <= pygame.K_9:
                         user_answer = event.key - pygame.K_1
 
         correct_index = answerOptions.index(current_question.correctAnswer)
         if user_answer == correct_index:
             seeds += 2
-            coins += 8
+            coins += 8 * (2 if double_coins else 1)
             return True
         else:
             farm_hearts -= 1
@@ -121,8 +136,9 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
 
     def handle_shop():
         nonlocal coins, grow_boost, dog_active, dog_timer, seeds, farm_hearts
+        nonlocal double_coins, double_coins_timer, extra_plot_active, extra_plot_timer
         shop_width = 520
-        shop_height = 350
+        shop_height = 430
         shop_rect = pygame.Rect((SCREEN_WIDTH - shop_width)//2, (SCREEN_HEIGHT - shop_height)//2, shop_width, shop_height)
         font = pygame.font.Font(None, 48)
         item_font = pygame.font.Font(None, 32)
@@ -186,6 +202,23 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
                             elif item["type"] == "dog":
                                 dog_active = True
                                 dog_timer = pygame.time.get_ticks() + 30000
+                            elif item["type"] == "shovel":
+                                
+                                for crop in crops:
+                                    if not crop["harvested"] and pygame.time.get_ticks() - crop["plant_time"] >= crop["grow_time"] * grow_boost:
+                                        crop["harvested"] = True
+                                        coins_gain = crop["value"] * (2 if double_coins else 1)
+                                        coins += coins_gain
+                            elif item["type"] == "spray":
+                                pests.clear()
+                            elif item["type"] == "double_coins":
+                                double_coins = True
+                                double_coins_timer = pygame.time.get_ticks() + 20000
+                                pygame.time.set_timer(USEREVENT+2, 20000)
+                            elif item["type"] == "extra_plot":
+                                extra_plot_active = True
+                                extra_plot_timer = pygame.time.get_ticks() + 30000
+                                pygame.time.set_timer(USEREVENT+3, 30000)
                             elif item["type"] == "seeds":
                                 seeds += 4
                             elif item["type"] == "heal":
@@ -206,6 +239,22 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
                                 elif item["type"] == "dog":
                                     dog_active = True
                                     dog_timer = pygame.time.get_ticks() + 30000
+                                elif item["type"] == "shovel":
+                                    for crop in crops:
+                                        if not crop["harvested"] and pygame.time.get_ticks() - crop["plant_time"] >= crop["grow_time"] * grow_boost:
+                                            crop["harvested"] = True
+                                            coins_gain = crop["value"] * (2 if double_coins else 1)
+                                            coins += coins_gain
+                                elif item["type"] == "spray":
+                                    pests.clear()
+                                elif item["type"] == "double_coins":
+                                    double_coins = True
+                                    double_coins_timer = pygame.time.get_ticks() + 20000
+                                    pygame.time.set_timer(USEREVENT+2, 20000)
+                                elif item["type"] == "extra_plot":
+                                    extra_plot_active = True
+                                    extra_plot_timer = pygame.time.get_ticks() + 30000
+                                    pygame.time.set_timer(USEREVENT+3, 30000)
                                 elif item["type"] == "seeds":
                                     seeds += 4
                                 elif item["type"] == "heal":
@@ -224,55 +273,75 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
         display_message(f"Seeds: {seeds}", 12, 90, SEED_COLOR)
         display_message(f"Coins: {coins}", 40, 90, COIN_COLOR)
 
+        
         for i, rect in enumerate(plot_rects):
             pygame.draw.ellipse(screen, (255,255,255), rect, 0)
             pygame.draw.ellipse(screen, (200,180,120), rect, 0)
             pygame.draw.ellipse(screen, BLACK, rect, 2)
-            for crop in crops:
-                if crop["plot"] == i and not crop["harvested"]:
-                    grow_percent = min(1, (pygame.time.get_ticks() - crop["plant_time"]) / (crop["grow_time"] * grow_boost))
-                    crop_center = (rect.centerx, rect.centery+5)
-                    crop_rad = int(18 + grow_percent*18)
-                    pygame.draw.circle(screen, crop["color"], crop_center, crop_rad)
-                    pygame.draw.circle(screen, BLACK, crop_center, crop_rad, 2)
-                    if grow_percent >= 1:
-                        pygame.draw.circle(screen, WHITE, crop_center, crop_rad+3, 3)
-                        display_message("Ready!", rect.y+rect.height+2, 18, crop["color"], x_position=rect.x+rect.width//2-24)
+
+        
+        if extra_plot_active and pygame.time.get_ticks() < extra_plot_timer:
+            pygame.draw.ellipse(screen, (255,255,220), extra_plot_rect, 0)
+            pygame.draw.ellipse(screen, BLACK, extra_plot_rect, 2)
+
+        
+        for crop in crops:
+            plot_idx = crop["plot"]
+            
+            if plot_idx == n_plots:
+                rect = extra_plot_rect
+            else:
+                rect = plot_rects[plot_idx]
+            if not crop["harvested"]:
+                grow_percent = min(1, (pygame.time.get_ticks() - crop["plant_time"]) / (crop["grow_time"] * grow_boost))
+                img = crop["image"]
+                w = int(rect.width * (0.5 + 0.5*grow_percent))
+                h = int(rect.height * (0.5 + grow_percent))
+                scaled = pygame.transform.smoothscale(img, (w, h))
+                screen.blit(scaled, (rect.centerx - w//2, rect.centery - h//2))
+                if grow_percent >= 1:
+                    pygame.draw.circle(screen, WHITE, rect.center, int(rect.width//2)+3, 3)
+                    display_message("Ready!", rect.y+rect.height+2, 18, (40,40,40), x_position=rect.x+rect.width//2-24)
 
         for pest in pests:
-            pygame.draw.circle(screen, PEST_COLOR, (pest["x"], pest["y"]), 18)
-            pygame.draw.circle(screen, PEST_OUTLINE, (pest["x"], pest["y"]), 18, 3)
+            pygame.draw.circle(screen, (80, 80, 120), (pest["x"], pest["y"]), 18)
+            pygame.draw.circle(screen, (255, 0, 120), (pest["x"], pest["y"]), 18, 3)
+            
             pygame.draw.circle(screen, WHITE, (pest["x"]-6, pest["y"]-4), 4)
             pygame.draw.circle(screen, WHITE, (pest["x"]+6, pest["y"]-4), 4)
             pygame.draw.circle(screen, BLACK, (pest["x"]-6, pest["y"]-4), 2)
             pygame.draw.circle(screen, BLACK, (pest["x"]+6, pest["y"]-4), 2)
-            pygame.draw.line(screen, PEST_OUTLINE, (pest["x"]-10, pest["y"]-14), (pest["x"]-18, pest["y"]-24), 2)
-            pygame.draw.line(screen, PEST_OUTLINE, (pest["x"]+10, pest["y"]-14), (pest["x"]+18, pest["y"]-24), 2)
+            
+            pygame.draw.line(screen, (255, 0, 120), (pest["x"]-10, pest["y"]-14), (pest["x"]-18, pest["y"]-24), 2)
+            pygame.draw.line(screen, (255, 0, 120), (pest["x"]+10, pest["y"]-14), (pest["x"]+18, pest["y"]-24), 2)
 
+        
         if dog_active and pygame.time.get_ticks() < dog_timer:
-            pygame.draw.ellipse(screen, (255, 210, 110), (SCREEN_WIDTH-170, SCREEN_HEIGHT//2+40, 88, 52))
-            pygame.draw.circle(screen, BLACK, (SCREEN_WIDTH-104, SCREEN_HEIGHT//2+60), 15)
-            pygame.draw.circle(screen, WHITE, (SCREEN_WIDTH-104, SCREEN_HEIGHT//2+60), 6)
+            screen.blit(pygame.transform.smoothscale(DOG_IMAGE, (80,100)), (SCREEN_WIDTH-170, SCREEN_HEIGHT//2+40))
             display_message("Dog!", SCREEN_HEIGHT//2+100, 18, BLACK, x_position=SCREEN_WIDTH-140)
 
+        
         for btn in [button_answer, button_shop, button_go_back, button_leave]:
             btn.draw(screen, BUTTON_COLOR)
             pygame.draw.rect(screen, BUTTON_OUTLINE, btn.rect, 3, border_radius=14)
 
+        
         for event in pygame.event.get():
             if event.type == QUIT:
                 quit()
             elif event.type == KEYDOWN:
-                if pygame.K_1 <= event.key <= pygame.K_7:
+                valid_plots = n_plots + 1 if extra_plot_active and pygame.time.get_ticks() < extra_plot_timer else n_plots
+                if pygame.K_1 <= event.key <= pygame.K_9:
                     plot_idx = event.key - pygame.K_1
-                    if 0 <= plot_idx < n_plots and seeds > 0 and not any(c["plot"] == plot_idx and not c["harvested"] for c in crops):
+                    if 0 <= plot_idx < valid_plots and seeds > 0 and not any(c["plot"] == plot_idx and not c["harvested"] for c in crops):
                         crop_type = random.choice(CROP_TYPES)
                         crops.append({
                             "plot": plot_idx,
                             "plant_time": pygame.time.get_ticks(),
                             "grow_time": crop_type["grow_time"],
                             "value": crop_type["value"],
-                            "color": crop_type["color"],
+                            "image": crop_type["image"],
+                            "name": crop_type["name"],
                             "harvested": False
                         })
                         seeds -= 1
@@ -289,23 +358,37 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
                         return
                 elif button_leave.is_clicked(pos):
                     quit()
-                for i, rect in enumerate(plot_rects):
-                    if rect.collidepoint(pos):
-                        for crop in crops:
-                            if crop["plot"] == i and not crop["harvested"]:
-                                if pygame.time.get_ticks() - crop["plant_time"] >= crop["grow_time"] * grow_boost:
-                                    crop["harvested"] = True
-                                    coins += crop["value"]
-            elif event.type == USEREVENT+1:
+                
+                for crop in crops:
+                    plot_idx = crop["plot"]
+                    rect = extra_plot_rect if plot_idx == n_plots else plot_rects[plot_idx]
+                    if rect.collidepoint(pos) and not crop["harvested"]:
+                        if pygame.time.get_ticks() - crop["plant_time"] >= crop["grow_time"] * grow_boost:
+                            crop["harvested"] = True
+                            coins_gain = crop["value"] * (2 if double_coins else 1)
+                            coins += coins_gain
+            elif event.type == USEREVENT+1:  
                 grow_boost = 1.0
                 pygame.time.set_timer(USEREVENT+1, 0)
+            elif event.type == USEREVENT+2:  
+                double_coins = False
+                pygame.time.set_timer(USEREVENT+2, 0)
+            elif event.type == USEREVENT+3:  
+                extra_plot_active = False
+                pygame.time.set_timer(USEREVENT+3, 0)
 
+        
         if question_index >= pest_grace_questions:
             pest_timer += 1
             pest_spawn_rate = 130
             if pest_timer > pest_spawn_rate and random.random() < 0.05:
-                target_plot = random.randint(0, n_plots-1)
-                x, y = plot_rects[target_plot].center
+                valid_plots = n_plots + 1 if extra_plot_active and pygame.time.get_ticks() < extra_plot_timer else n_plots
+                target_plot = random.randint(0, valid_plots-1)
+                if target_plot == n_plots:
+                    rect = extra_plot_rect
+                else:
+                    rect = plot_rects[target_plot]
+                x, y = rect.center
                 pests.append({"plot": target_plot, "x": x, "y": y-90, "target_y": y+8})
                 pest_timer = 0
 
@@ -313,6 +396,7 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
             if pest["y"] < pest["target_y"]:
                 pest["y"] += 2
             else:
+                
                 for crop in crops:
                     if crop["plot"] == pest["plot"] and not crop["harvested"]:
                         crop["harvested"] = True
@@ -334,7 +418,7 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
             return
 
         if question_index == total_questions and farm_hearts > 0:
-            display_message("You Won!", SCREEN_HEIGHT // 2, 100, CROP_YELLOW)
+            display_message("You Won!", SCREEN_HEIGHT // 2, 100, (255, 230, 46))
             pygame.display.flip()
             pygame.time.wait(3000)
             return
