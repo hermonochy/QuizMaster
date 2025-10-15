@@ -45,7 +45,16 @@ def darken(colour, amount=50):
     return colorsys.hsv_to_rgb(h, s, v)
 
 class Button:
-    def __init__(self, text, position, width=300, height=60, text_colour=(0, 0, 0)):
+    def __init__(
+        self,
+        text,
+        position,
+        width=300,
+        height=60,
+        text_colour=(0, 0, 0),
+        use_outline=False,
+        outline_color=(0,0,0)
+    ):
         self.text = text
         self.position = position
         self.width = width
@@ -53,13 +62,16 @@ class Button:
         self.font = pygame.font.Font(None, FONT_SIZE)
         self.rect = pygame.Rect(position[0], position[1], width, height)
         self.text_colour = text_colour
+        self.use_outline = use_outline
+        self.outline_color = outline_color
 
     def draw(self, screen, colour, border_radius=15, shadow_offset=4):
         shadow_colour = darken(colour)
         shadow_rect = pygame.Rect(self.rect.x + shadow_offset, self.rect.y + shadow_offset, self.width, self.height)
         pygame.draw.rect(screen, shadow_colour, shadow_rect, border_radius=border_radius)
         pygame.draw.rect(screen, colour, self.rect, border_radius=border_radius)
-        
+        if self.use_outline:
+            pygame.draw.rect(screen, self.outline_color, self.rect, 3, border_radius=border_radius)
         self.render_text(screen)
 
     def render_text(self, screen):

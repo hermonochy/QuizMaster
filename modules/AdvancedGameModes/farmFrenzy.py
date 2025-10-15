@@ -48,7 +48,7 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
 
     running = True
     farm_hearts = 5
-    seeds = 6
+    seeds = 7
     coins = 0
     crops = []
     pests = []
@@ -85,10 +85,10 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
     if doCountdown:
         countdown(titleofquiz, SKY_BLUE, BLACK)
 
-    button_answer = Button("Answer Question", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 190), 300, 50, BLACK)
-    button_shop = Button("Shop", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 250), 300, 50, BLACK)
-    button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 310), 250, 40, BLACK)
-    button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 360), 250, 40, BLACK)
+    button_answer = Button("Answer Question", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 190), 300, 50, BLACK, use_outline=True, outline_color=BUTTON_OUTLINE)
+    button_shop = Button("Shop", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 250), 300, 50, BLACK, use_outline=True, outline_color=BUTTON_OUTLINE)
+    button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 310), 250, 40, BLACK, use_outline=True, outline_color=BUTTON_OUTLINE)
+    button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 360), 250, 40, BLACK, use_outline=True, outline_color=BUTTON_OUTLINE)
 
     def handle_question():
         nonlocal seeds, farm_hearts, question_index, coins
@@ -103,7 +103,7 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
 
         buttons = []
         for idx, answer in enumerate(answerOptions):
-            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, 120 + idx * 60), 400, 40, BLACK)
+            button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, 120 + idx * 60), 400, 40, BLACK, use_outline=True, outline_color=BUTTON_OUTLINE)
             buttons.append(button)
 
         while user_answer is None:
@@ -111,7 +111,6 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
             display_message(f"Question: {current_question.question}", 60, 50, BLACK)
             for button in buttons:
                 button.draw(screen, BUTTON_COLOR)
-                pygame.draw.rect(screen, BUTTON_OUTLINE, button.rect, 3, border_radius=12)
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -138,7 +137,7 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
         nonlocal coins, grow_boost, dog_active, dog_timer, seeds, farm_hearts
         nonlocal double_coins, double_coins_timer, extra_plot_active, extra_plot_timer
         shop_width = 520
-        shop_height = 430
+        shop_height = 750
         shop_rect = pygame.Rect((SCREEN_WIDTH - shop_width)//2, (SCREEN_HEIGHT - shop_height)//2, shop_width, shop_height)
         font = pygame.font.Font(None, 48)
         item_font = pygame.font.Font(None, 32)
@@ -156,7 +155,6 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
         while running_shop:
             screen.fill(SKY_BLUE)
             pygame.draw.rect(screen, BUTTON_COLOR, shop_rect, border_radius=24)
-            pygame.draw.rect(screen, BUTTON_OUTLINE, shop_rect, 6, border_radius=24)
             title = font.render("Farm Shop", True, BLACK)
             screen.blit(title, (shop_rect.centerx - title.get_width()//2, shop_rect.y+18))
             coins_txt = desc_font.render(f"Coins: {coins}", True, COIN_COLOR)
@@ -170,7 +168,6 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
                 is_selected = (selected == idx)
                 color = (255,255,170) if is_selected else (255,220,120)
                 pygame.draw.rect(screen, color, (btn_x, btn_y+idx*56, btn_w, btn_h), border_radius=13)
-                pygame.draw.rect(screen, BUTTON_OUTLINE, (btn_x, btn_y+idx*56, btn_w, btn_h), 3, border_radius=13)
                 enough = coins >= item["cost"]
                 txt_col = BLACK if enough else (160,160,160)
                 item_name = item_font.render(f"{item['name']} [ {item['cost']} ]", True, txt_col)
@@ -270,8 +267,8 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
             pygame.draw.circle(screen, HEALTH_COLOR, (50 + i*34, 50), 16)
             pygame.draw.circle(screen, BLACK, (50 + i*34, 50), 16, 2)
 
-        display_message(f"Seeds: {seeds}", 12, 90, SEED_COLOR)
-        display_message(f"Coins: {coins}", 40, 90, COIN_COLOR)
+        display_message(f"Seeds: {seeds}", 30, 90, SEED_COLOR)
+        display_message(f"Coins: {coins}", 100, 90, COIN_COLOR)
 
         
         for i, rect in enumerate(plot_rects):
@@ -301,7 +298,6 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
                 screen.blit(scaled, (rect.centerx - w//2, rect.centery - h//2))
                 if grow_percent >= 1:
                     pygame.draw.circle(screen, WHITE, rect.center, int(rect.width//2)+3, 3)
-                    display_message("Ready!", rect.y+rect.height+2, 18, (40,40,40), x_position=rect.x+rect.width//2-24)
 
         for pest in pests:
             pygame.draw.circle(screen, (80, 80, 120), (pest["x"], pest["y"]), 18)
@@ -318,13 +314,9 @@ def farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v):
         
         if dog_active and pygame.time.get_ticks() < dog_timer:
             screen.blit(pygame.transform.smoothscale(DOG_IMAGE, (80,100)), (SCREEN_WIDTH-170, SCREEN_HEIGHT//2+40))
-            display_message("Dog!", SCREEN_HEIGHT//2+100, 18, BLACK, x_position=SCREEN_WIDTH-140)
-
         
         for btn in [button_answer, button_shop, button_go_back, button_leave]:
             btn.draw(screen, BUTTON_COLOR)
-            pygame.draw.rect(screen, BUTTON_OUTLINE, btn.rect, 3, border_radius=14)
-
         
         for event in pygame.event.get():
             if event.type == QUIT:
