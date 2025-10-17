@@ -27,6 +27,7 @@ from modules.overlays import drawSpiderWebs
 from modules.AdvancedGameModes.spaceInvaders import spaceInvaders
 from modules.AdvancedGameModes.strikeZone import strikeZone
 from modules.AdvancedGameModes.farmFrenzy import farmFrenzy
+from modules.AdvancedGameModes.blastField import blastField
 from modules.AdvancedGameModes.MidasMayhem import midasMayhem
 from modules.AdvancedGameModes.MazeRun import mazeRun
 from modules.AdvancedGameModes.deathRain import deathRain
@@ -465,6 +466,7 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
             "Strike Zone", 
             "Farm Frenzy",
             "Gift Fall" if isItChristmasTimeNow() else "Eggstorm" if isItEasterTimeNow() else "Death Rain", 
+            "Blast Field",
             "Quick Click", 
             "Midas Mayhem", 
             "Maze Run (Alpha)"
@@ -514,6 +516,9 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
                         return
                     elif btn_advanced == "Farm Frenzy":
                         farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v)
+                        return
+                    elif btn_advanced == "Blast Field":
+                        blastField(questionList, titleofquiz, doCountdown, doInstructions, v)
                         return
                     elif btn_advanced == "Quick Click":
                         quickClick(questionList, titleofquiz, doCountdown, doInstructions)

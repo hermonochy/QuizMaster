@@ -109,14 +109,18 @@ A frantic 2D survival shooter that combines quiz action with fast-paced dodging 
 
 |Powerup|Colour|Chance of Appearance|Function|
 |----|----|----|----|
-|Ammo Provider|🟡️|50%|Grants 25 Ammo|
-|Life Restorer|🟢️|30%|Grants 2 lives|
-|Shield|🟠️|15%|Grants 10 seconds immunity to enemy attacks|
+|Ammo Provider|🟡️|50%|+25 Ammo|
+|Life Restorer|🟢️|30%|+5 lives|
+|Shield|🟠️|15%|10 seconds immunity to enemy attacks|
 |All-out Attack|⚪️|5%|Sends out a blast of energy that destroys all enemies on the screen|
 
 **Farm Frenzy**
 
-In this vibrant, cartoon-style game mode, your goal is to plant, grow, and harvest as many crops as possible while answering quiz questions. To get started, use your seeds to plant crops by selecting an empty plot (press keys 1 to 9 or click a plot). Each crop type grows at a different speed and rewards you with coins when harvested. Correctly answering quiz questions gives you extra seeds and coins, helping you expand your farm. As you progress, pests will begin to appear—these mischievous bugs can eat your crops unless you use your upgrades. You can visit the farm shop at any time to spend your coins on upgrades: speed up crop growth, restore farm hearts, or buy more seeds. If you run out of farm hearts, the game ends, so stay alert! Your ultimate aim is to complete all the quiz questions with a flourishing, pest-free farm and a basket full of harvested crops.
+In this vibrant game mode, your goal is to plant, grow, and harvest as many crops as possible while answering quiz questions. To get started, use your seeds to plant crops by selecting an empty plot (press keys 1 to 7 or click a plot). Each crop type grows at a different speed and rewards you with coins when harvested. Correctly answering quiz questions gives you extra seeds and coins, helping you expand your farm. As you progress, pests will begin to appear—these mischievous bugs can eat your crops unless you use your upgrades. You can visit the farm shop at any time to spend your coins on upgrades: speed up crop growth, restore farm hearts, buy more seeds and more! If you run out of farm hearts, the game ends, so stay alert! Your ultimate aim is to complete all the quiz questions with a flourishing, pest-free farm and a basket full of harvested crops.
+
+**Blast Field**
+
+Players navigate a grid‑based arena, planting bombs. When a payload detonates, a multiple‑choice question appears in the blast radius. Answering correctly awards points, a wrong answer looses them a life. The goal is to survive as long as possible while racking up a high score.
 
 **Midas Mayhem**
 
