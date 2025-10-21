@@ -139,6 +139,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
     ENEMY_SPAWN_RATE = 30
     POWER_UP_DURATION = 5000
 
+    leaveGame = False
     health = questionLength
     player = {"image": pygame.Surface((50, 50), pygame.SRCALPHA), "rect": pygame.Rect(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 60, 50, 50), "health": health, "level": 1, "experience": 0}
     projectiles = []
@@ -171,7 +172,13 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
     inner.fill((255,255,255,18))
     player["image"].blit(inner, (3,3))
 
-    
+    def endGameScreen(message, textColour):
+        screen.fill(BG_TOP)
+        display_message(message, 300, 100, textColour)
+        pygame.display.flip()
+        pygame.time.wait(3000)
+        return
+
     def draw_background(surface):
         h = SCREEN_HEIGHT
         step = 12  
@@ -342,8 +349,9 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
     if doCountdown:
         countdown(titleofquiz, BG_TOP, UI_TEXT)
 
-    button_answer = Button("Answer Question", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 190), 300, 50, UI_TEXT)
-    button_shop = Button("Shop", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 250), 300, 50, UI_TEXT)
+    button_answer = Button("Answer Question", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 100), 300, 50, UI_TEXT)
+    button_shop = Button("Shop", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 190), 300, 50, UI_TEXT)
+    button_end = Button("End Game", (SCREEN_WIDTH // 2 + 325, SCREEN_HEIGHT // 2 + 250), 300, 50, UI_TEXT)
     button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 310), 250, 40, UI_TEXT)
     button_leave = Button("Quit", (SCREEN_WIDTH // 2 + 350, SCREEN_HEIGHT // 2 + 360), 250, 40, UI_TEXT)
 
@@ -358,6 +366,7 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
 
         button_answer.draw(screen, BUTTON_COLOUR)
         button_shop.draw(screen, BUTTON_COLOUR)
+        button_end.draw(screen, BUTTON_COLOUR, enabled=leaveGame)
         button_go_back.draw(screen, BUTTON_COLOUR)
         button_leave.draw(screen, BUTTON_COLOUR)
 
@@ -463,6 +472,9 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                     handle_question(forPowerup=False)
                 elif button_shop.is_clicked(pos):
                     handle_shop()
+                elif button_end.is_clicked(pos):
+                    endGameScreen("You Win!", SUCCESS)
+                    return
                 elif button_go_back.is_clicked(pos):
                     if popup("Go Back?", "Are you sure you want to go back?", buttons=("Return", "Stay")) == "Return":
                         return
@@ -602,17 +614,12 @@ def strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v):
                 if projectile in projectiles:
                     projectiles.remove(projectile)
 
-        if player["health"] <= 0 or (question_index == questionLength and ammo <= 0 and score < questionLength*10):
-            explosion.play()
-            display_message("You Lose!", 300, 100, DANGER)
-            pygame.display.flip()
-            pygame.time.wait(3000)
-            return
+        if question_index == questionLength and score > questionLength*10:
+            leaveGame = True
 
-        if question_index == questionLength and score > questionLength*5:
-            display_message("You Win!", 300, 100, SUCCESS)
-            pygame.display.flip()
-            pygame.time.wait(3000)
+        if player["health"] <= 0 or (question_index == questionLength and ammo <= 0): # <= if it is impossible for the player to win 
+            explosion.play()
+            endGameScreen("You Lose!", DANGER)
             return
 
         fire_cooldown = max(0, fire_cooldown-16)

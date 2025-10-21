@@ -52,7 +52,6 @@ class Button:
         width=300,
         height=60,
         text_colour=(0, 0, 0),
-        enabled=True,
         use_outline=False,
         outline_color=(0,0,0)
     ):
@@ -63,11 +62,13 @@ class Button:
         self.font = pygame.font.Font(None, FONT_SIZE)
         self.rect = pygame.Rect(position[0], position[1], width, height)
         self.text_colour = text_colour
-        self.enabled = enabled
         self.use_outline = use_outline
         self.outline_color = outline_color
 
-    def draw(self, screen, colour, border_radius=15, shadow_offset=4):
+    def draw(self, screen, colour, border_radius=15, shadow_offset=4, enabled=True):
+
+        self.enabled = enabled
+
         shadow_colour = darken(colour)
         shadow_rect = pygame.Rect(self.rect.x + shadow_offset, self.rect.y + shadow_offset, self.width, self.height)
         pygame.draw.rect(screen, shadow_colour, shadow_rect, border_radius=border_radius)
@@ -105,7 +106,7 @@ class Button:
         font = pygame.font.Font(None, font_size)
         y_offset = (self.rect.height - len(lines) * font.get_height()) // 2
         for line in lines:
-            label = font.render(line.strip(), True, self.text_colour)
+            label = font.render(line.strip(), True, self.text_colour if self.enabled else darken(self.text_colour))
             text_rect = label.get_rect(center=(self.rect.centerx, self.rect.y + y_offset + font.get_height() // 2))
             screen.blit(label, text_rect)
             y_offset += font.get_height()
