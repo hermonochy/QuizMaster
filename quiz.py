@@ -186,6 +186,7 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 1.2), 300, 40, BLACK)
     button_submit = Button("Choose", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 1.3), 300, 40, BLACK)
     question_amount_slider = Slider((SCREEN_WIDTH // 4, SCREEN_HEIGHT // 3), 800, min=1, max=250, step=1, initial=30)
+    menuButton = menuButtons(BLACK)
 
     while running:
         events = pygame.event.get()
@@ -195,6 +196,8 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
+                if menuButton.handle_click(pos):
+                    return
                 if button_submit.is_clicked(pos):
                     numOfQuestions = question_amount_slider.get()
                     return numOfQuestions, False
@@ -209,6 +212,7 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         display_message("Number of Questions:", 125, 40, BLACK)
         button_submit.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
+        menuButton.draw(screen, BUTTON_COLOUR)
 
         if isItHalloweenTimeNow():
             drawSpiderWebs(screen)
@@ -231,6 +235,7 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
 
     button_confirm = Button("Choose", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 290), 350, 50, BLACK)
     button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 350), 350, 50, BLACK)
+    menuButton = menuButtons(BLACK)
     scrollbar = None
     offset = 0
 
@@ -287,6 +292,7 @@ def quizDetails(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
 
         button_confirm.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
+        menuButton.draw(screen, BUTTON_COLOUR)
 
         if isItHalloweenTimeNow():
             drawSpiderWebs(screen)
@@ -302,7 +308,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         button_random_quiz = Button("Random Quiz", (SCREEN_WIDTH // 2 - 150, 400), 300, 40, BLACK)
         button_general_knowledge = Button("General Knowledge Quiz", (SCREEN_WIDTH // 2 - 150, 475), 300, 40, BLACK)
         button_math = Button("Math Quiz", (SCREEN_WIDTH // 2 - 150, 550), 300, 40, BLACK)
-
+        menuButton = menuButtons(BLACK)
         screen.fill(BACKGROUND_COLOUR)
         display_message("Search for a Quiz", 50, 50, BLACK)
         display_message("Or:", 350, 50, BLACK)
@@ -310,6 +316,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
         button_random_quiz.draw(screen, BUTTON_COLOUR)
         button_general_knowledge.draw(screen, BUTTON_COLOUR)
         button_math.draw(screen, BUTTON_COLOUR)
+        menuButton.draw(screen, BUTTON_COLOUR)
 
         if isItHalloweenTimeNow():
             drawSpiderWebs(screen)
@@ -320,6 +327,8 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
+                if menuButton.handle_click(pos):
+                    return
                 if button_random_quiz.is_clicked(pos):
                     quizfiles = glob('./Quizzes/**/*.json', recursive=True)
                     if quizfiles:
@@ -411,7 +420,7 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                     button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
                 if len(buttons) > 12:
                     scrollbar.draw(screen)
-
+                menuButton.draw(screen, BUTTON_COLOUR)
                 if isItHalloweenTimeNow():
                     drawSpiderWebs(screen)
 
@@ -423,6 +432,8 @@ def choose_quiz(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, v):
                         scrollbar.handle_event(event)
                     if event.type == MOUSEBUTTONDOWN:
                         pos = pygame.mouse.get_pos()
+                        if menuButton.handle_click(pos):
+                            return
                         for idx, button in enumerate(buttons):
                             if button.is_clicked(pos):
                                 user_answer = idx
@@ -475,6 +486,8 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
         advanced_modes = ButtonArray(advancedGamemodes, (SCREEN_WIDTH // 2 - 600, SCREEN_HEIGHT // 2 + 100), button_width=250, button_spacing=50, text_colour=BLACK)
         basic_modes.draw(screen, BUTTON_COLOUR)
         advanced_modes.draw(screen, BUTTON_COLOUR)
+        menuButton = menuButtons(BLACK)
+        menuButton.draw(screen, BUTTON_COLOUR)
         if isItHalloweenTimeNow():
             drawSpiderWebs(screen)
         pygame.display.update()
@@ -484,7 +497,8 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-
+                if menuButton.handle_click(pos):
+                    return
                 basic_btn_clicked, btn_basic = basic_modes.handle_click(pos)
                 advanced_btn_clicked, btn_advanced = advanced_modes.handle_click(pos)
                 btn_clicked = advanced_btn_clicked or basic_btn_clicked

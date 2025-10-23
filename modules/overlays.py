@@ -1,5 +1,7 @@
 import pygame
+import random
 
+from modules.elements import *
 from modules.constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 def drawSpiderWebs(screen):

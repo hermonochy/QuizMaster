@@ -160,6 +160,28 @@ class ButtonArray:
                 return True, button.text
         return None, None
 
+class menuButtons:
+    # Buttons that are needed in almost every screen
+    def __init__(self, BLACK, 
+        locationMM = (SCREEN_WIDTH // 2+340, SCREEN_HEIGHT // 2+300), 
+        heightMM = 40, widthMM = 250, 
+        locationQ = (SCREEN_WIDTH // 2+340, SCREEN_HEIGHT // 2+350), 
+        heightQ = 40, widthQ = 250
+    ):
+        self.button_go_back = Button("Main Menu", locationMM, widthMM, heightMM, BLACK)
+        self.button_leave = Button("Quit", locationQ, widthQ, heightQ, BLACK)
+
+    def draw(self, screen, colour, border_radius=15, shadow_offset=4, enabled=True):
+        self.button_go_back.draw(screen, colour, border_radius, shadow_offset, enabled)
+        self.button_leave.draw(screen, colour, border_radius, shadow_offset, enabled)
+
+    def handle_click(self, pos):
+        if self.button_go_back.is_clicked(pos):
+            return True
+        elif self.button_leave.is_clicked(pos):
+            quit()
+        return False
+
 class TextBox:
     def __init__(self, x, y, width, height, font_size=36, text_color=(30,30,30), bg_color=(245,245,245), border_color=(90,90,90), border_width=3, 
                  placeholder="", placeholder_color=(140, 140, 140), max_length=64, border_radius=12, active_color=(70,120,255)):
