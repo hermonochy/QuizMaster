@@ -140,9 +140,7 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
     bad_praise = (random.choice(bad_praise_list))
         
     button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
-    button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
-    button_quit = Button("Quit", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150), 250, 40, BLACK)
-    menuButton = menuButtons(BLACK)
+    menuButton = menuButtons(BLACK, locationMM=(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), locationQ=(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150))
 
     while True:
         screen.fill(BACKGROUND_COLOUR)
@@ -160,9 +158,7 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
         if incorrect_questions:
           button_show_incorrect = Button("Show Incorrect Answers", (SCREEN_WIDTH // 2 - 150 , SCREEN_HEIGHT // 2), 250, 40, BLACK)
           button_show_incorrect.draw(screen, BUTTON_COLOUR)
-        button_go_back.draw(screen, BUTTON_COLOUR)
         button_replay.draw(screen, BUTTON_COLOUR)
-        button_quit.draw(screen, BUTTON_COLOUR)
         menuButton.draw(screen, BUTTON_COLOUR)
 
         if isItHalloweenTimeNow():
@@ -176,16 +172,12 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if menuButton.handle_click(pos):
-                    return
+                    return False
                 if incorrect_questions and questionIndex > 0:
                     if button_show_incorrect.is_clicked(pos):
                         show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK)
-                if button_go_back.is_clicked(pos):
-                    return False
                 if button_replay.is_clicked(pos):
                     return True
-                if button_quit.is_clicked(pos):
-                    quit()
 
 def Instructions(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, **kwargs):
     while True:

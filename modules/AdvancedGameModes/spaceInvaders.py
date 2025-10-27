@@ -565,7 +565,7 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                     pygame.draw.rect(screen, (30, 30, 30), (alien["x"], alien["y"] - 8, alien_width, 6))
                     pygame.draw.rect(screen, (255, 80, 80), (alien["x"], alien["y"] - 8, bar_width, 6))
                     if alien["health"] < alien["max_health"]:
-                        alien["health"] = min(alien["max_health"], alien["health"] + 0.00025)
+                        alien["health"] = min(alien["max_health"], alien["health"] + 0.0005)
 
                 alien["x"] += alien_speed
                 if alien["x"] > SCREEN_WIDTH - alien_width or alien["x"] < 0:

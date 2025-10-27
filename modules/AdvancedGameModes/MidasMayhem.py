@@ -35,15 +35,13 @@ def midasMayhem(questionList, titleofquiz, doCountdown, doInstructions, BACKGROU
             button = Button(f"{idx + 1}. {answer}", (SCREEN_WIDTH // 2 - 200, ANSWER_OFFSET + idx * OPTION_HEIGHT), 400, 40, BLACK)
             buttons.append(button)
 
-        button_go_back = Button("Main Menu", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+250), 250, 40, BLACK)
-        button_leave = Button("Quit", (SCREEN_WIDTH // 2+350 , SCREEN_HEIGHT // 2+300), 250, 40, BLACK)
+        menuButton = menuButtons(BLACK)
 
         while running and user_answer is None:
             screen.fill(BACKGROUND_COLOUR)
             display_message(f"Gold: {player_gold}", SCREEN_HEIGHT - QUESTION_OFFSET, 40, BLACK)
             display_message(f"Question {questionIndex + 1}: {currentQuestion.question}", QUESTION_OFFSET, 50, BLACK)
-            button_go_back.draw(screen, BUTTON_COLOUR)
-            button_leave.draw(screen, BUTTON_COLOUR)
+            menuButton.draw(screen, BUTTON_COLOUR)
             for button in buttons:
                 button.draw(screen, BUTTON_COLOUR if user_answer is None else BACKGROUND_COLOUR)
             pygame.display.update()
@@ -53,13 +51,9 @@ def midasMayhem(questionList, titleofquiz, doCountdown, doInstructions, BACKGROU
                     quit()
                 if event.type == MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
-                    if button_go_back.is_clicked(pos):
+                    if menuButton.handle_click(pos):
                         if popup("Go Back?", "Are you sure you want to go back?", buttons=("Return", "Stay")) == "Return":
                             return
-                        else:
-                            continue
-                    if button_leave.is_clicked(pos):
-                        quit()
                     for idx, button in enumerate(buttons):
                         if button.is_clicked(pos):
                             user_answer = idx
@@ -76,8 +70,8 @@ def midasMayhem(questionList, titleofquiz, doCountdown, doInstructions, BACKGROU
             pygame.time.wait(1000)
 
             chest_outcomes = [
-                {"label": "Gain Gold", "probability": 0.55, "operation": "add", "amount": random.randint(5, (questionIndex+1)*10)},
-                {"label": "Lose Gold", "probability": 0.25, "operation": "subtract", "amount": random.randint(5, (questionIndex+1)*5)},
+                {"label": "Gain Gold", "probability": 0.5, "operation": "add", "amount": random.randint(5, (questionIndex+1)*10)},
+                {"label": "Lose Gold", "probability": 0.3, "operation": "subtract", "amount": random.randint(5, (questionIndex+1)*10)},
                 {"label": "Double Gold", "probability": 0.1, "operation": "multiply", "factor": 2},
                 {"label": "Triple Gold", "probability": 0.05, "operation": "multiply", "factor": 3},
                 {"label": "Jackpot!", "probability": 0.002, "operation": "add", "amount": (questionIndex+1)*10},

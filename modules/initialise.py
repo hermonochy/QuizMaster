@@ -1,5 +1,6 @@
 import pygame
 import argparse
+import pathlib
 
 from enum import Enum
 from pygame.locals import *
@@ -32,9 +33,9 @@ parser = argparse.ArgumentParser(
     prog='QuizMaster',
     description='Main program for QuizMaster. Features include: Playing quiz, preferences, description and starting QuizCreator.',
     )
-parser.add_argument('-q', '--quizPath', nargs='?', const="")
-parser.add_argument('-g', '--gameMode', nargs='?', const="", type=GameMode)
-parser.add_argument('-v', '--volume', nargs='?', const="")
+parser.add_argument('-q', '--quizPath', nargs='?', type=pathlib.Path)
+parser.add_argument('-g', '--gameMode', nargs='?', type=GameMode, choices=GameMode)
+parser.add_argument('-v', '--volume', nargs='?', type=float)
 args = parser.parse_args()
     
 clock = pygame.time.Clock()

@@ -114,6 +114,7 @@ class Button:
     def is_clicked(self, pos):
         if self.enabled:
             if self.rect.collidepoint(pos):
+                click.set_volume(volume)
                 click.play()
                 return True
         return False
