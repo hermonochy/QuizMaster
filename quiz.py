@@ -529,10 +529,10 @@ def choose_game_mode(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, questionList, t
                     elif btn_advanced == "Strike Zone":
                         strikeZone(questionList, titleofquiz, doCountdown, doInstructions, v)
                         return
-                    elif btn_advanced == "Death Rain" or btn_advanced == "Gift Fall" or btn_advanced == "Eggstorm":
+                    elif btn_advanced == "Death Rain" or btn_advanced == "Gift Fall" or btn_advanced == "Egg Storm":
                         deathRain(questionList, titleofquiz, doCountdown, doInstructions, v)
                         return
-                    elif btn_advanced == "Farm Frenzy":
+                    elif btn_advanced == "Farm Frenzy" or btn_advanced == "Pumpkin Patch":
                         farmFrenzy(questionList, titleofquiz, doCountdown, doInstructions, v)
                         return
                     elif btn_advanced == "Blast Field":

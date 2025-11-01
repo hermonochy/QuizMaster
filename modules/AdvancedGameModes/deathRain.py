@@ -6,7 +6,7 @@ from pygame.locals import *
 from modules.elements import *
 from modules.extendedText import deathRain_p1, deathRain_p2, deathRain_p3
 from modules.checker import isItChristmasTimeNow, isItEasterTimeNow
-from modules.otherWindows import *
+from modules.otherWindows import countdown, Instructions
 
 PLAYER_WIDTH = 70
 PLAYER_HEIGHT = 75
