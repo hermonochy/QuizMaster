@@ -410,6 +410,8 @@ def spaceInvaders(questionList, titleofquiz, doCountdown, doInstructions, v):
                                     lives += 10
                                 elif item["type"] == "ammo_bonus":
                                     set_effect("ammo_per_answer", 18, 60000)
+                                elif item["type"] == "ammo":
+                                    ammo += 100
                                 elif item["type"] == "shield":
                                     set_effect("shield", True, 15000)
                                 elif item["type"] == "autofire":
