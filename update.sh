@@ -6,4 +6,4 @@ cd Quizzes
 git pull
 cd ..
 
-echo Done!
+./setup.sh || echo Done!

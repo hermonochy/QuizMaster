@@ -47,7 +47,7 @@ Run the included script `./setup.sh` (Linux) or `setup.bat` script for Windows (
 
 ### Updating QuizMaster
 
-QuizMaster is constantly worked on and your copy can quickly become outdated. To update it, simply run `./update.sh` for Linux or `update.bat` for Windows. It is always a good idea to run the setup files after updating in case a module requirement or other is changed.
+QuizMaster is constantly worked on and your copy can quickly become outdated. To update it, simply run `./update.sh` for Linux or `update.bat` for Windows. For windows users, it is always a good idea to run the setup files after updating, in case a module requirement or other is changed. The Linux script does this automatically.
 
 ### Running QuizMaster
 
