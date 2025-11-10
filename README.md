@@ -25,9 +25,13 @@ If you've got some useful knowledge on top of this, you can create a quiz on it 
 
 ### Installation
 
-1. Clone this repository via terminal: ```git clone --recurse-submodules https://github.com/hermonochy/QuizMaster```
+1. Clone this repository via terminal: 
 
-  If you prefer not to include the example quizzes, you can omit the `--recurse-submodules` flag: ```git clone https://github.com/hermonochy/QuizMaster```
+```git clone --recurse-submodules https://github.com/hermonochy/QuizMaster```
+
+  If you prefer not to include the example quizzes, you can omit the `--recurse-submodules` flag: 
+  
+  ```git clone https://github.com/hermonochy/QuizMaster```
 
 2. Enter the directory containing the game executable: ```cd QuizMaster```
 

@@ -190,7 +190,6 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
     button_go_back = Button("Go Back", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 1.2), 300, 40, BLACK)
     button_submit = Button("Choose", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 1.3), 300, 40, BLACK)
     question_amount_slider = Slider((SCREEN_WIDTH // 4, SCREEN_HEIGHT // 3), 800, min=1, max=250, step=1, initial=30)
-    menuButton = menuButtons(BLACK)
 
     while running:
         events = pygame.event.get()
@@ -200,8 +199,6 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
                 quit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                if menuButton.handle_click(pos):
-                    return
                 if button_submit.is_clicked(pos):
                     numOfQuestions = question_amount_slider.get()
                     return numOfQuestions, False
@@ -216,7 +213,6 @@ def choose_question_amount(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK):
         display_message("Number of Questions:", 125, 40, BLACK)
         button_submit.draw(screen, BUTTON_COLOUR)
         button_go_back.draw(screen, BUTTON_COLOUR)
-        menuButton.draw(screen, BUTTON_COLOUR)
 
         if isItHalloweenTimeNow():
             drawSpiderWebs(screen)

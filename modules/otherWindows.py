@@ -102,7 +102,7 @@ def show_incorrect_answers(incorrect_questions, BACKGROUND_COLOUR, BUTTON_COLOUR
         screen.fill(BACKGROUND_COLOUR)
         y_position = 100
 
-        button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50)
+        button_back = Button("Back to Results", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT - 100), 300, 50, BLACK)
         button_back.draw(screen, BUTTON_COLOUR)
 
         for idx in range(offset, min(offset + items_per_page, total_items)-1):
@@ -140,7 +140,7 @@ def standard_end_window(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, titleofquiz, to
     bad_praise = (random.choice(bad_praise_list))
         
     button_replay = Button("Replay", (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), 250, 40, BLACK)
-    menuButton = menuButtons(BLACK, locationMM=(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 50), locationQ=(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150))
+    menuButton = menuButtons(BLACK, locationMM=(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 100), locationQ=(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 + 150))
 
     while True:
         screen.fill(BACKGROUND_COLOUR)
