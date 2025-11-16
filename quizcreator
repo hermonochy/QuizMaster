@@ -26,7 +26,7 @@ mainWindowLayout = [
     [sg.Text("Difficulty:", tooltip="Select the difficulty level for this quiz (1 = Baby Quiz, 3 = Secondary School Level, 5 = Requires a professional understanding of the subject)."),
      sg.Spin(difficultyList, key='difficulty', initial_value=3)],
     [sg.Checkbox("Randomize Questions", default=False, tooltip="Randomize the order of questions when the quiz is played.", key='randomOrder')],
-    [sg.Listbox(questionList, size=(150, 20), auto_size_text = True, expand_x = True, expand_y = True, key='quizquestionentry', enable_events=True, tooltip="The list of the questions."),
+    [sg.Listbox(questionList, size=(150, 20), font=("Calibri", 12), expand_x = True, expand_y = True, key='quizquestionentry', enable_events=True, tooltip="The list of the questions."),
      sg.Text(key='textbox', size=(20, 10))],
     [sg.Button("Add Question", tooltip="Add a new question."), sg.Button("Edit Question", tooltip="Select a question from the listbox to edit."),
      sg.Button('Duplicate Question', tooltip="Duplicate the selected question"),
@@ -34,7 +34,7 @@ mainWindowLayout = [
     [sg.Button('Quit')]
 ]
 
-mainWindow = sg.Window('Quiz Creator', mainWindowLayout, return_keyboard_events=True,resizable = True, finalize=True, use_default_focus=False)
+mainWindow = sg.Window('Quiz Creator', mainWindowLayout, return_keyboard_events=True, resizable = True, finalize=True, use_default_focus=False)
 
 def make_questionEditorWindow():
     questionEditorLayout = [
