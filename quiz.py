@@ -634,6 +634,7 @@ def StartOption(BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, v, doCountdown, doInstr
 
 def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstructions, v):
     running = True
+    welcome_image = pygame.image.load("images/Screenshots/logo.png").convert()
     if isItCelebrationNow():
         if isItHalloweenTimeNow():
             welcome_image = pygame.transform.scale(pygame.image.load("images/pumpkin2.png"), (60, 60))
@@ -641,8 +642,6 @@ def main(music, BACKGROUND_COLOUR, BUTTON_COLOUR, BLACK, doCountdown, doInstruct
             welcome_image = pygame.transform.scale(pygame.image.load("images/santa.png"), (60,60))
         elif isItEasterTimeNow():
             welcome_image = pygame.transform.scale(pygame.image.load("images/easterEgg1.png"), (60,65))
-    else:
-        welcome_image = pygame.image.load("images/Screenshots/logo.png").convert()
     while running:
         refreshPage = False
         screen.fill(BACKGROUND_COLOUR)
